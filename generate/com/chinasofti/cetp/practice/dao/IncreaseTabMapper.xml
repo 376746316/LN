@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.IncreaseTabMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.IncreaseTab" >
+    <id column="ITAB_ID" property="itabId" jdbcType="INTEGER" />
+    <result column="ITAB_PRAC_ID" property="itabPracId" jdbcType="INTEGER" />
+    <result column="ITAB_TASK_ID" property="itabTaskId" jdbcType="INTEGER" />
+    <result column="ITAB_STU_ID" property="itabStuId" jdbcType="INTEGER" />
+    <result column="ITAB_ABI_ID" property="itabAbiId" jdbcType="INTEGER" />
+    <result column="ITAB_INCRE_VALUE" property="itabIncreValue" jdbcType="INTEGER" />
+    <result column="ITAB_REGTIME" property="itabRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ITAB_ID, ITAB_PRAC_ID, ITAB_TASK_ID, ITAB_STU_ID, ITAB_ABI_ID, ITAB_INCRE_VALUE, 
+    ITAB_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.IncreaseTabExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_increase_tab
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_increase_tab
+    where ITAB_ID = #{itabId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_increase_tab
+    where ITAB_ID = #{itabId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.practice.model.IncreaseTabExample" >
+    delete from tp_increase_tab
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.practice.model.IncreaseTab" >
+    insert into tp_increase_tab (ITAB_ID, ITAB_PRAC_ID, ITAB_TASK_ID, 
+      ITAB_STU_ID, ITAB_ABI_ID, ITAB_INCRE_VALUE, 
+      ITAB_REGTIME)
+    values (#{itabId,jdbcType=INTEGER}, #{itabPracId,jdbcType=INTEGER}, #{itabTaskId,jdbcType=INTEGER}, 
+      #{itabStuId,jdbcType=INTEGER}, #{itabAbiId,jdbcType=INTEGER}, #{itabIncreValue,jdbcType=INTEGER}, 
+      #{itabRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.IncreaseTab" >
+    insert into tp_increase_tab
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itabId != null" >
+        ITAB_ID,
+      </if>
+      <if test="itabPracId != null" >
+        ITAB_PRAC_ID,
+      </if>
+      <if test="itabTaskId != null" >
+        ITAB_TASK_ID,
+      </if>
+      <if test="itabStuId != null" >
+        ITAB_STU_ID,
+      </if>
+      <if test="itabAbiId != null" >
+        ITAB_ABI_ID,
+      </if>
+      <if test="itabIncreValue != null" >
+        ITAB_INCRE_VALUE,
+      </if>
+      <if test="itabRegtime != null" >
+        ITAB_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itabId != null" >
+        #{itabId,jdbcType=INTEGER},
+      </if>
+      <if test="itabPracId != null" >
+        #{itabPracId,jdbcType=INTEGER},
+      </if>
+      <if test="itabTaskId != null" >
+        #{itabTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="itabStuId != null" >
+        #{itabStuId,jdbcType=INTEGER},
+      </if>
+      <if test="itabAbiId != null" >
+        #{itabAbiId,jdbcType=INTEGER},
+      </if>
+      <if test="itabIncreValue != null" >
+        #{itabIncreValue,jdbcType=INTEGER},
+      </if>
+      <if test="itabRegtime != null" >
+        #{itabRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.practice.model.IncreaseTabExample" resultType="java.lang.Integer" >
+    select count(*) from tp_increase_tab
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_increase_tab
+    <set >
+      <if test="record.itabId != null" >
+        ITAB_ID = #{record.itabId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabPracId != null" >
+        ITAB_PRAC_ID = #{record.itabPracId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabTaskId != null" >
+        ITAB_TASK_ID = #{record.itabTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabStuId != null" >
+        ITAB_STU_ID = #{record.itabStuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabAbiId != null" >
+        ITAB_ABI_ID = #{record.itabAbiId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabIncreValue != null" >
+        ITAB_INCRE_VALUE = #{record.itabIncreValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.itabRegtime != null" >
+        ITAB_REGTIME = #{record.itabRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_increase_tab
+    set ITAB_ID = #{record.itabId,jdbcType=INTEGER},
+      ITAB_PRAC_ID = #{record.itabPracId,jdbcType=INTEGER},
+      ITAB_TASK_ID = #{record.itabTaskId,jdbcType=INTEGER},
+      ITAB_STU_ID = #{record.itabStuId,jdbcType=INTEGER},
+      ITAB_ABI_ID = #{record.itabAbiId,jdbcType=INTEGER},
+      ITAB_INCRE_VALUE = #{record.itabIncreValue,jdbcType=INTEGER},
+      ITAB_REGTIME = #{record.itabRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.practice.model.IncreaseTab" >
+    update tp_increase_tab
+    <set >
+      <if test="itabPracId != null" >
+        ITAB_PRAC_ID = #{itabPracId,jdbcType=INTEGER},
+      </if>
+      <if test="itabTaskId != null" >
+        ITAB_TASK_ID = #{itabTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="itabStuId != null" >
+        ITAB_STU_ID = #{itabStuId,jdbcType=INTEGER},
+      </if>
+      <if test="itabAbiId != null" >
+        ITAB_ABI_ID = #{itabAbiId,jdbcType=INTEGER},
+      </if>
+      <if test="itabIncreValue != null" >
+        ITAB_INCRE_VALUE = #{itabIncreValue,jdbcType=INTEGER},
+      </if>
+      <if test="itabRegtime != null" >
+        ITAB_REGTIME = #{itabRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ITAB_ID = #{itabId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.IncreaseTab" >
+    update tp_increase_tab
+    set ITAB_PRAC_ID = #{itabPracId,jdbcType=INTEGER},
+      ITAB_TASK_ID = #{itabTaskId,jdbcType=INTEGER},
+      ITAB_STU_ID = #{itabStuId,jdbcType=INTEGER},
+      ITAB_ABI_ID = #{itabAbiId,jdbcType=INTEGER},
+      ITAB_INCRE_VALUE = #{itabIncreValue,jdbcType=INTEGER},
+      ITAB_REGTIME = #{itabRegtime,jdbcType=TIMESTAMP}
+    where ITAB_ID = #{itabId,jdbcType=INTEGER}
+  </update>
+</mapper>

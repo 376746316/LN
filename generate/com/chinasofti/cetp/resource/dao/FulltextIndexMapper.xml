@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.FulltextIndexMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.FulltextIndexKey" >
+    <id column="FI_TYPE" property="fiType" jdbcType="CHAR" />
+    <id column="FI_ID" property="fiId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.FulltextIndexWithBLOBs" extends="BaseResultMap" >
+    <result column="FI_TITLE" property="fiTitle" jdbcType="LONGVARCHAR" />
+    <result column="FI_CONTENT" property="fiContent" jdbcType="LONGVARCHAR" />
+    <result column="FI_T_INDEX" property="fiTIndex" jdbcType="LONGVARCHAR" />
+    <result column="FI_C_INDEX" property="fiCIndex" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FI_TYPE, FI_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    FI_TITLE, FI_CONTENT, FI_T_INDEX, FI_C_INDEX
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_fulltext_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_fulltext_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_fulltext_index
+    where FI_TYPE = #{fiType,jdbcType=CHAR}
+      and FI_ID = #{fiId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexKey" >
+    delete from tp_fulltext_index
+    where FI_TYPE = #{fiType,jdbcType=CHAR}
+      and FI_ID = #{fiId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexExample" >
+    delete from tp_fulltext_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexWithBLOBs" >
+    insert into tp_fulltext_index (FI_TYPE, FI_ID, FI_TITLE, 
+      FI_CONTENT, FI_T_INDEX, FI_C_INDEX
+      )
+    values (#{fiType,jdbcType=CHAR}, #{fiId,jdbcType=BIGINT}, #{fiTitle,jdbcType=LONGVARCHAR}, 
+      #{fiContent,jdbcType=LONGVARCHAR}, #{fiTIndex,jdbcType=LONGVARCHAR}, #{fiCIndex,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexWithBLOBs" >
+    insert into tp_fulltext_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fiType != null" >
+        FI_TYPE,
+      </if>
+      <if test="fiId != null" >
+        FI_ID,
+      </if>
+      <if test="fiTitle != null" >
+        FI_TITLE,
+      </if>
+      <if test="fiContent != null" >
+        FI_CONTENT,
+      </if>
+      <if test="fiTIndex != null" >
+        FI_T_INDEX,
+      </if>
+      <if test="fiCIndex != null" >
+        FI_C_INDEX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fiType != null" >
+        #{fiType,jdbcType=CHAR},
+      </if>
+      <if test="fiId != null" >
+        #{fiId,jdbcType=BIGINT},
+      </if>
+      <if test="fiTitle != null" >
+        #{fiTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiContent != null" >
+        #{fiContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiTIndex != null" >
+        #{fiTIndex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiCIndex != null" >
+        #{fiCIndex,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexExample" resultType="java.lang.Integer" >
+    select count(*) from tp_fulltext_index
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_fulltext_index
+    <set >
+      <if test="record.fiType != null" >
+        FI_TYPE = #{record.fiType,jdbcType=CHAR},
+      </if>
+      <if test="record.fiId != null" >
+        FI_ID = #{record.fiId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fiTitle != null" >
+        FI_TITLE = #{record.fiTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.fiContent != null" >
+        FI_CONTENT = #{record.fiContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.fiTIndex != null" >
+        FI_T_INDEX = #{record.fiTIndex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.fiCIndex != null" >
+        FI_C_INDEX = #{record.fiCIndex,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_fulltext_index
+    set FI_TYPE = #{record.fiType,jdbcType=CHAR},
+      FI_ID = #{record.fiId,jdbcType=BIGINT},
+      FI_TITLE = #{record.fiTitle,jdbcType=LONGVARCHAR},
+      FI_CONTENT = #{record.fiContent,jdbcType=LONGVARCHAR},
+      FI_T_INDEX = #{record.fiTIndex,jdbcType=LONGVARCHAR},
+      FI_C_INDEX = #{record.fiCIndex,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_fulltext_index
+    set FI_TYPE = #{record.fiType,jdbcType=CHAR},
+      FI_ID = #{record.fiId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexWithBLOBs" >
+    update tp_fulltext_index
+    <set >
+      <if test="fiTitle != null" >
+        FI_TITLE = #{fiTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiContent != null" >
+        FI_CONTENT = #{fiContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiTIndex != null" >
+        FI_T_INDEX = #{fiTIndex,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fiCIndex != null" >
+        FI_C_INDEX = #{fiCIndex,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where FI_TYPE = #{fiType,jdbcType=CHAR}
+      and FI_ID = #{fiId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.FulltextIndexWithBLOBs" >
+    update tp_fulltext_index
+    set FI_TITLE = #{fiTitle,jdbcType=LONGVARCHAR},
+      FI_CONTENT = #{fiContent,jdbcType=LONGVARCHAR},
+      FI_T_INDEX = #{fiTIndex,jdbcType=LONGVARCHAR},
+      FI_C_INDEX = #{fiCIndex,jdbcType=LONGVARCHAR}
+    where FI_TYPE = #{fiType,jdbcType=CHAR}
+      and FI_ID = #{fiId,jdbcType=BIGINT}
+  </update>
+  <select id="getSourceInfo" resultMap="ResultMapWithBLOBs" parameterType="map" >
+	SELECT
+		${type} AS FI_TYPE,
+		${col_id} AS FI_ID,
+		${col_title} AS FI_TITLE,
+		${col_content} AS FI_CONTENT
+	FROM
+		${table}
+	<if test="where_conditon != null">
+	WHERE
+		${where_conditon}
+	</if>	
+  </select>
+  <insert id="replace" parameterType="java.util.List" >
+    insert into tp_fulltext_index (FI_TYPE, FI_ID, FI_TITLE, 
+      FI_CONTENT, FI_T_INDEX, FI_C_INDEX
+      )
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.fiType,jdbcType=CHAR}, #{item.fiId,jdbcType=BIGINT}, #{item.fiTitle,jdbcType=LONGVARCHAR}, 
+      #{item.fiContent,jdbcType=LONGVARCHAR}, #{item.fiTIndex,jdbcType=LONGVARCHAR}, #{item.fiCIndex,jdbcType=LONGVARCHAR})
+    </foreach>
+    ON DUPLICATE KEY UPDATE FI_TITLE=VALUES(FI_TITLE),FI_CONTENT=VALUES(FI_CONTENT),FI_T_INDEX=VALUES(FI_T_INDEX),FI_C_INDEX=VALUES(FI_C_INDEX)
+  </insert>
+  <select id="search" resultMap="ResultMapWithBLOBs" parameterType="map" >
+	SELECT FI_TYPE,FI_ID,FI_TITLE,FI_CONTENT
+	FROM
+		tp_fulltext_index
+	WHERE
+	MATCH (FI_T_INDEX,FI_C_INDEX) AGAINST (#{key})
+	<if test="type != null" >
+	AND FI_TYPE = #{type}
+    </if>
+	ORDER BY
+	MATCH (FI_T_INDEX,FI_C_INDEX) AGAINST (#{key}) DESC
+  </select>  
+  <select id="countBySearch" resultType="java.lang.Integer" parameterType="map" >
+	SELECT count(0)
+	FROM
+		tp_fulltext_index
+	WHERE
+	MATCH (FI_T_INDEX,FI_C_INDEX) AGAINST (#{key})
+	AND FI_TYPE = #{type}
+  </select>  
+</mapper>

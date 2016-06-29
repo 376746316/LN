@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.attendance.dao.PracAttendanceMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.attendance.model.PracAttendance" >
+    <id column="PAT_ID" property="patId" jdbcType="INTEGER" />
+    <result column="PAT_PRAC_ID" property="patPracId" jdbcType="INTEGER" />
+    <result column="PAT_STU_ID" property="patStuId" jdbcType="INTEGER" />
+    <result column="PAT_CODE" property="patCode" jdbcType="VARCHAR" />
+    <result column="PAT_CLASS_ID" property="patClassId" jdbcType="INTEGER" />
+    <result column="PAT_USER_NO" property="patUserNo" jdbcType="INTEGER" />
+    <result column="PAT_REGTIME" property="patRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PAT_ID, PAT_PRAC_ID, PAT_STU_ID, PAT_CODE, PAT_CLASS_ID, PAT_USER_NO, PAT_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.attendance.model.PracAttendanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_prac_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_prac_attendance
+    where PAT_ID = #{patId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_prac_attendance
+    where PAT_ID = #{patId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.attendance.model.PracAttendanceExample" >
+    delete from tp_prac_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.attendance.model.PracAttendance" >
+    insert into tp_prac_attendance (PAT_ID, PAT_PRAC_ID, PAT_STU_ID, 
+      PAT_CODE, PAT_CLASS_ID, PAT_USER_NO, 
+      PAT_REGTIME)
+    values (#{patId,jdbcType=INTEGER}, #{patPracId,jdbcType=INTEGER}, #{patStuId,jdbcType=INTEGER}, 
+      #{patCode,jdbcType=VARCHAR}, #{patClassId,jdbcType=INTEGER}, #{patUserNo,jdbcType=INTEGER}, 
+      #{patRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.attendance.model.PracAttendance" >
+    insert into tp_prac_attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="patId != null" >
+        PAT_ID,
+      </if>
+      <if test="patPracId != null" >
+        PAT_PRAC_ID,
+      </if>
+      <if test="patStuId != null" >
+        PAT_STU_ID,
+      </if>
+      <if test="patCode != null" >
+        PAT_CODE,
+      </if>
+      <if test="patClassId != null" >
+        PAT_CLASS_ID,
+      </if>
+      <if test="patUserNo != null" >
+        PAT_USER_NO,
+      </if>
+      <if test="patRegtime != null" >
+        PAT_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="patId != null" >
+        #{patId,jdbcType=INTEGER},
+      </if>
+      <if test="patPracId != null" >
+        #{patPracId,jdbcType=INTEGER},
+      </if>
+      <if test="patStuId != null" >
+        #{patStuId,jdbcType=INTEGER},
+      </if>
+      <if test="patCode != null" >
+        #{patCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patClassId != null" >
+        #{patClassId,jdbcType=INTEGER},
+      </if>
+      <if test="patUserNo != null" >
+        #{patUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="patRegtime != null" >
+        #{patRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.attendance.model.PracAttendanceExample" resultType="java.lang.Integer" >
+    select count(*) from tp_prac_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_prac_attendance
+    <set >
+      <if test="record.patId != null" >
+        PAT_ID = #{record.patId,jdbcType=INTEGER},
+      </if>
+      <if test="record.patPracId != null" >
+        PAT_PRAC_ID = #{record.patPracId,jdbcType=INTEGER},
+      </if>
+      <if test="record.patStuId != null" >
+        PAT_STU_ID = #{record.patStuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.patCode != null" >
+        PAT_CODE = #{record.patCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patClassId != null" >
+        PAT_CLASS_ID = #{record.patClassId,jdbcType=INTEGER},
+      </if>
+      <if test="record.patUserNo != null" >
+        PAT_USER_NO = #{record.patUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.patRegtime != null" >
+        PAT_REGTIME = #{record.patRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_prac_attendance
+    set PAT_ID = #{record.patId,jdbcType=INTEGER},
+      PAT_PRAC_ID = #{record.patPracId,jdbcType=INTEGER},
+      PAT_STU_ID = #{record.patStuId,jdbcType=INTEGER},
+      PAT_CODE = #{record.patCode,jdbcType=VARCHAR},
+      PAT_CLASS_ID = #{record.patClassId,jdbcType=INTEGER},
+      PAT_USER_NO = #{record.patUserNo,jdbcType=INTEGER},
+      PAT_REGTIME = #{record.patRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.attendance.model.PracAttendance" >
+    update tp_prac_attendance
+    <set >
+      <if test="patPracId != null" >
+        PAT_PRAC_ID = #{patPracId,jdbcType=INTEGER},
+      </if>
+      <if test="patStuId != null" >
+        PAT_STU_ID = #{patStuId,jdbcType=INTEGER},
+      </if>
+      <if test="patCode != null" >
+        PAT_CODE = #{patCode,jdbcType=VARCHAR},
+      </if>
+      <if test="patClassId != null" >
+        PAT_CLASS_ID = #{patClassId,jdbcType=INTEGER},
+      </if>
+      <if test="patUserNo != null" >
+        PAT_USER_NO = #{patUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="patRegtime != null" >
+        PAT_REGTIME = #{patRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PAT_ID = #{patId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.attendance.model.PracAttendance" >
+    update tp_prac_attendance
+    set PAT_PRAC_ID = #{patPracId,jdbcType=INTEGER},
+      PAT_STU_ID = #{patStuId,jdbcType=INTEGER},
+      PAT_CODE = #{patCode,jdbcType=VARCHAR},
+      PAT_CLASS_ID = #{patClassId,jdbcType=INTEGER},
+      PAT_USER_NO = #{patUserNo,jdbcType=INTEGER},
+      PAT_REGTIME = #{patRegtime,jdbcType=TIMESTAMP}
+    where PAT_ID = #{patId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <!-- Add by YF 2014-1-20  -->
+	<resultMap type="com.chinasofti.cetp.attendance.model.StuAttendance"
+		id="stuAttendance">
+		<result column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="STU_NUM" property="stuNum" jdbcType="VARCHAR" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="PAT_ID" property="patId" jdbcType="INTEGER" />
+		<result column="PAT_CODE" property="patCode" jdbcType="VARCHAR" />
+		<result column="PC_CLASS_ID" property="classId" jdbcType="INTEGER" />
+		<result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+	</resultMap>
+  <select id="getStuAttenanceList" resultMap="stuAttendance" parameterType="map">
+	SELECT
+		STU_NO,
+		STU_NUM,
+		STU_NAME,
+		PAT_ID,
+		PAT_CODE,
+		PC_CLASS_ID,
+		CLASS_NAME
+	FROM
+		tp_student
+	INNER JOIN tp_practice_class ON (
+		STU_CLASS_ID = PC_CLASS_ID
+		AND PC_PRAC_ID = #{pracId,jdbcType=INTEGER}
+	)
+	INNER JOIN tp_class ON (STU_CLASS_ID = CLASS_ID)
+	LEFT JOIN tp_prac_attendance ON (
+		STU_NO = PAT_STU_ID
+		AND PAT_PRAC_ID = #{pracId,jdbcType=INTEGER}
+	)
+	WHERE
+		1 = 1
+	<if test="stuNum != null" >
+    AND STU_NUM = #{stuNum,jdbcType=VARCHAR}
+    </if>
+	<if test="stuName != null" >
+    AND STU_NAME LIKE #{stuName,jdbcType=VARCHAR}
+    </if>
+	<if test="className != null" >
+    AND CLASS_NAME LIKE #{className,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <insert id="insertSA" parameterType="com.chinasofti.cetp.attendance.model.StuAttendance">
+	INSERT INTO tp_prac_attendance (
+		PAT_PRAC_ID,
+		PAT_STU_ID,
+		PAT_CODE,
+		PAT_CLASS_ID,
+		PAT_USER_NO,
+		PAT_REGTIME
+	)
+	VALUES
+		(
+			#{pracId,jdbcType=INTEGER},
+			(
+				SELECT
+					stu_no
+				FROM
+					tp_student
+				WHERE
+					stu_class_id = #{classId,jdbcType=INTEGER}
+				AND STU_NUM = #{stuNum,jdbcType=INTEGER}
+			),
+			#{patCode,jdbcType=INTEGER},
+			#{classId,jdbcType=INTEGER},
+			#{userNo,jdbcType=INTEGER},
+			NOW()
+		)  
+  </insert>
+  
+  <select id="getPatId" resultType="Integer" parameterType="map">
+	SELECT
+		PAT_ID
+	FROM
+		tp_prac_attendance
+	WHERE
+		PAT_PRAC_ID = #{pracId}
+	AND PAT_CODE = #{code}
+  </select>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.RedeemMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.Redeem" >
+    <id column="RE_ID" property="reId" jdbcType="INTEGER" />
+    <result column="RE_VALIDITY" property="reValidity" jdbcType="TIMESTAMP" />
+    <result column="RE_USER_ID" property="reUserId" jdbcType="INTEGER" />
+    <result column="RE_PROVIDETIME" property="reProvidetime" jdbcType="TIMESTAMP" />
+    <result column="RE_REDEEMCODE" property="reRedeemcode" jdbcType="VARCHAR" />
+    <result column="RE_STATUS" property="reStatus" jdbcType="INTEGER" />
+    <result column="RE_COINAMOUNT" property="reCoinamount" jdbcType="INTEGER" />
+    <result column="RE_CREATETIME" property="reCreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RE_ID, RE_VALIDITY, RE_USER_ID, RE_PROVIDETIME, RE_REDEEMCODE, RE_STATUS, RE_COINAMOUNT, 
+    RE_CREATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.RedeemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_redeem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_redeem
+    where RE_ID = #{reId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_redeem
+    where RE_ID = #{reId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.RedeemExample" >
+    delete from tp_redeem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.Redeem" >
+    insert into tp_redeem (RE_ID, RE_VALIDITY, RE_USER_ID, 
+      RE_PROVIDETIME, RE_REDEEMCODE, RE_STATUS, 
+      RE_COINAMOUNT, RE_CREATETIME)
+    values (#{reId,jdbcType=INTEGER}, #{reValidity,jdbcType=TIMESTAMP}, #{reUserId,jdbcType=INTEGER}, 
+      #{reProvidetime,jdbcType=TIMESTAMP}, #{reRedeemcode,jdbcType=VARCHAR}, #{reStatus,jdbcType=INTEGER}, 
+      #{reCoinamount,jdbcType=INTEGER}, #{reCreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.Redeem" useGeneratedKeys="true" keyProperty="reId">
+    insert into tp_redeem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reId != null" >
+        RE_ID,
+      </if>
+      <if test="reValidity != null" >
+        RE_VALIDITY,
+      </if>
+      <if test="reUserId != null" >
+        RE_USER_ID,
+      </if>
+      <if test="reProvidetime != null" >
+        RE_PROVIDETIME,
+      </if>
+      <if test="reRedeemcode != null" >
+        RE_REDEEMCODE,
+      </if>
+      <if test="reStatus != null" >
+        RE_STATUS,
+      </if>
+      <if test="reCoinamount != null" >
+        RE_COINAMOUNT,
+      </if>
+      <if test="reCreatetime != null" >
+        RE_CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reId != null" >
+        #{reId,jdbcType=INTEGER},
+      </if>
+      <if test="reValidity != null" >
+        #{reValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reUserId != null" >
+        #{reUserId,jdbcType=INTEGER},
+      </if>
+      <if test="reProvidetime != null" >
+        #{reProvidetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reRedeemcode != null" >
+        #{reRedeemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="reStatus != null" >
+        #{reStatus,jdbcType=INTEGER},
+      </if>
+      <if test="reCoinamount != null" >
+        #{reCoinamount,jdbcType=INTEGER},
+      </if>
+      <if test="reCreatetime != null" >
+        #{reCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.RedeemExample" resultType="java.lang.Integer" >
+    select count(*) from tp_redeem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_redeem
+    <set >
+      <if test="record.reId != null" >
+        RE_ID = #{record.reId,jdbcType=INTEGER},
+      </if>
+      <if test="record.reValidity != null" >
+        RE_VALIDITY = #{record.reValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reUserId != null" >
+        RE_USER_ID = #{record.reUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.reProvidetime != null" >
+        RE_PROVIDETIME = #{record.reProvidetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reRedeemcode != null" >
+        RE_REDEEMCODE = #{record.reRedeemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reStatus != null" >
+        RE_STATUS = #{record.reStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.reCoinamount != null" >
+        RE_COINAMOUNT = #{record.reCoinamount,jdbcType=INTEGER},
+      </if>
+      <if test="record.reCreatetime != null" >
+        RE_CREATETIME = #{record.reCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_redeem
+    set RE_ID = #{record.reId,jdbcType=INTEGER},
+      RE_VALIDITY = #{record.reValidity,jdbcType=TIMESTAMP},
+      RE_USER_ID = #{record.reUserId,jdbcType=INTEGER},
+      RE_PROVIDETIME = #{record.reProvidetime,jdbcType=TIMESTAMP},
+      RE_REDEEMCODE = #{record.reRedeemcode,jdbcType=VARCHAR},
+      RE_STATUS = #{record.reStatus,jdbcType=INTEGER},
+      RE_COINAMOUNT = #{record.reCoinamount,jdbcType=INTEGER},
+      RE_CREATETIME = #{record.reCreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.Redeem" >
+    update tp_redeem
+    <set >
+      <if test="reValidity != null" >
+        RE_VALIDITY = #{reValidity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reUserId != null" >
+        RE_USER_ID = #{reUserId,jdbcType=INTEGER},
+      </if>
+      <if test="reProvidetime != null" >
+        RE_PROVIDETIME = #{reProvidetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reRedeemcode != null" >
+        RE_REDEEMCODE = #{reRedeemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="reStatus != null" >
+        RE_STATUS = #{reStatus,jdbcType=INTEGER},
+      </if>
+      <if test="reCoinamount != null" >
+        RE_COINAMOUNT = #{reCoinamount,jdbcType=INTEGER},
+      </if>
+      <if test="reCreatetime != null" >
+        RE_CREATETIME = #{reCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where RE_ID = #{reId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Redeem" >
+    update tp_redeem
+    set RE_VALIDITY = #{reValidity,jdbcType=TIMESTAMP},
+      RE_USER_ID = #{reUserId,jdbcType=INTEGER},
+      RE_PROVIDETIME = #{reProvidetime,jdbcType=TIMESTAMP},
+      RE_REDEEMCODE = #{reRedeemcode,jdbcType=VARCHAR},
+      RE_STATUS = #{reStatus,jdbcType=INTEGER},
+      RE_COINAMOUNT = #{reCoinamount,jdbcType=INTEGER},
+      RE_CREATETIME = #{reCreatetime,jdbcType=TIMESTAMP}
+    where RE_ID = #{reId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.RecommendSpecMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.RecommendSpec">
+		<id column="RS_SPEC_ID" property="rsSpecId" jdbcType="INTEGER" />
+		<id column="RS_TYPE" property="rsType" jdbcType="CHAR" />
+		<result column="RS_REGTIME" property="rsRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="SpecCourseMap" type="com.chinasofti.cetp.study.model.SpecCourse">
+		<id column="SPEC_ID" property="specId" jdbcType="INTEGER" />
+		<result column="SPEC_NAME" property="specName" jdbcType="VARCHAR" />
+		<result column="SPEC_CODE" property="specCode" jdbcType="VARCHAR" />
+		<result column="SPEC_PRE_COURSE" property="specPreCourse" jdbcType="VARCHAR" />
+		<result column="SPEC_MAJOR" property="specMajor" jdbcType="VARCHAR" />
+		<result column="SPEC_THEORY_TIME" property="specTheoryTime" jdbcType="INTEGER" />
+		<result column="SPEC_PRAC_TIME" property="specPracTime" jdbcType="INTEGER" />
+		<result column="SPEC_THEORY_CREDIT" property="specTheoryCredit" jdbcType="DOUBLE" />
+		<result column="SPEC_PRAC_CREDIT" property="specPracCredit" jdbcType="DOUBLE" />
+		<result column="SPEC_FLAG" property="specFlag" jdbcType="CHAR" />
+		<result column="SPEC_TYPE_ID" property="specTypeId" jdbcType="INTEGER" />
+		<result column="SPEC_EDU_BOOK" property="specEduBook" jdbcType="VARCHAR" />
+		<result column="SPEC_VERSION" property="specVersion" jdbcType="VARCHAR" />
+		<result column="SPEC_AVG_GRADE" property="specAvgGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_PRAC_GRADE" property="specPracGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_EXAM_GRADE" property="specExamGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_STANDARD" property="specStandard" jdbcType="VARCHAR" />
+		<result column="SPEC_USER_NO" property="specUserNo" jdbcType="INTEGER" />
+		<result column="SPEC_REGTIME" property="specRegtime" jdbcType="TIMESTAMP" />
+		<result column="SPEC_CLASS" property="specClass" jdbcType="CHAR" />
+		<result column="SPEC_COST" property="specCost" jdbcType="INTEGER" />
+		<result column="SPEC_COUNT" property="specCount" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs" extends="SpecCourseMap">
+		<result column="SPEC_INTRO" property="specIntro" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_TARGET" property="specTarget" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_RESOURCE" property="specResource" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_APP_CROWD" property="specAppCrowd" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_POINT" property="specPoint" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_WEIGHT" property="specWeight" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_THUMB" property="specThumb" jdbcType="LONGVARCHAR" />
+		<result column="user_name" property="teacherName" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		RS_SPEC_ID, RS_TYPE, RS_REGTIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.RecommendSpecExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_recommend_spec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.RecommendSpecKey">
+		select
+		<include refid="Base_Column_List" />
+		from tp_recommend_spec
+		where RS_SPEC_ID = #{rsSpecId,jdbcType=INTEGER}
+		and RS_TYPE = #{rsType,jdbcType=CHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.RecommendSpecKey">
+		delete from tp_recommend_spec
+		where RS_SPEC_ID = #{rsSpecId,jdbcType=INTEGER}
+		and RS_TYPE = #{rsType,jdbcType=CHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.RecommendSpecExample">
+		delete from tp_recommend_spec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.RecommendSpec">
+		insert into tp_recommend_spec (RS_SPEC_ID, RS_TYPE, RS_REGTIME
+		)
+		values (#{rsSpecId,jdbcType=INTEGER}, #{rsType,jdbcType=CHAR}, #{rsRegtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.RecommendSpec">
+		insert into tp_recommend_spec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rsSpecId != null">
+				RS_SPEC_ID,
+			</if>
+			<if test="rsType != null">
+				RS_TYPE,
+			</if>
+			<if test="rsRegtime != null">
+				RS_REGTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rsSpecId != null">
+				#{rsSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="rsType != null">
+				#{rsType,jdbcType=CHAR},
+			</if>
+			<if test="rsRegtime != null">
+				#{rsRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.RecommendSpecExample" resultType="java.lang.Integer">
+		select count(*) from tp_recommend_spec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_recommend_spec
+		<set>
+			<if test="record.rsSpecId != null">
+				RS_SPEC_ID = #{record.rsSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="record.rsType != null">
+				RS_TYPE = #{record.rsType,jdbcType=CHAR},
+			</if>
+			<if test="record.rsRegtime != null">
+				RS_REGTIME = #{record.rsRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_recommend_spec
+		set RS_SPEC_ID = #{record.rsSpecId,jdbcType=INTEGER},
+		RS_TYPE = #{record.rsType,jdbcType=CHAR},
+		RS_REGTIME = #{record.rsRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.RecommendSpec">
+		update tp_recommend_spec
+		<set>
+			<if test="rsRegtime != null">
+				RS_REGTIME = #{rsRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where RS_SPEC_ID = #{rsSpecId,jdbcType=INTEGER}
+		and RS_TYPE = #{rsType,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.RecommendSpec">
+		update tp_recommend_spec
+		set RS_REGTIME = #{rsRegtime,jdbcType=TIMESTAMP}
+		where RS_SPEC_ID = #{rsSpecId,jdbcType=INTEGER}
+		and RS_TYPE = #{rsType,jdbcType=CHAR}
+	</update>
+
+	<select id="getSpecsByType" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		SELECT
+		SPEC_ID, SPEC_NAME, SPEC_CODE, SPEC_PRE_COURSE, SPEC_MAJOR,
+		SPEC_THEORY_TIME,
+		SPEC_PRAC_TIME,
+		SPEC_THEORY_CREDIT, SPEC_PRAC_CREDIT,
+		SPEC_FLAG, SPEC_TYPE_ID, SPEC_EDU_BOOK,
+		SPEC_VERSION,
+		SPEC_AVG_GRADE,
+		SPEC_PRAC_GRADE, SPEC_EXAM_GRADE, SPEC_STANDARD, SPEC_USER_NO,
+		SPEC_REGTIME,
+		SPEC_CLASS, SPEC_COST, SPEC_COUNT,
+		SPEC_INTRO, SPEC_TARGET, SPEC_RESOURCE, SPEC_APP_CROWD,
+		SPEC_POINT, SPEC_WEIGHT,
+		SPEC_THUMB
+		FROM
+		tp_recommend_spec
+		INNER JOIN tp_spec_course ON SPEC_ID = tp_recommend_spec.RS_SPEC_ID
+		WHERE
+		RS_TYPE = #{type,jdbcType=INTEGER}
+	</select>
+	<select id="getNotWithRsTypeList" parameterType="map" resultMap="ResultMapWithBLOBs">
+		SELECT
+		IFNULL(USER_NICKNAME,USER_ID)user_name,
+		SPEC_ID, SPEC_NAME, SPEC_CODE, SPEC_PRE_COURSE, SPEC_MAJOR,
+		SPEC_THEORY_TIME,
+		SPEC_PRAC_TIME,
+		SPEC_THEORY_CREDIT, SPEC_PRAC_CREDIT,
+		SPEC_FLAG, SPEC_TYPE_ID, SPEC_EDU_BOOK,
+		SPEC_VERSION,
+		SPEC_AVG_GRADE,
+		SPEC_PRAC_GRADE, SPEC_EXAM_GRADE, SPEC_STANDARD, SPEC_USER_NO,
+		SPEC_REGTIME,
+		SPEC_CLASS, SPEC_COST, SPEC_COUNT,
+		SPEC_INTRO, SPEC_TARGET, SPEC_RESOURCE, SPEC_APP_CROWD,
+		SPEC_POINT, SPEC_WEIGHT,
+		SPEC_THUMB
+		FROM tp_spec_course a,tp_user b
+		WHERE a.SPEC_ID NOT IN(
+		SELECT RS_SPEC_ID
+		FROM tp_recommend_spec
+		WHERE RS_TYPE = #{rsType}
+		)
+		<if test="typeId != null">
+			AND SPEC_TYPE_ID = #{typeId}
+		</if>
+		AND a.SPEC_USER_NO = b.USER_NO
+
+	</select>
+
+</mapper>

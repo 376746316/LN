@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.ClassMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.MoreClass">
+
+		<id column="CLASS_ID" property="classId" jdbcType="INTEGER" />
+		<result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+		<result column="CLASS_SCHOOL_ID" property="classSchoolId"
+			jdbcType="INTEGER" />
+		<result column="ORG_ID" property="orgId" jdbcType="INTEGER" />
+		<result column="CLASS_GRADE" property="classGrade" jdbcType="VARCHAR" />
+		<result column="CLASS_MAJOR" property="classMajor" jdbcType="VARCHAR" />
+		<result column="CLASS_LINK_MAN" property="classLinkMan"
+			jdbcType="VARCHAR" />
+		<result column="CLASS_LINK_TEL" property="classLinkTel"
+			jdbcType="VARCHAR" />
+		<result column="CLASS_TECH_DIRECT" property="classTechDirect"
+			jdbcType="CHAR" />
+		<result column="CLASS_TYPE" property="classType" jdbcType="CHAR" />
+		<result column="CLASS_REGTIME" property="classRegtime"
+			jdbcType="TIMESTAMP" />
+
+		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+		<result column="MAJOR_NAME" property="majorName" jdbcType="VARCHAR" />
+
+	</resultMap>
+
+	<select id="selectClassByPrec" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select CLASS_NAME,CLASS_ID
+		from tp_class
+		WHERE CLASS_ID
+		IN
+		(SELECT SS_CLASS_ID FROM tp_spec_class WHERE SS_SPEC_ID=#{specId})
+	</select>
+	<!-- 班级学习专业课查询开始 -->
+
+	<select id="selectClassWithSpecCourse" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT class.*,major.MAJOR_NAME,org.ORG_NAME
+		FROM
+		tp_class class ,tp_major major, tp_org org
+		WHERE class.CLASS_MAJOR =
+		major.MAJOR_CODE
+		AND class.ORG_ID=org.ORG_ID
+		AND class.CLASS_ID IN(
+		SELECT s_class.SS_CLASS_ID FROM tp_spec_class s_class WHERE
+		s_class.SS_SPEC_ID =#{specId})
+	</select>
+
+	<select id="selectClassNotWithSpecCourse" resultMap="BaseResultMap"
+		parameterType="map">
+		SELECT class.*,major.MAJOR_NAME,org.ORG_NAME
+		FROM
+		tp_class class ,tp_major major, tp_org org
+		WHERE class.CLASS_MAJOR =
+		major.MAJOR_CODE
+		AND class.ORG_ID=org.ORG_ID
+		AND class.CLASS_ID NOT IN(
+		SELECT s_class.SS_CLASS_ID FROM tp_spec_class s_class WHERE
+		s_class.SS_SPEC_ID =#{specId})
+		<if test="orgId!=null"  >
+	      	and class.org_id in (
+			<foreach collection="orgList" separator="," item="org">
+			#{org.orgId}
+			</foreach>
+			)
+	    </if>
+	</select>
+
+	<!-- 班级学习专业课查询结束 -->
+
+	<!-- 查询所有 -->
+	<select id="selectAllClass" resultMap="BaseResultMap">
+
+		select c.class_id as
+		classId, c.class_name as className,c.class_link_man as
+		classLinkMan,c.class_link_tel as classLinkTel,c.CLASS_TECH_DIRECT as classTechDirect,
+		c.class_grade as
+		classGrade,o.org_name as orgName,c.class_type as
+		classType,m.major_name as majorName,c.ORG_ID as orgId,c.CLASS_MAJOR as classMajor
+		,c.class_tech_direct as
+		classTechDirect
+		from tp_class c
+		left
+		join tp_org o on c.org_id = o.org_id
+		left join tp_major m on c.class_major = m.major_code
+		where c.org_id = #{orgId}
+	</select>
+	<select id="queryClassByorgId" resultMap="BaseResultMap" parameterType="map">
+
+		select c.class_id as
+		
+		classId, c.class_name as className,c.class_link_man as
+		classLinkMan,c.class_link_tel as classLinkTel,c.CLASS_TECH_DIRECT as classTechDirect,
+		c.class_grade as
+		classGrade,o.org_name as orgName,c.class_type as
+		classType,m.major_name
+		as majorName, c.ORG_ID as orgId,c.CLASS_MAJOR as classMajor
+		from tp_class c
+		left
+		join tp_org o on c.org_id = o.org_id
+		left join tp_major m on c.class_major = m.major_code
+		where c.org_id in (
+		<foreach collection="orgList" separator="," item="org">
+		#{org.orgId}
+		</foreach>
+		)
+		<if test="s_className != null">
+			and c.class_name like #{s_className}
+		</if>
+	</select>
+	<select id="selectAllClassF" resultMap="BaseResultMap">
+
+		select c.class_id as
+		classId, c.class_name as className,c.class_link_man as
+		classLinkMan,c.class_link_tel as classLinkTel,c.CLASS_TECH_DIRECT as classTechDirect,
+		c.class_grade as
+		classGrade,o.org_name as orgName,c.class_type as
+		classType,m.major_name
+		as majorName ,c.ORG_ID as orgId,c.CLASS_MAJOR as classMajor
+		from tp_class c
+		left
+		join tp_org o on c.org_id = o.org_id
+		left join tp_major m on c.class_major = m.major_code
+	</select>
+	<!-- 删除一条 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+		delete from
+		tp_class
+		where CLASS_ID = #{classId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 模糊查找 -->
+	<select id="queryClass" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select c.class_id as
+		classId, c.class_name as className,c.class_link_man as
+		classLinkMan,c.class_link_tel as classLinkTel,
+		c.class_grade as
+		classGrade,o.org_name as orgName,c.class_type as
+		classType,m.major_name
+		as majorName,c.class_tech_direct as
+		classTechDirect,c.ORG_ID as orgId,c.CLASS_MAJOR as classMajor
+		from tp_class c
+		left
+		join tp_org o on c.org_id = o.org_id
+		left join tp_major m on c.class_major = m.major_code
+		<if test="s_className != null">
+			where c.class_name like #{s_className}
+		</if>
+	</select>
+
+	<sql id="Example_Where_Clause">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		CLASS_ID, CLASS_NAME, CLASS_SCHOOL_ID, ORG_ID, CLASS_GRADE,
+		CLASS_MAJOR, CLASS_LINK_MAN,
+		CLASS_LINK_TEL, CLASS_TECH_DIRECT,
+		CLASS_TYPE, CLASS_REGTIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.admin.model.ClassExample">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_class
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		select
+		<include refid="Base_Column_List" />
+		from tp_class
+		where CLASS_ID = #{classId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.ClassExample">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		delete from tp_class
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.admin.model.Class">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		insert into tp_class (CLASS_ID, CLASS_NAME, CLASS_SCHOOL_ID,
+		ORG_ID,
+		CLASS_GRADE, CLASS_MAJOR,
+		CLASS_LINK_MAN, CLASS_LINK_TEL,
+		CLASS_TECH_DIRECT,
+		CLASS_TYPE, CLASS_REGTIME)
+		values
+		(#{classId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR},
+		#{classSchoolId,jdbcType=INTEGER},
+		#{orgId,jdbcType=INTEGER},
+		#{classGrade,jdbcType=VARCHAR}, #{classMajor,jdbcType=VARCHAR},
+		#{classLinkMan,jdbcType=VARCHAR}, #{classLinkTel,jdbcType=VARCHAR},
+		#{classTechDirect,jdbcType=CHAR},
+		#{classType,jdbcType=CHAR},
+		#{classRegtime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.Class" useGeneratedKeys="true" keyProperty="classId">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		insert into tp_class
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="classId != null">
+				CLASS_ID,
+			</if>
+			<if test="className != null">
+				CLASS_NAME,
+			</if>
+			<if test="classSchoolId != null">
+				CLASS_SCHOOL_ID,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="classGrade != null">
+				CLASS_GRADE,
+			</if>
+			<if test="classMajor != null">
+				CLASS_MAJOR,
+			</if>
+			<if test="classLinkMan != null">
+				CLASS_LINK_MAN,
+			</if>
+			<if test="classLinkTel != null">
+				CLASS_LINK_TEL,
+			</if>
+			<if test="classTechDirect != null">
+				CLASS_TECH_DIRECT,
+			</if>
+			<if test="classType != null">
+				CLASS_TYPE,
+			</if>
+			<if test="classRegtime != null">
+				CLASS_REGTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="classId != null">
+				#{classId,jdbcType=INTEGER},
+			</if>
+			<if test="className != null">
+				#{className,jdbcType=VARCHAR},
+			</if>
+			<if test="classSchoolId != null">
+				#{classSchoolId,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="classGrade != null">
+				#{classGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="classMajor != null">
+				#{classMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="classLinkMan != null">
+				#{classLinkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="classLinkTel != null">
+				#{classLinkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="classTechDirect != null">
+				#{classTechDirect,jdbcType=CHAR},
+			</if>
+			<if test="classType != null">
+				#{classType,jdbcType=CHAR},
+			</if>
+			<if test="classRegtime != null">
+				#{classRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.ClassExample"
+		resultType="java.lang.Integer">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		select count(*) from tp_class
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		update tp_class
+		<set>
+			<if test="record.classId != null">
+				CLASS_ID = #{record.classId,jdbcType=INTEGER},
+			</if>
+			<if test="record.className != null">
+				CLASS_NAME = #{record.className,jdbcType=VARCHAR},
+			</if>
+			<if test="record.classSchoolId != null">
+				CLASS_SCHOOL_ID =
+				#{record.classSchoolId,jdbcType=INTEGER},
+			</if>
+			<if test="record.orgId != null">
+				ORG_ID = #{record.orgId,jdbcType=INTEGER},
+			</if>
+			<if test="record.classGrade != null">
+				CLASS_GRADE = #{record.classGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="record.classMajor != null">
+				CLASS_MAJOR = #{record.classMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="record.classLinkMan != null">
+				CLASS_LINK_MAN = #{record.classLinkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="record.classLinkTel != null">
+				CLASS_LINK_TEL = #{record.classLinkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.classTechDirect != null">
+				CLASS_TECH_DIRECT =
+				#{record.classTechDirect,jdbcType=CHAR},
+			</if>
+			<if test="record.classType != null">
+				CLASS_TYPE = #{record.classType,jdbcType=CHAR},
+			</if>
+			<if test="record.classRegtime != null">
+				CLASS_REGTIME =
+				#{record.classRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		update tp_class
+		set CLASS_ID = #{record.classId,jdbcType=INTEGER},
+		CLASS_NAME = #{record.className,jdbcType=VARCHAR},
+		CLASS_SCHOOL_ID =
+		#{record.classSchoolId,jdbcType=INTEGER},
+		ORG_ID =
+		#{record.orgId,jdbcType=INTEGER},
+		CLASS_GRADE =
+		#{record.classGrade,jdbcType=VARCHAR},
+		CLASS_MAJOR =
+		#{record.classMajor,jdbcType=VARCHAR},
+		CLASS_LINK_MAN =
+		#{record.classLinkMan,jdbcType=VARCHAR},
+		CLASS_LINK_TEL =
+		#{record.classLinkTel,jdbcType=VARCHAR},
+		CLASS_TECH_DIRECT =
+		#{record.classTechDirect,jdbcType=CHAR},
+		CLASS_TYPE =
+		#{record.classType,jdbcType=CHAR},
+		CLASS_REGTIME =
+		#{record.classRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.Class">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		update tp_class
+		<set>
+			<if test="className != null">
+				CLASS_NAME = #{className,jdbcType=VARCHAR},
+			</if>
+			<if test="classSchoolId != null">
+				CLASS_SCHOOL_ID = #{classSchoolId,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="classGrade != null">
+				CLASS_GRADE = #{classGrade,jdbcType=VARCHAR},
+			</if>
+			<if test="classMajor != null">
+				CLASS_MAJOR = #{classMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="classLinkMan != null">
+				CLASS_LINK_MAN = #{classLinkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="classLinkTel != null">
+				CLASS_LINK_TEL = #{classLinkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="classTechDirect != null">
+				CLASS_TECH_DIRECT = #{classTechDirect,jdbcType=CHAR},
+			</if>
+			<if test="classType != null">
+				CLASS_TYPE = #{classType,jdbcType=CHAR},
+			</if>
+			<if test="classRegtime != null">
+				CLASS_REGTIME = #{classRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where CLASS_ID = #{classId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Class">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Thu Jul 25 
+			19:01:39 CST 2013. -->
+		update tp_class
+		set CLASS_NAME = #{className,jdbcType=VARCHAR},
+		CLASS_SCHOOL_ID = #{classSchoolId,jdbcType=INTEGER},
+		ORG_ID =
+		#{orgId,jdbcType=INTEGER},
+		CLASS_GRADE =
+		#{classGrade,jdbcType=VARCHAR},
+		CLASS_MAJOR =
+		#{classMajor,jdbcType=VARCHAR},
+		CLASS_LINK_MAN =
+		#{classLinkMan,jdbcType=VARCHAR},
+		CLASS_LINK_TEL =
+		#{classLinkTel,jdbcType=VARCHAR},
+		CLASS_TECH_DIRECT =
+		#{classTechDirect,jdbcType=CHAR},
+		CLASS_TYPE =
+		#{classType,jdbcType=CHAR},
+		CLASS_REGTIME =
+		#{classRegtime,jdbcType=TIMESTAMP}
+		where CLASS_ID =
+		#{classId,jdbcType=INTEGER}
+	</update>
+</mapper>

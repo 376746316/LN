@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.ConectionForDialogMapper">
+	<resultMap id="BaseResultMap"
+		type="com.chinasofti.cetp.study.model.MoreConectionForDialog">
+		<id column="stu_no" property="stuNo" jdbcType="INTEGER" />
+		<id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="stu_name" property="stuName" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		tp_connect_stu_teacher.stu_no, tp_connect_stu_teacher.teacher_id, tp_connect_stu_teacher.create_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.study.model.ConectionForDialogKey">
+		select
+		<include refid="Base_Column_List" />
+		from tp_connect_stu_teacher
+		where stu_no = #{stuNo,jdbcType=INTEGER}
+		and teacher_id = #{teacherId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectedStudentByTeacher" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,stu_name
+		from tp_connect_stu_teacher,tp_student
+		where teacher_id =
+		#{teacherId}
+		and tp_student.stu_no = tp_connect_stu_teacher.stu_no
+
+	</select>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="com.chinasofti.cetp.study.model.ConectionForDialogKey">
+		delete from tp_connect_stu_teacher
+		where stu_no =
+		#{stuNo,jdbcType=INTEGER}
+		and teacher_id =
+		#{teacherId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.ConectionForDialog">
+		insert into
+		tp_connect_stu_teacher (stu_no, teacher_id, create_time
+		)
+		values
+		(#{stuNo,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.ConectionForDialog">
+		insert into tp_connect_stu_teacher
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="stuNo != null">
+				stu_no,
+			</if>
+			<if test="teacherId != null">
+				teacher_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="stuNo != null">
+				#{stuNo,jdbcType=INTEGER},
+			</if>
+			<if test="teacherId != null">
+				#{teacherId,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.ConectionForDialog">
+		update tp_connect_stu_teacher
+		<set>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where stu_no = #{stuNo,jdbcType=INTEGER}
+		and teacher_id =
+		#{teacherId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.ConectionForDialog">
+		update
+		tp_connect_stu_teacher
+		set create_time =
+		#{createTime,jdbcType=TIMESTAMP}
+		where stu_no =
+		#{stuNo,jdbcType=INTEGER}
+		and teacher_id =
+		#{teacherId,jdbcType=INTEGER}
+	</update>
+</mapper>

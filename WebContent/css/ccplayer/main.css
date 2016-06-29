@@ -1,0 +1,56 @@
+ol,ul{list-style:none;}
+body{font-family: "Helvetica Neue",Helvetica,微软雅黑,sans-serif;}
+.panel-body pre{background-color: #FFF;border: 0px;}
+.fl{float:left;}
+
+.top_menu{margin-left: 40px;}
+.top_menu > li {margin-left: 30px;}
+.index_pre{border-top:0px;border-top-left-radius:0px;background-color: #FFFFFF;}
+.index_pre .attribute, .index_pre .title, .index_pre .tag{color: #3333FF;}
+.index_pre .json, .index_pre .value{color: #6600CC;}
+.index_pre .number{color: #339933;}
+.index_pre .string{color: #000000;}
+.index_pre .cdata{color: #FF9933;}
+.index_pre .pi{color: #999999;}
+
+.index_player_pre{background-color: #FFFFFF;}
+.index_player_pre .attribute{color:#000099;}
+.index_player_pre .keyword{color: #990000;}
+.index_player_pre .title, .index_player_pre .string{color: #3333FF;}
+.index_player_pre .comment{color: #339933;}
+.index_player_pre .value{color: #FF3300;}
+
+
+/** tool panel */
+.tool-container{padding-right: 50px;padding-left: 80px;}
+.tool-panel-top{background: #f5f5f5; border-radius:5px; padding: 10px;width: 100%;}
+.tool-panel-col{width: 69%;}
+.tool-panel-btn{background-color: #f5f5f5; color: #0000;border: 1px solid #CCCCCC;}
+.tool-panel-info{background-color: #FFFFFF; color: #0000;border: 1px solid #CCCCCC;}
+.tool-player > div > object > embed{border: 0px solid rgba(0, 0, 0, 0.15); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);}
+.tool-response > pre > code > ul{padding: 0px;}
+
+/**tool table */
+.tool-table{width: 100%;}
+.tool-table > thead > tr > th {vertical-align: bottom; border-bottom: 1px solid #EEE;}
+.tool-table > thead > tr > th, .tool-table > tbody > tr > th, .tool-table > tfoot > tr > th, .tool-table > thead > tr > td, .tool-table > tbody > tr > td, .tool-table > tfoot > tr > td {
+    line-height: 1.42857;
+    padding: 8px;
+    vertical-align: middle;
+}
+.tool-td-2{width: 10%;}
+.tool-td-3{width: 30%;}
+.tool-td-4{width: 40%;}
+
+ /*search video 提示信息*/
+#tooltip {background: none repeat scroll 0 0 #F2F4F8; border: 1px solid #C7C7C7; color: #333333; line-height: 180%; padding: 8px; position: absolute; text-align: left; z-index: 999;}
+.tooltip {cursor: default;padding: 6px; color:#4A71A5;}
+
+.upload-message{padding-top: 5px; padding-left: 10px;color:#C9302C;}
+.uploadvideoarea .rightspan{width:50px; height:30px; right:0px;z-index:1}
+.uploadvideoarea embed {position: absolute;z-index: 1;}
+#swfBrowse{width:45px;right:0px;  z-index:1000}
+
+/** footer */
+.footer{color:#848484; font:12px "Helvetica Neue",Helvetica,微软雅黑,sans-serif;}
+.license{text-align:center; line-height:30px; padding-bottom:32px;}

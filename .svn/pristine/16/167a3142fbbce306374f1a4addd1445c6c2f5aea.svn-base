@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.TeamPhaseResultMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.TeamPhaseResult" >
+    <id column="TPH_ID" property="tphId" jdbcType="INTEGER" />
+    <result column="TPH_TEAM_ID" property="tphTeamId" jdbcType="INTEGER" />
+    <result column="TPH_TASK_ID" property="tphTaskId" jdbcType="INTEGER" />
+    <result column="TPH_NAME" property="tphName" jdbcType="VARCHAR" />
+    <result column="TPH_STYLE" property="tphStyle" jdbcType="CHAR" />
+    <result column="TPH_RESULT" property="tphResult" jdbcType="VARCHAR" />
+    <result column="TPH_COMMIT_TIME" property="tphCommitTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TPH_ID, TPH_TEAM_ID, TPH_TASK_ID, TPH_NAME, TPH_STYLE, TPH_RESULT, TPH_COMMIT_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_team_phase_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_team_phase_result
+    where TPH_ID = #{tphId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_team_phase_result
+    where TPH_ID = #{tphId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResultExample" >
+    delete from tp_team_phase_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResult" >
+    insert into tp_team_phase_result (TPH_ID, TPH_TEAM_ID, TPH_TASK_ID, 
+      TPH_NAME, TPH_STYLE, TPH_RESULT, 
+      TPH_COMMIT_TIME)
+    values (#{tphId,jdbcType=INTEGER}, #{tphTeamId,jdbcType=INTEGER}, #{tphTaskId,jdbcType=INTEGER}, 
+      #{tphName,jdbcType=VARCHAR}, #{tphStyle,jdbcType=CHAR}, #{tphResult,jdbcType=VARCHAR}, 
+      #{tphCommitTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResult" >
+    insert into tp_team_phase_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tphId != null" >
+        TPH_ID,
+      </if>
+      <if test="tphTeamId != null" >
+        TPH_TEAM_ID,
+      </if>
+      <if test="tphTaskId != null" >
+        TPH_TASK_ID,
+      </if>
+      <if test="tphName != null" >
+        TPH_NAME,
+      </if>
+      <if test="tphStyle != null" >
+        TPH_STYLE,
+      </if>
+      <if test="tphResult != null" >
+        TPH_RESULT,
+      </if>
+      <if test="tphCommitTime != null" >
+        TPH_COMMIT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tphId != null" >
+        #{tphId,jdbcType=INTEGER},
+      </if>
+      <if test="tphTeamId != null" >
+        #{tphTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="tphTaskId != null" >
+        #{tphTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="tphName != null" >
+        #{tphName,jdbcType=VARCHAR},
+      </if>
+      <if test="tphStyle != null" >
+        #{tphStyle,jdbcType=CHAR},
+      </if>
+      <if test="tphResult != null" >
+        #{tphResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tphCommitTime != null" >
+        #{tphCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResultExample" resultType="java.lang.Integer" >
+    select count(*) from tp_team_phase_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_team_phase_result
+    <set >
+      <if test="record.tphId != null" >
+        TPH_ID = #{record.tphId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tphTeamId != null" >
+        TPH_TEAM_ID = #{record.tphTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tphTaskId != null" >
+        TPH_TASK_ID = #{record.tphTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tphName != null" >
+        TPH_NAME = #{record.tphName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tphStyle != null" >
+        TPH_STYLE = #{record.tphStyle,jdbcType=CHAR},
+      </if>
+      <if test="record.tphResult != null" >
+        TPH_RESULT = #{record.tphResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tphCommitTime != null" >
+        TPH_COMMIT_TIME = #{record.tphCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_team_phase_result
+    set TPH_ID = #{record.tphId,jdbcType=INTEGER},
+      TPH_TEAM_ID = #{record.tphTeamId,jdbcType=INTEGER},
+      TPH_TASK_ID = #{record.tphTaskId,jdbcType=INTEGER},
+      TPH_NAME = #{record.tphName,jdbcType=VARCHAR},
+      TPH_STYLE = #{record.tphStyle,jdbcType=CHAR},
+      TPH_RESULT = #{record.tphResult,jdbcType=VARCHAR},
+      TPH_COMMIT_TIME = #{record.tphCommitTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResult" >
+    update tp_team_phase_result
+    <set >
+      <if test="tphTeamId != null" >
+        TPH_TEAM_ID = #{tphTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="tphTaskId != null" >
+        TPH_TASK_ID = #{tphTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="tphName != null" >
+        TPH_NAME = #{tphName,jdbcType=VARCHAR},
+      </if>
+      <if test="tphStyle != null" >
+        TPH_STYLE = #{tphStyle,jdbcType=CHAR},
+      </if>
+      <if test="tphResult != null" >
+        TPH_RESULT = #{tphResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tphCommitTime != null" >
+        TPH_COMMIT_TIME = #{tphCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TPH_ID = #{tphId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.TeamPhaseResult" >
+    update tp_team_phase_result
+    set TPH_TEAM_ID = #{tphTeamId,jdbcType=INTEGER},
+      TPH_TASK_ID = #{tphTaskId,jdbcType=INTEGER},
+      TPH_NAME = #{tphName,jdbcType=VARCHAR},
+      TPH_STYLE = #{tphStyle,jdbcType=CHAR},
+      TPH_RESULT = #{tphResult,jdbcType=VARCHAR},
+      TPH_COMMIT_TIME = #{tphCommitTime,jdbcType=TIMESTAMP}
+    where TPH_ID = #{tphId,jdbcType=INTEGER}
+  </update>
+</mapper>

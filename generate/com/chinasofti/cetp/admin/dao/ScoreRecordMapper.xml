@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.ScoreRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.ScoreRecord" >
+    <id column="SREC_ID" property="srecId" jdbcType="BIGINT" />
+    <result column="SREC_RULE" property="srecRule" jdbcType="INTEGER" />
+    <result column="SREC_SCORE" property="srecScore" jdbcType="INTEGER" />
+    <result column="SREC_STU_NO" property="srecStuNo" jdbcType="INTEGER" />
+    <result column="SREC_USER_NO" property="srecUserNo" jdbcType="INTEGER" />
+    <result column="SREC_REASON" property="srecReason" jdbcType="VARCHAR" />
+    <result column="SREC_REGTIME" property="srecRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SREC_ID, SREC_RULE, SREC_SCORE, SREC_STU_NO, SREC_USER_NO, SREC_REASON, SREC_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ScoreRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_score_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_score_record
+    where SREC_ID = #{srecId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_score_record
+    where SREC_ID = #{srecId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.ScoreRecordExample" >
+    delete from tp_score_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.ScoreRecord" >
+    insert into tp_score_record (SREC_ID, SREC_RULE, SREC_SCORE, 
+      SREC_STU_NO, SREC_USER_NO, SREC_REASON, 
+      SREC_REGTIME)
+    values (#{srecId,jdbcType=BIGINT}, #{srecRule,jdbcType=INTEGER}, #{srecScore,jdbcType=INTEGER}, 
+      #{srecStuNo,jdbcType=INTEGER}, #{srecUserNo,jdbcType=INTEGER}, #{srecReason,jdbcType=VARCHAR}, 
+      #{srecRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.ScoreRecord" >
+    insert into tp_score_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="srecId != null" >
+        SREC_ID,
+      </if>
+      <if test="srecRule != null" >
+        SREC_RULE,
+      </if>
+      <if test="srecScore != null" >
+        SREC_SCORE,
+      </if>
+      <if test="srecStuNo != null" >
+        SREC_STU_NO,
+      </if>
+      <if test="srecUserNo != null" >
+        SREC_USER_NO,
+      </if>
+      <if test="srecReason != null" >
+        SREC_REASON,
+      </if>
+      <if test="srecRegtime != null" >
+        SREC_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="srecId != null" >
+        #{srecId,jdbcType=BIGINT},
+      </if>
+      <if test="srecRule != null" >
+        #{srecRule,jdbcType=INTEGER},
+      </if>
+      <if test="srecScore != null" >
+        #{srecScore,jdbcType=INTEGER},
+      </if>
+      <if test="srecStuNo != null" >
+        #{srecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="srecUserNo != null" >
+        #{srecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="srecReason != null" >
+        #{srecReason,jdbcType=VARCHAR},
+      </if>
+      <if test="srecRegtime != null" >
+        #{srecRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.ScoreRecordExample" resultType="java.lang.Integer" >
+    select count(*) from tp_score_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_score_record
+    <set >
+      <if test="record.srecId != null" >
+        SREC_ID = #{record.srecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.srecRule != null" >
+        SREC_RULE = #{record.srecRule,jdbcType=INTEGER},
+      </if>
+      <if test="record.srecScore != null" >
+        SREC_SCORE = #{record.srecScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.srecStuNo != null" >
+        SREC_STU_NO = #{record.srecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.srecUserNo != null" >
+        SREC_USER_NO = #{record.srecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.srecReason != null" >
+        SREC_REASON = #{record.srecReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srecRegtime != null" >
+        SREC_REGTIME = #{record.srecRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_score_record
+    set SREC_ID = #{record.srecId,jdbcType=BIGINT},
+      SREC_RULE = #{record.srecRule,jdbcType=INTEGER},
+      SREC_SCORE = #{record.srecScore,jdbcType=INTEGER},
+      SREC_STU_NO = #{record.srecStuNo,jdbcType=INTEGER},
+      SREC_USER_NO = #{record.srecUserNo,jdbcType=INTEGER},
+      SREC_REASON = #{record.srecReason,jdbcType=VARCHAR},
+      SREC_REGTIME = #{record.srecRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.ScoreRecord" >
+    update tp_score_record
+    <set >
+      <if test="srecRule != null" >
+        SREC_RULE = #{srecRule,jdbcType=INTEGER},
+      </if>
+      <if test="srecScore != null" >
+        SREC_SCORE = #{srecScore,jdbcType=INTEGER},
+      </if>
+      <if test="srecStuNo != null" >
+        SREC_STU_NO = #{srecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="srecUserNo != null" >
+        SREC_USER_NO = #{srecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="srecReason != null" >
+        SREC_REASON = #{srecReason,jdbcType=VARCHAR},
+      </if>
+      <if test="srecRegtime != null" >
+        SREC_REGTIME = #{srecRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SREC_ID = #{srecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.ScoreRecord" >
+    update tp_score_record
+    set SREC_RULE = #{srecRule,jdbcType=INTEGER},
+      SREC_SCORE = #{srecScore,jdbcType=INTEGER},
+      SREC_STU_NO = #{srecStuNo,jdbcType=INTEGER},
+      SREC_USER_NO = #{srecUserNo,jdbcType=INTEGER},
+      SREC_REASON = #{srecReason,jdbcType=VARCHAR},
+      SREC_REGTIME = #{srecRegtime,jdbcType=TIMESTAMP}
+    where SREC_ID = #{srecId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- =========================================================新增=========================================================== -->
+  <sql id="ScoreRule_Column_List" >
+    SR_ID, SR_NAME, SR_CYCLE, SR_TIMES, SR_SCORE, SR_FLAG, SR_REGTIME
+  </sql>
+  
+   <resultMap id="DetailedScoreRecordResultMap" type="com.chinasofti.cetp.admin.model.DetailedScoreRecord" >
+    <id column="SREC_ID" property="srecId" jdbcType="BIGINT" />
+    <result column="SREC_RULE" property="srecRule" jdbcType="INTEGER" />
+    <result column="SREC_SCORE" property="srecScore" jdbcType="INTEGER" />
+    <result column="SREC_STU_NO" property="srecStuNo" jdbcType="INTEGER" />
+    <result column="SREC_USER_NO" property="srecUserNo" jdbcType="INTEGER" />
+    <result column="SREC_REASON" property="srecReason" jdbcType="VARCHAR" />
+    <result column="SREC_REGTIME" property="srecRegtime" jdbcType="TIMESTAMP" />
+    <association property="scoreRule" javaType="com.chinasofti.cetp.admin.model.ScoreRule">
+    	<id column="SR_ID" property="srId" jdbcType="INTEGER" />
+	    <result column="SR_NAME" property="srName" jdbcType="VARCHAR" />
+	    <result column="SR_CYCLE" property="srCycle" jdbcType="CHAR" />
+	    <result column="SR_TIMES" property="srTimes" jdbcType="INTEGER" />
+	    <result column="SR_SCORE" property="srScore" jdbcType="INTEGER" />
+	    <result column="SR_FLAG" property="srFlag" jdbcType="CHAR" />
+	    <result column="SR_REGTIME" property="srRegtime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  
+  <!-- 积分记录-页面模型 -->
+  <resultMap id="PageModelScoreRecordResultMap" type="com.chinasofti.cetp.admin.model.PageModelScoreRecord" >
+	    <result column="SREC_REASON" property="srecReason" jdbcType="VARCHAR" />
+		<result column="TIMES" property="srTimes" jdbcType="INTEGER" />
+	  	<result column="SR_SCORE" property="srScore" jdbcType="INTEGER" />
+	  	<result column="SUMSCORE" property="sumScore" jdbcType="INTEGER" />
+	   	<result column="LASTDATE" property="lastDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getByMap" parameterType="map" resultMap="DetailedScoreRecordResultMap">
+  	SELECT
+		<include refid="Base_Column_List" />,
+		<include refid="ScoreRule_Column_List" />
+	FROM
+		tp_score_record t1
+	INNER JOIN TP_SCORE_RULE t2 ON t1.SREC_RULE = t2.SR_ID
+	WHERE
+		t1.SREC_STU_NO = #{stuNo,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getPageModelScoreRecordByStuNo" parameterType="map" resultMap="PageModelScoreRecordResultMap">
+  	(
+		SELECT
+			SREC_REASON as SREC_REASON,
+			COUNT(SREC_ID) AS TIMES,
+			SR_SCORE as SR_SCORE,
+			SUM(SREC_SCORE) AS SUMSCORE,
+			DATE(SREC_REGTIME) AS LASTDATE
+		FROM
+			tp_score_record
+		INNER JOIN tp_score_rule ON SREC_RULE = SR_ID
+		WHERE
+			SR_FLAG = 1
+		AND SR_CYCLE = 1
+		AND SREC_STU_NO = #{stuNo,jdbcType=INTEGER}
+		GROUP BY
+			SREC_RULE,
+			DATE(SREC_REGTIME)
+	)
+	UNION ALL
+		(
+			SELECT
+				SREC_REASON as SREC_REASON,
+				1 AS TIMES,
+				SR_SCORE as SR_SCORE,
+				SREC_SCORE AS SUMSCORE,
+				DATE(SREC_REGTIME) AS LASTDATE
+			FROM
+				tp_score_record
+			INNER JOIN tp_score_rule ON SREC_RULE = SR_ID
+			WHERE
+				SR_FLAG = 1
+			AND SR_CYCLE = 0
+			AND SREC_STU_NO = #{stuNo,jdbcType=INTEGER}
+		)
+	ORDER BY
+		LASTDATE DESC LIMIT 0, 50
+  </select>
+ 
+</mapper>

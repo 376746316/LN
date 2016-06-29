@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.ListVideoMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.ListVideo">
+		<id column="LV_ID" property="lvId" jdbcType="INTEGER" />
+		<result column="LV_LIST_ID" property="lvListId" jdbcType="INTEGER" />
+		<result column="LV_VIDEO_ID" property="lvVideoId" jdbcType="INTEGER" />
+		<result column="LV_SEQ" property="lvSeq" jdbcType="INTEGER" />
+		<result column="LV_IMG" property="lvImg" jdbcType="LONGVARCHAR" />
+		<result column="LV_UPDATETIME" property="lvUpdatetime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		LV_ID, LV_LIST_ID, LV_VIDEO_ID, LV_SEQ,LV_IMG, LV_UPDATETIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.ListVideoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_list_video
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tp_list_video
+		where LV_ID = #{lvId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_list_video
+		where LV_ID = #{lvId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.resource.model.ListVideo">
+		insert into tp_list_video (LV_ID, LV_LIST_ID, LV_VIDEO_ID,
+		LV_SEQ, LV_UPDATETIME, LV_IMG)
+		values (#{lvId,jdbcType=INTEGER}, #{lvListId,jdbcType=INTEGER}, #{lvVideoId,jdbcType=INTEGER},
+		#{lvSeq,jdbcType=INTEGER}, #{lvUpdatetime,jdbcType=TIMESTAMP}, #{lvImg,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.ListVideo">
+		insert into tp_list_video
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="lvId != null">
+				LV_ID,
+			</if>
+			<if test="lvListId != null">
+				LV_LIST_ID,
+			</if>
+			<if test="lvVideoId != null">
+				LV_VIDEO_ID,
+			</if>
+			<if test="lvSeq != null">
+				LV_SEQ,
+			</if>
+			<if test="lvSeq == null">
+				LV_SEQ,
+			</if>
+			<if test="lvUpdatetime != null">
+				LV_UPDATETIME,
+			</if>
+			<if test="lvImg != null">
+				LV_IMG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="lvId != null">
+				#{lvId,jdbcType=INTEGER},
+			</if>
+			<if test="lvListId != null">
+				#{lvListId,jdbcType=INTEGER},
+			</if>
+			<if test="lvVideoId != null">
+				#{lvVideoId,jdbcType=INTEGER},
+			</if>
+			<if test="lvSeq != null">
+				#{lvSeq,jdbcType=INTEGER},
+			</if>
+			<if test="lvSeq == null">
+				(SELECT
+				IFNULL(MAX(C.LV_SEQ), 0) + 1
+				FROM
+				tp_List_video C
+				WHERE
+				C.LV_list_id = #{lvListId,jdbcType=INTEGER}),
+			</if>
+			<if test="lvUpdatetime != null">
+				#{lvUpdatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lvImg != null">
+				#{lvImg,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.ListVideoExample" resultType="java.lang.Integer">
+		select count(*) from tp_list_video
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.ListVideo">
+		update tp_list_video
+		<set>
+			<if test="lvListId != null">
+				LV_LIST_ID = #{lvListId,jdbcType=INTEGER},
+			</if>
+			<if test="lvVideoId != null">
+				LV_VIDEO_ID = #{lvVideoId,jdbcType=INTEGER},
+			</if>
+			<if test="lvSeq != null">
+				LV_SEQ = #{lvSeq,jdbcType=INTEGER},
+			</if>
+			<if test="lvUpdatetime != null">
+				LV_UPDATETIME = #{lvUpdatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lvImg != null">
+				LV_IMG = #{lvImg,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where LV_ID = #{lvId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.ListVideo">
+		update tp_list_video
+		set LV_LIST_ID = #{lvListId,jdbcType=INTEGER},
+		LV_VIDEO_ID = #{lvVideoId,jdbcType=INTEGER},
+		LV_SEQ = #{lvSeq,jdbcType=INTEGER},
+		LV_UPDATETIME = #{lvUpdatetime,jdbcType=TIMESTAMP}
+		LV_IMG = #{lvImg,jdbcType=LONGVARCHAR}
+		where LV_ID = #{lvId,jdbcType=INTEGER}
+	</update>
+</mapper>

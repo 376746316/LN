@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.RqaAttachMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.RqaAttach" >
+    <id column="RA_ID" property="raId" jdbcType="BIGINT" />
+    <result column="RA_RQA_ID" property="raRqaId" jdbcType="BIGINT" />
+    <result column="RA_NAME" property="raName" jdbcType="VARCHAR" />
+    <result column="RA_URL" property="raUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RA_ID, RA_RQA_ID, RA_NAME, RA_URL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.RqaAttachExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_realtime_qa_attach
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_realtime_qa_attach
+    where RA_ID = #{raId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_realtime_qa_attach
+    where RA_ID = #{raId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.RqaAttachExample" >
+    delete from tp_realtime_qa_attach
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.RqaAttach" >
+    insert into tp_realtime_qa_attach (RA_ID, RA_RQA_ID, RA_NAME, 
+      RA_URL)
+    values (#{raId,jdbcType=BIGINT}, #{raRqaId,jdbcType=BIGINT}, #{raName,jdbcType=VARCHAR}, 
+      #{raUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.RqaAttach" useGeneratedKeys="true" keyProperty="raId">
+    insert into tp_realtime_qa_attach
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="raId != null" >
+        RA_ID,
+      </if>
+      <if test="raRqaId != null" >
+        RA_RQA_ID,
+      </if>
+      <if test="raName != null" >
+        RA_NAME,
+      </if>
+      <if test="raUrl != null" >
+        RA_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="raId != null" >
+        #{raId,jdbcType=BIGINT},
+      </if>
+      <if test="raRqaId != null" >
+        #{raRqaId,jdbcType=BIGINT},
+      </if>
+      <if test="raName != null" >
+        #{raName,jdbcType=VARCHAR},
+      </if>
+      <if test="raUrl != null" >
+        #{raUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.RqaAttachExample" resultType="java.lang.Integer" >
+    select count(*) from tp_realtime_qa_attach
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_realtime_qa_attach
+    <set >
+      <if test="record.raId != null" >
+        RA_ID = #{record.raId,jdbcType=BIGINT},
+      </if>
+      <if test="record.raRqaId != null" >
+        RA_RQA_ID = #{record.raRqaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.raName != null" >
+        RA_NAME = #{record.raName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.raUrl != null" >
+        RA_URL = #{record.raUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_realtime_qa_attach
+    set RA_ID = #{record.raId,jdbcType=BIGINT},
+      RA_RQA_ID = #{record.raRqaId,jdbcType=BIGINT},
+      RA_NAME = #{record.raName,jdbcType=VARCHAR},
+      RA_URL = #{record.raUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.RqaAttach" >
+    update tp_realtime_qa_attach
+    <set >
+      <if test="raRqaId != null" >
+        RA_RQA_ID = #{raRqaId,jdbcType=BIGINT},
+      </if>
+      <if test="raName != null" >
+        RA_NAME = #{raName,jdbcType=VARCHAR},
+      </if>
+      <if test="raUrl != null" >
+        RA_URL = #{raUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RA_ID = #{raId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.RqaAttach" >
+    update tp_realtime_qa_attach
+    set RA_RQA_ID = #{raRqaId,jdbcType=BIGINT},
+      RA_NAME = #{raName,jdbcType=VARCHAR},
+      RA_URL = #{raUrl,jdbcType=VARCHAR}
+    where RA_ID = #{raId,jdbcType=BIGINT}
+  </update>
+  <insert id="copyRaList" parameterType="map" >
+	INSERT INTO tp_realtime_qa_attach (RA_NAME, RA_URL, RA_RQA_ID) SELECT
+		prevRqa.RA_NAME,
+		prevRqa.RA_URL,
+		#{to} AS RA_RQA_ID
+	FROM
+		tp_realtime_qa_attach prevRqa
+	WHERE
+		prevRqa.RA_RQA_ID = #{from}  
+  </insert>
+</mapper>

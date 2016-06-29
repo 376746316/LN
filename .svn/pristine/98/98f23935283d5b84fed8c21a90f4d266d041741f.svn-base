@@ -1,0 +1,17 @@
+package com.nixiang.test;
+
+public class Customer {
+    public static void main(String[] args) {
+		System.out.println("mybatis项目");
+		System.out.println("你要干啥啊你");//逗你玩呢
+
+		/**
+		 * 不知道要写一些什么
+		 * 
+		 * 算了吧
+		 * 
+		 * 今天星期几
+		 */
+
+	}
+}

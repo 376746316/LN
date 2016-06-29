@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveAwardMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveAward" >
+    <id column="AWARD_ID" property="awardId" jdbcType="INTEGER" />
+    <result column="AWARD_LIVECLASS_ID" property="awardLiveclassId" jdbcType="INTEGER" />
+    <result column="AWARD_FLAG" property="awardFlag" jdbcType="CHAR" />
+    <result column="AWARD_PRICE" property="awardPrice" jdbcType="INTEGER" />
+    <result column="AWARD_COUNT" property="awardCount" jdbcType="INTEGER" />
+    <result column="AWARD_START_TIME" property="awardStartTime" jdbcType="TIMESTAMP" />
+    <result column="AWARD_END_TIME" property="awardEndTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AWARD_ID, AWARD_LIVECLASS_ID, AWARD_FLAG, AWARD_PRICE, AWARD_COUNT, AWARD_START_TIME, 
+    AWARD_END_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveAwardExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_live_award
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_live_award
+    where AWARD_ID = #{awardId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_live_award
+    where AWARD_ID = #{awardId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveAward" >
+    insert into tp_live_award (AWARD_ID, AWARD_LIVECLASS_ID, AWARD_FLAG, 
+      AWARD_PRICE, AWARD_COUNT, AWARD_START_TIME, 
+      AWARD_END_TIME)
+    values (#{awardId,jdbcType=INTEGER}, #{awardLiveclassId,jdbcType=INTEGER}, #{awardFlag,jdbcType=CHAR}, 
+      #{awardPrice,jdbcType=INTEGER}, #{awardCount,jdbcType=INTEGER}, #{awardStartTime,jdbcType=TIMESTAMP}, 
+      #{awardEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveAward" >
+    insert into tp_live_award
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="awardId != null" >
+        AWARD_ID,
+      </if>
+      <if test="awardLiveclassId != null" >
+        AWARD_LIVECLASS_ID,
+      </if>
+      <if test="awardFlag != null" >
+        AWARD_FLAG,
+      </if>
+      <if test="awardPrice != null" >
+        AWARD_PRICE,
+      </if>
+      <if test="awardCount != null" >
+        AWARD_COUNT,
+      </if>
+      <if test="awardStartTime != null" >
+        AWARD_START_TIME,
+      </if>
+      <if test="awardEndTime != null" >
+        AWARD_END_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="awardId != null" >
+        #{awardId,jdbcType=INTEGER},
+      </if>
+      <if test="awardLiveclassId != null" >
+        #{awardLiveclassId,jdbcType=INTEGER},
+      </if>
+      <if test="awardFlag != null" >
+        #{awardFlag,jdbcType=CHAR},
+      </if>
+      <if test="awardPrice != null" >
+        #{awardPrice,jdbcType=INTEGER},
+      </if>
+      <if test="awardCount != null" >
+        #{awardCount,jdbcType=INTEGER},
+      </if>
+      <if test="awardStartTime != null" >
+        #{awardStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awardEndTime != null" >
+        #{awardEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveAwardExample" resultType="java.lang.Integer" >
+    select count(*) from tp_live_award
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveAward" >
+    update tp_live_award
+    <set >
+      <if test="awardLiveclassId != null" >
+        AWARD_LIVECLASS_ID = #{awardLiveclassId,jdbcType=INTEGER},
+      </if>
+      <if test="awardFlag != null" >
+        AWARD_FLAG = #{awardFlag,jdbcType=CHAR},
+      </if>
+      <if test="awardPrice != null" >
+        AWARD_PRICE = #{awardPrice,jdbcType=INTEGER},
+      </if>
+      <if test="awardCount != null" >
+        AWARD_COUNT = #{awardCount,jdbcType=INTEGER},
+      </if>
+      <if test="awardStartTime != null" >
+        AWARD_START_TIME = #{awardStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awardEndTime != null" >
+        AWARD_END_TIME = #{awardEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where AWARD_ID = #{awardId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveAward" >
+    update tp_live_award
+    set AWARD_LIVECLASS_ID = #{awardLiveclassId,jdbcType=INTEGER},
+      AWARD_FLAG = #{awardFlag,jdbcType=CHAR},
+      AWARD_PRICE = #{awardPrice,jdbcType=INTEGER},
+      AWARD_COUNT = #{awardCount,jdbcType=INTEGER},
+      AWARD_START_TIME = #{awardStartTime,jdbcType=TIMESTAMP},
+      AWARD_END_TIME = #{awardEndTime,jdbcType=TIMESTAMP}
+    where AWARD_ID = #{awardId,jdbcType=INTEGER}
+  </update>
+</mapper>

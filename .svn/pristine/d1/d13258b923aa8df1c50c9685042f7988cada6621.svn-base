@@ -1,0 +1,22 @@
+<response>
+  <returncode>SUCCESS</returncode>
+  <fullname>Jamie Xu</fullname>
+  <confname>Demo Meeting</confname>
+  <meetingID>183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1392780599398</meetingID>
+  <externMeetingID>Meeting</externMeetingID>
+  <externUserID>om8y0vagfjvt</externUserID>
+  <internalUserID>om8y0vagfjvt</internalUserID>
+  <role>MODERATOR</role>
+  <conference>183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1392780599398</conference>
+  <room>183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1392780599398</room>
+  <voicebridge>74427</voicebridge>
+  <dialnumber>613-555-1234</dialnumber>
+  <webvoiceconf>74427</webvoiceconf>
+  <mode>LIVE</mode>
+  <record>false</record>
+  <welcome>&lt;br&gt;Welcome to &lt;b&gt;Meeting&lt;/b&gt;!&lt;br&gt;&lt;br&gt;For help on using BigBlueButton see these (short) &lt;a href="event:http://www.bigbluebutton.org/content/videos"&gt;&lt;u&gt;tutorial videos&lt;/u&gt;&lt;/a&gt;.&lt;br&gt;&lt;br&gt;To join the audio bridge click the headset icon (upper-left hand corner).  Use a headset to avoid causing background noise for others.&lt;br&gt;&lt;br&gt;&lt;br&gt;This server is running &lt;a href="https://code.google.com/p/bigbluebutton/wiki/081Overview" target="_blank"&gt;&lt;u&gt;BigBlueButton 0.81&lt;/u&gt;&lt;/a&gt;.</welcome>
+  <logoutUrl>http://127.0.0.1</logoutUrl>
+  <defaultLayout>NOLAYOUT</defaultLayout>
+  <avatarURL>avatar.png</avatarURL>
+  <customdata/>
+</response>

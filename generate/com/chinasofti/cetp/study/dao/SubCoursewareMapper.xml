@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.SubCoursewareMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.SubCourseware">
+		<id column="SC_ID" property="scId" jdbcType="INTEGER" />
+		<result column="SC_SEQ" property="scSeq" jdbcType="INTEGER" />
+		<result column="SC_NAME" property="scName" jdbcType="VARCHAR" />
+		<result column="SC_PLAY_TIME" property="scPlayTime" jdbcType="INTEGER" />
+		<result column="SC_VIDEO" property="scVideo" jdbcType="INTEGER" />
+		<result column="SC_CHAPTER_ID" property="scChapterId" jdbcType="INTEGER" />
+		<result column="SC_REGTIME" property="scRegtime" jdbcType="TIMESTAMP" />
+		<association property="video" javaType="com.chinasofti.cetp.resource.model.VideoWithBLOBs" resultMap="VideoResultMap"></association>
+	</resultMap>
+	<resultMap id="VideoResultMap" type="com.chinasofti.cetp.resource.model.VideoWithBLOBs">
+		<result column="V_ID" jdbcType="INTEGER" property="vId" />
+		<result column="V_TECH_TYPE" property="vTechType" jdbcType="INTEGER" />
+		<result column="V_STATUS" property="vStatus" jdbcType="CHAR" />
+		<result column="V_TYPE" property="vType" jdbcType="CHAR" />
+		<result column="V_FILE_NAME" property="vFileName" jdbcType="VARCHAR" />
+		<result column="V_NAME" property="vName" jdbcType="VARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+		<result column="V_PLAY_COUNT" property="vPlayCount" jdbcType="INTEGER" />
+		<result column="V_DOWNLOAD_COUNT" property="vDownloadCount" jdbcType="INTEGER" />
+		<result column="V_COMMENT" property="vComment" jdbcType="VARCHAR" />
+		<result column="V_REGTIME" property="vRegtime" jdbcType="TIMESTAMP" />
+		<result column="V_PLAY_URL" jdbcType="LONGVARCHAR" property="vPlayUrl" />
+		<result column="V_DOWNLOAD_URL" jdbcType="LONGVARCHAR" property="vDownloadUrl" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SC_ID, SC_SEQ, SC_NAME, SC_PLAY_TIME, SC_VIDEO, SC_CHAPTER_ID, SC_REGTIME
+	</sql>
+	<sql id="Video_Column_List">
+		V_ID, V_TECH_TYPE, V_STATUS, V_TYPE,V_FILE_NAME, V_NAME, V_PLAY_COUNT, V_DOWNLOAD_COUNT, V_COMMENT,
+		V_REGTIME,
+		V_PLAY_URL, V_DOWNLOAD_URL
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SubCoursewareExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_sub_courseware
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Video_Column_List" />
+		FROM
+		tp_sub_courseware C LEFT JOIN
+		tp_video D ON C.SC_VIDEO = D.V_ID
+		where SC_ID = #{scId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_sub_courseware
+		where SC_ID = #{scId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.SubCoursewareExample">
+		delete from tp_sub_courseware
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.SubCourseware" useGeneratedKeys="true" keyProperty="scId">
+		insert into tp_sub_courseware ( SC_SEQ, SC_NAME,
+		SC_PLAY_TIME, SC_VIDEO, SC_CHAPTER_ID,
+		SC_REGTIME)
+		values (#{scSeq,jdbcType=INTEGER}, #{scName,jdbcType=VARCHAR},
+		#{scPlayTime,jdbcType=INTEGER}, #{scVideo,jdbcType=INTEGER}, #{scChapterId,jdbcType=INTEGER},
+		#{scRegtime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.SubCourseware" useGeneratedKeys="true" keyProperty="scId">
+		insert into tp_sub_courseware
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				SC_ID,
+			</if>
+			<if test="scSeq != null">
+				SC_SEQ,
+			</if>
+			<if test="scSeq == null">
+				SC_SEQ,
+			</if>
+			<if test="scName != null">
+				SC_NAME,
+			</if>
+			<if test="scPlayTime != null">
+				SC_PLAY_TIME,
+			</if>
+			<if test="scVideo != null">
+				SC_VIDEO,
+			</if>
+			<if test="scChapterId != null">
+				SC_CHAPTER_ID,
+			</if>
+			<if test="scRegtime != null">
+				SC_REGTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="scId != null">
+				#{scId,jdbcType=INTEGER},
+			</if>
+			<if test="scSeq != null">
+				#{scSeq,jdbcType=INTEGER},
+			</if>
+			<if test="scSeq == null">
+				(SELECT
+				IFNULL(MAX(C.SC_SEQ), 0) + 1
+				FROM
+				tp_sub_courseware C
+				WHERE
+				C.SC_CHAPTER_ID = #{scChapterId,jdbcType=INTEGER}),
+			</if>
+			<if test="scName != null">
+				#{scName,jdbcType=VARCHAR},
+			</if>
+			<if test="scPlayTime != null">
+				#{scPlayTime,jdbcType=INTEGER},
+			</if>
+			<if test="scVideo != null">
+				#{scVideo,jdbcType=INTEGER},
+			</if>
+			<if test="scChapterId != null">
+				#{scChapterId,jdbcType=INTEGER},
+			</if>
+			<if test="scRegtime != null">
+				#{scRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.SubCoursewareExample" resultType="java.lang.Integer">
+		select count(*) from tp_sub_courseware
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_sub_courseware
+		<set>
+			<if test="record.scId != null">
+				SC_ID = #{record.scId,jdbcType=INTEGER},
+			</if>
+			<if test="record.scSeq != null">
+				SC_SEQ = #{scSeq,jdbcType=INTEGER},
+			</if>
+			<if test="record.scName != null">
+				SC_NAME = #{record.scName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.scPlayTime != null">
+				SC_PLAY_TIME = #{record.scPlayTime,jdbcType=INTEGER},
+			</if>
+			<if test="record.scVideo != null">
+				SC_VIDEO = #{record.scVideo,jdbcType=INTEGER},
+			</if>
+			<if test="record.scChapterId != null">
+				SC_CHAPTER_ID = #{record.scChapterId,jdbcType=INTEGER},
+			</if>
+			<if test="record.scRegtime != null">
+				SC_REGTIME = #{record.scRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_sub_courseware
+		set SC_ID = #{record.scId,jdbcType=INTEGER},SC_SEQ = #{scSeq,jdbcType=INTEGER},
+		SC_NAME = #{record.scName,jdbcType=VARCHAR},
+		SC_PLAY_TIME =
+		#{record.scPlayTime,jdbcType=INTEGER},
+		SC_VIDEO =
+		#{record.scVideo,jdbcType=INTEGER},
+		SC_CHAPTER_ID =
+		#{record.scChapterId,jdbcType=INTEGER},
+		SC_REGTIME =
+		#{record.scRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.SubCourseware">
+		update tp_sub_courseware
+		<set>
+			<if test="scSeq != null">
+				SC_SEQ = #{scSeq,jdbcType=INTEGER},
+			</if>
+			<if test="scName != null">
+				SC_NAME = #{scName,jdbcType=VARCHAR},
+			</if>
+			<if test="scPlayTime != null">
+				SC_PLAY_TIME = #{scPlayTime,jdbcType=INTEGER},
+			</if>
+			<if test="scVideo != null">
+				SC_VIDEO = #{scVideo,jdbcType=INTEGER},
+			</if>
+			<if test="scChapterId != null">
+				SC_CHAPTER_ID = #{scChapterId,jdbcType=INTEGER},
+			</if>
+			<if test="scRegtime != null">
+				SC_REGTIME = #{scRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where SC_ID = #{scId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SubCourseware">
+		update tp_sub_courseware
+		set SC_SEQ = #{scSeq,jdbcType=INTEGER},
+		SC_NAME = #{scName,jdbcType=VARCHAR},
+		SC_PLAY_TIME = #{scPlayTime,jdbcType=INTEGER},
+		SC_VIDEO = #{scVideo,jdbcType=INTEGER},
+		SC_CHAPTER_ID = #{scChapterId,jdbcType=INTEGER},
+		SC_REGTIME = #{scRegtime,jdbcType=TIMESTAMP}
+		where SC_ID = #{scId,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectSubCourseBySpecId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Video_Column_List" />
+		FROM
+		tp_sub_courseware C LEFT JOIN
+		tp_video D ON
+		C.SC_VIDEO = D.V_ID
+		WHERE
+		C.SC_CHAPTER_ID IN (
+		SELECT
+		A.CHAP_ID
+		FROM
+		tp_chapter A,
+		tp_spec_course B
+		WHERE
+		A.CHAP_SPEC_ID = B.SPEC_ID
+		AND
+		B.SPEC_ID =
+		#{specId,jdbcType=INTEGER}
+		)
+		ORDER BY SC_REGTIME ASC
+
+	</select>
+
+
+	<select id="selectSubCourseByChapId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Video_Column_List" />
+		FROM
+		tp_sub_courseware C LEFT JOIN
+		tp_video D ON
+		C.SC_VIDEO = D.V_ID
+		WHERE
+		C.SC_CHAPTER_ID =#{chapId,jdbcType=INTEGER}
+		ORDER BY C.SC_SEQ ASC
+	</select>
+</mapper>

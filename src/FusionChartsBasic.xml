@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<chart caption='' bgcolor='FFFFFF' anchoralpha='0' basefontcolor='3E3E3F' bordercolor='6FACD1' captionpadding='20' radarFillColor='FFFFFF' >   
+<styles>   
+<definition>     
+<style type="Bevel" name="Bevel_0" angle="170" Distance="6" shadowAlpha="90"  blurX="6"/> 
+</definition>    
+<application>     
+<apply toObject="DATAPLOT" styles="Bevel_0"/> 
+</application>
+</styles>
+</chart>         

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.PlayListMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.PlayList">
+		<id column="LIST_ID" property="listId" jdbcType="INTEGER" />
+		<result column="LIST_NAME" property="listName" jdbcType="VARCHAR" />
+		<result column="LIST_ANTHOR" property="listAnthor" jdbcType="VARCHAR" />
+		<result column="LIST_UPDATETIME" property="listUpdatetime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.PlayList" extends="BaseResultMap">
+		<result column="LIST_INFO" property="listInfo" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="PlayListWithVideo" type="com.chinasofti.cetp.resource.model.PlayListWithVideo" extends="ResultMapWithBLOBs">
+		<association property="listVideo" column="LIST_ID" select="selectListVideoWithVideoByPrimaryKey"  ></association>
+	</resultMap>
+	<resultMap id="ListVideoResultMap" type="com.chinasofti.cetp.resource.model.ListVideo">
+		<id column="LV_ID" property="lvId" jdbcType="INTEGER" />
+		<result column="LV_LIST_ID" property="lvListId" jdbcType="INTEGER" />
+		<result column="LV_VIDEO_ID" property="lvVideoId" jdbcType="INTEGER" />
+		<result column="LV_SEQ" property="lvSeq" jdbcType="INTEGER" />
+		<result column="LV_IMG" property="lvImg" jdbcType="LONGVARCHAR" />
+		<result column="LV_UPDATETIME" property="lvUpdatetime" jdbcType="TIMESTAMP" />
+		<association property="video" javaType="com.chinasofti.cetp.resource.model.VideoWithBLOBs" resultMap="VideoResultMap"></association>
+	</resultMap>
+	<resultMap id="VideoResultMap" type="com.chinasofti.cetp.resource.model.VideoWithBLOBs">
+		<result column="V_ID" jdbcType="INTEGER" property="vId" />
+		<result column="V_TECH_TYPE" property="vTechType" jdbcType="INTEGER" />
+		<result column="V_STATUS" property="vStatus" jdbcType="CHAR" />
+		<result column="V_TYPE" property="vType" jdbcType="CHAR" />
+		<result column="V_FILE_NAME" property="vFileName" jdbcType="VARCHAR" />
+		<result column="V_NAME" property="vName" jdbcType="VARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+		<result column="V_PLAY_COUNT" property="vPlayCount" jdbcType="INTEGER" />
+		<result column="V_DOWNLOAD_COUNT" property="vDownloadCount" jdbcType="INTEGER" />
+		<result column="V_COMMENT" property="vComment" jdbcType="VARCHAR" />
+		<result column="V_REGTIME" property="vRegtime" jdbcType="TIMESTAMP" />
+		<result column="V_PLAY_URL" jdbcType="LONGVARCHAR" property="vPlayUrl" />
+		<result column="V_DOWNLOAD_URL" jdbcType="LONGVARCHAR" property="vDownloadUrl" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		LIST_ID, LIST_NAME, LIST_ANTHOR, LIST_UPDATETIME
+	</sql>
+	<sql id="Blob_Column_List">
+		LIST_INFO
+	</sql>
+	<sql id="List_Video_Column_List">
+		LV_ID, LV_LIST_ID, LV_VIDEO_ID, LV_SEQ,LV_UPDATETIME,LV_IMG
+	</sql>
+	<sql id="Video_Column_List">
+		V_ID, V_TECH_TYPE, V_STATUS, V_TYPE,V_FILE_NAME, V_NAME, V_PLAY_COUNT, V_DOWNLOAD_COUNT, V_COMMENT,
+		V_REGTIME,
+		V_PLAY_URL, V_DOWNLOAD_URL
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.PlayListExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_play_list
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.PlayListExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_play_list
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_play_list
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_play_list
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.resource.model.PlayList">
+		insert into tp_play_list (LIST_ID, LIST_NAME, LIST_ANTHOR,
+		LIST_UPDATETIME, LIST_INFO)
+		values (#{listId,jdbcType=INTEGER}, #{listName,jdbcType=VARCHAR}, #{listAnthor,jdbcType=VARCHAR},
+		#{listUpdatetime,jdbcType=TIMESTAMP}, #{listInfo,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.PlayList">
+		insert into tp_play_list
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="listId != null">
+				LIST_ID,
+			</if>
+			<if test="listName != null">
+				LIST_NAME,
+			</if>
+			<if test="listAnthor != null">
+				LIST_ANTHOR,
+			</if>
+			<if test="listUpdatetime != null">
+				LIST_UPDATETIME,
+			</if>
+			<if test="listInfo != null">
+				LIST_INFO,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="listId != null">
+				#{listId,jdbcType=INTEGER},
+			</if>
+			<if test="listName != null">
+				#{listName,jdbcType=VARCHAR},
+			</if>
+			<if test="listAnthor != null">
+				#{listAnthor,jdbcType=VARCHAR},
+			</if>
+			<if test="listUpdatetime != null">
+				#{listUpdatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="listInfo != null">
+				#{listInfo,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.PlayListExample" resultType="java.lang.Integer">
+		select count(*) from tp_play_list
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.PlayList">
+		update tp_play_list
+		<set>
+			<if test="listName != null">
+				LIST_NAME = #{listName,jdbcType=VARCHAR},
+			</if>
+			<if test="listAnthor != null">
+				LIST_ANTHOR = #{listAnthor,jdbcType=VARCHAR},
+			</if>
+			<if test="listUpdatetime != null">
+				LIST_UPDATETIME = #{listUpdatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="listInfo != null">
+				LIST_INFO = #{listInfo,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.PlayList">
+		update tp_play_list
+		set LIST_NAME = #{listName,jdbcType=VARCHAR},
+		LIST_ANTHOR = #{listAnthor,jdbcType=VARCHAR},
+		LIST_UPDATETIME = #{listUpdatetime,jdbcType=TIMESTAMP},
+		LIST_INFO = #{listInfo,jdbcType=LONGVARCHAR}
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.PlayList">
+		update tp_play_list
+		set LIST_NAME = #{listName,jdbcType=VARCHAR},
+		LIST_ANTHOR = #{listAnthor,jdbcType=VARCHAR},
+		LIST_UPDATETIME = #{listUpdatetime,jdbcType=TIMESTAMP}
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</update>
+	<select id="selectListVideoWithVideoByPrimaryKey" resultMap="ListVideoResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="List_Video_Column_List" />
+		,
+		<include refid="Video_Column_List" />
+		FROM
+		tp_list_video 
+		INNER JOIN tp_video ON (LV_VIDEO_ID = V_ID)
+		WHERE
+		LV_LIST_ID = #{listId,jdbcType=INTEGER}
+		ORDER BY LV_SEQ ASC
+	</select>
+	<select id="selectPlayListWithVideoByPrimaryKey" resultMap="PlayListWithVideo" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_play_list
+		where LIST_ID = #{listId,jdbcType=INTEGER}
+	</select>
+</mapper>

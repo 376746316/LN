@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qin.aqintable.dao.AqintableMapper">
+	<resultMap id="BaseResultMap" type="com.qin.aqintable.model.Aqintable">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="cardid" property="cardid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, name, pwd, cardid
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.AqintableExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from aqintable
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+
+
+
+
+		from aqintable
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByPrimaryKeyName" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.Aqintable">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPrimaryKeyNameAndPwd" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.Aqintable">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable
+		where name = #{name,jdbcType=VARCHAR} and pwd =
+		#{pwd,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPrimaryQueryLikeName" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.AqintableExample">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable where name like #{name,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="selectByPrimaryQueryLimitALL" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.Page">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable
+		limit
+		#{offset,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+	</select>
+	<!-- 分页查询：根据次序 -->
+	<select id="selectByPrimaryQueryLimit" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.Page">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable where name like #{name,jdbcType=VARCHAR} order by id
+		limit
+		#{offset,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+	</select>
+	<!-- 返回符合条件记录数 -->
+	<select id="selectByPrimaryQueryLikeNameNumber" resultType="java.lang.Integer"
+		parameterType="com.qin.aqintable.model.Aqintable">
+		select
+		count(*)
+		from aqintable where name like
+		#{name,jdbcType=VARCHAR}
+	</select>
+
+	<!-- -->
+	<select id="selectByPrimaryQueryAll" resultMap="BaseResultMap"
+		parameterType="com.qin.aqintable.model.AqintableExample">
+		select
+		<include refid="Base_Column_List" />
+		from aqintable
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		aqintable
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByPrimaryKeyName" parameterType="java.lang.String">
+		delete from
+		aqintable
+		where name = #{name,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.qin.aqintable.model.Aqintable">
+		insert into aqintable (id,
+		name, pwd,
+		cardid)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{pwd,jdbcType=VARCHAR},
+		#{cardid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.qin.aqintable.model.Aqintable">
+		insert into aqintable
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="pwd != null">
+				pwd,
+			</if>
+			<if test="cardid != null">
+				cardid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="cardid != null">
+				#{cardid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.qin.aqintable.model.AqintableExample"
+		resultType="java.lang.Integer">
+		select count(*) from aqintable
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.qin.aqintable.model.Aqintable">
+		update aqintable
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="cardid != null">
+				cardid = #{cardid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.qin.aqintable.model.Aqintable">
+		update aqintable
+		set name = #{name,jdbcType=VARCHAR},
+		pwd = #{pwd,jdbcType=VARCHAR},
+		cardid = #{cardid,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeySelectiveIsName" parameterType="com.qin.aqintable.model.Aqintable">
+		update aqintable
+		<set>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="cardid != null">
+				cardid = #{cardid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where name = #{name,jdbcType=VARCHAR}
+	</update>
+</mapper>

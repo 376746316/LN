@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.ModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.MoreModule" >
+   
+    <id column="MD_ID" property="mdId" jdbcType="INTEGER" />
+    <result column="MD_NAME" property="mdName" jdbcType="VARCHAR" />
+    <result column="MD_SHOW_NAME" property="mdShowName" jdbcType="VARCHAR" />
+    <result column="MD_PARENT" property="mdParent" jdbcType="INTEGER" />
+    <result column="MD_LEVEL" property="mdLevel" jdbcType="INTEGER" />
+    <result column="MD_IS_LEAF" property="mdIsLeaf" jdbcType="CHAR" />
+    <result column="MD_SEQ" property="mdSeq" jdbcType="INTEGER" />
+    <result column="MD_REGTIME" property="mdRegtime" jdbcType="TIMESTAMP" />
+    <result column="MD_ICON_URL" property="iconUrl" jdbcType="CHAR" />
+    
+	<result column="MD_PARENT" property="parentName" jdbcType="VARCHAR" /> 
+	<result column="URL_HREF" property="urlHref" jdbcType="VARCHAR"/>
+  
+  </resultMap>
+  
+   <resultMap id="MenuResultMap" type="com.chinasofti.cetp.admin.model.Menu" >
+   		
+   		<id column="MD_ID" property="mdId" jdbcType="INTEGER" />
+   		<result column="md_name" property="mdName" jdbcType="VARCHAR" />
+   		<result column="md_parent" property="mdParent" jdbcType="VARCHAR" />
+   		<result column="url_href" property="mdUrlHref" jdbcType="VARCHAR" />
+   		<result column="md_icon_url" property="mdUrlIconUrl" jdbcType="VARCHAR" />
+   
+   </resultMap>
+  
+ 	 <!-- 根据用户 加载后台Rootmenu -->
+	<select id="getRootMenuByRole" parameterType="java.lang.String" resultMap="MenuResultMap">
+	SELECT
+		m.md_id,
+		m.md_name,
+		m.md_parent,
+		url.url_href,
+		m.md_icon_url
+	FROM
+		tp_module m
+	LEFT JOIN tp_module_url mu ON  mu.mu_md_id = m.MD_ID 
+	LEFT JOIN tp_url url on url.URL_ID = mu.MU_URL_ID
+	WHERE
+		m.md_id IN (
+			SELECT
+				rm.rm_module_id
+			FROM
+				tp_role_module rm
+			WHERE
+				rm.rm_role_id IN (
+					SELECT
+						ur.ur_role_id
+					FROM
+						tp_user_role ur
+					WHERE
+						ur.ur_user_id = (
+							SELECT
+								u.user_no
+							FROM
+								tp_user u
+							WHERE
+								u.user_id = #{userId}
+								
+						)
+				)
+		)
+	and m.MD_PARENT is  null
+	</select>
+	
+	 <!-- 根据用户 加载后台Rootmenu -->
+	<select id="getSubMenuByRole" parameterType="java.lang.String" resultMap="MenuResultMap">
+	SELECT
+		m.md_id,
+		m.md_name,
+		m.md_parent,
+		url.url_href,
+		m.md_icon_url
+	FROM
+		tp_module m
+	LEFT JOIN tp_module_url mu ON  mu.mu_md_id = m.MD_ID 
+	LEFT JOIN tp_url url on url.URL_ID = mu.MU_URL_ID
+	WHERE
+		m.md_id IN (
+			SELECT
+				rm.rm_module_id
+			FROM
+				tp_role_module rm
+			WHERE
+				rm.rm_role_id IN (
+					SELECT
+						ur.ur_role_id
+					FROM
+						tp_user_role ur
+					WHERE
+						ur.ur_user_id = (
+							SELECT
+								u.user_no
+							FROM
+								tp_user u
+							WHERE
+								u.user_id = #{userId}
+								
+						)
+				)
+		)
+	and m.MD_PARENT is not null
+	</select>
+  
+   <!-- 根据角色查询功能模块 -->
+  <select id="selectByRole" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+   SELECT
+		m.md_id,
+		m.md_name,
+		m.md_parent,
+		url.url_href,
+		m.md_icon_url
+	FROM
+		tp_module m
+	LEFT JOIN tp_module_url mu ON  mu.mu_md_id = m.MD_ID 
+	LEFT JOIN tp_url url on url.URL_ID = mu.MU_URL_ID
+	WHERE
+		m.md_id IN (
+			SELECT
+				rm.rm_module_id
+			FROM
+				tp_role_module rm
+			WHERE
+				rm.rm_role_id = #{roleId}
+		)
+	and m.MD_PARENT is not null
+  </select>
+  
+  <!-- 查询所有 -->
+  <select id="selectAllModule" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+    select s.md_id as mdId ,s.md_show_name as mdName,s.md_icon_url as iconUrl,p.md_name  as parentName,
+    		u.url_href as urlHref,s.MD_PARENT as mdParent
+	from tp_module s
+	left join tp_module p
+	on s.md_parent=p.md_id 
+    left join tp_url u
+    on u.url_id = s.md_id
+  </select>
+  
+  <!-- 查询一级Module -->
+  <select id="selectRootModule" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+    select s.md_id as mdId ,s.md_show_name as mdName,s.md_icon_url as iconUrl,p.md_name  as parentName,
+    		u.url_href as urlHref,s.MD_PARENT as mdParent
+	from tp_module s
+	left join tp_module p
+	on s.md_parent=p.md_id 
+    left join tp_url u
+    on u.url_id = s.md_id
+    where s.md_parent is null
+  </select>
+  
+  <!-- 查询二级目录 -->
+   <select id="selectSubModule" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+      select s.md_id as mdId ,s.md_show_name as mdName,s.md_icon_url as iconUrl,p.md_name  as parentName,
+    		u.url_href as urlHref,s.MD_PARENT as mdParent
+	from tp_module s
+	left join tp_module p
+	on s.md_parent=p.md_id 
+    left join tp_url u
+    on u.url_id = s.md_id
+    where s.md_parent is not null
+  </select>
+   <select id="queryModule" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+    select s.md_id as mdId ,s.md_show_name as mdName,p.md_name  as parentName
+	from tp_module s
+	left join tp_module p
+	on s.md_parent=p.md_id 
+	where 1=1
+	<if test="s_mdName != null" >
+		and s.md_name like  #{s_mdName}
+	</if>
+    
+  </select>
+  
+  <select id="queryModuleId" resultMap="BaseResultMap" parameterType="HashMap" >
+  
+  	select m.md_id as MD_ID 
+  	from tp_module m
+  	where m.md_name = #{mdName}
+  </select>
+  
+  <!-- 加载所属模块功能 -->
+  <select id="getModuleParent" resultMap="BaseResultMap">
+  	 select s.md_id as mdId ,s.md_show_name as mdName,p.md_name  as parentName
+		from tp_module s
+		left join tp_module p
+		on s.md_parent=p.md_id
+		where p.md_id = 0
+		or p.md_id is null
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    
+    delete from tp_module
+    where MD_ID = #{mdId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertModule_01" parameterType="com.chinasofti.cetp.admin.model.MoreModule">
+  
+	  insert into tp_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    
+      <if test="mdName != null" >
+        MD_NAME,
+      </if>
+      <if test="mdName != null" >
+        MD_SHOW_NAME,
+      </if>
+      <if test="mdParent != null" >
+        MD_PARENT,
+      </if>
+      <if test="mdLevel != null" >
+        MD_LEVEL,
+      </if>
+      <if test="mdIsLeaf != null" >
+        MD_IS_LEAF,
+      </if>
+      <if test="mdSeq != null" >
+        MD_SEQ,
+      </if>
+      <if test="mdRegtime != null" >
+        MD_REGTIME,
+      </if>
+      <if test="iconUrl != null" >
+        MD_ICON_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    
+      <if test="mdName != null" >
+        #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdName != null" >
+        #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdParent != null" >
+        #{mdParent,jdbcType=INTEGER},
+      </if>
+      <if test="mdLevel != null" >
+        #{mdLevel,jdbcType=INTEGER},
+      </if>
+      <if test="mdIsLeaf != null" >
+        #{mdIsLeaf,jdbcType=CHAR},
+      </if>
+      <if test="mdSeq != null" >
+        #{mdSeq,jdbcType=INTEGER},
+      </if>
+      <if test="mdRegtime != null" >
+        #{mdRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconUrl != null" >
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <sql id="Example_Where_Clause" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+   
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    MD_ID, MD_NAME, MD_SHOW_NAME, MD_PARENT, MD_LEVEL, MD_IS_LEAF, MD_SEQ, MD_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_module
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from tp_module
+    where MD_ID = #{mdId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    delete from tp_module
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.Module" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    insert into tp_module (MD_ID, MD_NAME, MD_SHOW_NAME, 
+      MD_PARENT, MD_LEVEL, MD_IS_LEAF, 
+      MD_SEQ, MD_REGTIME)
+    values (#{mdId,jdbcType=INTEGER}, #{mdName,jdbcType=VARCHAR}, #{mdShowName,jdbcType=VARCHAR}, 
+      #{mdParent,jdbcType=INTEGER}, #{mdLevel,jdbcType=INTEGER}, #{mdIsLeaf,jdbcType=CHAR}, 
+      #{mdSeq,jdbcType=INTEGER}, #{mdRegtime,jdbcType=TIMESTAMP})
+      
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.Module" >
+    
+    insert into tp_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mdId != null" >
+        MD_ID,
+      </if>
+      <if test="mdName != null" >
+        MD_NAME,
+      </if>
+      <if test="mdName != null" >
+        MD_SHOW_NAME,
+      </if>
+      <if test="mdParent != null" >
+        MD_PARENT,
+      </if>
+      <if test="mdLevel != null" >
+        MD_LEVEL,
+      </if>
+      <if test="mdIsLeaf != null" >
+        MD_IS_LEAF,
+      </if>
+      <if test="mdSeq != null" >
+        MD_SEQ,
+      </if>
+      <if test="mdRegtime != null" >
+        MD_REGTIME,
+      </if>
+      <if test="iconUrl != null" >
+        MD_ICON_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mdId != null" >
+        #{mdId,jdbcType=INTEGER},
+      </if>
+      <if test="mdName != null" >
+        #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdName != null" >
+        #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdParent != null" >
+        #{mdParent,jdbcType=INTEGER},
+      </if>
+      <if test="mdLevel != null" >
+        #{mdLevel,jdbcType=INTEGER},
+      </if>
+      <if test="mdIsLeaf != null" >
+        #{mdIsLeaf,jdbcType=CHAR},
+      </if>
+      <if test="mdSeq != null" >
+        #{mdSeq,jdbcType=INTEGER},
+      </if>
+      <if test="mdRegtime != null" >
+        #{mdRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconUrl != null" >
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.ModuleExample" resultType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    select count(*) from tp_module
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    update tp_module
+    <set >
+      <if test="record.mdId != null" >
+        MD_ID = #{record.mdId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdName != null" >
+        MD_NAME = #{record.mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mdShowName != null" >
+        MD_SHOW_NAME = #{record.mdShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mdParent != null" >
+        MD_PARENT = #{record.mdParent,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdLevel != null" >
+        MD_LEVEL = #{record.mdLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdIsLeaf != null" >
+        MD_IS_LEAF = #{record.mdIsLeaf,jdbcType=CHAR},
+      </if>
+      <if test="record.mdSeq != null" >
+        MD_SEQ = #{record.mdSeq,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdRegtime != null" >
+        MD_REGTIME = #{record.mdRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    update tp_module
+    set MD_ID = #{record.mdId,jdbcType=INTEGER},
+      MD_NAME = #{record.mdName,jdbcType=VARCHAR},
+      MD_SHOW_NAME = #{record.mdShowName,jdbcType=VARCHAR},
+      MD_PARENT = #{record.mdParent,jdbcType=INTEGER},
+      MD_LEVEL = #{record.mdLevel,jdbcType=INTEGER},
+      MD_IS_LEAF = #{record.mdIsLeaf,jdbcType=CHAR},
+      MD_SEQ = #{record.mdSeq,jdbcType=INTEGER},
+      MD_REGTIME = #{record.mdRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.MoreModule" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    update tp_module
+    <set >
+      <if test="mdName != null" >
+        MD_NAME = #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdShowName != null" >
+        MD_SHOW_NAME = #{mdShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdParent != null" >
+        MD_PARENT = #{mdParent,jdbcType=INTEGER},
+      </if>
+      <if test="mdLevel != null" >
+        MD_LEVEL = #{mdLevel,jdbcType=INTEGER},
+      </if>
+      <if test="mdIsLeaf != null" >
+        MD_IS_LEAF = #{mdIsLeaf,jdbcType=CHAR},
+      </if>
+      <if test="mdSeq != null" >
+        MD_SEQ = #{mdSeq,jdbcType=INTEGER},
+      </if>
+      <if test="mdRegtime != null" >
+        MD_REGTIME = #{mdRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconUrl != null" >
+        MD_ICON_URL = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MD_ID = #{mdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Module" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Thu Jul 25 19:01:39 CST 2013.
+    -->
+    update tp_module
+    set MD_NAME = #{mdName,jdbcType=VARCHAR},
+      MD_SHOW_NAME = #{mdShowName,jdbcType=VARCHAR},
+      MD_PARENT = #{mdParent,jdbcType=INTEGER},
+      MD_LEVEL = #{mdLevel,jdbcType=INTEGER},
+      MD_IS_LEAF = #{mdIsLeaf,jdbcType=CHAR},
+      MD_SEQ = #{mdSeq,jdbcType=INTEGER},
+      MD_REGTIME = #{mdRegtime,jdbcType=TIMESTAMP}
+    where MD_ID = #{mdId,jdbcType=INTEGER}
+  </update>
+</mapper>

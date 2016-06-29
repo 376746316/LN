@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.TeamPlanResultMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.TeamPlanResult" >
+    <id column="TPR_ID" property="tprId" jdbcType="INTEGER" />
+    <result column="TPR_PLAN_ID" property="tprPlanId" jdbcType="INTEGER" />
+    <result column="TPR_NAME" property="tprName" jdbcType="VARCHAR" />
+    <result column="TPR_STYLE" property="tprStyle" jdbcType="CHAR" />
+    <result column="TPR_RESULT" property="tprResult" jdbcType="VARCHAR" />
+    <result column="TPR_COMMIT_TIME" property="tprCommitTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TPR_ID, TPR_PLAN_ID, TPR_NAME, TPR_STYLE, TPR_RESULT, TPR_COMMIT_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_team_plan_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_team_plan_result
+    where TPR_ID = #{tprId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_team_plan_result
+    where TPR_ID = #{tprId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResultExample" >
+    delete from tp_team_plan_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResult" >
+    insert into tp_team_plan_result (TPR_ID, TPR_PLAN_ID, TPR_NAME, 
+      TPR_STYLE, TPR_RESULT, TPR_COMMIT_TIME
+      )
+    values (#{tprId,jdbcType=INTEGER}, #{tprPlanId,jdbcType=INTEGER}, #{tprName,jdbcType=VARCHAR}, 
+      #{tprStyle,jdbcType=CHAR}, #{tprResult,jdbcType=VARCHAR}, #{tprCommitTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResult" >
+    insert into tp_team_plan_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tprId != null" >
+        TPR_ID,
+      </if>
+      <if test="tprPlanId != null" >
+        TPR_PLAN_ID,
+      </if>
+      <if test="tprName != null" >
+        TPR_NAME,
+      </if>
+      <if test="tprStyle != null" >
+        TPR_STYLE,
+      </if>
+      <if test="tprResult != null" >
+        TPR_RESULT,
+      </if>
+      <if test="tprCommitTime != null" >
+        TPR_COMMIT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tprId != null" >
+        #{tprId,jdbcType=INTEGER},
+      </if>
+      <if test="tprPlanId != null" >
+        #{tprPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="tprName != null" >
+        #{tprName,jdbcType=VARCHAR},
+      </if>
+      <if test="tprStyle != null" >
+        #{tprStyle,jdbcType=CHAR},
+      </if>
+      <if test="tprResult != null" >
+        #{tprResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tprCommitTime != null" >
+        #{tprCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResultExample" resultType="java.lang.Integer" >
+    select count(*) from tp_team_plan_result
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_team_plan_result
+    <set >
+      <if test="record.tprId != null" >
+        TPR_ID = #{record.tprId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tprPlanId != null" >
+        TPR_PLAN_ID = #{record.tprPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tprName != null" >
+        TPR_NAME = #{record.tprName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tprStyle != null" >
+        TPR_STYLE = #{record.tprStyle,jdbcType=CHAR},
+      </if>
+      <if test="record.tprResult != null" >
+        TPR_RESULT = #{record.tprResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tprCommitTime != null" >
+        TPR_COMMIT_TIME = #{record.tprCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_team_plan_result
+    set TPR_ID = #{record.tprId,jdbcType=INTEGER},
+      TPR_PLAN_ID = #{record.tprPlanId,jdbcType=INTEGER},
+      TPR_NAME = #{record.tprName,jdbcType=VARCHAR},
+      TPR_STYLE = #{record.tprStyle,jdbcType=CHAR},
+      TPR_RESULT = #{record.tprResult,jdbcType=VARCHAR},
+      TPR_COMMIT_TIME = #{record.tprCommitTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResult" >
+    update tp_team_plan_result
+    <set >
+      <if test="tprPlanId != null" >
+        TPR_PLAN_ID = #{tprPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="tprName != null" >
+        TPR_NAME = #{tprName,jdbcType=VARCHAR},
+      </if>
+      <if test="tprStyle != null" >
+        TPR_STYLE = #{tprStyle,jdbcType=CHAR},
+      </if>
+      <if test="tprResult != null" >
+        TPR_RESULT = #{tprResult,jdbcType=VARCHAR},
+      </if>
+      <if test="tprCommitTime != null" >
+        TPR_COMMIT_TIME = #{tprCommitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TPR_ID = #{tprId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.TeamPlanResult" >
+    update tp_team_plan_result
+    set TPR_PLAN_ID = #{tprPlanId,jdbcType=INTEGER},
+      TPR_NAME = #{tprName,jdbcType=VARCHAR},
+      TPR_STYLE = #{tprStyle,jdbcType=CHAR},
+      TPR_RESULT = #{tprResult,jdbcType=VARCHAR},
+      TPR_COMMIT_TIME = #{tprCommitTime,jdbcType=TIMESTAMP}
+    where TPR_ID = #{tprId,jdbcType=INTEGER}
+  </update>
+</mapper>

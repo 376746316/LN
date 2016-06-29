@@ -1,0 +1,156 @@
+#abilityTree.tree {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#abilityTree.tree li {
+  white-space: nowrap;
+}
+#abilityTree.tree li ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#abilityTree .tree-node {
+  height: 18px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+#abilityTree .tree-hit {
+  cursor: pointer;
+}
+#abilityTree .tree-expanded,
+#abilityTree .tree-collapsed,
+#abilityTree .tree-folder,
+#abilityTree .tree-file,
+#abilityTree .tree-checkbox,
+#abilityTree .tree-indent {
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+#abilityTree .tree-icon {
+  display: none!important;
+}
+#abilityTree .tree-expanded {
+  background: url('images/lv_f.png') 1px 3px no-repeat;
+}
+#abilityTree .tree-expanded-hover {
+  background: url('images/lv_f.png') 1px 3px no-repeat;
+}
+#abilityTree .tree-collapsed {
+  background: url('images/lv_j.png') 1px 3px no-repeat;
+}
+#abilityTree .tree-collapsed-hover {
+  background: url('images/lv_j.png') 1px 3px no-repeat;
+}
+#abilityTree.tree ul .tree-expanded {
+  background: url('images/lh_f.png') 1px 3px no-repeat;
+}
+#abilityTree.tree ul .tree-expanded-hover {
+  background: url('images/lh_f.png') 1px 3px no-repeat;
+}
+#abilityTree.tree ul .tree-collapsed {
+  background: url('images/lh_j.png') 1px 3px no-repeat;
+}
+#abilityTree.tree ul .tree-collapsed-hover {
+  background: url('images/lh_j.png') 1px 3px no-repeat;
+}
+#abilityTree .tree-line {
+  background: url('images/tree_icons.png') no-repeat -176px 0;
+}
+#abilityTree .tree-join {
+  background: url('images/tree_icons.png') no-repeat -192px 0;
+}
+#abilityTree .tree-joinbottom {
+  background: url('images/tree_icons.png') no-repeat -160px 0;
+}
+#abilityTree .tree-folder {
+  background: url('images/tree_icons.png') no-repeat -208px 0;
+}
+#abilityTree .tree-folder-open {
+  background: url('images/tree_icons.png') no-repeat -224px 0;
+}
+#abilityTree .tree-file {
+  background: url('images/tree_icons.png') no-repeat -240px 0;
+}
+#abilityTree .tree-loading {
+  background: url('images/loading.gif') no-repeat center center;
+}
+#abilityTree .tree-checkbox0 {
+  background: url('images/tree_icons.png') no-repeat -208px -18px;
+}
+#abilityTree .tree-checkbox1 {
+  background: url('images/tree_icons.png') no-repeat -224px -18px;
+}
+#abilityTree .tree-checkbox2 {
+  background: url('images/tree_icons.png') no-repeat -240px -18px;
+}
+#abilityTree .tree-title {
+  font-size: 12px;
+  display: inline-block;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 0 2px;
+  height: 18px;
+  line-height: 18px;
+}
+#abilityTree .tree-node-proxy {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 2px 0 20px;
+  border-width: 1px;
+  border-style: solid;
+  z-index: 9900000;
+}
+#abilityTree .tree-dnd-icon {
+  display: inline-block;
+  position: absolute;
+  width: 16px;
+  height: 18px;
+  left: 2px;
+  top: 50%;
+  margin-top: -9px;
+}
+#abilityTree .tree-dnd-yes {
+  background: url('images/tree_icons.png') no-repeat -256px 0;
+}
+#abilityTree .tree-dnd-no {
+  background: url('images/tree_icons.png') no-repeat -256px -18px;
+}
+#abilityTree .tree-node-top {
+  border-top: 1px dotted red;
+}
+#abilityTree .tree-node-bottom {
+  border-bottom: 1px dotted red;
+}
+#abilityTree .tree-node-append .tree-title {
+  border: 1px dotted red;
+}
+#abilityTree .tree-editor {
+  border: 1px solid #ccc;
+  font-size: 12px;
+  height: 14px !important;
+  height: 18px;
+  line-height: 14px;
+  padding: 1px 2px;
+  width: 80px;
+  position: absolute;
+  top: 0;
+}
+#abilityTree .tree-node-proxy {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #95B8E7;
+}
+#abilityTree .tree-node-hover {
+  background: #eaf2ff;
+  color: #000000;
+}
+#abilityTree .tree-node-selected {
+  background: #ffe48d;
+  color: #000000;
+}

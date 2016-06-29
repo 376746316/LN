@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveClassMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveClass">
+		<id column="LIVE_CLASS_ID" property="liveClassId" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_LIVEID" property="liveClassLiveId" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_NAME" property="liveClassName" jdbcType="VARCHAR" />
+		<result column="LIVE_CLASS_START" property="liveClassStart" jdbcType="TIMESTAMP" />
+		<result column="LIVE_CLASS_WEEKS" property="liveClassWeeks" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_TOTAL" property="liveClassTotal" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_LOGIN" property="liveClassLogin" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_NOTE" property="liveClassNote" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_POST" property="liveClassPost" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_WORK" property="liveClassWork" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_TEST" property="liveClassTest" jdbcType="INTEGER" />
+		<result column="LIVE_CLASS_FLAG" property="liveClassFlag" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap type="com.chinasofti.cetp.live.model.MoreLiveClass" id="MoreResultMap" extends="BaseResultMap">
+		<result column="Live_count" property="count" jdbcType="INTEGER" />
+		<result column="LCS_STU_NO" property="lcsStuNo" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap type="com.chinasofti.cetp.live.model.MoreLiveClass" id="MyResultMap" extends="BaseResultMap">
+		<result column="LIVE_THUMB" property="liveThumb" jdbcType="VARCHAR" />
+		<result column="LIVE_NAME" property="liveName" jdbcType="VARCHAR" />
+		<result column="USER_NICKNAME" property="teacherName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		LIVE_CLASS_ID, LIVE_CLASS_LIVEID, LIVE_CLASS_NAME, LIVE_CLASS_START, LIVE_CLASS_WEEKS,
+		LIVE_CLASS_TOTAL, LIVE_CLASS_LOGIN, LIVE_CLASS_NOTE, LIVE_CLASS_POST, LIVE_CLASS_WORK,
+		LIVE_CLASS_TEST, LIVE_CLASS_FLAG
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveClassExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_live_class
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tp_live_class
+		where LIVE_CLASS_ID = #{liveClassId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_live_class
+		where LIVE_CLASS_ID = #{liveClassId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveClass" keyProperty="liveClassId" useGeneratedKeys="true">
+		insert into tp_live_class (LIVE_CLASS_ID, LIVE_CLASS_LIVEID, LIVE_CLASS_NAME,
+		LIVE_CLASS_START, LIVE_CLASS_WEEKS, LIVE_CLASS_TOTAL,
+		LIVE_CLASS_LOGIN, LIVE_CLASS_NOTE, LIVE_CLASS_POST,
+		LIVE_CLASS_WORK, LIVE_CLASS_TEST, LIVE_CLASS_FLAG
+		)
+		values (#{liveClassId,jdbcType=INTEGER}, #{liveClassLiveId,jdbcType=INTEGER}, #{liveClassName,jdbcType=VARCHAR},
+		#{liveClassStart,jdbcType=TIMESTAMP}, #{liveClassWeeks,jdbcType=INTEGER}, #{liveClassTotal,jdbcType=INTEGER},
+		#{liveClassLogin,jdbcType=INTEGER}, #{liveClassNote,jdbcType=INTEGER}, #{liveClassPost,jdbcType=INTEGER},
+		#{liveClassWork,jdbcType=INTEGER}, #{liveClassTest,jdbcType=INTEGER}, #{liveClassFlag,jdbcType=CHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveClass" keyProperty="liveClassId" useGeneratedKeys="true">
+		insert into tp_live_class
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="liveClassId != null">
+				LIVE_CLASS_ID,
+			</if>
+			<if test="liveClassLiveId != null">
+				LIVE_CLASS_LIVEID,
+			</if>
+			<if test="liveClassName != null">
+				LIVE_CLASS_NAME,
+			</if>
+			<if test="liveClassStart != null">
+				LIVE_CLASS_START,
+			</if>
+			<if test="liveClassWeeks != null">
+				LIVE_CLASS_WEEKS,
+			</if>
+			<if test="liveClassTotal != null">
+				LIVE_CLASS_TOTAL,
+			</if>
+			<if test="liveClassLogin != null">
+				LIVE_CLASS_LOGIN,
+			</if>
+			<if test="liveClassNote != null">
+				LIVE_CLASS_NOTE,
+			</if>
+			<if test="liveClassPost != null">
+				LIVE_CLASS_POST,
+			</if>
+			<if test="liveClassWork != null">
+				LIVE_CLASS_WORK,
+			</if>
+			<if test="liveClassTest != null">
+				LIVE_CLASS_TEST,
+			</if>
+			<if test="liveClassFlag != null">
+				LIVE_CLASS_FLAG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="liveClassId != null">
+				#{liveClassId,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassLiveId != null">
+				#{liveClassLiveId,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassName != null">
+				#{liveClassName,jdbcType=VARCHAR},
+			</if>
+			<if test="liveClassStart != null">
+				#{liveClassStart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="liveClassWeeks != null">
+				#{liveClassWeeks,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassTotal != null">
+				#{liveClassTotal,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassLogin != null">
+				#{liveClassLogin,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassNote != null">
+				#{liveClassNote,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassPost != null">
+				#{liveClassPost,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassWork != null">
+				#{liveClassWork,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassTest != null">
+				#{liveClassTest,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassFlag != null">
+				#{liveClassFlag,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveClassExample" resultType="java.lang.Integer">
+		select count(*) from tp_live_class
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveClass">
+		update tp_live_class
+		<set>
+			<if test="liveClassLiveId != null">
+				LIVE_CLASS_LIVEID = #{liveClassLiveId,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassName != null">
+				LIVE_CLASS_NAME = #{liveClassName,jdbcType=VARCHAR},
+			</if>
+			<if test="liveClassStart != null">
+				LIVE_CLASS_START = #{liveClassStart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="liveClassWeeks != null">
+				LIVE_CLASS_WEEKS = #{liveClassWeeks,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassTotal != null">
+				LIVE_CLASS_TOTAL = #{liveClassTotal,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassLogin != null">
+				LIVE_CLASS_LOGIN = #{liveClassLogin,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassNote != null">
+				LIVE_CLASS_NOTE = #{liveClassNote,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassPost != null">
+				LIVE_CLASS_POST = #{liveClassPost,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassWork != null">
+				LIVE_CLASS_WORK = #{liveClassWork,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassTest != null">
+				LIVE_CLASS_TEST = #{liveClassTest,jdbcType=INTEGER},
+			</if>
+			<if test="liveClassFlag != null">
+				LIVE_CLASS_FLAG = #{liveClassFlag,jdbcType=CHAR},
+			</if>
+		</set>
+		where LIVE_CLASS_ID = #{liveClassId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveClass">
+		update tp_live_class
+		set LIVE_CLASS_LIVEID = #{liveClassLiveId,jdbcType=INTEGER},
+		LIVE_CLASS_NAME = #{liveClassName,jdbcType=VARCHAR},
+		LIVE_CLASS_START = #{liveClassStart,jdbcType=TIMESTAMP},
+		LIVE_CLASS_WEEKS = #{liveClassWeeks,jdbcType=INTEGER},
+		LIVE_CLASS_TOTAL = #{liveClassTotal,jdbcType=INTEGER},
+		LIVE_CLASS_LOGIN = #{liveClassLogin,jdbcType=INTEGER},
+		LIVE_CLASS_NOTE = #{liveClassNote,jdbcType=INTEGER},
+		LIVE_CLASS_POST = #{liveClassPost,jdbcType=INTEGER},
+		LIVE_CLASS_WORK = #{liveClassWork,jdbcType=INTEGER},
+		LIVE_CLASS_TEST = #{liveClassTest,jdbcType=INTEGER},
+		LIVE_CLASS_FLAG = #{liveClassFlag,jdbcType=CHAR}
+		where LIVE_CLASS_ID = #{liveClassId,jdbcType=INTEGER}
+	</update>
+	<select id="selectCountLiveClassByLiveId" parameterType="HashMap" resultMap="MoreResultMap">
+		SELECT
+		T2.count as Live_count,T3.LCS_STU_NO,
+		<include refid="Base_Column_List" />
+		FROM (
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tp_live_class E
+		WHERE E.LIVE_CLASS_LIVEID =#{liveId}
+		)T1 LEFT JOIN (
+
+		SELECT
+		count(A.LCS_CLASS_ID) As count,A.LCS_CLASS_ID,A.LCS_STU_NO As LCS_STU_NO
+		FROM
+		tp_live_class_stu A
+		GROUP BY
+		A.LCS_CLASS_ID
+		) T2 ON (
+		T1.LIVE_CLASS_ID = T2.LCS_CLASS_ID
+		)LEFT JOIN tp_live_class_stu T3
+		ON (T2.LCS_CLASS_ID = T3.LCS_CLASS_ID AND T3.LCS_STU_NO = #{stuNo})
+		GROUP BY T1.LIVE_CLASS_ID
+	</select>
+	<select id="selectMyCenterLiveByStuNo" parameterType="HashMap" resultMap="MyResultMap">
+		SELECT
+		USER_NICKNAME,
+		LIVE_NAME,
+		LIVE_THUMB ,
+		<include refid="Base_Column_List" />
+		FROM
+		tp_live_class_stu a
+		JOIN tp_live_class b ON a.LCS_CLASS_ID = b.LIVE_CLASS_ID
+		JOIN tp_live c ON b.LIVE_CLASS_LIVEID = c.live_Id
+		JOIN tp_user d ON c.LIVE_TEACHER_NO = d.USER_NO
+		WHERE
+		LCS_STU_NO = #{stuNo}
+		<if test="status != null">
+			AND c.LIVE_STATUS = #{status}
+		</if>
+	</select>
+</mapper>

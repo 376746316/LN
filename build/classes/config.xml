@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<param-config>
+	<parent-param id="1" value="性别">
+		<param id="0" value="男" />
+		<param id="1" value="女" />
+	</parent-param>
+
+	<parent-param id="2" value="法人性质">
+		<param id="0" value="非法人单位" />
+		<param id="1" value="法人单位" />
+	</parent-param>
+
+	<parent-param id="3" value="企业性质">
+		<param id="1" value="国有" />
+		<param id="2" value="民营" />
+		<param id="3" value="股份" />
+		<param id="4" value="集体" />
+	</parent-param>
+
+	<parent-param id="4" value="组织性质">
+		<param id="1" value="基地" />
+		<param id="2" value="学校" />
+		<param id="3" value="企业" />
+		<param id="4" value="政府" />
+	</parent-param>
+
+	<parent-param id="5" value="是否为叶节点">
+		<param id="0" value="目录" />
+		<param id="1" value="叶节点" />
+	</parent-param>
+
+	<parent-param id="6" value="技术方向">
+		<param id="01" value="JAVA" />
+		<param id="02" value=".Net" />
+		<param id="03" value="C++" />
+		<param id="04" value="网络" />
+	</parent-param>
+
+	<parent-param id="7" value="班级性质">
+		<param id="1" value="基地" />
+		<param id="2" value="学校" />
+	</parent-param>
+
+	<parent-param id="8" value="学历">
+		<param id="0" value="博士" />
+		<param id="1" value="硕士" />
+		<param id="2" value="本科" />
+		<param id="3" value="大专" />
+		<param id="4" value="高中" />
+		<param id="5" value="初中" />
+	</parent-param>
+
+	<parent-param id="9" value="普通用户性质">
+		<param id="1" value="基地" />
+		<param id="2" value="学校" />
+		<param id="3" value="企业" />
+		<param id="4" value="政府" />
+	</parent-param>
+
+	<parent-param id="10" value="是否">
+		<param id="0" value="不是" />
+		<param id="1" value="是" />
+	</parent-param>
+
+	<parent-param id="11" value="政治面貌">
+		<param id="0" value="党员" />
+		<param id="1" value="民主党派" />
+		<param id="2" value="群众" />
+	</parent-param>
+
+	<parent-param id="12" value="学生用户性质">
+		<param id="0" value="基地" />
+		<param id="1" value="学校" />
+	</parent-param>
+
+	<parent-param id="13" value="目前状态">
+		<param id="0" value="待业" />
+		<param id="1" value="在职" />
+	</parent-param>
+
+	<parent-param id="14" value="岗位调换">
+		<param id="0" value="不同意" />
+		<param id="1" value="同意" />
+	</parent-param>
+
+	<parent-param id="15" value="课件风格">
+		<param id="1" value="单视频" />
+		<param id="2" value="多视频" />
+		<param id="3" value="视频和练习" />
+		<param id="4" value="HTML" />
+		<param id="5" value="PPT" />
+		<param id="6" value="其它" />
+	</parent-param>
+
+	<parent-param id="16" value="视频类型">
+		<param id="1" value="swf" />
+		<param id="2" value="wmv" />
+		<param id="3" value="flv" />
+	</parent-param>
+
+	<parent-param id="17" value="语言类型">
+		<param id="ZH" value="中文" />
+		<param id="EN" value="英文" />
+		<param id="JP" value="日语" />
+	</parent-param>
+
+	<parent-param id="18" value="课件难度级别">
+		<param id="0" value="易" />
+		<param id="1" value="中" />
+		<param id="2" value="难" />
+	</parent-param>
+
+	<parent-param id="19" value="课件归属">
+		<param id="1" value="系统" />
+		<param id="2" value="学校" />
+	</parent-param>
+
+	<parent-param id="20" value="课件地位">
+		<param id="0" value="理解" />
+		<param id="1" value="掌握" />
+		<param id="2" value="熟练" />
+		<param id="3" value="精通" />
+	</parent-param>
+
+	<parent-param id="21" value="练习题难度级别">
+		<param id="1" value="简单" />
+		<param id="2" value="适中" />
+		<param id="3" value="较难" />
+		<param id="4" value="难" />
+		<param id="5" value="很难" />
+	</parent-param>
+
+	<parent-param id="22" value="判断题答案">
+		<param id="0" value="错误" />
+		<param id="1" value="正确" />
+	</parent-param>
+
+	<parent-param id="23" value="考题类型">
+		<param id="1" value="单选题" />
+		<param id="2" value="多选题" />
+		<param id="3" value="判断题" />
+		<param id="4" value="填空题" />
+		<param id="5" value="简答题" />
+		<param id="6" value="程序题" />
+	</parent-param>
+
+	<parent-param id="24" value="课程类型">
+		<param id="1" value="专业必修课" />
+		<param id="2" value="专业选修课" />
+	</parent-param>
+
+	<parent-param id="25" value="学习状态">
+		<param id="1" value="未开始" />
+		<param id="2" value="学习中" />
+		<param id="3" value="已完成" />
+	</parent-param>
+
+	<parent-param id="26" value="练习状态">
+		<param id="1" value="未提交" />
+		<param id="2" value="已提交" />
+	</parent-param>
+
+	<parent-param id="27" value="批阅状态">
+		<param id="1" value="未批阅" />
+		<param id="2" value="已批阅" />
+	</parent-param>
+
+	<parent-param id="28" value="考题状态">
+		<param id="1" value="未提交" />
+		<param id="2" value="已提交" />
+	</parent-param>
+
+	<parent-param id="29" value="对错状态">
+		<param id="0" value="错" />
+		<param id="1" value="对" />
+		<param id="2" value="部分正确" />
+	</parent-param>
+
+	<parent-param id="30" value="模拟试题批阅状态">
+		<param id="0" value="自动阅" />
+		<param id="1" value="未批阅" />
+		<param id="2" value="已批阅" />
+	</parent-param>
+
+	<parent-param id="31" value="问题紧急状态">
+		<param id="1" value="一般" />
+		<param id="2" value="紧急" />
+		<param id="3" value="非常紧急" />
+	</parent-param>
+
+	<parent-param id="32" value="回答状态">
+		<param id="1" value="未回复" />
+		<param id="2" value="已回复" />
+		<param id="3" value="已结题" />
+	</parent-param>
+
+	<parent-param id="33" value="回答人角色">
+		<param id="1" value="学生" />
+		<param id="2" value="教师" />
+	</parent-param>
+
+	<parent-param id="34" value="是否为团队项目">
+		<param id="1" value="个人" />
+		<param id="2" value="团队" />
+	</parent-param>
+
+	<parent-param id="35" value="应用领域">
+		<param id="01" value="公共" />
+		<param id="02" value="医疗" />
+		<param id="03" value="金融" />
+		<param id="04" value="交通" />
+		<param id="05" value="办公" />
+		<param id="06" value="物流" />
+	</parent-param>
+
+	<parent-param id="36" value="时间单位">
+		<param id="1" value="学时" />
+		<param id="2" value="天" />
+		<param id="3" value="周" />
+		<param id="4" value="月" />
+	</parent-param>
+
+	<parent-param id="37" value="案例归属">
+		<param id="1" value="系统" />
+		<param id="2" value="学校" />
+		<param id="3" value="个人" />
+	</parent-param>
+
+	<parent-param id="38" value="软件文档类型">
+		<param id="1" value="参考文档" />
+		<param id="2" value="软件" />
+	</parent-param>
+
+
+	<parent-param id="39" value="参考答案类型">
+		<param id="1" value="文档" />
+		<param id="2" value="图片" />
+		<param id="3" value="视频" />
+		<param id="4" value="代码" />
+	</parent-param>
+
+
+	<parent-param id="40" value="任务优先级别">
+		<param id="1" value="一般" />
+		<param id="2" value="重要" />
+		<param id="3" value="非常重要" />
+	</parent-param>
+
+	<parent-param id="41" value="任务提交物">
+		<param id="0" value="没有" />
+		<param id="1" value="有" />
+	</parent-param>
+
+	<parent-param id="42" value="实训类型">
+		<param id="1" value="课设" />
+		<param id="2" value="综合" />
+	</parent-param>
+
+	<parent-param id="43" value="实训状态">
+		<param id="1" value="未发布" />
+		<param id="2" value="已发布" />
+		<param id="3" value="进行中" />
+		<param id="4" value="结束" />
+	</parent-param>
+
+	<parent-param id="44" value="任务状态">
+		<param id="1" value="未开始" />
+		<param id="2" value="进行中" />
+		<param id="3" value="挂起" />
+		<param id="4" value="结束" />
+	</parent-param>
+
+	<parent-param id="45" value="问卷问题属性">
+		<param id="1" value="选择" />
+		<param id="2" value="问答" />
+	</parent-param>
+
+	<parent-param id="46" value="问卷问题分类">
+		<param id="01" value="实训" />
+		<param id="02" value="课程" />
+		<param id="03" value="课件" />
+		<param id="04" value="直播" />
+		<param id="05" value="公共" />
+	</parent-param>
+
+	<parent-param id="47" value="问卷问题可用状态">
+		<param id="0" value="不可用" />
+		<param id="1" value="可用" />
+	</parent-param>
+
+	<parent-param id="48" value="问卷问题选项属性">
+		<param id="0" value="其它" />
+		<param id="1" value="选择" />
+	</parent-param>
+
+	<parent-param id="49" value="调查类型">
+		<param id="0" value="公共" />
+		<param id="1" value="普通用户" />
+		<param id="2" value="学生" />
+	</parent-param>
+
+	<parent-param id="50" value="启用标识">
+		<param id="0" value="停用" />
+		<param id="1" value="启用" />
+		<param id="2" value="永久" />
+	</parent-param>
+
+	<!-- 系统信息配置 -->
+	<parent-param id="55" value="系统信息">
+		<param id="01" value="5D:64:57:3C:6F:58:70:50:48:6D:48:3C:5F:63:4C:4C:4D:3D:4A:50:43:6E:3F" />
+		<param id="02" value="60:55:57:40:3F:4F:70:40:77:72:48:4C:5C:6A:4C:4C:51:3C:4A:50:74:76:4F" />
+	</parent-param>
+
+	<!-- @Update Time :2013/08/03 16:48:01 -->
+	<!-- @Update Todd ：新增【系统管理】-【模块管理】 模块图标url属性 -->
+	<!-- @Update User ：HuangQ -->
+	<parent-param id="51" value="Icon">
+
+		<param id="images/admin/icon/1.ico" value="images/admin/icon/1.ico" />
+		<param id="images/admin/icon/10.ico" value="images/admin/icon/10.ico" />
+		<param id="images/admin/icon/clock_warning.png" value="images/admin/icon/clock_warning.png" />
+		<param id="images/admin/icon/cabin.png" value="images/admin/icon/cabin.png" />
+		<param id="images/admin/icon/calculator_edit.png" value="images/admin/icon/calculator_edit.png" />
+		<param id="images/admin/icon/couch.png" value="images/admin/icon/couch.png" />
+		<param id="images/admin/icon/email_add.png" value="images/admin/icon/email_add.png" />
+		<param id="images/admin/icon/email_add_image.png" value="images/admin/icon/email_add_image.png" />
+		<param id="images/admin/icon/feed_edit.png" value="images/admin/icon/feed_edit.png" />
+		<param id="images/admin/icon/find_erro.png" value="images/admin/icon/find_erro.png" />
+
+		<param id="images/admin/icon/find_erro.png" value="images/admin/icon/find_erro.png" />
+		<param id="images/admin/icon/window_cascade.png" value="images/admin/icon/window_cascade.png" />
+		<param id="images/admin/icon/window_gallery.png" value="images/admin/icon/window_gallery.png" />
+		<param id="images/admin/icon/sign_remove.png" value="images/admin/icon/sign_remove.png" />
+		<param id="images/admin/icon/mime_jpg.png" value="images/admin/icon/mime_jpg.png" />
+		<param id="images/admin/icon/mime_doc.png" value="images/admin/icon/mime_doc.png" />
+		<param id="images/admin/icon/mime_fla.png" value="images/admin/icon/mime_fla.png" />
+		<param id="images/admin/icon/mime_jpg.png" value="images/admin/icon/mime_jpg.png" />
+		<param id="images/admin/icon/mime_xml.png" value="images/admin/icon/mime_xml.png" />
+		<param id="images/admin/icon/mimie_xsl.png" value="images/admin/icon/mimie_xsl.png" />
+
+		<param id="images/admin/icon/home.png" value="images/admin/icon/home.png" />
+		<param id="images/admin/icon/lock_edit.png" value="images/admin/icon/lock_edit.png" />
+		<param id="images/admin/icon/lock_go.png" value="images/admin/icon/lock_go.png" />
+		<param id="images/admin/icon/lock_empty.png" value="images/admin/icon/lock_empty.png" />
+		<param id="images/admin/icon/key.png" value="images/admin/icon/key.png" />
+		<param id="images/admin/icon/gift.png" value="images/admin/icon/gift.png" />
+		<param id="images/admin/icon/form_save.png" value="images/admin/icon/form_save.png" />
+		<param id="images/admin/icon/find_add.png" value="images/admin/icon/find_add.png" />
+		<param id="images/admin/icon/folder_down.png" value="images/admin/icon/folder_down.png" />
+		<param id="images/admin/icon/folder_down.png" value="images/admin/icon/folder_down.png" />
+
+		<param id="images/admin/icon/mini_deny.png" value="images/admin/icon/mini_deny.png" />
+		<param id="images/admin/icon/sign_error.png" value="images/admin/icon/sign_error.png" />
+		<param id="images/admin/icon/terminal.png" value="images/admin/icon/terminal.png" />
+		<param id="images/admin/icon/text_field_edit.png" value="images/admin/icon/text_field_edit.png" />
+		<param id="images/admin/icon/text_field_link.png" value="images/admin/icon/text_field_link.png" />
+		<param id="images/admin/icon/spanner_save.png" value="images/admin/icon/spanner_save.png" />
+		<param id="images/admin/icon/arrow_down.png" value="images/admin/icon/arrow_down.png" />
+		<param id="images/admin/icon/comments.png" value="images/admin/icon/comments.png" />
+		<param id="images/admin/icon/email_add_image.png" value="images/admin/icon/email_add_image.png" />
+		<param id="images/admin/icon/folder_down.png" value="images/admin/icon/folder_down.png" />
+
+	</parent-param>
+
+	<!-- 课件上传ppt，doc文档时候的转换工具路径配置 -->
+	<!-- <parent-param id="52" value="工具路径"> <param id="pdf2swfPath" value="D:\\cetpPlugins\\SWFTools\\" /> <param id="viewer" value="D:\\cetpPlugins\\SWFTools\\swfs\\rfxview.swf" /> <param id="command" value="-T 9 -s storeallcharacters -s languagedir=D:\\cetpPlugins\\xpdf-chinese-simplified -s simpleviewer -w" /> </parent-param> -->
+
+	<parent-param id="52" value="工具路径">
+		<param id="pdf2swfPath" value="/usr/local/bin/pdf2swf" />
+		<param id="viewer" value="/tools/swftools-0.9.2/swfs/rfxview.swf" />
+		<param id="command" value="-T 9 -s storeallcharacters -s languagedir=/usr/local/xpdf-chinese-simplified" />
+	</parent-param>
+
+	<parent-param id="53" value="组织标识">
+		<param id="0" value="非法人单位" />
+		<param id="1" value="是法人单位" />
+	</parent-param>
+
+	<parent-param id="54" value="组织分类">
+		<param id="1" value="基地" />
+		<param id="2" value="学校" />
+		<param id="3" value="企业" />
+		<param id="4" value="政府" />
+	</parent-param>
+
+	<parent-param id="56" value="请假类型">
+		<param id="04" value="事假" />
+		<param id="05" value="病假" />
+	</parent-param>
+
+	<parent-param id="57" value="请假状态">
+		<param id="01" value="待审批" />
+		<param id="02" value="批准" />
+		<param id="03" value="不批" />
+	</parent-param>
+
+	<parent-param id="58" value="考勤记录状态">
+		<param id="01" value="正常" />
+		<param id="02" value="迟到" />
+		<param id="03" value="早退" />
+		<param id="04" value="事假" />
+		<param id="05" value="病假" />
+		<param id="06" value="旷课" />
+	</parent-param>
+
+	<parent-param id="59" value="搜索类别">
+		<param id="0" value="全部" />
+		<param id="1" value="课程" />
+		<param id="2" value="实训" />
+		<param id="3" value="直播" />
+	</parent-param>
+	<parent-param id="60" value="视频资源类型">
+		<param id="1" value="奇艺高清" />
+		<param id="2" value="CC云视频" />
+		<param id="3" value="系统服务器" />
+	</parent-param>
+	<parent-param id="61" value="实时答疑状态">
+		<param id="1" value="描述问题" />
+		<param id="2" value="选择辅导工程师" />
+		<param id="3" value="工程师确认" />
+		<param id="4" value="在线辅导" />
+		<param id="5" value="评价辅导" />
+		<param id="6" value="已解决" />
+		<param id="7" value="待解决" />
+	</parent-param>
+	<!-- 直播管理使用 -->
+	<parent-param id="62" value="直播是否公开">
+		<param id="0" value="不公开" />
+		<param id="1" value="公开" />
+	</parent-param>
+	<parent-param id="63" value="直播状态">
+		<param id="0" value="未发布" />
+		<param id="1" value="审核中" />
+		<param id="2" value="审核未通过" />
+		<param id="3" value="直播中" />
+		<param id="4" value="已完成" />
+	</parent-param>
+	<parent-param id="64" value="视频资源状态">
+		<param id="0" value="未发布" />
+		<param id="1" value="发布中" />
+		<param id="2" value="发布失败" />
+		<param id="3" value="已发布" />
+	</parent-param>
+	<parent-param id="65" value="成果物类型">
+		<param id="1" value="文档" />
+		<param id="2" value="代码" />
+		<param id="3" value="视频" />
+		<param id="4" value="图片" />
+		<param id="5" value="安装包" />
+	</parent-param>
+	<parent-param id="66" value="课程级别">
+		<param id="0" value="初级" />
+		<param id="1" value="中级" />
+		<param id="2" value="高级" />
+	</parent-param>
+	<parent-param id="67" value="常用邮箱后缀">
+		<param id="0" value="gmail.com" />
+		<param id="1" value="yahoo.com" />
+		<param id="2" value="msn.com" />
+		<param id="3" value="hotmail.com" />
+		<param id="4" value="ask.com" />
+		<param id="5" value="live.com" />
+		<param id="6" value="0355.net" />
+		<param id="7" value="163.com" />
+		<param id="8" value="163.net" />
+		<param id="9" value="263.net" />
+		<param id="10" value="3721.net" />
+		<param id="11" value="yeah.net" />
+		<param id="12" value="googlemail.com" />
+		<param id="13" value="mail.com" />
+		<param id="14" value="hotmail.com" />
+		<param id="15" value="yahoo.com" />
+		<param id="16" value="gmail.com" />
+		<param id="17" value="aim.com" />
+		<param id="18" value="aol.com" />
+		<param id="19" value="walla.com" />
+		<param id="20" value="126.com" />
+		<param id="21" value="163.com" />
+		<param id="22" value="sina.com" />
+		<param id="23" value="21cn.com" />
+		<param id="24" value="sohu.com" />
+		<param id="25" value="yahoo.com.cn" />
+		<param id="26" value="tom.com" />
+		<param id="27" value="qq.com" />
+		<param id="28" value="etang.com" />
+		<param id="29" value="eyou.com" />
+		<param id="30" value="56.com" />
+		<param id="31" value="x.cn" />
+		<param id="32" value="chinaren.com" />
+		<param id="33" value="sogou.com" />
+		<param id="34" value="citiz.com" />
+	</parent-param>
+	<parent-param id="68" value="课程分类">
+		<param id="0" value="开发类" />
+		<param id="1" value="设计类" />
+		<param id="2" value="职业类" />
+		<param id="3" value="管理类" />
+	</parent-param>
+	<parent-param id="69" value="课程状态">
+		<param id="0" value="未发布" />
+		<param id="1" value="审核中" />
+		<param id="2" value="审核未通过" />
+		<param id="3" value="已发布" />
+	</parent-param>
+	<parent-param id="70" value="任务时间单位">
+		<param id="1" value="学时" />
+		<param id="2" value="天" />
+	</parent-param>
+	<parent-param id="71" value="技术分类对应CC视频分类">
+		<param id="1" value="81408" />
+		<param id="10" value="86592" />
+		<param id="20" value="86593" />
+		<param id="32" value="86594" />
+		<param id="46" value="86595" />
+		<param id="53" value="86596" />
+		<param id="59" value="86596" />
+		<param id="65" value="86596" />
+		<param id="71" value="86596" />
+		<param id="80" value="86597" />
+		<param id="88" value="86598" />
+		<param id="96" value="87413" />
+	</parent-param>
+	<parent-param id="72" value="成长阶段栏目对应显示图片地址">
+		<param id="1" value="images/czjd_gaozhong.png" />
+		<param id="2" value="images/img486_275.png" />
+		<param id="3" value="images/img485_250.png" />
+		<param id="4" value="images/img486_275_zy.png" />
+		<param id="5" value="images/img486_275_zy.png" />
+		<param id="6" value="images/czjd_gc_1.png" />
+		<param id="7" value="images/czjd_ctc.png" />
+		<param id="8" value="images/img486_275_2.png" />
+		<param id="9" value="images/czjd_biye.png" />
+		<param id="10" value="images/img486_275.png" />
+	</parent-param>
+</param-config>
+

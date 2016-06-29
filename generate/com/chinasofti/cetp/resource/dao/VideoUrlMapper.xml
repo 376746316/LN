@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.VideoUrlMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.VideoUrl">
+		<id column="VU_ID" property="vuId" jdbcType="INTEGER" />
+		<result column="VU_V_ID" property="vuVId" jdbcType="INTEGER" />
+		<result column="VU_TYPE" property="vuType" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.VideoUrl" extends="BaseResultMap">
+		<result column="VU_PLAY_URL" property="vuPlayUrl" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		VU_ID, VU_V_ID, VU_TYPE
+	</sql>
+	<sql id="Blob_Column_List">
+		VU_PLAY_URL
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.VideoUrlExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_video_url
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.VideoUrlExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_video_url
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_video_url
+		where VU_ID = #{vuId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_video_url
+		where VU_ID = #{vuId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.resource.model.VideoUrl">
+		insert into tp_video_url (VU_ID, VU_V_ID, VU_TYPE,
+		VU_PLAY_URL)
+		values (#{vuId,jdbcType=INTEGER}, #{vuVId,jdbcType=INTEGER}, #{vuType,jdbcType=CHAR},
+		#{vuPlayUrl,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.VideoUrl">
+		insert into tp_video_url
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="vuId != null">
+				VU_ID,
+			</if>
+			<if test="vuVId != null">
+				VU_V_ID,
+			</if>
+			<if test="vuType != null">
+				VU_TYPE,
+			</if>
+			<if test="vuPlayUrl != null">
+				VU_PLAY_URL,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="vuId != null">
+				#{vuId,jdbcType=INTEGER},
+			</if>
+			<if test="vuVId != null">
+				#{vuVId,jdbcType=INTEGER},
+			</if>
+			<if test="vuType != null">
+				#{vuType,jdbcType=CHAR},
+			</if>
+			<if test="vuPlayUrl != null">
+				#{vuPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.VideoUrlExample" resultType="java.lang.Integer">
+		select count(*) from tp_video_url
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.VideoUrl">
+		update tp_video_url
+		<set>
+			<if test="vuVId != null">
+				VU_V_ID = #{vuVId,jdbcType=INTEGER},
+			</if>
+			<if test="vuType != null">
+				VU_TYPE = #{vuType,jdbcType=CHAR},
+			</if>
+			<if test="vuPlayUrl != null">
+				VU_PLAY_URL = #{vuPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where VU_ID = #{vuId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.VideoUrl">
+		update tp_video_url
+		set VU_V_ID = #{vuVId,jdbcType=INTEGER},
+		VU_TYPE = #{vuType,jdbcType=CHAR},
+		VU_PLAY_URL = #{vuPlayUrl,jdbcType=LONGVARCHAR}
+		where VU_ID = #{vuId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.VideoUrl">
+		update tp_video_url
+		set VU_V_ID = #{vuVId,jdbcType=INTEGER},
+		VU_TYPE = #{vuType,jdbcType=CHAR}
+		where VU_ID = #{vuId,jdbcType=INTEGER}
+	</update>
+
+	<delete id="deleteByMap" parameterType="Map">
+		DELETE FROM
+		tp_video_url
+		WHERE VU_TYPE = #{type}
+		AND VU_V_ID = #{vId}
+	</delete>
+</mapper>

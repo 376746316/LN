@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.ExerciseMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.Exercise">
+		<id column="EXER_ID" property="exerId" jdbcType="INTEGER" />
+		<result column="EXER_TITLE" property="exerTitle" jdbcType="VARCHAR" />
+		<result column="EXER_TYPE_ID" property="exerTypeId" jdbcType="INTEGER" />
+		<result column="EXER_KEYWORDS" property="exerKeywords" jdbcType="VARCHAR" />
+		<result column="EXER_DIFFCULT" property="exerDiffcult" jdbcType="CHAR" />
+		<result column="EXER_SUGGEST_TIME" property="exerSuggestTime" jdbcType="INTEGER" />
+		<result column="EXER_SCORE" property="exerScore" jdbcType="INTEGER" />
+		<result column="EXER_ATTACH_RES" property="exerAttachRes" jdbcType="VARCHAR" />
+		<result column="EXER_ATTACH_ANSWER" property="exerAttachAnswer" jdbcType="VARCHAR" />
+		<result column="EXER_USER_NO" property="exerUserNo" jdbcType="INTEGER" />
+		<result column="EXER_REGTIME" property="exerRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.ExerciseWithBLOBs" extends="BaseResultMap">
+		<result column="EXER_CONTEXT" property="exerContext" jdbcType="LONGVARCHAR" />
+		<result column="EXER_STEP" property="exerStep" jdbcType="LONGVARCHAR" />
+		<result column="EXER_TEXT_ANSWER" property="exerTextAnswer" jdbcType="LONGVARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="MoreResultMap" type="com.chinasofti.cetp.study.model.MoreExercise" extends="ResultMapWithBLOBs">
+		<result column="CHAP_ID" property="chapId" jdbcType="INTEGER" />
+		<result column="CHAP_NAME" property="chapName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="LiveResultMap" type="com.chinasofti.cetp.live.model.LiveExerciese" extends="ResultMapWithBLOBs">
+		<result column="LHW_LC_ID" property="liveCourseId" jdbcType="INTEGER" />
+		<association property="exerciseStu" javaType="com.chinasofti.cetp.study.model.ExerciseStu" resultMap="exerStuMap"></association>
+	</resultMap>
+	<resultMap id="exerStuMap" type="com.chinasofti.cetp.study.model.ExerciseStu">
+		<result column="ES_ID" property="esId" jdbcType="INTEGER" />
+		<result column="ES_SUBCW_ID" property="esSubcwId" jdbcType="INTEGER" />
+		<result column="ES_LIVE_COURSEID" property="esLiveCourseid" jdbcType="INTEGER" />
+		<result column="ES_EXER_ID" property="esExerId" jdbcType="INTEGER" />
+		<result column="ES_STU_ID" property="esStuId" jdbcType="INTEGER" />
+		<result column="ES_STATUS" property="esStatus" jdbcType="CHAR" />
+		<result column="ES_TEXT_ANSWER" property="esTextAnswer" jdbcType="VARCHAR" />
+		<result column="ES_ATTACH_ANSWER" property="esAttachAnswer" jdbcType="VARCHAR" />
+		<result column="ES_COMMIT_TIME" property="esCommitTime" jdbcType="TIMESTAMP" />
+		<result column="ES_SCORE" property="esScore" jdbcType="INTEGER" />
+		<result column="ES_TEACHER_ID" property="esTeacherId" jdbcType="INTEGER" />
+		<result column="ES_CHECK_FLAG" property="esCheckFlag" jdbcType="CHAR" />
+		<result column="ES_CHECK_TIME" property="esCheckTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Exer_Column_List">
+		ES_ID, ES_SUBCW_ID, ES_EXER_ID, ES_STU_ID, ES_STATUS,
+		ES_TEXT_ANSWER,
+		ES_ATTACH_ANSWER,
+		ES_COMMIT_TIME, ES_SCORE,
+		ES_TEACHER_ID, ES_CHECK_FLAG, ES_CHECK_TIME, ES_LIVE_COURSEID
+	</sql>
+	<sql id="Base_Column_List">
+		EXER_ID, EXER_TITLE, EXER_TYPE_ID, EXER_KEYWORDS, EXER_DIFFCULT,
+		EXER_SUGGEST_TIME,
+		EXER_SCORE, EXER_ATTACH_RES, EXER_ATTACH_ANSWER, EXER_USER_NO, EXER_REGTIME
+	</sql>
+	<sql id="Blob_Column_List">
+		EXER_CONTEXT, EXER_STEP, EXER_TEXT_ANSWER
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.study.model.ExerciseExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_exercise
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.ExerciseExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_exercise
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,TECH_TYPE_NAME
+		from tp_exercise,tp_tech_type
+		where EXER_ID =
+		#{exerId,jdbcType=INTEGER}
+		and
+		tp_tech_type.TECH_TYPE_ID=tp_exercise.EXER_TYPE_ID
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_exercise
+		where EXER_ID = #{exerId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.ExerciseExample">
+		delete from tp_exercise
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.ExerciseWithBLOBs" useGeneratedKeys="true" keyProperty="exerId">
+		insert into tp_exercise (EXER_ID, EXER_TITLE, EXER_TYPE_ID,
+		EXER_KEYWORDS, EXER_DIFFCULT, EXER_SUGGEST_TIME,
+		EXER_SCORE, EXER_ATTACH_RES, EXER_ATTACH_ANSWER,
+		EXER_USER_NO, EXER_REGTIME, EXER_CONTEXT,
+		EXER_STEP, EXER_TEXT_ANSWER)
+		values (#{exerId,jdbcType=INTEGER}, #{exerTitle,jdbcType=VARCHAR},
+		#{exerTypeId,jdbcType=INTEGER},
+		#{exerKeywords,jdbcType=VARCHAR}, #{exerDiffcult,jdbcType=CHAR}, #{exerSuggestTime,jdbcType=INTEGER},
+		#{exerScore,jdbcType=INTEGER}, #{exerAttachRes,jdbcType=VARCHAR},
+		#{exerAttachAnswer,jdbcType=VARCHAR},
+		#{exerUserNo,jdbcType=INTEGER}, #{exerRegtime,jdbcType=TIMESTAMP},
+		#{exerContext,jdbcType=LONGVARCHAR},
+		#{exerStep,jdbcType=LONGVARCHAR}, #{exerTextAnswer,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.ExerciseWithBLOBs" useGeneratedKeys="true" keyProperty="exerId">
+		insert into tp_exercise
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="exerId != null">
+				EXER_ID,
+			</if>
+			<if test="exerTitle != null">
+				EXER_TITLE,
+			</if>
+			<if test="exerTypeId != null">
+				EXER_TYPE_ID,
+			</if>
+			<if test="exerKeywords != null">
+				EXER_KEYWORDS,
+			</if>
+			<if test="exerDiffcult != null">
+				EXER_DIFFCULT,
+			</if>
+			<if test="exerSuggestTime != null">
+				EXER_SUGGEST_TIME,
+			</if>
+			<if test="exerScore != null">
+				EXER_SCORE,
+			</if>
+			<if test="exerAttachRes != null">
+				EXER_ATTACH_RES,
+			</if>
+			<if test="exerAttachAnswer != null">
+				EXER_ATTACH_ANSWER,
+			</if>
+			<if test="exerUserNo != null">
+				EXER_USER_NO,
+			</if>
+			<if test="exerRegtime != null">
+				EXER_REGTIME,
+			</if>
+			<if test="exerContext != null">
+				EXER_CONTEXT,
+			</if>
+			<if test="exerStep != null">
+				EXER_STEP,
+			</if>
+			<if test="exerTextAnswer != null">
+				EXER_TEXT_ANSWER,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="exerId != null">
+				#{exerId,jdbcType=INTEGER},
+			</if>
+			<if test="exerTitle != null">
+				#{exerTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="exerTypeId != null">
+				#{exerTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="exerKeywords != null">
+				#{exerKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="exerDiffcult != null">
+				#{exerDiffcult,jdbcType=CHAR},
+			</if>
+			<if test="exerSuggestTime != null">
+				#{exerSuggestTime,jdbcType=INTEGER},
+			</if>
+			<if test="exerScore != null">
+				#{exerScore,jdbcType=INTEGER},
+			</if>
+			<if test="exerAttachRes != null">
+				#{exerAttachRes,jdbcType=VARCHAR},
+			</if>
+			<if test="exerAttachAnswer != null">
+				#{exerAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="exerUserNo != null">
+				#{exerUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="exerRegtime != null">
+				#{exerRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="exerContext != null">
+				#{exerContext,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="exerStep != null">
+				#{exerStep,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="exerTextAnswer != null">
+				#{exerTextAnswer,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.ExerciseExample" resultType="java.lang.Integer">
+		select count(*) from tp_exercise
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_exercise
+		<set>
+			<if test="record.exerId != null">
+				EXER_ID = #{record.exerId,jdbcType=INTEGER},
+			</if>
+			<if test="record.exerTitle != null">
+				EXER_TITLE = #{record.exerTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.exerTypeId != null">
+				EXER_TYPE_ID = #{record.exerTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="record.exerKeywords != null">
+				EXER_KEYWORDS = #{record.exerKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="record.exerDiffcult != null">
+				EXER_DIFFCULT = #{record.exerDiffcult,jdbcType=CHAR},
+			</if>
+			<if test="record.exerSuggestTime != null">
+				EXER_SUGGEST_TIME = #{record.exerSuggestTime,jdbcType=INTEGER},
+			</if>
+			<if test="record.exerScore != null">
+				EXER_SCORE = #{record.exerScore,jdbcType=INTEGER},
+			</if>
+			<if test="record.exerAttachRes != null">
+				EXER_ATTACH_RES = #{record.exerAttachRes,jdbcType=VARCHAR},
+			</if>
+			<if test="record.exerAttachAnswer != null">
+				EXER_ATTACH_ANSWER = #{record.exerAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="record.exerUserNo != null">
+				EXER_USER_NO = #{record.exerUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.exerRegtime != null">
+				EXER_REGTIME = #{record.exerRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.exerContext != null">
+				EXER_CONTEXT = #{record.exerContext,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.exerStep != null">
+				EXER_STEP = #{record.exerStep,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.exerTextAnswer != null">
+				EXER_TEXT_ANSWER = #{record.exerTextAnswer,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_exercise
+		set EXER_ID = #{record.exerId,jdbcType=INTEGER},
+		EXER_TITLE = #{record.exerTitle,jdbcType=VARCHAR},
+		EXER_TYPE_ID = #{record.exerTypeId,jdbcType=INTEGER},
+		EXER_KEYWORDS = #{record.exerKeywords,jdbcType=VARCHAR},
+		EXER_DIFFCULT = #{record.exerDiffcult,jdbcType=CHAR},
+		EXER_SUGGEST_TIME = #{record.exerSuggestTime,jdbcType=INTEGER},
+		EXER_SCORE = #{record.exerScore,jdbcType=INTEGER},
+		EXER_ATTACH_RES = #{record.exerAttachRes,jdbcType=VARCHAR},
+		EXER_ATTACH_ANSWER = #{record.exerAttachAnswer,jdbcType=VARCHAR},
+		EXER_USER_NO = #{record.exerUserNo,jdbcType=INTEGER},
+		EXER_REGTIME = #{record.exerRegtime,jdbcType=TIMESTAMP},
+		EXER_CONTEXT = #{record.exerContext,jdbcType=LONGVARCHAR},
+		EXER_STEP = #{record.exerStep,jdbcType=LONGVARCHAR},
+		EXER_TEXT_ANSWER = #{record.exerTextAnswer,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_exercise
+		set EXER_ID = #{record.exerId,jdbcType=INTEGER},
+		EXER_TITLE = #{record.exerTitle,jdbcType=VARCHAR},
+		EXER_TYPE_ID = #{record.exerTypeId,jdbcType=INTEGER},
+		EXER_KEYWORDS = #{record.exerKeywords,jdbcType=VARCHAR},
+		EXER_DIFFCULT = #{record.exerDiffcult,jdbcType=CHAR},
+		EXER_SUGGEST_TIME = #{record.exerSuggestTime,jdbcType=INTEGER},
+		EXER_SCORE = #{record.exerScore,jdbcType=INTEGER},
+		EXER_ATTACH_RES = #{record.exerAttachRes,jdbcType=VARCHAR},
+		EXER_ATTACH_ANSWER = #{record.exerAttachAnswer,jdbcType=VARCHAR},
+		EXER_USER_NO = #{record.exerUserNo,jdbcType=INTEGER},
+		EXER_REGTIME = #{record.exerRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.ExerciseWithBLOBs">
+		update tp_exercise
+		<set>
+			<if test="exerTitle != null">
+				EXER_TITLE = #{exerTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="exerTypeId != null">
+				EXER_TYPE_ID = #{exerTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="exerKeywords != null">
+				EXER_KEYWORDS = #{exerKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="exerDiffcult != null">
+				EXER_DIFFCULT = #{exerDiffcult,jdbcType=CHAR},
+			</if>
+			<if test="exerSuggestTime != null">
+				EXER_SUGGEST_TIME = #{exerSuggestTime,jdbcType=INTEGER},
+			</if>
+			<if test="exerScore != null">
+				EXER_SCORE = #{exerScore,jdbcType=INTEGER},
+			</if>
+			<if test="exerAttachRes != null">
+				EXER_ATTACH_RES = #{exerAttachRes,jdbcType=VARCHAR},
+			</if>
+			<if test="exerAttachAnswer != null">
+				EXER_ATTACH_ANSWER = #{exerAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="exerUserNo != null">
+				EXER_USER_NO = #{exerUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="exerRegtime != null">
+				EXER_REGTIME = #{exerRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="exerContext != null">
+				EXER_CONTEXT = #{exerContext,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="exerStep != null">
+				EXER_STEP = #{exerStep,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="exerTextAnswer != null">
+				EXER_TEXT_ANSWER = #{exerTextAnswer,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where EXER_ID = #{exerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.ExerciseWithBLOBs">
+		update tp_exercise
+		set EXER_TITLE = #{exerTitle,jdbcType=VARCHAR},
+		EXER_TYPE_ID = #{exerTypeId,jdbcType=INTEGER},
+		EXER_KEYWORDS = #{exerKeywords,jdbcType=VARCHAR},
+		EXER_DIFFCULT = #{exerDiffcult,jdbcType=CHAR},
+		EXER_SUGGEST_TIME = #{exerSuggestTime,jdbcType=INTEGER},
+		EXER_SCORE = #{exerScore,jdbcType=INTEGER},
+		EXER_ATTACH_RES = #{exerAttachRes,jdbcType=VARCHAR},
+		EXER_ATTACH_ANSWER = #{exerAttachAnswer,jdbcType=VARCHAR},
+		EXER_USER_NO = #{exerUserNo,jdbcType=INTEGER},
+		EXER_REGTIME = #{exerRegtime,jdbcType=TIMESTAMP},
+		EXER_CONTEXT = #{exerContext,jdbcType=LONGVARCHAR},
+		EXER_STEP = #{exerStep,jdbcType=LONGVARCHAR},
+		EXER_TEXT_ANSWER = #{exerTextAnswer,jdbcType=LONGVARCHAR}
+		where EXER_ID = #{exerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.Exercise">
+		update tp_exercise
+		set EXER_TITLE = #{exerTitle,jdbcType=VARCHAR},
+		EXER_TYPE_ID = #{exerTypeId,jdbcType=INTEGER},
+		EXER_KEYWORDS = #{exerKeywords,jdbcType=VARCHAR},
+		EXER_DIFFCULT = #{exerDiffcult,jdbcType=CHAR},
+		EXER_SUGGEST_TIME = #{exerSuggestTime,jdbcType=INTEGER},
+		EXER_SCORE = #{exerScore,jdbcType=INTEGER},
+		EXER_ATTACH_RES = #{exerAttachRes,jdbcType=VARCHAR},
+		EXER_ATTACH_ANSWER = #{exerAttachAnswer,jdbcType=VARCHAR},
+		EXER_USER_NO = #{exerUserNo,jdbcType=INTEGER},
+		EXER_REGTIME = #{exerRegtime,jdbcType=TIMESTAMP}
+		where EXER_ID = #{exerId,jdbcType=INTEGER}
+	</update>
+
+	<!--自定义接口 -->
+
+	<select id="selectExerciseForSub" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_exercise A ,tp_subcw_exer B
+		WHERE A.EXER_ID = B.SE_EXER_ID
+		AND B.SE_SUBCW_ID = #{scId,jdbcType=INTEGER}
+	</select>
+	<select id="selectQureyExercises" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,TECH_TYPE_NAME
+		from TP_EXERCISE
+		execrise,TP_TECH_TYPE type
+		where
+		execrise.EXER_TYPE_ID =
+		type.TECH_TYPE_ID
+		<if test="selectTypeId != null">
+			and execrise.EXER_TYPE_ID=#{selectTypeId}
+		</if>
+		<if test="selectKey != null">
+			and execrise.EXER_KEYWORDS like #{selectKey}
+		</if>
+		<if test="selectTitle != null">
+			and execrise.EXER_TITLE like #{selectTitle}
+		</if>
+		<if test="userNo != null">
+			and execrise.EXER_USER_NO = #{userNo}
+		</if>
+	</select>
+
+	<select id="selectHomeworkForChapter" resultMap="MoreResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,D.CHAP_ID,D.CHAP_NAME
+		FROM tp_exercise B ,(
+		SELECT
+		A.HW_EXER_ID,C.CHAP_ID,C.CHAP_NAME
+		FROM
+		tp_homework A,tp_chapter C
+		WHERE
+		A.HW_CHAP_ID = C.CHAP_ID
+		AND A.HW_CHAP_ID = #{chapId}) D
+		WHERE B.EXER_ID = D.HW_EXER_ID
+	</select>
+	<select id="selectHomeworkForChapterId" resultMap="MoreResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,D.CHAP_ID,D.CHAP_NAME
+		FROM tp_exercise B ,(
+		SELECT
+		A.HW_EXER_ID,C.CHAP_ID,C.CHAP_NAME
+		FROM
+		tp_homework A,tp_chapter C
+		WHERE
+		A.HW_CHAP_ID = C.CHAP_ID
+		AND A.HW_CHAP_ID = #{chapId}) D
+		WHERE B.EXER_ID = D.HW_EXER_ID
+	</select>
+	<select id="selectHomeworkNotForChapter" resultMap="MoreResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_exercise B
+		WHERE B.EXER_ID NOT IN(
+		SELECT
+		a.HW_EXER_ID
+		FROM tp_homework a
+		WHERE a.HW_CHAP_ID =#{chapId})
+		<if test="userNo != null">
+		AND B.EXER_USER_NO =#{userNo}
+		</if>
+	</select>
+
+	<select id="selectByLiveClassId" resultMap="LiveResultMap" parameterType="HashMap">
+		select
+		<include refid="Exer_Column_List" />
+		,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,TECH_TYPE_NAME,
+		f.lhw_lc_id
+		FROM tp_exercise e JOIN(
+		SELECT d.LHW_EXER_ID,d.LHW_LC_ID
+		FROM tp_live_homework d
+		WHERE d.LHW_LC_ID IN(
+		SELECT
+		c.LHW_LC_ID
+		FROM tp_live_homework c
+		WHERE c.LHW_LC_ID IN(
+		SELECT
+		b.LIVE_COURSE_ID
+		FROM tp_live_course b
+		WHERE b.LIVE_COURSE_CHAP_ID IN(
+		SELECT
+		a.LIVE_CHAP_ID
+		FROM tp_live_chapter a
+		WHERE a.LIVE_CHAP_CLASS_ID =#{liveClassId}))))f ON f.LHW_EXER_ID = e.EXER_ID LEFT JOIN tp_exercise_stu stu ON (f.LHW_EXER_ID = stu.ES_EXER_ID AND stu.ES_STU_ID=#{stuNo})
+		JOIN tp_tech_type ON EXER_TYPE_ID = TECH_TYPE_ID
+		<if test="exerId != null">
+			WHERE f.LHW_EXER_ID = #{exerId}
+		</if>
+	</select>
+
+	<select id="selectWithSubCourseId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,TECH_TYPE_NAME
+		from tp_exercise
+		tp_exer,TP_TECH_TYPE type
+		where tp_exer.EXER_TYPE_ID =
+		type.TECH_TYPE_ID and tp_exer.exer_id in
+		(select distinct se_exer_id
+		from tp_subcw_exer
+		where SE_SUBCW_ID
+		=#{subCourseId,jdbcType=INTEGER})
+	</select>
+
+	<select id="selectNotWithSubCourseId" parameterType="map" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,TECH_TYPE_NAME
+		from tp_exercise
+		tp_exer,TP_TECH_TYPE type
+		where tp_exer.EXER_TYPE_ID =
+		type.TECH_TYPE_ID and tp_exer.exer_id not in
+		(select distinct
+		se_exer_id from
+		tp_subcw_exer
+		where SE_SUBCW_ID
+		=#{subCourseId,jdbcType=INTEGER})
+		<if test="userNo != null">
+			AND EXER_USER_NO = #{userNo}
+		</if>
+	</select>
+	<select id="selectExerListByScId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		FROM tp_exercise A
+		WHERE A.EXER_ID IN(
+		SELECT
+		B.SE_EXER_ID
+		FROM
+		tp_subcw_exer B
+		WHERE B.SE_SUBCW_ID = #{scId}
+		)
+	</select>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.UserTechTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.UserTechTypeKey" >
+    <id column="UT_USER_NO" property="utUserNo" jdbcType="INTEGER" />
+    <id column="UT_TECHTYPE_ID" property="utTechtypeId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UT_USER_NO, UT_TECHTYPE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_user_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeKey" >
+    delete from tp_user_tech_type
+    where UT_USER_NO = #{utUserNo,jdbcType=INTEGER}
+      and UT_TECHTYPE_ID = #{utTechtypeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeExample" >
+    delete from tp_user_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeKey" >
+    insert into tp_user_tech_type (UT_USER_NO, UT_TECHTYPE_ID)
+    values (#{utUserNo,jdbcType=INTEGER}, #{utTechtypeId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertList" parameterType="map" >
+    insert into tp_user_tech_type (UT_USER_NO, UT_TECHTYPE_ID)
+    values
+    <foreach collection="userTechTypes" item="techTypeId" separator=",">
+    (#{userNo,jdbcType=INTEGER},#{techTypeId})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeKey" >
+    insert into tp_user_tech_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="utUserNo != null" >
+        UT_USER_NO,
+      </if>
+      <if test="utTechtypeId != null" >
+        UT_TECHTYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="utUserNo != null" >
+        #{utUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="utTechtypeId != null" >
+        #{utTechtypeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.UserTechTypeExample" resultType="java.lang.Integer" >
+    select count(*) from tp_user_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_user_tech_type
+    <set >
+      <if test="record.utUserNo != null" >
+        UT_USER_NO = #{record.utUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.utTechtypeId != null" >
+        UT_TECHTYPE_ID = #{record.utTechtypeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_user_tech_type
+    set UT_USER_NO = #{record.utUserNo,jdbcType=INTEGER},
+      UT_TECHTYPE_ID = #{record.utTechtypeId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

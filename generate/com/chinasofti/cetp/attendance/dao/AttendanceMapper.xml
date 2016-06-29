@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.attendance.dao.AttendanceMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.attendance.model.Attendance" >
+    <id column="AE_ID" property="aeId" jdbcType="INTEGER" />
+    <result column="AE_PAT_ID" property="aePatId" jdbcType="INTEGER" />
+    <result column="AE_DATE" property="aeDate" jdbcType="DATE" />
+    <result column="AE_NEED_SIGNIN" property="aeNeedSignin" jdbcType="TIME" />
+    <result column="AE_REAL_SIGNIN" property="aeRealSignin" jdbcType="TIME" />
+    <result column="AE_DIFF_TIME" property="aeDiffTime" jdbcType="INTEGER" />
+    <result column="AE_STATUS" property="aeStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AE_ID, AE_PAT_ID, AE_DATE, AE_NEED_SIGNIN, AE_REAL_SIGNIN, AE_DIFF_TIME, AE_STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.attendance.model.AttendanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_attendance
+    where AE_ID = #{aeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_attendance
+    where AE_ID = #{aeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.attendance.model.AttendanceExample" >
+    delete from tp_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.attendance.model.Attendance" >
+    insert into tp_attendance (AE_ID, AE_PAT_ID, AE_DATE, 
+      AE_NEED_SIGNIN, AE_REAL_SIGNIN, AE_DIFF_TIME, 
+      AE_STATUS)
+    values (#{aeId,jdbcType=INTEGER}, #{aePatId,jdbcType=INTEGER}, #{aeDate,jdbcType=DATE}, 
+      #{aeNeedSignin,jdbcType=TIME}, #{aeRealSignin,jdbcType=TIME}, #{aeDiffTime,jdbcType=INTEGER}, 
+      #{aeStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.attendance.model.Attendance" >
+    insert into tp_attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aeId != null" >
+        AE_ID,
+      </if>
+      <if test="aePatId != null" >
+        AE_PAT_ID,
+      </if>
+      <if test="aeDate != null" >
+        AE_DATE,
+      </if>
+      <if test="aeNeedSignin != null" >
+        AE_NEED_SIGNIN,
+      </if>
+      <if test="aeRealSignin != null" >
+        AE_REAL_SIGNIN,
+      </if>
+      <if test="aeDiffTime != null" >
+        AE_DIFF_TIME,
+      </if>
+      <if test="aeStatus != null" >
+        AE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aeId != null" >
+        #{aeId,jdbcType=INTEGER},
+      </if>
+      <if test="aePatId != null" >
+        #{aePatId,jdbcType=INTEGER},
+      </if>
+      <if test="aeDate != null" >
+        #{aeDate,jdbcType=DATE},
+      </if>
+      <if test="aeNeedSignin != null" >
+        #{aeNeedSignin,jdbcType=TIME},
+      </if>
+      <if test="aeRealSignin != null" >
+        #{aeRealSignin,jdbcType=TIME},
+      </if>
+      <if test="aeDiffTime != null" >
+        #{aeDiffTime,jdbcType=INTEGER},
+      </if>
+      <if test="aeStatus != null" >
+        #{aeStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.attendance.model.AttendanceExample" resultType="java.lang.Integer" >
+    select count(*) from tp_attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_attendance
+    <set >
+      <if test="record.aeId != null" >
+        AE_ID = #{record.aeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aePatId != null" >
+        AE_PAT_ID = #{record.aePatId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aeDate != null" >
+        AE_DATE = #{record.aeDate,jdbcType=DATE},
+      </if>
+      <if test="record.aeNeedSignin != null" >
+        AE_NEED_SIGNIN = #{record.aeNeedSignin,jdbcType=TIME},
+      </if>
+      <if test="record.aeRealSignin != null" >
+        AE_REAL_SIGNIN = #{record.aeRealSignin,jdbcType=TIME},
+      </if>
+      <if test="record.aeDiffTime != null" >
+        AE_DIFF_TIME = #{record.aeDiffTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.aeStatus != null" >
+        AE_STATUS = #{record.aeStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_attendance
+    set AE_ID = #{record.aeId,jdbcType=INTEGER},
+      AE_PAT_ID = #{record.aePatId,jdbcType=INTEGER},
+      AE_DATE = #{record.aeDate,jdbcType=DATE},
+      AE_NEED_SIGNIN = #{record.aeNeedSignin,jdbcType=TIME},
+      AE_REAL_SIGNIN = #{record.aeRealSignin,jdbcType=TIME},
+      AE_DIFF_TIME = #{record.aeDiffTime,jdbcType=INTEGER},
+      AE_STATUS = #{record.aeStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.attendance.model.Attendance" >
+    update tp_attendance
+    <set >
+      <if test="aePatId != null" >
+        AE_PAT_ID = #{aePatId,jdbcType=INTEGER},
+      </if>
+      <if test="aeDate != null" >
+        AE_DATE = #{aeDate,jdbcType=DATE},
+      </if>
+      <if test="aeNeedSignin != null" >
+        AE_NEED_SIGNIN = #{aeNeedSignin,jdbcType=TIME},
+      </if>
+      <if test="aeRealSignin != null" >
+        AE_REAL_SIGNIN = #{aeRealSignin,jdbcType=TIME},
+      </if>
+      <if test="aeDiffTime != null" >
+        AE_DIFF_TIME = #{aeDiffTime,jdbcType=INTEGER},
+      </if>
+      <if test="aeStatus != null" >
+        AE_STATUS = #{aeStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AE_ID = #{aeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.attendance.model.Attendance" >
+    update tp_attendance
+    set AE_PAT_ID = #{aePatId,jdbcType=INTEGER},
+      AE_DATE = #{aeDate,jdbcType=DATE},
+      AE_NEED_SIGNIN = #{aeNeedSignin,jdbcType=TIME},
+      AE_REAL_SIGNIN = #{aeRealSignin,jdbcType=TIME},
+      AE_DIFF_TIME = #{aeDiffTime,jdbcType=INTEGER},
+      AE_STATUS = #{aeStatus,jdbcType=VARCHAR}
+    where AE_ID = #{aeId,jdbcType=INTEGER}
+  </update>
+  <!-- add by YF 2014-03-17  -->
+  <resultMap type="com.chinasofti.cetp.attendance.model.MoreAttendance" id="MoreAttendance" extends="BaseResultMap">
+	  <result column="STU_NUM" property="stuNum" jdbcType="VARCHAR" />
+	  <result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+	  <result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+	  <result column="TEAM_NAME" property="teamName" jdbcType="VARCHAR" />
+	  <result column="PAT_CODE" property="patCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectMoreAttendance" resultMap="MoreAttendance" parameterType="map">
+	SELECT
+		<include refid="Base_Column_List" />, 
+		STU_NUM,
+		STU_NAME,
+		CLASS_NAME,
+		TEAM_NAME,
+		PAT_CODE
+	FROM
+		tp_attendance
+	INNER JOIN tp_prac_attendance ON AE_PAT_ID = PAT_ID
+	INNER JOIN tp_student ON STU_NO = PAT_STU_ID
+	INNER JOIN tp_class ON CLASS_ID = STU_CLASS_ID
+	LEFT JOIN tp_practice_team ON TEAM_PRAC_ID = PAT_PRAC_ID
+	LEFT JOIN tp_team_member ON (
+		TM_TEAM_ID = TEAM_ID
+		AND TM_MEMBER_NO = STU_NO
+	)
+	WHERE
+		PAT_PRAC_ID = #{pracId}
+	<if test="dateStart != null" >	
+	AND AE_DATE &gt;= #{dateStart}
+	</if>
+	<if test="dateEnd != null" >	
+	AND AE_DATE &lt;= #{dateEnd} 
+	</if>
+	<if test="patCode != null" >	
+	AND PAT_CODE LIKE #{patCode}
+	</if>
+	<if test="aeStatus != null" >	
+	AND AE_STATUS = #{aeStatus}
+	</if>
+	<if test="stuName != null" >	
+	AND STU_NAME LIKE #{stuName}
+	</if>
+	<if test="stuNum != null" >
+	AND STU_NUM LIKE #{stuNum}
+	</if>
+	<if test="className != null" >
+	AND CLASS_NAME LIKE #{className}
+	</if>
+	<if test="teamName != null" >
+	AND TEAM_NAME LIKE #{teamName}
+	</if>
+	ORDER BY
+	<if test="desc" >
+		AE_DATE DESC,
+	</if>
+	<if test="!desc" >
+		AE_DATE ASC,
+	</if>
+		AE_NEED_SIGNIN ASC  
+  </select>
+  <select id="selectStuAttendance" resultMap="BaseResultMap" parameterType="map">
+	SELECT
+		<include refid="Base_Column_List" />
+	FROM
+		tp_attendance
+	INNER JOIN tp_prac_attendance ON AE_PAT_ID = PAT_ID
+	WHERE
+		PAT_PRAC_ID = #{pracId}
+	AND PAT_STU_ID = #{stuNo}
+	<if test="dateStart != null" >	
+	AND AE_DATE &gt;= #{dateStart}
+	</if>
+	<if test="dateEnd != null" >	
+	AND AE_DATE &lt;= #{dateEnd} 
+	</if>
+	<if test="aeStatus != null" >	
+	AND AE_STATUS = #{aeStatus}
+	</if>
+	ORDER BY
+	<if test="desc" >
+		AE_DATE DESC,
+	</if>
+	<if test="!desc" >
+		AE_DATE ASC,
+	</if>
+		AE_NEED_SIGNIN ASC  
+  </select>
+  	<resultMap id="attendanceInfoMap"
+		type="com.chinasofti.cetp.attendance.model.AttendanceInfo">
+		<result column="STU_NUM" property="stuNum" jdbcType="VARCHAR" />
+		<result column="PAT_CODE" property="patCode" jdbcType="VARCHAR" />
+		<result column="TEAM_NAME" property="teamName" jdbcType="VARCHAR" />
+		<result column="CLASS_NAME" property="className" jdbcType="VARCHAR" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="DEU" property="due" jdbcType="INTEGER" />
+		<result column="NORMAL" property="normal" jdbcType="INTEGER" />
+		<result column="LATE" property="late" jdbcType="INTEGER" />
+		<result column="EARLY" property="early" jdbcType="INTEGER" />
+		<result column="MATTER_LEAVE" property="matterLeave" jdbcType="INTEGER" />
+		<result column="SICK_LEAVE" property="sickLeave" jdbcType="INTEGER" />
+		<result column="ABSENTEEISM" property="absenteeism" jdbcType="INTEGER" />
+	</resultMap>
+  <select id="selectAttendanceInfos" resultMap="attendanceInfoMap"  parameterType="map"> 
+	SELECT
+		t3.STU_NUM AS STU_NUM,
+		t2.PAT_CODE AS PAT_CODE,
+		t4.TEAM_NAME AS TEAM_NAME,
+		t5.CLASS_NAME AS CLASS_NAME,
+		t3.STU_NAME AS STU_NAME,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a0
+			WHERE
+				a0.AE_PAT_ID = t1.AE_PAT_ID
+		) AS DEU,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a1
+			WHERE
+				a1.AE_PAT_ID = t1.AE_PAT_ID
+			AND a1.AE_STATUS = '01'
+		) AS NORMAL,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a2
+			WHERE
+				a2.AE_PAT_ID = t1.AE_PAT_ID
+			AND a2.AE_STATUS = '02'
+		) AS LATE,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a3
+			WHERE
+				a3.AE_PAT_ID = t1.AE_PAT_ID
+			AND a3.AE_STATUS = '03'
+		) AS EARLY,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a4
+			WHERE
+				a4.AE_PAT_ID = t1.AE_PAT_ID
+			AND a4.AE_STATUS = '04'
+		) AS MATTER_LEAVE,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a5
+			WHERE
+				a5.AE_PAT_ID = t1.AE_PAT_ID
+			AND a5.AE_STATUS = '05'
+		) AS SICK_LEAVE,
+		(
+			SELECT
+				COUNT(0)
+			FROM
+				tp_attendance AS a6
+			WHERE
+				a6.AE_PAT_ID = t1.AE_PAT_ID
+			AND a6.AE_STATUS = '06'
+		) AS ABSENTEEISM
+	FROM
+		tp_attendance AS t1
+	INNER JOIN TP_PRAC_ATTENDANCE AS t2 ON t1.AE_PAT_ID = t2.PAT_ID
+	INNER JOIN TP_STUDENT AS t3 ON t2.PAT_STU_ID = t3.STU_NO
+	INNER JOIN tp_class AS t5 ON t5.CLASS_ID = t3.STU_CLASS_ID
+	LEFT JOIN (
+		SELECT
+			TEAM_NAME,
+			TEAM_PRAC_ID,
+			TM_MEMBER_NO
+		FROM
+			tp_practice_team
+		INNER JOIN tp_team_member ON TEAM_ID = TM_TEAM_ID
+	) AS t4 ON (
+		t4.TM_MEMBER_NO = t3.STU_NO
+		AND t4.TEAM_PRAC_ID = t2.PAT_PRAC_ID
+	)
+	WHERE
+		t2.PAT_PRAC_ID = #{pracId}
+	<if test="patCode != null" >	
+	AND t2.PAT_CODE LIKE #{patCode}
+	</if>
+	<if test="stuName != null" >	
+	AND t3.STU_NAME LIKE #{stuName}
+	</if>
+	<if test="stuNum != null" >
+	AND t3.STU_NUM LIKE #{stuNum}
+	</if>
+	<if test="className != null" >
+	AND t5.CLASS_NAME LIKE #{className}
+	</if>
+	<if test="teamName != null" >
+	AND t4.TEAM_NAME LIKE #{teamName}
+	</if>
+	GROUP BY
+		t1.AE_PAT_ID  
+  </select>  
+</mapper>

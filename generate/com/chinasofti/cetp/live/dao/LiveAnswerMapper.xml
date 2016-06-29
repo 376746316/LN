@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveAnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveAnswer" >
+    <id column="LA_ANSWER_ID" property="laAnswerId" jdbcType="INTEGER" />
+    <result column="LA_QUESTION_ID" property="laQuestionId" jdbcType="INTEGER" />
+    <result column="LA_ANSWER_USER" property="laAnswerUser" jdbcType="INTEGER" />
+    <result column="LA_ANSWER_ROLE" property="laAnswerRole" jdbcType="CHAR" />
+    <result column="LA_REPLY_ATTACH" property="laReplyAttach" jdbcType="VARCHAR" />
+    <result column="LA_REPLY_TIME" property="laReplyTime" jdbcType="TIMESTAMP" />
+    <result column="LA_PUMP" property="laPump" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.live.model.LiveAnswer" extends="BaseResultMap" >
+    <result column="LA_REPLY_CONTENT" property="laReplyContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LA_ANSWER_ID, LA_QUESTION_ID, LA_ANSWER_USER, LA_ANSWER_ROLE, LA_REPLY_ATTACH, LA_REPLY_TIME, 
+    LA_PUMP
+  </sql>
+  <sql id="Blob_Column_List" >
+    LA_REPLY_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveAnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveAnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_live_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_answer
+    where LA_ANSWER_ID = #{laAnswerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_live_answer
+    where LA_ANSWER_ID = #{laAnswerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveAnswer" >
+    insert into tp_live_answer (LA_ANSWER_ID, LA_QUESTION_ID, LA_ANSWER_USER, 
+      LA_ANSWER_ROLE, LA_REPLY_ATTACH, LA_REPLY_TIME, 
+      LA_PUMP, LA_REPLY_CONTENT)
+    values (#{laAnswerId,jdbcType=INTEGER}, #{laQuestionId,jdbcType=INTEGER}, #{laAnswerUser,jdbcType=INTEGER}, 
+      #{laAnswerRole,jdbcType=CHAR}, #{laReplyAttach,jdbcType=VARCHAR}, #{laReplyTime,jdbcType=TIMESTAMP}, 
+      #{laPump,jdbcType=INTEGER}, #{laReplyContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveAnswer" >
+    insert into tp_live_answer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="laAnswerId != null" >
+        LA_ANSWER_ID,
+      </if>
+      <if test="laQuestionId != null" >
+        LA_QUESTION_ID,
+      </if>
+      <if test="laAnswerUser != null" >
+        LA_ANSWER_USER,
+      </if>
+      <if test="laAnswerRole != null" >
+        LA_ANSWER_ROLE,
+      </if>
+      <if test="laReplyAttach != null" >
+        LA_REPLY_ATTACH,
+      </if>
+      <if test="laReplyTime != null" >
+        LA_REPLY_TIME,
+      </if>
+      <if test="laPump != null" >
+        LA_PUMP,
+      </if>
+      <if test="laReplyContent != null" >
+        LA_REPLY_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="laAnswerId != null" >
+        #{laAnswerId,jdbcType=INTEGER},
+      </if>
+      <if test="laQuestionId != null" >
+        #{laQuestionId,jdbcType=INTEGER},
+      </if>
+      <if test="laAnswerUser != null" >
+        #{laAnswerUser,jdbcType=INTEGER},
+      </if>
+      <if test="laAnswerRole != null" >
+        #{laAnswerRole,jdbcType=CHAR},
+      </if>
+      <if test="laReplyAttach != null" >
+        #{laReplyAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="laReplyTime != null" >
+        #{laReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="laPump != null" >
+        #{laPump,jdbcType=INTEGER},
+      </if>
+      <if test="laReplyContent != null" >
+        #{laReplyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveAnswerExample" resultType="java.lang.Integer" >
+    select count(*) from tp_live_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveAnswer" >
+    update tp_live_answer
+    <set >
+      <if test="laQuestionId != null" >
+        LA_QUESTION_ID = #{laQuestionId,jdbcType=INTEGER},
+      </if>
+      <if test="laAnswerUser != null" >
+        LA_ANSWER_USER = #{laAnswerUser,jdbcType=INTEGER},
+      </if>
+      <if test="laAnswerRole != null" >
+        LA_ANSWER_ROLE = #{laAnswerRole,jdbcType=CHAR},
+      </if>
+      <if test="laReplyAttach != null" >
+        LA_REPLY_ATTACH = #{laReplyAttach,jdbcType=VARCHAR},
+      </if>
+      <if test="laReplyTime != null" >
+        LA_REPLY_TIME = #{laReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="laPump != null" >
+        LA_PUMP = #{laPump,jdbcType=INTEGER},
+      </if>
+      <if test="laReplyContent != null" >
+        LA_REPLY_CONTENT = #{laReplyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LA_ANSWER_ID = #{laAnswerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveAnswer" >
+    update tp_live_answer
+    set LA_QUESTION_ID = #{laQuestionId,jdbcType=INTEGER},
+      LA_ANSWER_USER = #{laAnswerUser,jdbcType=INTEGER},
+      LA_ANSWER_ROLE = #{laAnswerRole,jdbcType=CHAR},
+      LA_REPLY_ATTACH = #{laReplyAttach,jdbcType=VARCHAR},
+      LA_REPLY_TIME = #{laReplyTime,jdbcType=TIMESTAMP},
+      LA_PUMP = #{laPump,jdbcType=INTEGER},
+      LA_REPLY_CONTENT = #{laReplyContent,jdbcType=LONGVARCHAR}
+    where LA_ANSWER_ID = #{laAnswerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveAnswer" >
+    update tp_live_answer
+    set LA_QUESTION_ID = #{laQuestionId,jdbcType=INTEGER},
+      LA_ANSWER_USER = #{laAnswerUser,jdbcType=INTEGER},
+      LA_ANSWER_ROLE = #{laAnswerRole,jdbcType=CHAR},
+      LA_REPLY_ATTACH = #{laReplyAttach,jdbcType=VARCHAR},
+      LA_REPLY_TIME = #{laReplyTime,jdbcType=TIMESTAMP},
+      LA_PUMP = #{laPump,jdbcType=INTEGER}
+    where LA_ANSWER_ID = #{laAnswerId,jdbcType=INTEGER}
+  </update>
+</mapper>

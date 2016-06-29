@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.SpecCourseMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.SpecCourse">
+		<id column="SPEC_ID" property="specId" jdbcType="INTEGER" />
+		<result column="SPEC_NAME" property="specName" jdbcType="VARCHAR" />
+		<result column="SPEC_CODE" property="specCode" jdbcType="VARCHAR" />
+		<result column="SPEC_PRE_COURSE" property="specPreCourse" jdbcType="VARCHAR" />
+		<result column="SPEC_MAJOR" property="specMajor" jdbcType="VARCHAR" />
+		<result column="SPEC_THEORY_TIME" property="specTheoryTime" jdbcType="INTEGER" />
+		<result column="SPEC_PRAC_TIME" property="specPracTime" jdbcType="INTEGER" />
+		<result column="SPEC_THEORY_CREDIT" property="specTheoryCredit" jdbcType="DOUBLE" />
+		<result column="SPEC_PRAC_CREDIT" property="specPracCredit" jdbcType="DOUBLE" />
+		<result column="SPEC_FLAG" property="specFlag" jdbcType="CHAR" />
+		<result column="SPEC_STATUS" property="specStatus" jdbcType="CHAR" />
+		<result column="SPEC_TYPE_ID" property="specTypeId" jdbcType="INTEGER" />
+		<result column="SPEC_EDU_BOOK" property="specEduBook" jdbcType="VARCHAR" />
+		<result column="SPEC_VERSION" property="specVersion" jdbcType="VARCHAR" />
+		<result column="SPEC_AVG_GRADE" property="specAvgGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_PRAC_GRADE" property="specPracGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_EXAM_GRADE" property="specExamGrade" jdbcType="DOUBLE" />
+		<result column="SPEC_STANDARD" property="specStandard" jdbcType="VARCHAR" />
+		<result column="SPEC_USER_NO" property="specUserNo" jdbcType="INTEGER" />
+		<result column="SPEC_REGTIME" property="specRegtime" jdbcType="TIMESTAMP" />
+		<result column="SPEC_CLASS" property="specClass" jdbcType="CHAR" />
+		<result column="SPEC_COST" property="specCost" jdbcType="INTEGER" />
+		<result column="SPEC_COUNT" property="specCount" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs" extends="BaseResultMap">
+		<result column="SPEC_TIP_MSG" property="specTipMsg" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_INTRO" property="specIntro" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_TARGET" property="specTarget" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_RESOURCE" property="specResource" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_APP_CROWD" property="specAppCrowd" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_POINT" property="specPoint" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_WEIGHT" property="specWeight" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_THUMB" property="specThumb" jdbcType="LONGVARCHAR" />
+		<result column="user_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap type="com.chinasofti.cetp.study.model.SpecCourseAndComment" id="SpecCourseAndComment">
+		<!-- 课程ID -->
+		<result column="SPEC_ID" property="courseID" jdbcType="INTEGER" />
+		<!-- 课程名称 -->
+		<result column="SPEC_NAME" property="courseName" jdbcType="VARCHAR" />
+		<!-- 授课教师 -->
+		<result column="user_name" property="teacherName" jdbcType="VARCHAR" />
+		<!-- 课程消费 -->
+		<result column="SPEC_COST" property="courseCost" jdbcType="INTEGER" />
+
+		<!-- 学习人数 -->
+		<result column="stuNum" property="studyingStuNnum" jdbcType="INTEGER" />
+		<!-- 评论数 -->
+		<result column="comNum" property="commentNum" jdbcType="INTEGER" />
+		<!-- 课程图片 -->
+		<result column="imgURL" property="imgURL" jdbcType="VARCHAR" />
+		<!-- 课程类型 -->
+		<result column="typeName" property="typeName" jdbcType="VARCHAR" />
+		<!-- 课程点击数 -->
+		<result column="hitNum" property="hitNum" jdbcType="INTEGER" />
+		<!-- 课程更新时间 -->
+		<result column="SPEC_REGTIME" property="updateTime" />
+
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SPEC_ID, SPEC_NAME, SPEC_CODE, SPEC_PRE_COURSE, SPEC_MAJOR,
+		SPEC_THEORY_TIME,
+		SPEC_PRAC_TIME,
+		SPEC_THEORY_CREDIT, SPEC_PRAC_CREDIT,
+		SPEC_FLAG, SPEC_STATUS, SPEC_TYPE_ID, SPEC_EDU_BOOK,
+		SPEC_VERSION,
+		SPEC_AVG_GRADE,
+		SPEC_PRAC_GRADE, SPEC_EXAM_GRADE, SPEC_STANDARD, SPEC_USER_NO,
+		SPEC_REGTIME,
+		SPEC_CLASS, SPEC_COST, SPEC_COUNT
+	</sql>
+	<sql id="Blob_Column_List">
+		SPEC_TIP_MSG,SPEC_INTRO, SPEC_TARGET, SPEC_RESOURCE, SPEC_APP_CROWD,
+		SPEC_POINT, SPEC_WEIGHT,
+		SPEC_THUMB
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.study.model.SpecCourseExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_spec_course
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SpecCourseExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_spec_course
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,user_name,TECH_TYPE_NAME
+		from tp_spec_course,tp_user,tp_tech_type
+		where SPEC_ID =
+		#{specId,jdbcType=INTEGER}
+		and SPEC_USER_NO = tp_user.user_no
+		and SPEC_TYPE_ID = TECH_TYPE_ID
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_spec_course
+		where SPEC_ID = #{specId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.SpecCourseExample">
+		delete from tp_spec_course
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs" useGeneratedKeys="true" keyProperty="specId">
+		insert into tp_spec_course
+		(SPEC_NAME, SPEC_CODE,
+		SPEC_PRE_COURSE, SPEC_MAJOR,
+		SPEC_THEORY_TIME,
+		SPEC_PRAC_TIME, SPEC_THEORY_CREDIT, SPEC_PRAC_CREDIT,
+		SPEC_FLAG, SPEC_STATUS,SPEC_TYPE_ID, SPEC_EDU_BOOK,
+		SPEC_VERSION, SPEC_AVG_GRADE,
+		SPEC_PRAC_GRADE,
+		SPEC_EXAM_GRADE, SPEC_STANDARD, SPEC_USER_NO,
+		SPEC_REGTIME, SPEC_CLASS, SPEC_COST,
+		SPEC_COUNT, SPEC_TIP_MSG,SPEC_INTRO,
+		SPEC_TARGET,
+		SPEC_RESOURCE, SPEC_APP_CROWD, SPEC_POINT,
+		SPEC_WEIGHT,
+		SPEC_THUMB)
+		values (
+		#{specName,jdbcType=VARCHAR},
+		#{specCode,jdbcType=VARCHAR},
+		#{specPreCourse,jdbcType=VARCHAR}, #{specMajor,jdbcType=VARCHAR},
+		#{specTheoryTime,jdbcType=INTEGER},
+		#{specPracTime,jdbcType=INTEGER},
+		#{specTheoryCredit,jdbcType=DOUBLE},
+		#{specPracCredit,jdbcType=DOUBLE},
+		#{specFlag,jdbcType=CHAR}, #{specStatus,jdbcType=CHAR},
+		#{specTypeId,jdbcType=INTEGER}, #{specEduBook,jdbcType=VARCHAR},
+		#{specVersion,jdbcType=VARCHAR},
+		#{specAvgGrade,jdbcType=DOUBLE},
+		#{specPracGrade,jdbcType=DOUBLE},
+		#{specExamGrade,jdbcType=DOUBLE},
+		#{specStandard,jdbcType=VARCHAR}, #{specUserNo,jdbcType=INTEGER},
+		now(), #{specClass,jdbcType=CHAR},
+		#{specCost,jdbcType=INTEGER},
+		#{specCount,jdbcType=BIGINT}, #{specTipMsg,jdbcType=LONGVARCHAR},
+		#{specIntro,jdbcType=LONGVARCHAR},
+		#{specTarget,jdbcType=LONGVARCHAR},
+		#{specResource,jdbcType=LONGVARCHAR},
+		#{specAppCrowd,jdbcType=LONGVARCHAR},
+		#{specPoint,jdbcType=LONGVARCHAR},
+		#{specWeight,jdbcType=LONGVARCHAR},
+		#{specThumb,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs" useGeneratedKeys="true" keyProperty="specId">
+		insert into tp_spec_course
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="specId != null">
+				SPEC_ID,
+			</if>
+			<if test="specName != null">
+				SPEC_NAME,
+			</if>
+			<if test="specCode != null">
+				SPEC_CODE,
+			</if>
+			<if test="specPreCourse != null">
+				SPEC_PRE_COURSE,
+			</if>
+			<if test="specMajor != null">
+				SPEC_MAJOR,
+			</if>
+			<if test="specTheoryTime != null">
+				SPEC_THEORY_TIME,
+			</if>
+			<if test="specPracTime != null">
+				SPEC_PRAC_TIME,
+			</if>
+			<if test="specTheoryCredit != null">
+				SPEC_THEORY_CREDIT,
+			</if>
+			<if test="specPracCredit != null">
+				SPEC_PRAC_CREDIT,
+			</if>
+			<if test="specFlag != null">
+				SPEC_FLAG,
+			</if>
+			<if test="specStatus != null">
+				SPEC_STATUS,
+			</if>
+			<if test="specTypeId != null">
+				SPEC_TYPE_ID,
+			</if>
+			<if test="specEduBook != null">
+				SPEC_EDU_BOOK,
+			</if>
+			<if test="specVersion != null">
+				SPEC_VERSION,
+			</if>
+			<if test="specAvgGrade != null">
+				SPEC_AVG_GRADE,
+			</if>
+			<if test="specPracGrade != null">
+				SPEC_PRAC_GRADE,
+			</if>
+			<if test="specExamGrade != null">
+				SPEC_EXAM_GRADE,
+			</if>
+			<if test="specStandard != null">
+				SPEC_STANDARD,
+			</if>
+			<if test="specUserNo != null">
+				SPEC_USER_NO,
+			</if>
+			<if test="specRegtime != null">
+				SPEC_REGTIME,
+			</if>
+			<if test="specClass != null">
+				SPEC_CLASS,
+			</if>
+			<if test="specCost != null">
+				SPEC_COST,
+			</if>
+			<if test="specCount != null">
+				SPEC_COUNT,
+			</if>
+			<if test="specTipMsg != null">
+				SPEC_TIP_MSG,
+			</if>
+			<if test="specIntro != null">
+				SPEC_INTRO,
+			</if>
+			<if test="specTarget != null">
+				SPEC_TARGET,
+			</if>
+			<if test="specResource != null">
+				SPEC_RESOURCE,
+			</if>
+			<if test="specAppCrowd != null">
+				SPEC_APP_CROWD,
+			</if>
+			<if test="specPoint != null">
+				SPEC_POINT,
+			</if>
+			<if test="specWeight != null">
+				SPEC_WEIGHT,
+			</if>
+			<if test="specThumb != null">
+				SPEC_THUMB,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="specId != null">
+				#{specId,jdbcType=INTEGER},
+			</if>
+			<if test="specName != null">
+				#{specName,jdbcType=VARCHAR},
+			</if>
+			<if test="specCode != null">
+				#{specCode,jdbcType=VARCHAR},
+			</if>
+			<if test="specPreCourse != null">
+				#{specPreCourse,jdbcType=VARCHAR},
+			</if>
+			<if test="specMajor != null">
+				#{specMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="specTheoryTime != null">
+				#{specTheoryTime,jdbcType=INTEGER},
+			</if>
+			<if test="specPracTime != null">
+				#{specPracTime,jdbcType=INTEGER},
+			</if>
+			<if test="specTheoryCredit != null">
+				#{specTheoryCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracCredit != null">
+				#{specPracCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specFlag != null">
+				#{specFlag,jdbcType=CHAR},
+			</if>
+			<if test="specStatus != null">
+				#{specStatus,jdbcType=CHAR},
+			</if>
+			<if test="specTypeId != null">
+				#{specTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="specEduBook != null">
+				#{specEduBook,jdbcType=VARCHAR},
+			</if>
+			<if test="specVersion != null">
+				#{specVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="specAvgGrade != null">
+				#{specAvgGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracGrade != null">
+				#{specPracGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specExamGrade != null">
+				#{specExamGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specStandard != null">
+				#{specStandard,jdbcType=VARCHAR},
+			</if>
+			<if test="specUserNo != null">
+				#{specUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="specRegtime != null">
+				#{specRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="specClass != null">
+				#{specClass,jdbcType=CHAR},
+			</if>
+			<if test="specCost != null">
+				#{specCost,jdbcType=INTEGER},
+			</if>
+			<if test="specCount != null">
+				#{specCount,jdbcType=BIGINT},
+			</if>
+			<if test="specTipMsg != null">
+				#{specTipMsg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specIntro != null">
+				#{specIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specTarget != null">
+				#{specTarget,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specResource != null">
+				#{specResource,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specAppCrowd != null">
+				#{specAppCrowd,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specPoint != null">
+				#{specPoint,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specWeight != null">
+				#{specWeight,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specThumb != null">
+				#{specThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.SpecCourseExample" resultType="java.lang.Integer">
+		select count(*) from tp_spec_course
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_spec_course
+		<set>
+			<if test="specName != null">
+				SPEC_NAME = #{specName,jdbcType=VARCHAR},
+			</if>
+			<if test="specCode != null">
+				SPEC_CODE = #{specCode,jdbcType=VARCHAR},
+			</if>
+			<if test="specPreCourse != null">
+				SPEC_PRE_COURSE = #{specPreCourse,jdbcType=VARCHAR},
+			</if>
+			<if test="specMajor != null">
+				SPEC_MAJOR = #{specMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="specTheoryTime != null">
+				SPEC_THEORY_TIME = #{specTheoryTime,jdbcType=INTEGER},
+			</if>
+			<if test="specPracTime != null">
+				SPEC_PRAC_TIME = #{specPracTime,jdbcType=INTEGER},
+			</if>
+			<if test="specTheoryCredit != null">
+				SPEC_THEORY_CREDIT = #{specTheoryCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracCredit != null">
+				SPEC_PRAC_CREDIT = #{specPracCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specFlag != null">
+				SPEC_FLAG = #{specFlag,jdbcType=CHAR},
+			</if>
+			<if test="specStatus != null">
+				SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+			</if>
+			<if test="specTypeId != null">
+				SPEC_TYPE_ID = #{specTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="specEduBook != null">
+				SPEC_EDU_BOOK = #{specEduBook,jdbcType=VARCHAR},
+			</if>
+			<if test="specVersion != null">
+				SPEC_VERSION = #{specVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="specAvgGrade != null">
+				SPEC_AVG_GRADE = #{specAvgGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracGrade != null">
+				SPEC_PRAC_GRADE = #{specPracGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specExamGrade != null">
+				SPEC_EXAM_GRADE = #{specExamGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specStandard != null">
+				SPEC_STANDARD = #{specStandard,jdbcType=VARCHAR},
+			</if>
+			<if test="specUserNo != null">
+				SPEC_USER_NO = #{specUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="specRegtime != null">
+				SPEC_REGTIME = #{specRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="specClass != null">
+				SPEC_CLASS = #{specClass,jdbcType=CHAR},
+			</if>
+			<if test="specCost != null">
+				SPEC_COST = #{specCost,jdbcType=INTEGER},
+			</if>
+			<if test="specCount != null">
+				SPEC_COUNT = #{specCount,jdbcType=BIGINT},
+			</if>
+			<if test="specTipMsg != null">
+				SPEC_TIP_MSG = #{specTipMsg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specIntro != null">
+				SPEC_INTRO = #{specIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specTarget != null">
+				SPEC_TARGET = #{specTarget,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specResource != null">
+				SPEC_RESOURCE = #{specResource,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specAppCrowd != null">
+				SPEC_APP_CROWD = #{specAppCrowd,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specPoint != null">
+				SPEC_POINT = #{specPoint,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specWeight != null">
+				SPEC_WEIGHT = #{specWeight,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specThumb != null">
+				SPEC_THUMB = #{specThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_spec_course
+		set SPEC_NAME = #{specName,jdbcType=VARCHAR},
+		SPEC_CODE = #{specCode,jdbcType=VARCHAR},
+		SPEC_PRE_COURSE = #{specPreCourse,jdbcType=VARCHAR},
+		SPEC_MAJOR = #{specMajor,jdbcType=VARCHAR},
+		SPEC_THEORY_TIME = #{specTheoryTime,jdbcType=INTEGER},
+		SPEC_PRAC_TIME = #{specPracTime,jdbcType=INTEGER},
+		SPEC_THEORY_CREDIT = #{specTheoryCredit,jdbcType=DOUBLE},
+		SPEC_PRAC_CREDIT = #{specPracCredit,jdbcType=DOUBLE},
+		SPEC_FLAG = #{specFlag,jdbcType=CHAR},
+		SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+		SPEC_TYPE_ID = #{specTypeId,jdbcType=INTEGER},
+		SPEC_EDU_BOOK = #{specEduBook,jdbcType=VARCHAR},
+		SPEC_VERSION = #{specVersion,jdbcType=VARCHAR},
+		SPEC_AVG_GRADE = #{specAvgGrade,jdbcType=DOUBLE},
+		SPEC_PRAC_GRADE = #{specPracGrade,jdbcType=DOUBLE},
+		SPEC_EXAM_GRADE = #{specExamGrade,jdbcType=DOUBLE},
+		SPEC_STANDARD = #{specStandard,jdbcType=VARCHAR},
+		SPEC_USER_NO = #{specUserNo,jdbcType=INTEGER},
+		SPEC_REGTIME = #{specRegtime,jdbcType=TIMESTAMP},
+		SPEC_CLASS = #{specClass,jdbcType=CHAR},
+		SPEC_COST =
+		#{specCost,jdbcType=INTEGER},
+		SPEC_COUNT = #{specCount,jdbcType=BIGINT},
+		SPEC_TIP_MSG = #{specTipMsg,jdbcType=LONGVARCHAR},
+		SPEC_INTRO = #{specIntro,jdbcType=LONGVARCHAR},
+		SPEC_TARGET = #{specTarget,jdbcType=LONGVARCHAR},
+		SPEC_RESOURCE = #{specResource,jdbcType=LONGVARCHAR},
+		SPEC_APP_CROWD = #{specAppCrowd,jdbcType=LONGVARCHAR},
+		SPEC_POINT = #{specPoint,jdbcType=LONGVARCHAR},
+		SPEC_WEIGHT = #{specWeight,jdbcType=LONGVARCHAR},
+		SPEC_THUMB = #{specThumb,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_spec_course
+		set SPEC_NAME = #{specName,jdbcType=VARCHAR},
+		SPEC_CODE = #{specCode,jdbcType=VARCHAR},
+		SPEC_PRE_COURSE = #{specPreCourse,jdbcType=VARCHAR},
+		SPEC_MAJOR = #{specMajor,jdbcType=VARCHAR},
+		SPEC_THEORY_TIME = #{specTheoryTime,jdbcType=INTEGER},
+		SPEC_PRAC_TIME = #{specPracTime,jdbcType=INTEGER},
+		SPEC_THEORY_CREDIT = #{specTheoryCredit,jdbcType=DOUBLE},
+		SPEC_PRAC_CREDIT = #{specPracCredit,jdbcType=DOUBLE},
+		SPEC_FLAG = #{specFlag,jdbcType=CHAR},
+		SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+		SPEC_TYPE_ID = #{specTypeId,jdbcType=INTEGER},
+		SPEC_EDU_BOOK = #{specEduBook,jdbcType=VARCHAR},
+		SPEC_VERSION = #{specVersion,jdbcType=VARCHAR},
+		SPEC_AVG_GRADE = #{specAvgGrade,jdbcType=DOUBLE},
+		SPEC_PRAC_GRADE = #{specPracGrade,jdbcType=DOUBLE},
+		SPEC_EXAM_GRADE = #{specExamGrade,jdbcType=DOUBLE},
+		SPEC_STANDARD = #{specStandard,jdbcType=VARCHAR},
+		SPEC_USER_NO = #{specUserNo,jdbcType=INTEGER},
+		SPEC_REGTIME = #{specRegtime,jdbcType=TIMESTAMP},
+		SPEC_CLASS = #{specClass,jdbcType=CHAR},
+		SPEC_COST =
+		#{specCost,jdbcType=INTEGER},
+		SPEC_COUNT = #{specCount,jdbcType=BIGINT},
+		SPEC_TIP_MSG = #{specTipMsg,jdbcType=LONGVARCHAR},
+		SPEC_INTRO = #{specIntro,jdbcType=LONGVARCHAR},
+		SPEC_TARGET = #{specTarget,jdbcType=LONGVARCHAR},
+		SPEC_RESOURCE = #{specResource,jdbcType=LONGVARCHAR},
+		SPEC_APP_CROWD = #{specAppCrowd,jdbcType=LONGVARCHAR},
+		SPEC_POINT = #{specPoint,jdbcType=LONGVARCHAR},
+		SPEC_WEIGHT = #{specWeight,jdbcType=LONGVARCHAR},
+		SPEC_THUMB = #{specThumb,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs">
+		update tp_spec_course
+		<set>
+			<if test="specName != null">
+				SPEC_NAME = #{specName,jdbcType=VARCHAR},
+			</if>
+			<if test="specCode != null">
+				SPEC_CODE = #{specCode,jdbcType=VARCHAR},
+			</if>
+			<if test="specPreCourse != null">
+				SPEC_PRE_COURSE = #{specPreCourse,jdbcType=VARCHAR},
+			</if>
+			<if test="specMajor != null">
+				SPEC_MAJOR = #{specMajor,jdbcType=VARCHAR},
+			</if>
+			<if test="specTheoryTime != null">
+				SPEC_THEORY_TIME = #{specTheoryTime,jdbcType=INTEGER},
+			</if>
+			<if test="specPracTime != null">
+				SPEC_PRAC_TIME = #{specPracTime,jdbcType=INTEGER},
+			</if>
+			<if test="specTheoryCredit != null">
+				SPEC_THEORY_CREDIT = #{specTheoryCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracCredit != null">
+				SPEC_PRAC_CREDIT = #{specPracCredit,jdbcType=DOUBLE},
+			</if>
+			<if test="specFlag != null">
+				SPEC_FLAG = #{specFlag,jdbcType=CHAR},
+			</if>
+			<if test="specStatus != null">
+				SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+			</if>
+			<if test="specTypeId != null">
+				SPEC_TYPE_ID = #{specTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="specEduBook != null">
+				SPEC_EDU_BOOK = #{specEduBook,jdbcType=VARCHAR},
+			</if>
+			<if test="specVersion != null">
+				SPEC_VERSION = #{specVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="specAvgGrade != null">
+				SPEC_AVG_GRADE = #{specAvgGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specPracGrade != null">
+				SPEC_PRAC_GRADE = #{specPracGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specExamGrade != null">
+				SPEC_EXAM_GRADE = #{specExamGrade,jdbcType=DOUBLE},
+			</if>
+			<if test="specStandard != null">
+				SPEC_STANDARD = #{specStandard,jdbcType=VARCHAR},
+			</if>
+			<if test="specUserNo != null">
+				SPEC_USER_NO = #{specUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="specRegtime != null">
+				SPEC_REGTIME = #{specRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="specClass != null">
+				SPEC_CLASS = #{specClass,jdbcType=CHAR},
+			</if>
+			<if test="specCost != null">
+				SPEC_COST = #{specCost,jdbcType=INTEGER},
+			</if>
+			<if test="specCount != null">
+				SPEC_COUNT = #{specCount,jdbcType=BIGINT},
+			</if>
+			<if test="specTipMsg != null">
+				SPEC_TIP_MSG = #{specTipMsg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specIntro != null">
+				SPEC_INTRO = #{specIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specTarget != null">
+				SPEC_TARGET = #{specTarget,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specResource != null">
+				SPEC_RESOURCE = #{specResource,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specAppCrowd != null">
+				SPEC_APP_CROWD = #{specAppCrowd,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specPoint != null">
+				SPEC_POINT = #{specPoint,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specWeight != null">
+				SPEC_WEIGHT = #{specWeight,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="specThumb != null">
+				SPEC_THUMB = #{specThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where SPEC_ID = #{specId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.SpecCourseWithBLOBs">
+		update
+		tp_spec_course
+		set SPEC_NAME = #{specName,jdbcType=VARCHAR},
+		SPEC_CODE = #{specCode,jdbcType=VARCHAR},
+		SPEC_PRE_COURSE = #{specPreCourse,jdbcType=VARCHAR},
+		SPEC_MAJOR = #{specMajor,jdbcType=VARCHAR},
+		SPEC_THEORY_TIME = #{specTheoryTime,jdbcType=INTEGER},
+		SPEC_PRAC_TIME = #{specPracTime,jdbcType=INTEGER},
+		SPEC_THEORY_CREDIT = #{specTheoryCredit,jdbcType=DOUBLE},
+		SPEC_PRAC_CREDIT = #{specPracCredit,jdbcType=DOUBLE},
+		SPEC_FLAG = #{specFlag,jdbcType=CHAR},
+		SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+		SPEC_TYPE_ID = #{specTypeId,jdbcType=INTEGER},
+		SPEC_EDU_BOOK = #{specEduBook,jdbcType=VARCHAR},
+		SPEC_VERSION = #{specVersion,jdbcType=VARCHAR},
+		SPEC_AVG_GRADE = #{specAvgGrade,jdbcType=DOUBLE},
+		SPEC_PRAC_GRADE = #{specPracGrade,jdbcType=DOUBLE},
+		SPEC_EXAM_GRADE = #{specExamGrade,jdbcType=DOUBLE},
+		SPEC_STANDARD = #{specStandard,jdbcType=VARCHAR},
+		SPEC_USER_NO = #{specUserNo,jdbcType=INTEGER},
+		SPEC_REGTIME = #{specRegtime,jdbcType=TIMESTAMP},
+		SPEC_CLASS = #{specClass,jdbcType=CHAR},
+		SPEC_COST = #{specCost,jdbcType=INTEGER},
+		SPEC_COUNT = #{specCount,jdbcType=BIGINT},
+		SPEC_TIP_MSG = #{specTipMsg,jdbcType=LONGVARCHAR},
+		SPEC_INTRO = #{specIntro,jdbcType=LONGVARCHAR},
+		SPEC_TARGET = #{specTarget,jdbcType=LONGVARCHAR},
+		SPEC_RESOURCE = #{specResource,jdbcType=LONGVARCHAR},
+		SPEC_APP_CROWD = #{specAppCrowd,jdbcType=LONGVARCHAR},
+		SPEC_POINT = #{specPoint,jdbcType=LONGVARCHAR},
+		SPEC_WEIGHT = #{specWeight,jdbcType=LONGVARCHAR},
+		SPEC_THUMB = #{specThumb,jdbcType=LONGVARCHAR}
+		where SPEC_ID =
+		#{specId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SpecCourse">
+		update
+		tp_spec_course
+		set SPEC_NAME = #{specName,jdbcType=VARCHAR},
+		SPEC_CODE =
+		#{specCode,jdbcType=VARCHAR},
+		SPEC_PRE_COURSE =
+		#{specPreCourse,jdbcType=VARCHAR},
+		SPEC_MAJOR =
+		#{specMajor,jdbcType=VARCHAR},
+		SPEC_THEORY_TIME =
+		#{specTheoryTime,jdbcType=INTEGER},
+		SPEC_PRAC_TIME =
+		#{specPracTime,jdbcType=INTEGER},
+		SPEC_THEORY_CREDIT =
+		#{specTheoryCredit,jdbcType=DOUBLE},
+		SPEC_PRAC_CREDIT =
+		#{specPracCredit,jdbcType=DOUBLE},
+		SPEC_FLAG =
+		#{specFlag,jdbcType=CHAR},
+		SPEC_STATUS = #{specStatus,jdbcType=CHAR},
+		SPEC_TYPE_ID =
+		#{specTypeId,jdbcType=INTEGER},
+		SPEC_EDU_BOOK =
+		#{specEduBook,jdbcType=VARCHAR},
+		SPEC_VERSION =
+		#{specVersion,jdbcType=VARCHAR},
+		SPEC_AVG_GRADE =
+		#{specAvgGrade,jdbcType=DOUBLE},
+		SPEC_PRAC_GRADE =
+		#{specPracGrade,jdbcType=DOUBLE},
+		SPEC_EXAM_GRADE =
+		#{specExamGrade,jdbcType=DOUBLE},
+		SPEC_STANDARD =
+		#{specStandard,jdbcType=VARCHAR},
+		SPEC_USER_NO =
+		#{specUserNo,jdbcType=INTEGER},
+		SPEC_REGTIME =
+		#{specRegtime,jdbcType=TIMESTAMP},
+		SPEC_CLASS =
+		#{specClass,jdbcType=CHAR},
+		SPEC_COST =
+		#{specCost,jdbcType=INTEGER},
+		SPEC_COUNT = #{specCount,jdbcType=BIGINT}
+		where SPEC_ID =
+		#{specId,jdbcType=INTEGER}
+	</update>
+	<select id="getAllSpecAndComm" resultMap="SpecCourseAndComment" parameterType="map">
+		SELECT
+		SPEC_ID,
+		SPEC_NAME,
+		user_name,
+		SPEC_COST,
+		COUNT(SU_STU_ID) AS stuNum,
+		IFNULL(t_CSNUM.comNum, 0) AS comNum,
+		IFNULL(SPEC_COUNT,0) as hitNum,
+		SPEC_THUMB as imgURL,
+		TECH_TYPE_NAME as typeName,
+		SPEC_REGTIME as updateTime
+
+		FROM tp_spec_stu
+		INNER JOIN tp_spec_course ON SU_SPEC_ID = SPEC_ID
+		INNER JOIN tp_user ON SPEC_USER_NO = USER_NO
+		INNER JOIN tp_tech_type ON SPEC_TYPE_ID = TECH_TYPE_ID
+		LEFT JOIN (
+		SELECT
+		COSC_SPEC_ID,
+		COUNT(COSC_CO_ID) AS comNum
+		FROM
+		tp_comment_sc
+		GROUP BY
+		COSC_SPEC_ID
+		) AS t_CSNUM ON t_CSNUM.COSC_SPEC_ID = SPEC_ID
+		<if test="status!=null">
+			WHERE SU_STATUS=#{status}
+		</if>
+		<if test="TECH_TYPE_NAME!=null">
+			WHERE TECH_TYPE_NAME=#{TECH_TYPE_NAME}
+		</if>
+		GROUP BY SU_SPEC_ID
+		<if test="typeCount!= null">
+			ORDER BY count(#{typeCount}) DESC
+		</if>
+		<if test="type!= null">
+			ORDER BY #{type} DESC
+		</if>
+		<if test="condition!= null">
+			ORDER BY ${condition} DESC
+		</if>
+		<if test="limit!=null">
+			LIMIT 0,#{limit}
+		</if>
+	</select>
+	<select id="getCourseCost" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT IFNUll(SPEC_COST,0)
+		FROM tp_spec_course
+		WHERE SPEC_ID = #{specId}
+	</select>
+	<!-- 后台列表页面 -->
+	<select id="selectSpecCourseForList" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,type.TECH_TYPE_NAME
+		,IFNUll(user_nickname,user_id) as user_name
+		from
+		TP_SPEC_COURSE course,tp_tech_type type ,tp_user where
+		course.SPEC_TYPE_ID=type.TECH_TYPE_ID
+		and course.SPEC_USER_NO = user_no
+		<if test="selectName !=null">
+			and course.SPEC_NAME like #{selectName}
+		</if>
+		<if test="selectTeacherNo !=null">
+			and course.SPEC_USER_NO = #{selectTeacherNo}
+		</if>
+		<if test="selectStatus !=null">
+			and course.SPEC_STATUS like #{selectStatus}
+		</if>
+		<if test="selectTypeId != null">
+			AND FIND_IN_SET(SPEC_TYPE_ID,getChildTechType(#{selectTypeId}))
+		</if>
+		<if test="userNo != null">
+			and course.SPEC_USER_NO like #{userNo}
+		</if>
+		ORDER BY SPEC_REGTIME DESC
+	</select>
+	<!-- 后台岗位课程列表页面 -->
+	<select id="selectSpecCourseForProfIdList" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,type.TECH_TYPE_NAME
+		,IFNUll(user_nickname,user_id) as user_name
+		from
+		TP_SPEC_COURSE course,tp_tech_type type ,tp_user where
+		course.SPEC_TYPE_ID=type.TECH_TYPE_ID
+		and course.SPEC_USER_NO = user_no
+		AND SPEC_ID not IN (
+		SELECT
+		PS_SPEC_ID
+		FROM tp_profession_spec
+		WHERE tp_profession_spec.PS_PROF_ID = #{profId}
+		)
+		<if test="selectName !=null">
+			and course.SPEC_NAME like #{selectName}
+		</if>
+		<if test="selectTeacherNo !=null">
+			and course.SPEC_USER_NO = #{selectTeacherNo}
+		</if>
+		<if test="selectStatus !=null">
+			and course.SPEC_STATUS like #{selectStatus}
+		</if>
+		<if test="selectLevel !=null">
+			and course.SPEC_CLASS like #{selectLevel}
+		</if>
+		<if test="selectTypeId != null">
+			AND FIND_IN_SET(SPEC_TYPE_ID,getChildTechType(#{selectTypeId}))
+		</if>
+		<if test="userNo != null">
+			and course.SPEC_USER_NO like #{userNo}
+		</if>
+		ORDER BY SPEC_REGTIME DESC
+	</select>
+
+	<!-- 更新课程点击量 -->
+	<update id="updateHitNum" parameterType="java.lang.Integer">
+		UPDATE
+		tp_spec_course
+		SET
+		SPEC_COUNT = IFNULL(SPEC_COUNT + 1,1)
+		WHERE
+		SPEC_ID = #{specID}
+	</update>
+
+	<!-- 查询本人在讲的专业课 -->
+	<select id="getTeachingSpecCourse" resultMap="BaseResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from tp_spec_course
+		where SPEC_USER_NO = #{teacherId,jdbcType=INTEGER}
+		<if test="selectName !=null">
+			and SPEC_NAME like #{selectName}
+		</if>
+	</select>
+	<!-- end -->
+</mapper>

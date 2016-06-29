@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveQuestion" >
+    <id column="LQ_QUESTION_ID" property="lqQuestionId" jdbcType="INTEGER" />
+    <result column="LQ_LIVE_ID" property="lqLiveId" jdbcType="INTEGER" />
+    <result column="LQ_STU_ID" property="lqStuId" jdbcType="INTEGER" />
+    <result column="LQ_TITLE" property="lqTitle" jdbcType="VARCHAR" />
+    <result column="LQ_KEYWORD" property="lqKeyword" jdbcType="VARCHAR" />
+    <result column="LQ_TYPE_ID" property="lqTypeId" jdbcType="INTEGER" />
+    <result column="LQ_EMERGENCY" property="lqEmergency" jdbcType="CHAR" />
+    <result column="LQ_QUE_TIME" property="lqQueTime" jdbcType="TIMESTAMP" />
+    <result column="LQ_STATUS" property="lqStatus" jdbcType="CHAR" />
+    <result column="LQ_BEST_ANSWER" property="lqBestAnswer" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.live.model.LiveQuestion" extends="BaseResultMap" >
+    <result column="LQ_CONTENT" property="lqContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LQ_QUESTION_ID, LQ_LIVE_ID, LQ_STU_ID, LQ_TITLE, LQ_KEYWORD, LQ_TYPE_ID, LQ_EMERGENCY, 
+    LQ_QUE_TIME, LQ_STATUS, LQ_BEST_ANSWER
+  </sql>
+  <sql id="Blob_Column_List" >
+    LQ_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveQuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_live_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_question
+    where LQ_QUESTION_ID = #{lqQuestionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_live_question
+    where LQ_QUESTION_ID = #{lqQuestionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveQuestion" >
+    insert into tp_live_question (LQ_QUESTION_ID, LQ_LIVE_ID, LQ_STU_ID, 
+      LQ_TITLE, LQ_KEYWORD, LQ_TYPE_ID, 
+      LQ_EMERGENCY, LQ_QUE_TIME, LQ_STATUS, 
+      LQ_BEST_ANSWER, LQ_CONTENT)
+    values (#{lqQuestionId,jdbcType=INTEGER}, #{lqLiveId,jdbcType=INTEGER}, #{lqStuId,jdbcType=INTEGER}, 
+      #{lqTitle,jdbcType=VARCHAR}, #{lqKeyword,jdbcType=VARCHAR}, #{lqTypeId,jdbcType=INTEGER}, 
+      #{lqEmergency,jdbcType=CHAR}, #{lqQueTime,jdbcType=TIMESTAMP}, #{lqStatus,jdbcType=CHAR}, 
+      #{lqBestAnswer,jdbcType=INTEGER}, #{lqContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveQuestion" >
+    insert into tp_live_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lqQuestionId != null" >
+        LQ_QUESTION_ID,
+      </if>
+      <if test="lqLiveId != null" >
+        LQ_LIVE_ID,
+      </if>
+      <if test="lqStuId != null" >
+        LQ_STU_ID,
+      </if>
+      <if test="lqTitle != null" >
+        LQ_TITLE,
+      </if>
+      <if test="lqKeyword != null" >
+        LQ_KEYWORD,
+      </if>
+      <if test="lqTypeId != null" >
+        LQ_TYPE_ID,
+      </if>
+      <if test="lqEmergency != null" >
+        LQ_EMERGENCY,
+      </if>
+      <if test="lqQueTime != null" >
+        LQ_QUE_TIME,
+      </if>
+      <if test="lqStatus != null" >
+        LQ_STATUS,
+      </if>
+      <if test="lqBestAnswer != null" >
+        LQ_BEST_ANSWER,
+      </if>
+      <if test="lqContent != null" >
+        LQ_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lqQuestionId != null" >
+        #{lqQuestionId,jdbcType=INTEGER},
+      </if>
+      <if test="lqLiveId != null" >
+        #{lqLiveId,jdbcType=INTEGER},
+      </if>
+      <if test="lqStuId != null" >
+        #{lqStuId,jdbcType=INTEGER},
+      </if>
+      <if test="lqTitle != null" >
+        #{lqTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="lqKeyword != null" >
+        #{lqKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="lqTypeId != null" >
+        #{lqTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="lqEmergency != null" >
+        #{lqEmergency,jdbcType=CHAR},
+      </if>
+      <if test="lqQueTime != null" >
+        #{lqQueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lqStatus != null" >
+        #{lqStatus,jdbcType=CHAR},
+      </if>
+      <if test="lqBestAnswer != null" >
+        #{lqBestAnswer,jdbcType=INTEGER},
+      </if>
+      <if test="lqContent != null" >
+        #{lqContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveQuestionExample" resultType="java.lang.Integer" >
+    select count(*) from tp_live_question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveQuestion" >
+    update tp_live_question
+    <set >
+      <if test="lqLiveId != null" >
+        LQ_LIVE_ID = #{lqLiveId,jdbcType=INTEGER},
+      </if>
+      <if test="lqStuId != null" >
+        LQ_STU_ID = #{lqStuId,jdbcType=INTEGER},
+      </if>
+      <if test="lqTitle != null" >
+        LQ_TITLE = #{lqTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="lqKeyword != null" >
+        LQ_KEYWORD = #{lqKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="lqTypeId != null" >
+        LQ_TYPE_ID = #{lqTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="lqEmergency != null" >
+        LQ_EMERGENCY = #{lqEmergency,jdbcType=CHAR},
+      </if>
+      <if test="lqQueTime != null" >
+        LQ_QUE_TIME = #{lqQueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lqStatus != null" >
+        LQ_STATUS = #{lqStatus,jdbcType=CHAR},
+      </if>
+      <if test="lqBestAnswer != null" >
+        LQ_BEST_ANSWER = #{lqBestAnswer,jdbcType=INTEGER},
+      </if>
+      <if test="lqContent != null" >
+        LQ_CONTENT = #{lqContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LQ_QUESTION_ID = #{lqQuestionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveQuestion" >
+    update tp_live_question
+    set LQ_LIVE_ID = #{lqLiveId,jdbcType=INTEGER},
+      LQ_STU_ID = #{lqStuId,jdbcType=INTEGER},
+      LQ_TITLE = #{lqTitle,jdbcType=VARCHAR},
+      LQ_KEYWORD = #{lqKeyword,jdbcType=VARCHAR},
+      LQ_TYPE_ID = #{lqTypeId,jdbcType=INTEGER},
+      LQ_EMERGENCY = #{lqEmergency,jdbcType=CHAR},
+      LQ_QUE_TIME = #{lqQueTime,jdbcType=TIMESTAMP},
+      LQ_STATUS = #{lqStatus,jdbcType=CHAR},
+      LQ_BEST_ANSWER = #{lqBestAnswer,jdbcType=INTEGER},
+      LQ_CONTENT = #{lqContent,jdbcType=LONGVARCHAR}
+    where LQ_QUESTION_ID = #{lqQuestionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveQuestion" >
+    update tp_live_question
+    set LQ_LIVE_ID = #{lqLiveId,jdbcType=INTEGER},
+      LQ_STU_ID = #{lqStuId,jdbcType=INTEGER},
+      LQ_TITLE = #{lqTitle,jdbcType=VARCHAR},
+      LQ_KEYWORD = #{lqKeyword,jdbcType=VARCHAR},
+      LQ_TYPE_ID = #{lqTypeId,jdbcType=INTEGER},
+      LQ_EMERGENCY = #{lqEmergency,jdbcType=CHAR},
+      LQ_QUE_TIME = #{lqQueTime,jdbcType=TIMESTAMP},
+      LQ_STATUS = #{lqStatus,jdbcType=CHAR},
+      LQ_BEST_ANSWER = #{lqBestAnswer,jdbcType=INTEGER}
+    where LQ_QUESTION_ID = #{lqQuestionId,jdbcType=INTEGER}
+  </update>
+</mapper>

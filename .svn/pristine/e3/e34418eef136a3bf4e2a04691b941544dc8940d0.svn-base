@@ -1,0 +1,1126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.PracticeMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.MorePractice">
+		<id column="PRAC_ID" property="pracId" jdbcType="INTEGER" />
+		<result column="PRAC_NAME" property="pracName" jdbcType="VARCHAR" />
+		<result column="PRAC_INTRO" property="pracIntro" jdbcType="VARCHAR" />
+		<result column="PRAC_TYPE" property="pracType" jdbcType="CHAR" />
+		<result column="PRAC_IS_TEAM" property="pracIsTeam" jdbcType="CHAR" />
+		<result column="PRAC_START_DATE" property="pracStartDate" jdbcType="DATE" />
+		<result column="PRAC_END_DATE" property="pracEndDate" jdbcType="DATE" />
+		<result column="PRAC_SOFT_PERCENT" property="pracSoftPercent" jdbcType="DOUBLE" />
+		<result column="PRAC_TEAM_PERCENT" property="pracTeamPercent" jdbcType="DOUBLE" />
+		<result column="PRAC_COST" property="pracCost" jdbcType="INTEGER" />
+		<result column="PRAC_TECH_TYPE" property="pracTechType" jdbcType="INTEGER" />
+		<result column="PRAC_TEACHER" property="pracTeacher" jdbcType="INTEGER" />
+		<result column="PRAC_STATUS" property="pracStatus" jdbcType="CHAR" />
+		<result column="PRAC_USER_NO" property="pracUserNo" jdbcType="INTEGER" />
+		<result column="PRAC_STU_NO" property="pracStuNo" jdbcType="INTEGER" />
+		<result column="PRAC_REGTIME" property="pracRegtime" jdbcType="TIMESTAMP" />
+
+		<result column="PRO_ID" property="proId" jdbcType="INTEGER" />
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+		<result column="PRO_DOMAIN" property="proDomain" jdbcType="VARCHAR" />
+		<result column="PRO_DIFFCULT" property="proDiffcult" jdbcType="VARCHAR" />
+		<result column="PRO_OWNER_FLAG" property="proOwnerFlag" jdbcType="VARCHAR" />
+		<result column="TEAM_ID" property="teamId" jdbcType="INTEGER" />
+		<result column="TEAM_NAME" property="teamName" jdbcType="VARCHAR" />
+
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="TEAM_PRO_ID" property="teamProId" jdbcType="INTEGER" />
+		<result column="STU_NUM" property="stuNum" jdbcType="INTEGER" />
+		<result column="PRAC_IMG" property="pracImg" jdbcType="LONGVARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="selResultMap" type="com.chinasofti.cetp.practice.model.MoreMorePractice">
+		<id column="PRAC_ID" property="pracId" jdbcType="INTEGER" />
+		<result column="PRAC_NAME" property="pracName" jdbcType="VARCHAR" />
+		<result column="PRAC_INTRO" property="pracIntro" jdbcType="VARCHAR" />
+		<result column="PRAC_TYPE" property="pracType" jdbcType="CHAR" />
+		<result column="PRAC_IS_TEAM" property="pracIsTeam" jdbcType="CHAR" />
+		<result column="PRAC_START_DATE" property="pracStartDate" jdbcType="DATE" />
+		<result column="PRAC_END_DATE" property="pracEndDate" jdbcType="DATE" />
+		<result column="PRAC_SOFT_PERCENT" property="pracSoftPercent" jdbcType="DOUBLE" />
+		<result column="PRAC_TEAM_PERCENT" property="pracTeamPercent" jdbcType="DOUBLE" />
+		<result column="PRAC_TEACHER" property="pracTeacher" jdbcType="INTEGER" />
+		<result column="PRAC_STATUS" property="pracStatus" jdbcType="CHAR" />
+		<result column="PRAC_USER_NO" property="pracUserNo" jdbcType="INTEGER" />
+		<result column="PRAC_REGTIME" property="pracRegtime" jdbcType="TIMESTAMP" />
+		<result column="CLASS_NAME" property="class_name" jdbcType="VARCHAR" />
+		<result column="PRO_ID" property="proId" jdbcType="INTEGER" />
+		<result column="PRO_NAME" property="pro_name" jdbcType="VARCHAR" />
+
+		<result column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="PRO_ID" property="proId" jdbcType="INTEGER" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_USERID" property="stuUserid" jdbcType="VARCHAR" />
+		<result column="TASK_NAME" property="taskName" jdbcType="VARCHAR" />
+		<result column="PN_FINISH_PERCENT" property="pnFinishPercent" jdbcType="DOUBLE" />
+
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<resultMap id="ProBaseResultMap" type="com.chinasofti.cetp.practice.model.MorePro">
+		<id column="PRO_ID" property="proId" jdbcType="INTEGER" />															<!-- 案例编号 -->
+		<result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />											<!-- 案例名称 -->
+		<result column="PRO_STYLE" property="proStyle" jdbcType="CHAR" />												<!-- 案例类型 -->
+		<result column="PRO_TYPE_ID" property="proTypeId" jdbcType="INTEGER" />									<!-- 案例分类ID -->
+		<result column="PRO_IS_TEAM" property="proIsTeam" jdbcType="CHAR" />										<!-- 是否为团队项目 -->
+		<result column="PRO_DOMAIN" property="proDomain" jdbcType="CHAR" />										<!-- 应用领域 -->
+		<result column="PRO_LANGUAGE" property="proLanguage" jdbcType="VARCHAR" />							<!-- 开发语言 -->
+		<result column="PRO_TIME" property="proTime" jdbcType="INTEGER" />											<!-- 项目周期 -->
+		<result column="PRO_TIME_SUFFIX" property="proTimeSuffix" jdbcType="CHAR" />							<!-- 时间单位 -->
+		<result column="PRO_DIFFCULT" property="proDiffcult" jdbcType="CHAR" />										<!-- 难度级别 -->
+		<result column="PRO_PERSON_NUM" property="proPersonNum" jdbcType="INTEGER" />						<!-- 团队人数 -->
+		<result column="PRO_OWNER_FLAG" property="proOwnerFlag" jdbcType="CHAR" />							<!-- 案例归属 -->
+		<result column="PRO_KRYWORD" property="proKryword" jdbcType="VARCHAR" />								<!-- 关键字 -->
+		<result column="PRO_PRE_COND" property="proPreCond" jdbcType="VARCHAR" />								<!-- 前提条件 -->
+		<result column="PRO_TECH" property="proTech" jdbcType="VARCHAR" />											<!-- 关键技术 -->
+		<result column="PRO_USER_NO" property="proUserNo" jdbcType="INTEGER" />									<!-- 记录创建人 -->
+		<result column="PRO_REGTIME" property="proRegtime" jdbcType="TIMESTAMP" />							<!-- 记录创建时间 -->
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />					<!-- 分类名称 -->
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="PRO_INTRO" property="proIntro" jdbcType="LONGVARCHAR" />								<!-- 项目简介 -->
+		<result column="PRO_TARGET" property="proTarget" jdbcType="LONGVARCHAR" />							<!-- 项目目标 -->
+		<result column="PRO_DEV_ENV" property="proDevEnv" jdbcType="LONGVARCHAR" />							<!-- 开发环境 -->									<!-- 用户名称 -->
+	</resultMap>
+
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		PRAC_ID, PRAC_NAME, PRAC_INTRO, PRAC_TYPE, PRAC_IS_TEAM, PRAC_START_DATE, PRAC_END_DATE,
+		PRAC_SOFT_PERCENT, PRAC_TEAM_PERCENT, PRAC_COST, PRAC_TECH_TYPE, PRAC_TEACHER, PRAC_STATUS,
+		PRAC_USER_NO, PRAC_STU_NO, PRAC_REGTIME
+	</sql>
+	<select id="selectMoreByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.PracticeExample">
+		<!-- add by YF 2013/9/12 -->
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,USER_NAME
+		from tp_practice inner join tp_user on PRAC_TEACHER = USER_NO
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.PracticeExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_practice
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tp_practice
+		where PRAC_ID = #{pracId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_practice
+		where PRAC_ID = #{pracId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.practice.model.PracticeExample">
+		delete from tp_practice
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.practice.model.MorePractice">
+		insert into tp_practice (PRAC_ID, PRAC_NAME, PRAC_INTRO,
+		PRAC_TYPE, PRAC_IS_TEAM, PRAC_START_DATE,
+		PRAC_END_DATE, PRAC_SOFT_PERCENT, PRAC_TEAM_PERCENT,
+		PRAC_COST, PRAC_TECH_TYPE, PRAC_TEACHER,
+		PRAC_STATUS, PRAC_USER_NO, PRAC_STU_NO,
+		PRAC_REGTIME)
+		values (#{pracId,jdbcType=INTEGER}, #{pracName,jdbcType=VARCHAR}, #{pracIntro,jdbcType=VARCHAR},
+		#{pracType,jdbcType=CHAR}, #{pracIsTeam,jdbcType=CHAR}, #{pracStartDate,jdbcType=DATE},
+		#{pracEndDate,jdbcType=DATE}, #{pracSoftPercent,jdbcType=DOUBLE}, #{pracTeamPercent,jdbcType=DOUBLE},
+		#{pracCost,jdbcType=INTEGER}, #{pracTechType,jdbcType=INTEGER}, #{pracTeacher,jdbcType=INTEGER},
+		#{pracStatus,jdbcType=CHAR}, #{pracUserNo,jdbcType=INTEGER}, #{pracStuNo,jdbcType=INTEGER},
+		#{pracRegtime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.Practice" useGeneratedKeys="true" keyProperty="pracId">
+		insert into tp_practice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pracId != null">
+				PRAC_ID,
+			</if>
+			<if test="pracName != null">
+				PRAC_NAME,
+			</if>
+			<if test="pracIntro != null">
+				PRAC_INTRO,
+			</if>
+			<if test="pracType != null">
+				PRAC_TYPE,
+			</if>
+			<if test="pracIsTeam != null">
+				PRAC_IS_TEAM,
+			</if>
+			<if test="pracStartDate != null">
+				PRAC_START_DATE,
+			</if>
+			<if test="pracEndDate != null">
+				PRAC_END_DATE,
+			</if>
+			<if test="pracSoftPercent != null">
+				PRAC_SOFT_PERCENT,
+			</if>
+			<if test="pracTeamPercent != null">
+				PRAC_TEAM_PERCENT,
+			</if>
+			<if test="pracCost != null">
+				PRAC_COST,
+			</if>
+			<if test="pracTechType != null">
+				PRAC_TECH_TYPE,
+			</if>
+			<if test="pracTeacher != null">
+				PRAC_TEACHER,
+			</if>
+			<if test="pracStatus != null">
+				PRAC_STATUS,
+			</if>
+			<if test="pracUserNo != null">
+				PRAC_USER_NO,
+			</if>
+			<if test="pracStuNo != null">
+				PRAC_STU_NO,
+			</if>
+			<if test="pracRegtime != null">
+				PRAC_REGTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pracId != null">
+				#{pracId,jdbcType=INTEGER},
+			</if>
+			<if test="pracName != null">
+				#{pracName,jdbcType=VARCHAR},
+			</if>
+			<if test="pracIntro != null">
+				#{pracIntro,jdbcType=VARCHAR},
+			</if>
+			<if test="pracType != null">
+				#{pracType,jdbcType=CHAR},
+			</if>
+			<if test="pracIsTeam != null">
+				#{pracIsTeam,jdbcType=CHAR},
+			</if>
+			<if test="pracStartDate != null">
+				#{pracStartDate,jdbcType=DATE},
+			</if>
+			<if test="pracEndDate != null">
+				#{pracEndDate,jdbcType=DATE},
+			</if>
+			<if test="pracSoftPercent != null">
+				#{pracSoftPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="pracTeamPercent != null">
+				#{pracTeamPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="pracCost != null">
+				#{pracCost,jdbcType=INTEGER},
+			</if>
+			<if test="pracTechType != null">
+				#{pracTechType,jdbcType=INTEGER},
+			</if>
+			<if test="pracTeacher != null">
+				#{pracTeacher,jdbcType=INTEGER},
+			</if>
+			<if test="pracStatus != null">
+				#{pracStatus,jdbcType=CHAR},
+			</if>
+			<if test="pracUserNo != null">
+				#{pracUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="pracStuNo != null">
+				#{pracStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="pracRegtime != null">
+				#{pracRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.practice.model.PracticeExample" resultType="java.lang.Integer">
+		select count(*) from tp_practice
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_practice
+		<set>
+			<if test="record.pracId != null">
+				PRAC_ID = #{record.pracId,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracName != null">
+				PRAC_NAME = #{record.pracName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.pracIntro != null">
+				PRAC_INTRO = #{record.pracIntro,jdbcType=VARCHAR},
+			</if>
+			<if test="record.pracType != null">
+				PRAC_TYPE = #{record.pracType,jdbcType=CHAR},
+			</if>
+			<if test="record.pracIsTeam != null">
+				PRAC_IS_TEAM = #{record.pracIsTeam,jdbcType=CHAR},
+			</if>
+			<if test="record.pracStartDate != null">
+				PRAC_START_DATE = #{record.pracStartDate,jdbcType=DATE},
+			</if>
+			<if test="record.pracEndDate != null">
+				PRAC_END_DATE = #{record.pracEndDate,jdbcType=DATE},
+			</if>
+			<if test="record.pracSoftPercent != null">
+				PRAC_SOFT_PERCENT = #{record.pracSoftPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="record.pracTeamPercent != null">
+				PRAC_TEAM_PERCENT = #{record.pracTeamPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="record.pracCost != null">
+				PRAC_COST = #{record.pracCost,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracTechType != null">
+				PRAC_TECH_TYPE = #{record.pracTechType,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracTeacher != null">
+				PRAC_TEACHER = #{record.pracTeacher,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracStatus != null">
+				PRAC_STATUS = #{record.pracStatus,jdbcType=CHAR},
+			</if>
+			<if test="record.pracUserNo != null">
+				PRAC_USER_NO = #{record.pracUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracStuNo != null">
+				PRAC_STU_NO = #{record.pracStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.pracRegtime != null">
+				PRAC_REGTIME = #{record.pracRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_practice
+		set PRAC_ID = #{record.pracId,jdbcType=INTEGER},
+		PRAC_NAME = #{record.pracName,jdbcType=VARCHAR},
+		PRAC_INTRO = #{record.pracIntro,jdbcType=VARCHAR},
+		PRAC_TYPE = #{record.pracType,jdbcType=CHAR},
+		PRAC_IS_TEAM = #{record.pracIsTeam,jdbcType=CHAR},
+		PRAC_START_DATE = #{record.pracStartDate,jdbcType=DATE},
+		PRAC_END_DATE = #{record.pracEndDate,jdbcType=DATE},
+		PRAC_SOFT_PERCENT = #{record.pracSoftPercent,jdbcType=DOUBLE},
+		PRAC_TEAM_PERCENT = #{record.pracTeamPercent,jdbcType=DOUBLE},
+		PRAC_COST = #{record.pracCost,jdbcType=INTEGER},
+		PRAC_TECH_TYPE = #{record.pracTechType,jdbcType=INTEGER},
+		PRAC_TEACHER = #{record.pracTeacher,jdbcType=INTEGER},
+		PRAC_STATUS = #{record.pracStatus,jdbcType=CHAR},
+		PRAC_USER_NO = #{record.pracUserNo,jdbcType=INTEGER},
+		PRAC_STU_NO = #{record.pracStuNo,jdbcType=INTEGER},
+		PRAC_REGTIME = #{record.pracRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.practice.model.Practice">
+		update tp_practice
+		<set>
+			<if test="pracName != null">
+				PRAC_NAME = #{pracName,jdbcType=VARCHAR},
+			</if>
+			<if test="pracIntro != null">
+				PRAC_INTRO = #{pracIntro,jdbcType=VARCHAR},
+			</if>
+			<if test="pracType != null">
+				PRAC_TYPE = #{pracType,jdbcType=CHAR},
+			</if>
+			<if test="pracIsTeam != null">
+				PRAC_IS_TEAM = #{pracIsTeam,jdbcType=CHAR},
+			</if>
+			<if test="pracStartDate != null">
+				PRAC_START_DATE = #{pracStartDate,jdbcType=DATE},
+			</if>
+			<if test="pracEndDate != null">
+				PRAC_END_DATE = #{pracEndDate,jdbcType=DATE},
+			</if>
+			<if test="pracSoftPercent != null">
+				PRAC_SOFT_PERCENT = #{pracSoftPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="pracTeamPercent != null">
+				PRAC_TEAM_PERCENT = #{pracTeamPercent,jdbcType=DOUBLE},
+			</if>
+			<if test="pracCost != null">
+				PRAC_COST = #{pracCost,jdbcType=INTEGER},
+			</if>
+			<if test="pracTechType != null">
+				PRAC_TECH_TYPE = #{pracTechType,jdbcType=INTEGER},
+			</if>
+			<if test="pracTeacher != null">
+				PRAC_TEACHER = #{pracTeacher,jdbcType=INTEGER},
+			</if>
+			<if test="pracStatus != null">
+				PRAC_STATUS = #{pracStatus,jdbcType=CHAR},
+			</if>
+			<if test="pracUserNo != null">
+				PRAC_USER_NO = #{pracUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="pracStuNo != null">
+				PRAC_STU_NO = #{pracStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="pracRegtime != null">
+				PRAC_REGTIME = #{pracRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where PRAC_ID = #{pracId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.Practice">
+		update tp_practice
+		set PRAC_NAME = #{pracName,jdbcType=VARCHAR},
+		PRAC_INTRO = #{pracIntro,jdbcType=VARCHAR},
+		PRAC_TYPE = #{pracType,jdbcType=CHAR},
+		PRAC_IS_TEAM = #{pracIsTeam,jdbcType=CHAR},
+		PRAC_START_DATE = #{pracStartDate,jdbcType=DATE},
+		PRAC_END_DATE = #{pracEndDate,jdbcType=DATE},
+		PRAC_SOFT_PERCENT = #{pracSoftPercent,jdbcType=DOUBLE},
+		PRAC_TEAM_PERCENT = #{pracTeamPercent,jdbcType=DOUBLE},
+		PRAC_COST = #{pracCost,jdbcType=INTEGER},
+		PRAC_TECH_TYPE = #{pracTechType,jdbcType=INTEGER},
+		PRAC_TEACHER = #{pracTeacher,jdbcType=INTEGER},
+		PRAC_STATUS = #{pracStatus,jdbcType=CHAR},
+		PRAC_USER_NO = #{pracUserNo,jdbcType=INTEGER},
+		PRAC_STU_NO = #{pracStuNo,jdbcType=INTEGER},
+		PRAC_REGTIME = #{pracRegtime,jdbcType=TIMESTAMP}
+		where PRAC_ID = #{pracId,jdbcType=INTEGER}
+	</update>
+
+	<sql id="Base_Column_ListP">
+		PRO_ID, PRO_NAME, PRO_STYLE, PRO_TYPE_ID, PRO_IS_TEAM, PRO_DOMAIN,
+		PRO_LANGUAGE,
+		PRO_TIME, PRO_TIME_SUFFIX, PRO_DIFFCULT, PRO_PERSON_NUM,
+		PRO_OWNER_FLAG,
+		PRO_KRYWORD,
+		PRO_PRE_COND, PRO_TECH, PRO_USER_NO,
+		PRO_REGTIME
+	</sql>
+
+	<sql id="Blob_Column_ListP">
+		PRO_INTRO, PRO_TARGET, PRO_DEV_ENV
+	</sql>
+	<select id="selectPer" parameterType="HashMap" resultMap="BaseResultMap">
+		select
+		b.CLASS_NAME CLASS_NAME
+		,d.PRO_NAME PRO_NAME
+		,e.PRAC_ID PRAC_ID
+		,e.PRAC_NAME PRAC_NAME
+		,e.PRAC_INTRO PRAC_INTRO
+		,e.PRAC_IS_TEAM PRAC_IS_TEAM
+		,e.PRAC_START_DATE PRAC_START_DATE
+		,e.PRAC_END_DATE PRAC_END_DATE
+		,e.PRAC_SOFT_PERCENT PRAC_SOFT_PERCENT
+		,e.PRAC_TEAM_PERCENT PRAC_TEAM_PERCENT
+		,e.PRAC_TEACHER PRAC_TEACHER
+		,f.USER_NAME USER_NAME
+		from
+		tp_practice_class a
+		,tp_class b
+		,tp_avail_pro c
+		,tp_pro d
+		,tp_practice e
+		,tp_user f
+		where
+		a.PC_CLASS_ID =b.CLASS_ID
+		and a.PC_PRAC_ID = c.AP_PRAC_ID
+		and c.AP_PRO_ID =d.PRO_ID
+		and a.PC_PRAC_ID =e.PRAC_ID
+		and e.PRAC_USER_NO = f.USER_NO
+	</select>
+
+	<select id="selectQueryPer" parameterType="HashMap" resultMap="BaseResultMap">
+		select
+		DISTINCT
+		e.PRAC_ID PRAC_ID
+		,e.PRAC_NAME PRAC_NAME
+		,f.USER_NAME USER_NAME
+		from
+		tp_practice_class a
+		,tp_class b
+		,tp_avail_pro c
+		,tp_pro d
+		,tp_practice e
+		,tp_user f
+		where
+		a.PC_CLASS_ID =b.CLASS_ID
+		and a.PC_PRAC_ID = c.AP_PRAC_ID
+		and c.AP_PRO_ID =d.PRO_ID
+		and a.PC_PRAC_ID =e.PRAC_ID
+		and e.PRAC_USER_NO = f.USER_NO
+		<if test="selectPracIsTeam != null">
+			and e.PRAC_IS_TEAM = #{selectPracIsTeam,jdbcType=VARCHAR}
+		</if>
+		<if test="selectPRAC_ID != null">
+			and e.PRAC_ID = #{selectPRAC_ID,jdbcType=INTEGER}
+		</if>
+		<if test="selectPRAC_NAME != null">
+			and e.PRAC_NAME like #{selectPRAC_NAME,jdbcType=VARCHAR}
+		</if>
+
+	</select>
+
+
+	<select id="selectPerP" parameterType="HashMap" resultMap="selResultMap">
+		select
+		c.PRO_NAME PRO_NAME
+		,d.STU_NO STU_NO
+		,d.STU_NAME STU_NAME
+		,b.TASK_NAME TASK_NAME
+		,a.PN_FINISH_PERCENT PN_FINISH_PERCENT
+		,c.PRO_ID PRO_ID
+		from
+		tp_person_plan a
+		,tp_pro_task b
+		,tp_pro c
+		,tp_student d
+		,tp_class e
+		,tp_practice_class f
+		where
+		a.PN_TASK_ID =b.TASK_ID
+		and b.TASK_PRO_ID = c.PRO_ID
+		and a.PN_STU_NO =d.STU_NO
+		and d.STU_CLASS_ID =e.CLASS_ID
+		and e.CLASS_ID=f.PC_CLASS_ID
+		and f.PC_PRAC_ID=#{pracIdP,jdbcType=INTEGER}
+		and a.PN_STATUS = '2'
+	</select>
+	<select id="selectPerP1" parameterType="HashMap" resultMap="selResultMap">
+		select
+		c.PRO_NAME PRO_NAME
+		,d.STU_NO STU_NO
+		,d.STU_NAME STU_NAME
+		,'' TASK_NAME
+		,'' PN_FINISH_PERCENT
+		,c.PRO_ID PRO_ID
+		from
+		tp_pro c
+		,tp_prac_person a
+		,tp_student d
+		,tp_class e
+		,tp_practice_class f
+		where
+		c.PRO_ID =a.PP_PRO_ID
+		and a.PP_STU_ID = d.STU_NO
+		and d.STU_CLASS_ID =e.CLASS_ID
+		and e.CLASS_ID=f.PC_CLASS_ID
+		and f.PC_PRAC_ID=#{pracIdP,jdbcType=INTEGER}
+		<if test="selectSTU_NO!= null">
+			and d.STU_NO like #{selectSTU_NO,jdbcType=INTEGER}
+		</if>
+		<if test="selectSTU_NAME != null">
+			and d.STU_NAME like #{selectSTU_NAME,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectQueryPerP" parameterType="HashMap" resultMap="selResultMap">
+		select
+		c.PRO_NAME PRO_NAME
+		,d.STU_NO STU_NO
+		,d.STU_NAME STU_NAME
+		,b.TASK_NAME TASK_NAME
+		,a.PN_FINISH_PERCENT PN_FINISH_PERCENT
+		,c.PRO_ID PRO_ID
+		from
+		tp_person_plan a
+		,tp_pro_task b
+		,tp_pro c
+		,tp_student d
+		,tp_class e
+		,tp_practice_class f
+		where
+		a.PN_TASK_ID =b.TASK_ID
+		and b.TASK_PRO_ID = c.PRO_ID
+		and a.PN_STU_NO =d.STU_NO
+		and d.STU_CLASS_ID =e.CLASS_ID
+		and e.CLASS_ID=f.PC_CLASS_ID
+		and f.PC_PRAC_ID=#{pracIdP,jdbcType=INTEGER}
+		and a.PN_STATUS = '2'
+
+		<if test="selectSTU_NO!= null">
+			and STU_NO like #{selectSTU_NO,jdbcType=INTEGER}
+		</if>
+		<if test="selectSTU_NAME != null">
+			and STU_NAME like
+			#{selectSTU_NAME,jdbcType=VARCHAR}
+		</if>
+
+	</select>
+	<select id="selectByPrimaryKeyDetail" resultMap="selResultMap" parameterType="java.lang.Integer">
+		select
+		distinct
+		e.PRAC_ID PRAC_ID
+		,e.PRAC_NAME PRAC_NAME
+		,e.PRAC_INTRO PRAC_INTRO
+		,e.PRAC_IS_TEAM PRAC_IS_TEAM
+		,e.PRAC_START_DATE PRAC_START_DATE
+		,e.PRAC_END_DATE PRAC_END_DATE
+		,e.PRAC_SOFT_PERCENT PRAC_SOFT_PERCENT
+		,e.PRAC_TEAM_PERCENT PRAC_TEAM_PERCENT
+		,e.PRAC_TEACHER PRAC_TEACHER
+		,f.USER_NAME USER_NAME
+		from
+		tp_practice_class a
+		,tp_class b
+		,tp_avail_pro
+		c
+		,tp_pro d
+		,tp_practice e
+		,tp_user f
+		where
+		a.PC_CLASS_ID =b.CLASS_ID
+		and a.PC_PRAC_ID = c.AP_PRAC_ID
+		and c.AP_PRO_ID =d.PRO_ID
+		and a.PC_PRAC_ID =e.PRAC_ID
+		and e.PRAC_TEACHER = f.USER_NO
+		and e.PRAC_ID = #{selpracid}
+	</select>
+	<select id="selectByPrimaryKeyDetailP" resultMap="selResultMap" parameterType="java.lang.Integer">
+		select
+		c.PRO_NAME PRO_NAME
+		,d.STU_NO STU_NO
+		,d.STU_NAME STU_NAME
+		,b.TASK_NAME TASK_NAME
+		,a.PN_FINISH_PERCENT PN_FINISH_PERCENT
+		,c.PRO_ID
+		PRO_ID
+
+		from tp_person_plan a
+		,tp_pro_task b
+		,tp_pro c
+		,tp_student d
+		,tp_class e
+		,tp_practice_class f
+		where
+		a.PN_TASK_ID =b.TASK_ID
+		and
+		b.TASK_PRO_ID = c.PRO_ID
+		and a.PN_STU_NO =d.STU_NO
+		and d.STU_CLASS_ID =
+		e.CLASS_ID
+		and e.CLASS_ID=f.PC_CLASS_ID
+		and f.PC_PRAC_ID=
+		#{pracIdP,jdbcType=INTEGER}
+		and a.PN_STATUS = '2'
+
+	</select>
+
+	<select id="selectByPrimaryKeyP" resultMap="ProBaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_ListP" />
+		,
+		<include refid="Blob_Column_ListP" />
+		from tp_pro
+		where PRO_ID = #{proId,jdbcType=INTEGER}
+	</select>
+
+	<!-- edit by YF 2013-11-19 select PRAC_STATUS by 'selectPracStatus' -->
+	<select id="selectQueryTrainingMng" parameterType="HashMap" resultMap="BaseResultMap">
+		select a.PRAC_ID
+		,a.PRAC_NAME
+		,a.PRAC_INTRO
+		,a.PRAC_TYPE
+		,(case when
+		(a.PRAC_IS_TEAM = '1') then "个人"
+		when (a.PRAC_IS_TEAM = '2') then "团队"
+		end) as PRAC_IS_TEAM
+		,a.PRAC_START_DATE,10
+		,a.PRAC_END_DATE
+		,a.PRAC_SOFT_PERCENT
+		,a.PRAC_TEACHER
+		,NOW()
+		,(case when (a.PRAC_STATUS = '1') then "未发布"
+		when (a.PRAC_STATUS = '2') then "已发布"
+		when (a.PRAC_STATUS = '3') then "进行中"
+		when (a.PRAC_STATUS = '4') then "结束"
+		end) as PRAC_STATUS
+		,a.PRAC_USER_NO
+		,a.PRAC_REGTIME
+		,b.USER_NO
+		,b.USER_NAME
+		,c.STU_NO
+		,c.STU_NAME
+		from TP_PRACTICE a
+		left join TP_USER b
+		on b.USER_NO =
+		a.PRAC_TEACHER
+		left join TP_STUDENT c
+		on c.STU_NO = a.PRAC_USER_NO
+		where
+		1=1
+		<if test="selectPracName !=null and selectPracName != '' ">
+			and a.PRAC_NAME like #{selectPracName}
+		</if>
+		<if test="selectPracIsTeam !=null and selectPracIsTeam !='' ">
+			and a.PRAC_IS_TEAM=#{selectPracIsTeam}
+		</if>
+		<if test="selectPracTeacher !=null and selectPracTeacher != '' ">
+			and a.PRAC_TEACHER = #{selectPracTeacher}
+		</if>
+		<if test="selectPracStatus !=null and selectPracStatus !='' ">
+			and a.PRAC_STATUS = #{selectPracStatus}
+		</if>
+	</select>
+	<select id="selectThisMsg" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select a.PRAC_ID
+		,a.PRAC_NAME
+		,a.PRAC_INTRO
+		,a.PRAC_TYPE
+		,a.PRAC_IS_TEAM
+		,a.PRAC_START_DATE
+		,a.PRAC_END_DATE
+		,a.PRAC_SOFT_PERCENT
+		,a.PRAC_TEAM_PERCENT
+		,a.PRAC_COST
+		,a.PRAC_TECH_TYPE
+		,a.PRAC_TEACHER
+		,a.PRAC_STATUS
+		,a.PRAC_USER_NO
+		,a.PRAC_REGTIME
+		,b.USER_NO
+		,b.USER_NAME
+		,c.STU_NO
+		,c.STU_NAME
+		from
+		TP_PRACTICE a
+		left join TP_USER b
+		on b.USER_NO = a.PRAC_TEACHER
+		left join
+		TP_STUDENT c
+		on c.STU_NO = a.PRAC_USER_NO
+		where PRAC_ID =
+		#{pracId,jdbcType=INTEGER}
+	</select>
+	<!-- 查询可选项目列表 edit by YF 2013-12-02 -->
+	<select id="selectCanselectPro" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		distinct
+		b.PRO_ID
+		,b.PRO_NAME
+		,b.PRO_DOMAIN
+		,b.PRO_OWNER_FLAG
+		,(case when
+		(b.PRO_DIFFCULT = '1') then "简单"
+		when (b.PRO_DIFFCULT = '2') then "适中"
+		when (b.PRO_DIFFCULT = '3') then "较难"
+		when (b.PRO_DIFFCULT = '4') then
+		"难"
+		when (b.PRO_DIFFCULT = '5') then "很难"
+		end) as PRO_DIFFCULT
+		from
+		TP_PRO b
+		inner join TP_AVAIL_PRO c
+		on c.AP_PRO_ID = b.PRO_ID
+		where c.AP_PRAC_ID = #{pracId,jdbcType=INTEGER}
+	</select>
+	<!-- 查询实训ID,个人实训/团队实训 -->
+	<select id="selectPracType" parameterType="HashMap" resultMap="BaseResultMap">
+		select d.PRAC_ID
+		,d.PRAC_IS_TEAM
+		from TP_PRO b														<!-- 案例 -->
+		inner join TP_AVAIL_PRO c												<!-- 案例实训关系表 -->
+		on c.AP_PRO_ID = b.PRO_ID
+		and b.PRO_ID = #{proId,jdbcType=INTEGER}
+		inner join TP_PRACTICE d												<!-- 实训表 -->
+		on d.PRAC_ID = c.AP_PRAC_ID
+		and		<![CDATA[d.PRAC_END_DATE>=now()]]>
+		and		<![CDATA[d.PRAC_START_DATE<=now()]]>
+		inner join TP_PRACTICE_CLASS e									<!-- 实训班级关系表 -->
+		on e.PC_PRAC_ID = d.PRAC_ID
+		inner join TP_CLASS f													<!-- 班级表 -->
+		on f.CLASS_ID = e.PC_CLASS_ID
+		inner join TP_STUDENT g													<!-- 学生表 -->
+		on g.STU_CLASS_ID = f.CLASS_ID
+		where g.STU_NO =
+		#{studentNumber,jdbcType=INTEGER}
+	</select>
+	<!-- 根据学生ID查看是否为组长并返回组编号 -->
+	<select id="checkForTeamLeader" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select TEAM_ID
+		,TEAM_PRO_ID
+		from TP_PRACTICE_TEAM
+		where
+		TEAM_LEADER_NO = #{studentNumber}
+	</select>
+	<select id="checkSelPro" parameterType="HashMap" resultType="java.lang.Integer">
+		select
+		count(PP_STU_ID)
+		from
+		TP_PRAC_PERSON
+		where
+		PP_STU_ID = #{stuNo}
+		and PP_PRAC_ID =#{pracId}
+		and PP_PRO_ID IS NOT NULL
+	</select>
+	<update id="updTpPracticeTeam" parameterType="HashMap">
+		update
+		TP_PRACTICE_TEAM
+		set TEAM_PRO_ID = #{proId},
+		PRAC_REGTIME = now()
+		where
+		TEAM_ID = #{teamId}
+	</update>
+
+	<!-- 查询学号下的实训 -->
+	<select id="checkPracticeForStuNo" parameterType="HashMap" resultMap="BaseResultMap">
+		SELECT * FROM tp_practice WHERE PRAC_ID in (
+		SELECT
+		TEAM_PRAC_ID FROM
+		tp_practice_team WHERE TEAM_ID IN (
+		SELECT TM_TEAM_ID
+		FROM
+		tp_team_member WHERE TM_MEMBER_NO=#{stuNo}))
+		<if test="pracName !=null">
+			and PRAC_NAME LIKE
+			#{pracName}
+		</if>
+
+	</select>
+	<select id="getSelectedStuList" parameterType="HashMap" resultMap="selResultMap">
+		select
+		f.STU_NO STU_NO
+		,f.STU_NAME STU_NAME
+		,g.PRO_ID PRO_ID
+		,g.PRO_NAME PRO_NAME
+		from
+		(select
+		a.STU_NO
+		,a.STU_NAME
+		,b.CLASS_ID
+		from
+		TP_STUDENT a
+		,TP_CLASS b
+		,TP_PRACTICE_CLASS c
+		where
+		a.STU_CLASS_ID = b.CLASS_ID
+		and b.CLASS_ID = c.PC_CLASS_ID
+		and c.PC_PRAC_ID = #{pracId}) f
+		left join
+		(select
+		d.PRO_ID
+		,d.PRO_NAME
+		,e.PP_STU_ID PP_STU_ID
+		from
+		TP_PRO d
+		,TP_PRAC_PERSON e
+		where
+		d.PRO_ID = e.PP_PRO_ID
+		and e.PP_PRAC_ID = #{pracId}) g
+		on
+		f.STU_NO = g.PP_STU_ID
+		where
+		1=1
+		<if test="selstuName !=null">
+			and f.STU_NAME LIKE #{selstuName}
+		</if>
+		<if test="selClassId !=null">
+			and f.CLASS_ID =#{selClassId}
+		</if>
+	</select>
+	<insert id="insertPersonPro" parameterType="HashMap">
+		insert into
+		TP_PRAC_PERSON(
+		PP_PRAC_ID
+		,PP_PRO_ID
+		,PP_STU_ID
+		,PP_REGTIME)
+		values(
+		#{pracId,jdbcType=INTEGER}
+		,#{proId,jdbcType=INTEGER}
+		,#{stuNo,jdbcType=INTEGER}
+		,now()
+		)
+	</insert>
+	<update id="updatePersonPro" parameterType="HashMap">
+		update
+		TP_PRAC_PERSON
+		set
+		PP_PRO_ID = #{proId,jdbcType=INTEGER}
+		where
+		PP_PRAC_ID =#{pracId,jdbcType=INTEGER}
+		and PP_STU_ID = #{stuNo,jdbcType=INTEGER}
+	</update>
+	<insert id="insertPersonPro1" parameterType="HashMap">
+		insert into
+		TP_PRAC_PERSON(
+		PP_PRAC_ID
+		,PP_STU_ID
+		,PP_REGTIME)
+		values(
+		#{pracId,jdbcType=INTEGER}
+		,#{stuNo,jdbcType=INTEGER}
+		,now()
+		)
+	</insert>
+	<insert id="insertPersonTask" parameterType="HashMap">
+		insert into
+		TP_PERSON_PLAN(
+		PN_STU_NO
+		,PN_TASK_ID
+		,PN_SUGGEST_TIME
+		,PL_REGTIME)
+		select
+		#{stuNo,jdbcType=INTEGER}
+		,TASK_ID
+		,TASK_TIME
+		,now()
+		from
+		TP_PRO_TASK
+		where
+		TASK_PRO_ID = #{proId,jdbcType=INTEGER}
+	</insert>
+	<!-- add by YF 2014-7-9 -->
+	<select id="getPracListForStu" resultMap="BaseResultMap" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		IFNULL(USER_NICKNAME, USER_ID) AS USER_NAME,
+		count(PP_STU_ID) AS STU_NUM,
+		PRAC_IMG,
+		TECH_TYPE_NAME
+		FROM
+		tp_practice
+		INNER JOIN tp_user ON PRAC_TEACHER = USER_NO
+		LEFT JOIN (
+		SELECT
+		AP_PRAC_ID,
+		GROUP_CONCAT(DEMO_IMG_URL) AS PRAC_IMG
+		FROM
+		tp_avail_pro
+		INNER JOIN tp_pro ON AP_PRO_ID = PRO_ID
+		INNER JOIN tp_pro_demo_img ON DEMO_PRO_ID = PRO_ID
+		WHERE
+		NOT PRO_OWNER_FLAG = '3'
+		GROUP BY
+		AP_PRAC_ID
+		) AS timg ON timg.AP_PRAC_ID = PRAC_ID
+		LEFT JOIN tp_tech_type ON PRAC_TECH_TYPE = TECH_TYPE_ID
+		LEFT JOIN tp_prac_person ON PP_PRAC_ID = PRAC_ID
+		WHERE
+		PRAC_STATUS = '2'
+		<if test="techType !=null">
+			AND TECH_TYPE_NAME = #{techType}
+		</if>
+		<if test="pracIsTeam !=null">
+			AND PRAC_IS_TEAM = #{pracIsTeam}
+		</if>
+		GROUP BY
+		PRAC_ID
+		ORDER BY
+		PRAC_ID DESC
+	</select>
+	<select id="getStuPracList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		IFNULL(USER_NICKNAME, USER_ID) AS USER_NAME,
+		PRAC_IMG,
+		TECH_TYPE_NAME,
+		TEAM_ID,
+		IFNULL(TEAM_PRO_ID, PP_PRO_ID) AS PRO_ID
+		FROM
+		tp_practice
+		INNER JOIN tp_user ON PRAC_TEACHER = USER_NO
+		INNER JOIN (
+		SELECT
+		AP_PRAC_ID,
+		GROUP_CONCAT(DEMO_IMG_URL) AS PRAC_IMG
+		FROM
+		tp_avail_pro
+		INNER JOIN tp_pro ON AP_PRO_ID = PRO_ID
+		INNER JOIN tp_pro_demo_img ON DEMO_PRO_ID = PRO_ID
+		WHERE
+		NOT PRO_OWNER_FLAG = '3'
+		GROUP BY
+		AP_PRAC_ID
+		) AS timg ON timg.AP_PRAC_ID = PRAC_ID
+		INNER JOIN tp_prac_person ON PP_PRAC_ID = PRAC_ID
+		LEFT JOIN tp_team_member ON PP_STU_ID = TM_MEMBER_NO
+		LEFT JOIN tp_practice_team ON (
+		TEAM_ID = TM_TEAM_ID
+		AND TEAM_PRAC_ID = PRAC_ID
+		)
+		LEFT JOIN tp_tech_type ON PRAC_TECH_TYPE = TECH_TYPE_ID
+		WHERE
+		PP_STU_ID = #{stuNo}
+		GROUP BY
+		PRAC_ID
+		ORDER BY
+		PRAC_ID DESC
+	</select>
+	<!-- 获取个人实训信息 -->
+	<select id="getPersonPracInfo" resultMap="selResultMap" parameterType="map">
+		SELECT
+		PRO_NAME,
+		STU_NO,
+		STU_USERID,
+		TASK_NAME,
+		PN_FINISH_PERCENT,
+		PRO_ID
+		FROM
+		tp_student
+		INNER JOIN tp_prac_person ON STU_NO = PP_STU_ID
+		LEFT JOIN tp_pro ON PRO_ID = PP_PRO_ID
+		LEFT JOIN (
+		SELECT
+		PN_STU_NO,
+		PN_FINISH_PERCENT,
+		TASK_NAME,
+		TASK_PRO_ID
+		FROM
+		tp_person_plan
+		INNER JOIN tp_pro_task ON TASK_ID = PN_TASK_ID
+		WHERE
+		PN_STATUS = '2'
+		) ts ON (
+		PN_STU_NO = STU_NO
+		AND TASK_PRO_ID = PRO_ID
+		)
+		WHERE PP_PRAC_ID = #{pracId}
+		<if test="stuNo !=null">
+			AND STU_NO = #{stuNo}
+		</if>
+		<if test="stuUserid !=null">
+			AND STU_USERID = #{stuUserid}
+		</if>
+		GROUP BY
+		STU_NO
+	</select>
+	<select id="getPracByClassId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		tp_practice
+		INNER JOIN tp_practice_class ON (
+		PRAC_ID = PC_PRAC_ID
+		AND PC_CLASS_ID = #{classId}
+		)
+		WHERE
+		PRAC_STATUS = '2'
+		OR PRAC_STATUS = '3'
+		LIMIT 0,1
+	</select>
+	<select id="getPracListByTeacher" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		IFNULL(USER_NICKNAME, USER_ID) AS USER_NAME,
+		count(PP_STU_ID) AS STU_NUM,
+		PRAC_IMG,
+		TECH_TYPE_NAME,
+		PRO_NAME
+		FROM
+		tp_practice
+		INNER JOIN tp_user ON PRAC_TEACHER = USER_NO
+		INNER JOIN (
+		SELECT
+		AP_PRAC_ID,
+		GROUP_CONCAT(DEMO_IMG_URL) AS PRAC_IMG,
+		GROUP_CONCAT(distinct PRO_NAME) AS PRO_NAME
+		FROM
+		tp_avail_pro
+		INNER JOIN tp_pro ON AP_PRO_ID = PRO_ID
+		INNER JOIN tp_pro_demo_img ON DEMO_PRO_ID = PRO_ID
+		WHERE
+		NOT PRO_OWNER_FLAG = '3'
+		GROUP BY
+		AP_PRAC_ID
+		) AS timg ON timg.AP_PRAC_ID = PRAC_ID
+		LEFT JOIN tp_tech_type ON PRAC_TECH_TYPE = TECH_TYPE_ID
+		LEFT JOIN tp_prac_person ON PP_PRAC_ID = PRAC_ID
+		WHERE
+		NOT PRAC_STATUS = '1'
+		AND PRAC_TEACHER = #{userNo}
+		GROUP BY
+		PRAC_ID
+		ORDER BY
+		PRAC_ID DESC
+	</select>
+</mapper>

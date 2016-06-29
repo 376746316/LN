@@ -1,0 +1,26 @@
+package com.lidezheng.mybatis.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.lidezheng.Author.dao.AuthorMapper;
+import com.lidezheng.Author.model.AuthorMore;
+import com.lidezheng.Blog.dao.BlogMapper;
+import com.lidezheng.Blog.model.BlogMore;
+
+@Service
+public class MybatisService {
+	@Autowired
+	AuthorMapper authorMapper;
+	@Autowired
+	BlogMapper blogMapper;
+	public AuthorMore getInfo(String id){
+		return authorMapper.getinfo(Integer.valueOf(id));
+	}
+	
+	public List<BlogMore> getinfoByBlogId(Integer id){
+		return blogMapper.getinfoByBlogId(id);
+	}
+}

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.Comment" >
+    <id column="CO_ID" property="coId" jdbcType="BIGINT" />
+    <result column="CO_VIDEO" property="coVideo" jdbcType="INTEGER" />
+    <result column="CO_TEACHER" property="coTeacher" jdbcType="INTEGER" />
+    <result column="CO_CONTENT" property="coContent" jdbcType="INTEGER" />
+    <result column="CO_TOTAL" property="coTotal" jdbcType="INTEGER" />
+    <result column="CO_STU_NO" property="coStuNo" jdbcType="INTEGER" />
+    <result column="CO_COMMENT" property="coComment" jdbcType="VARCHAR" />
+    <result column="CO_REGTIME" property="coRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CO_ID, CO_VIDEO, CO_TEACHER, CO_CONTENT, CO_TOTAL, CO_STU_NO, CO_COMMENT, CO_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.CommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_comment
+    where CO_ID = #{coId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_comment
+    where CO_ID = #{coId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.resource.model.CommentExample" >
+    delete from tp_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.resource.model.Comment" >
+    insert into tp_comment (CO_ID, CO_VIDEO, CO_TEACHER, 
+      CO_CONTENT, CO_TOTAL, CO_STU_NO, 
+      CO_COMMENT, CO_REGTIME)
+    values (#{coId,jdbcType=BIGINT}, #{coVideo,jdbcType=INTEGER}, #{coTeacher,jdbcType=INTEGER}, 
+      #{coContent,jdbcType=INTEGER}, #{coTotal,jdbcType=INTEGER}, #{coStuNo,jdbcType=INTEGER}, 
+      #{coComment,jdbcType=VARCHAR}, #{coRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.Comment" useGeneratedKeys="true"  keyProperty="coId">
+    insert into tp_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coId != null" >
+        CO_ID,
+      </if>
+      <if test="coVideo != null" >
+        CO_VIDEO,
+      </if>
+      <if test="coTeacher != null" >
+        CO_TEACHER,
+      </if>
+      <if test="coContent != null" >
+        CO_CONTENT,
+      </if>
+      <if test="coTotal != null" >
+        CO_TOTAL,
+      </if>
+      <if test="coStuNo != null" >
+        CO_STU_NO,
+      </if>
+      <if test="coComment != null" >
+        CO_COMMENT,
+      </if>
+      <if test="coRegtime != null" >
+        CO_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coId != null" >
+        #{coId,jdbcType=BIGINT},
+      </if>
+      <if test="coVideo != null" >
+        #{coVideo,jdbcType=INTEGER},
+      </if>
+      <if test="coTeacher != null" >
+        #{coTeacher,jdbcType=INTEGER},
+      </if>
+      <if test="coContent != null" >
+        #{coContent,jdbcType=INTEGER},
+      </if>
+      <if test="coTotal != null" >
+        #{coTotal,jdbcType=INTEGER},
+      </if>
+      <if test="coStuNo != null" >
+        #{coStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="coComment != null" >
+        #{coComment,jdbcType=VARCHAR},
+      </if>
+      <if test="coRegtime != null" >
+        #{coRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.CommentExample" resultType="java.lang.Integer" >
+    select count(*) from tp_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_comment
+    <set >
+      <if test="record.coId != null" >
+        CO_ID = #{record.coId,jdbcType=BIGINT},
+      </if>
+      <if test="record.coVideo != null" >
+        CO_VIDEO = #{record.coVideo,jdbcType=INTEGER},
+      </if>
+      <if test="record.coTeacher != null" >
+        CO_TEACHER = #{record.coTeacher,jdbcType=INTEGER},
+      </if>
+      <if test="record.coContent != null" >
+        CO_CONTENT = #{record.coContent,jdbcType=INTEGER},
+      </if>
+      <if test="record.coTotal != null" >
+        CO_TOTAL = #{record.coTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.coStuNo != null" >
+        CO_STU_NO = #{record.coStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.coComment != null" >
+        CO_COMMENT = #{record.coComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coRegtime != null" >
+        CO_REGTIME = #{record.coRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_comment
+    set CO_ID = #{record.coId,jdbcType=BIGINT},
+      CO_VIDEO = #{record.coVideo,jdbcType=INTEGER},
+      CO_TEACHER = #{record.coTeacher,jdbcType=INTEGER},
+      CO_CONTENT = #{record.coContent,jdbcType=INTEGER},
+      CO_TOTAL = #{record.coTotal,jdbcType=INTEGER},
+      CO_STU_NO = #{record.coStuNo,jdbcType=INTEGER},
+      CO_COMMENT = #{record.coComment,jdbcType=VARCHAR},
+      CO_REGTIME = #{record.coRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.Comment" >
+    update tp_comment
+    <set >
+      <if test="coVideo != null" >
+        CO_VIDEO = #{coVideo,jdbcType=INTEGER},
+      </if>
+      <if test="coTeacher != null" >
+        CO_TEACHER = #{coTeacher,jdbcType=INTEGER},
+      </if>
+      <if test="coContent != null" >
+        CO_CONTENT = #{coContent,jdbcType=INTEGER},
+      </if>
+      <if test="coTotal != null" >
+        CO_TOTAL = #{coTotal,jdbcType=INTEGER},
+      </if>
+      <if test="coStuNo != null" >
+        CO_STU_NO = #{coStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="coComment != null" >
+        CO_COMMENT = #{coComment,jdbcType=VARCHAR},
+      </if>
+      <if test="coRegtime != null" >
+        CO_REGTIME = #{coRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CO_ID = #{coId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.Comment" >
+    update tp_comment
+    set CO_VIDEO = #{coVideo,jdbcType=INTEGER},
+      CO_TEACHER = #{coTeacher,jdbcType=INTEGER},
+      CO_CONTENT = #{coContent,jdbcType=INTEGER},
+      CO_TOTAL = #{coTotal,jdbcType=INTEGER},
+      CO_STU_NO = #{coStuNo,jdbcType=INTEGER},
+      CO_COMMENT = #{coComment,jdbcType=VARCHAR},
+      CO_REGTIME = #{coRegtime,jdbcType=TIMESTAMP}
+    where CO_ID = #{coId,jdbcType=BIGINT}
+  </update>
+  <select id="selectAllComm" parameterType="Integer" resultMap="BaseResultMap">
+  	SELECT 
+   	*
+    from tp_comment 
+	INNER JOIN tp_comment_sc ON tp_comment_sc.COSC_CO_ID = CO_ID
+	WHERE 
+	tp_comment_sc.COSC_SPEC_ID=#{specID}
+	ORDER BY CO_REGTIME DESC
+  </select>
+</mapper>

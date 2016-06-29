@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.question.dao.AnswerReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.question.model.AnswerReply" >
+    <id column="ANS_REP_ID" property="ansRepId" jdbcType="INTEGER" />
+    <result column="ANS_REP_ANS" property="ansRepAns" jdbcType="INTEGER" />
+    <result column="ANS_REP_TYPE" property="ansRepType" jdbcType="CHAR" />
+    <result column="ANS_REP_TIME" property="ansRepTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.question.model.AnswerReply" extends="BaseResultMap" >
+    <result column="ANS_REP_CONTENT" property="ansRepContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ANS_REP_ID, ANS_REP_ANS, ANS_REP_TYPE, ANS_REP_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    ANS_REP_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.question.model.AnswerReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_answer_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.question.model.AnswerReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_answer_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_answer_reply
+    where ANS_REP_ID = #{ansRepId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_answer_reply
+    where ANS_REP_ID = #{ansRepId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.question.model.AnswerReplyExample" >
+    delete from tp_answer_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.question.model.AnswerReply" >
+    insert into tp_answer_reply (ANS_REP_ID, ANS_REP_ANS, ANS_REP_TYPE, 
+      ANS_REP_TIME, ANS_REP_CONTENT)
+    values (#{ansRepId,jdbcType=INTEGER}, #{ansRepAns,jdbcType=INTEGER}, #{ansRepType,jdbcType=CHAR}, 
+      #{ansRepTime,jdbcType=TIMESTAMP}, #{ansRepContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.question.model.AnswerReply" >
+    insert into tp_answer_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ansRepId != null" >
+        ANS_REP_ID,
+      </if>
+      <if test="ansRepAns != null" >
+        ANS_REP_ANS,
+      </if>
+      <if test="ansRepType != null" >
+        ANS_REP_TYPE,
+      </if>
+      <if test="ansRepTime != null" >
+        ANS_REP_TIME,
+      </if>
+      <if test="ansRepContent != null" >
+        ANS_REP_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ansRepId != null" >
+        #{ansRepId,jdbcType=INTEGER},
+      </if>
+      <if test="ansRepAns != null" >
+        #{ansRepAns,jdbcType=INTEGER},
+      </if>
+      <if test="ansRepType != null" >
+        #{ansRepType,jdbcType=CHAR},
+      </if>
+      <if test="ansRepTime != null" >
+        #{ansRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ansRepContent != null" >
+        #{ansRepContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.question.model.AnswerReplyExample" resultType="java.lang.Integer" >
+    select count(*) from tp_answer_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_answer_reply
+    <set >
+      <if test="record.ansRepId != null" >
+        ANS_REP_ID = #{record.ansRepId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansRepAns != null" >
+        ANS_REP_ANS = #{record.ansRepAns,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansRepType != null" >
+        ANS_REP_TYPE = #{record.ansRepType,jdbcType=CHAR},
+      </if>
+      <if test="record.ansRepTime != null" >
+        ANS_REP_TIME = #{record.ansRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ansRepContent != null" >
+        ANS_REP_CONTENT = #{record.ansRepContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_answer_reply
+    set ANS_REP_ID = #{record.ansRepId,jdbcType=INTEGER},
+      ANS_REP_ANS = #{record.ansRepAns,jdbcType=INTEGER},
+      ANS_REP_TYPE = #{record.ansRepType,jdbcType=CHAR},
+      ANS_REP_TIME = #{record.ansRepTime,jdbcType=TIMESTAMP},
+      ANS_REP_CONTENT = #{record.ansRepContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_answer_reply
+    set ANS_REP_ID = #{record.ansRepId,jdbcType=INTEGER},
+      ANS_REP_ANS = #{record.ansRepAns,jdbcType=INTEGER},
+      ANS_REP_TYPE = #{record.ansRepType,jdbcType=CHAR},
+      ANS_REP_TIME = #{record.ansRepTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.question.model.AnswerReply" >
+    update tp_answer_reply
+    <set >
+      <if test="ansRepAns != null" >
+        ANS_REP_ANS = #{ansRepAns,jdbcType=INTEGER},
+      </if>
+      <if test="ansRepType != null" >
+        ANS_REP_TYPE = #{ansRepType,jdbcType=CHAR},
+      </if>
+      <if test="ansRepTime != null" >
+        ANS_REP_TIME = #{ansRepTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ansRepContent != null" >
+        ANS_REP_CONTENT = #{ansRepContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ANS_REP_ID = #{ansRepId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.question.model.AnswerReply" >
+    update tp_answer_reply
+    set ANS_REP_ANS = #{ansRepAns,jdbcType=INTEGER},
+      ANS_REP_TYPE = #{ansRepType,jdbcType=CHAR},
+      ANS_REP_TIME = #{ansRepTime,jdbcType=TIMESTAMP},
+      ANS_REP_CONTENT = #{ansRepContent,jdbcType=LONGVARCHAR}
+    where ANS_REP_ID = #{ansRepId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.question.model.AnswerReply" >
+    update tp_answer_reply
+    set ANS_REP_ANS = #{ansRepAns,jdbcType=INTEGER},
+      ANS_REP_TYPE = #{ansRepType,jdbcType=CHAR},
+      ANS_REP_TIME = #{ansRepTime,jdbcType=TIMESTAMP}
+    where ANS_REP_ID = #{ansRepId,jdbcType=INTEGER}
+  </update>
+</mapper>

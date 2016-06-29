@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.VideoMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.Video">
+		<id column="V_ID" property="vId" jdbcType="INTEGER" />
+		<result column="V_TECH_TYPE" property="vTechType" jdbcType="INTEGER" />
+		<result column="V_STATUS" property="vStatus" jdbcType="CHAR" />
+		<result column="V_TYPE" property="vType" jdbcType="CHAR" />
+		<result column="V_FILE_NAME" property="vFileName" jdbcType="VARCHAR" />
+		<result column="V_NAME" property="vName" jdbcType="VARCHAR" />
+		<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+		<result column="V_PLAY_COUNT" property="vPlayCount" jdbcType="INTEGER" />
+		<result column="V_DOWNLOAD_COUNT" property="vDownloadCount" jdbcType="INTEGER" />
+		<result column="V_COMMENT" property="vComment" jdbcType="VARCHAR" />
+		<result column="V_REGTIME" property="vRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.VideoWithBLOBs" extends="BaseResultMap">
+		<result column="V_PLAY_URL" property="vPlayUrl" jdbcType="LONGVARCHAR" />
+		<result column="V_DOWNLOAD_URL" property="vDownloadUrl" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="MoreResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.ListVideoWithBLOBs" extends="ResultMapWithBLOBs">
+		<result column="LV_ID" property="lvId" jdbcType="INTEGER" />
+		<result column="LV_IMG" property="lvImg" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		V_ID, V_TECH_TYPE, V_STATUS, V_TYPE, V_FILE_NAME,V_NAME, V_PLAY_COUNT, V_DOWNLOAD_COUNT, V_COMMENT,
+		V_REGTIME
+	</sql>
+	<sql id="Blob_Column_List">
+		V_PLAY_URL, V_DOWNLOAD_URL
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.VideoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,TECH_TYPE_NAME ,
+		<include refid="Blob_Column_List" />
+		from tp_video LEFT JOIN TP_TECH_TYPE ON V_TECH_TYPE = TECH_TYPE_ID
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExampleWithBLOBsList" resultMap="ResultMapWithBLOBs" parameterType="HashMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,TECH_TYPE_NAME ,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_video
+		LEFT JOIN TP_TECH_TYPE ON V_TECH_TYPE = TECH_TYPE_ID
+		WHERE
+		(
+		V_NAME LIKE #{vName}
+		AND V_TYPE LIKE #{vTypeId}
+		AND V_STATUS LIKE #{vStatus}
+		)
+		<if test="vTechType != null">
+			AND FIND_IN_SET(V_TECH_TYPE,getChildTechType(#{vTechType}))
+		</if>
+		ORDER BY V_REGTIME DESC
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.VideoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_video
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_video
+		where V_ID = #{vId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_video
+		where V_ID = #{vId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.resource.model.VideoWithBLOBs" keyProperty="vId" useGeneratedKeys="true">
+		insert into tp_video (V_ID, V_TECH_TYPE, V_STATUS,
+		V_TYPE,V_FILE_NAME, V_NAME, V_PLAY_COUNT,
+		V_DOWNLOAD_COUNT, V_COMMENT, V_REGTIME,
+		V_PLAY_URL, V_DOWNLOAD_URL)
+		values (#{vId,jdbcType=INTEGER}, #{vTechType,jdbcType=INTEGER}, #{vStatus,jdbcType=CHAR},
+		#{vType,jdbcType=CHAR}, #{vFileName,jdbcType=VARCHAR}, #{vName,jdbcType=VARCHAR}, #{vPlayCount,jdbcType=INTEGER},
+		#{vDownloadCount,jdbcType=INTEGER}, #{vComment,jdbcType=VARCHAR}, #{vRegtime,jdbcType=TIMESTAMP},
+		#{vPlayUrl,jdbcType=LONGVARCHAR}, #{vDownloadUrl,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.VideoWithBLOBs" keyProperty="vId" useGeneratedKeys="true">
+		insert into tp_video
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="vId != null">
+				V_ID,
+			</if>
+			<if test="vTechType != null">
+				V_TECH_TYPE,
+			</if>
+			<if test="vStatus != null">
+				V_STATUS,
+			</if>
+			<if test="vType != null">
+				V_TYPE,
+			</if>
+			<if test="vFileName != null">
+				V_FILE_NAME,
+			</if>
+			<if test="vName != null">
+				V_NAME,
+			</if>
+			<if test="vPlayCount != null">
+				V_PLAY_COUNT,
+			</if>
+			<if test="vDownloadCount != null">
+				V_DOWNLOAD_COUNT,
+			</if>
+			<if test="vComment != null">
+				V_COMMENT,
+			</if>
+			<if test="vRegtime != null">
+				V_REGTIME,
+			</if>
+			<if test="vPlayUrl != null">
+				V_PLAY_URL,
+			</if>
+			<if test="vDownloadUrl != null">
+				V_DOWNLOAD_URL,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="vId != null">
+				#{vId,jdbcType=INTEGER},
+			</if>
+			<if test="vTechType != null">
+				#{vTechType,jdbcType=INTEGER},
+			</if>
+			<if test="vStatus != null">
+				#{vStatus,jdbcType=CHAR},
+			</if>
+			<if test="vType != null">
+				#{vType,jdbcType=CHAR},
+			</if>
+			<if test="vFileName != null">
+				#{vFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="vName != null">
+				#{vName,jdbcType=VARCHAR},
+			</if>
+			<if test="vPlayCount != null">
+				#{vPlayCount,jdbcType=INTEGER},
+			</if>
+			<if test="vDownloadCount != null">
+				#{vDownloadCount,jdbcType=INTEGER},
+			</if>
+			<if test="vComment != null">
+				#{vComment,jdbcType=VARCHAR},
+			</if>
+			<if test="vRegtime != null">
+				#{vRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vPlayUrl != null">
+				#{vPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="vDownloadUrl != null">
+				#{vDownloadUrl,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.VideoExample" resultType="java.lang.Integer">
+		select count(*) from tp_video
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.VideoWithBLOBs">
+		update tp_video
+		<set>
+			<if test="vTechType != null">
+				V_TECH_TYPE = #{vTechType,jdbcType=INTEGER},
+			</if>
+			<if test="vStatus != null">
+				V_STATUS = #{vStatus,jdbcType=CHAR},
+			</if>
+			<if test="vType != null">
+				V_TYPE = #{vType,jdbcType=CHAR},
+			</if>
+			<if test="vFileName != null">
+				V_FILE_NAME = #{vFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="vName != null">
+				V_NAME = #{vName,jdbcType=VARCHAR},
+			</if>
+			<if test="vPlayCount != null">
+				V_PLAY_COUNT = #{vPlayCount,jdbcType=INTEGER},
+			</if>
+			<if test="vDownloadCount != null">
+				V_DOWNLOAD_COUNT = #{vDownloadCount,jdbcType=INTEGER},
+			</if>
+			<if test="vComment != null">
+				V_COMMENT = #{vComment,jdbcType=VARCHAR},
+			</if>
+			<if test="vRegtime != null">
+				V_REGTIME = #{vRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vPlayUrl != null">
+				V_PLAY_URL = #{vPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="vDownloadUrl != null">
+				V_DOWNLOAD_URL = #{vDownloadUrl,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where V_ID = #{vId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.VideoWithBLOBs">
+		update tp_video
+		set V_TECH_TYPE = #{vTechType,jdbcType=INTEGER},
+		V_STATUS = #{vStatus,jdbcType=CHAR},
+		V_TYPE = #{vType,jdbcType=CHAR},
+		V_FILE_NAME = #{vFileName,jdbcType=VARCHAR},
+		V_NAME = #{vName,jdbcType=VARCHAR},
+		V_PLAY_COUNT = #{vPlayCount,jdbcType=INTEGER},
+		V_DOWNLOAD_COUNT = #{vDownloadCount,jdbcType=INTEGER},
+		V_COMMENT = #{vComment,jdbcType=VARCHAR},
+		V_REGTIME = #{vRegtime,jdbcType=TIMESTAMP},
+		V_PLAY_URL = #{vPlayUrl,jdbcType=LONGVARCHAR},
+		V_DOWNLOAD_URL = #{vDownloadUrl,jdbcType=LONGVARCHAR}
+		where V_ID = #{vId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.Video">
+		update tp_video
+		set V_TECH_TYPE = #{vTechType,jdbcType=INTEGER},
+		V_STATUS = #{vStatus,jdbcType=CHAR},
+		V_TYPE = #{vType,jdbcType=CHAR},
+		V_FILE_NAME = #{vFileName,jdbcType=VARCHAR},
+		V_NAME = #{vName,jdbcType=VARCHAR},
+		V_PLAY_COUNT = #{vPlayCount,jdbcType=INTEGER},
+		V_DOWNLOAD_COUNT = #{vDownloadCount,jdbcType=INTEGER},
+		V_COMMENT = #{vComment,jdbcType=VARCHAR},
+		V_REGTIME = #{vRegtime,jdbcType=TIMESTAMP}
+		where V_ID = #{vId,jdbcType=INTEGER}
+	</update>
+	<select id="selectVideoListByListId" resultMap="MoreResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		LV_ID,LV_IMG,
+		<include refid="Base_Column_List" />
+		,TECH_TYPE_NAME ,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_video
+		LEFT JOIN TP_TECH_TYPE ON V_TECH_TYPE = TECH_TYPE_ID
+		INNER JOIN tp_list_video ON LV_VIDEO_ID = V_ID
+		WHERE
+		(
+		LV_LIST_ID = #{listId}
+		AND V_NAME LIKE #{vName}
+		AND V_TYPE LIKE #{vTypeId}
+		AND V_STATUS LIKE #{vStatus}
+		)
+		<if test="vTechType != null">
+			AND FIND_IN_SET(V_TECH_TYPE,getChildTechType(#{vTechType}))
+		</if>
+		ORDER BY LV_SEQ ASC
+	</select>
+	<select id="selectVideoListNotByListId" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,TECH_TYPE_NAME ,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_video
+		LEFT JOIN TP_TECH_TYPE ON V_TECH_TYPE = TECH_TYPE_ID
+		WHERE
+		(
+		V_ID NOT IN (
+		SELECT
+		LV_VIDEO_ID
+		FROM
+		tp_list_video
+		WHERE
+		tp_list_video.LV_LIST_ID = #{listId}
+		)
+		AND V_NAME LIKE #{vName}
+		AND V_TYPE LIKE #{vTypeId}
+		AND V_STATUS LIKE #{vStatus}
+		)
+		<if test="vTechType != null">
+			AND FIND_IN_SET(V_TECH_TYPE,getChildTechType(#{vTechType}))
+		</if>
+		ORDER BY V_REGTIME DESC
+	</select>
+</mapper>

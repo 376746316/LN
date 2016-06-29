@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.question.dao.AnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.question.model.Answer" >
+    <id column="ANS_ID" property="ansId" jdbcType="INTEGER" />
+    <result column="ANS_QUE_ID" property="ansQueId" jdbcType="INTEGER" />
+    <result column="ANS_USER_NO" property="ansUserNo" jdbcType="INTEGER" />
+    <result column="ANS_STU_NO" property="ansStuNo" jdbcType="INTEGER" />
+    <result column="ANS_ROLE" property="ansRole" jdbcType="CHAR" />
+    <result column="ANS_TIME" property="ansTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.question.model.AnswerWithBLOBs" extends="BaseResultMap" >
+    <result column="ANS_CONTENT" property="ansContent" jdbcType="LONGVARCHAR" />
+    <result column="ANS_EVA" property="ansEva" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="MoreAnswer" type="com.chinasofti.cetp.question.model.MoreAnswer" extends="ResultMapWithBLOBs" >
+    <result column="ANS_NAME" property="ansName" jdbcType="VARCHAR" />
+    <result column="ANS_HEAD" property="ansHead" jdbcType="LONGVARCHAR" />
+    <association property="arList" column="ANS_ID" select="getAnswerReply"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ANS_ID, ANS_QUE_ID, ANS_USER_NO, ANS_STU_NO, ANS_ROLE, ANS_TIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    ANS_CONTENT, ANS_EVA
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.question.model.AnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.question.model.AnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_answer
+    where ANS_ID = #{ansId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_answer
+    where ANS_ID = #{ansId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.question.model.AnswerExample" >
+    delete from tp_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.question.model.AnswerWithBLOBs" >
+    insert into tp_answer (ANS_ID, ANS_QUE_ID, ANS_USER_NO, 
+      ANS_STU_NO, ANS_ROLE, ANS_TIME, 
+      ANS_CONTENT, ANS_EVA)
+    values (#{ansId,jdbcType=INTEGER}, #{ansQueId,jdbcType=INTEGER}, #{ansUserNo,jdbcType=INTEGER}, 
+      #{ansStuNo,jdbcType=INTEGER}, #{ansRole,jdbcType=CHAR}, #{ansTime,jdbcType=TIMESTAMP}, 
+      #{ansContent,jdbcType=LONGVARCHAR}, #{ansEva,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.question.model.AnswerWithBLOBs" >
+    insert into tp_answer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ansId != null" >
+        ANS_ID,
+      </if>
+      <if test="ansQueId != null" >
+        ANS_QUE_ID,
+      </if>
+      <if test="ansUserNo != null" >
+        ANS_USER_NO,
+      </if>
+      <if test="ansStuNo != null" >
+        ANS_STU_NO,
+      </if>
+      <if test="ansRole != null" >
+        ANS_ROLE,
+      </if>
+      <if test="ansTime != null" >
+        ANS_TIME,
+      </if>
+      <if test="ansContent != null" >
+        ANS_CONTENT,
+      </if>
+      <if test="ansEva != null" >
+        ANS_EVA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ansId != null" >
+        #{ansId,jdbcType=INTEGER},
+      </if>
+      <if test="ansQueId != null" >
+        #{ansQueId,jdbcType=INTEGER},
+      </if>
+      <if test="ansUserNo != null" >
+        #{ansUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="ansStuNo != null" >
+        #{ansStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="ansRole != null" >
+        #{ansRole,jdbcType=CHAR},
+      </if>
+      <if test="ansTime != null" >
+        #{ansTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ansContent != null" >
+        #{ansContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ansEva != null" >
+        #{ansEva,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.question.model.AnswerExample" resultType="java.lang.Integer" >
+    select count(*) from tp_answer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_answer
+    <set >
+      <if test="record.ansId != null" >
+        ANS_ID = #{record.ansId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansQueId != null" >
+        ANS_QUE_ID = #{record.ansQueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansUserNo != null" >
+        ANS_USER_NO = #{record.ansUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansStuNo != null" >
+        ANS_STU_NO = #{record.ansStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.ansRole != null" >
+        ANS_ROLE = #{record.ansRole,jdbcType=CHAR},
+      </if>
+      <if test="record.ansTime != null" >
+        ANS_TIME = #{record.ansTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ansContent != null" >
+        ANS_CONTENT = #{record.ansContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.ansEva != null" >
+        ANS_EVA = #{record.ansEva,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_answer
+    set ANS_ID = #{record.ansId,jdbcType=INTEGER},
+      ANS_QUE_ID = #{record.ansQueId,jdbcType=INTEGER},
+      ANS_USER_NO = #{record.ansUserNo,jdbcType=INTEGER},
+      ANS_STU_NO = #{record.ansStuNo,jdbcType=INTEGER},
+      ANS_ROLE = #{record.ansRole,jdbcType=CHAR},
+      ANS_TIME = #{record.ansTime,jdbcType=TIMESTAMP},
+      ANS_CONTENT = #{record.ansContent,jdbcType=LONGVARCHAR},
+      ANS_EVA = #{record.ansEva,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_answer
+    set ANS_ID = #{record.ansId,jdbcType=INTEGER},
+      ANS_QUE_ID = #{record.ansQueId,jdbcType=INTEGER},
+      ANS_USER_NO = #{record.ansUserNo,jdbcType=INTEGER},
+      ANS_STU_NO = #{record.ansStuNo,jdbcType=INTEGER},
+      ANS_ROLE = #{record.ansRole,jdbcType=CHAR},
+      ANS_TIME = #{record.ansTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.question.model.AnswerWithBLOBs" >
+    update tp_answer
+    <set >
+      <if test="ansQueId != null" >
+        ANS_QUE_ID = #{ansQueId,jdbcType=INTEGER},
+      </if>
+      <if test="ansUserNo != null" >
+        ANS_USER_NO = #{ansUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="ansStuNo != null" >
+        ANS_STU_NO = #{ansStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="ansRole != null" >
+        ANS_ROLE = #{ansRole,jdbcType=CHAR},
+      </if>
+      <if test="ansTime != null" >
+        ANS_TIME = #{ansTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ansContent != null" >
+        ANS_CONTENT = #{ansContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ansEva != null" >
+        ANS_EVA = #{ansEva,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ANS_ID = #{ansId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.question.model.AnswerWithBLOBs" >
+    update tp_answer
+    set ANS_QUE_ID = #{ansQueId,jdbcType=INTEGER},
+      ANS_USER_NO = #{ansUserNo,jdbcType=INTEGER},
+      ANS_STU_NO = #{ansStuNo,jdbcType=INTEGER},
+      ANS_ROLE = #{ansRole,jdbcType=CHAR},
+      ANS_TIME = #{ansTime,jdbcType=TIMESTAMP},
+      ANS_CONTENT = #{ansContent,jdbcType=LONGVARCHAR},
+      ANS_EVA = #{ansEva,jdbcType=LONGVARCHAR}
+    where ANS_ID = #{ansId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.question.model.Answer" >
+    update tp_answer
+    set ANS_QUE_ID = #{ansQueId,jdbcType=INTEGER},
+      ANS_USER_NO = #{ansUserNo,jdbcType=INTEGER},
+      ANS_STU_NO = #{ansStuNo,jdbcType=INTEGER},
+      ANS_ROLE = #{ansRole,jdbcType=CHAR},
+      ANS_TIME = #{ansTime,jdbcType=TIMESTAMP}
+    where ANS_ID = #{ansId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAnswers" resultMap="MoreAnswer" parameterType="java.lang.Integer">
+	SELECT
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    , IFNULL(STU_NICKNAME, STU_USERID) AS ANS_NAME
+    , STU_HEAD_M AS ANS_HEAD
+	FROM
+		tp_answer
+	INNER JOIN tp_student ON ANS_STU_NO = STU_NO
+	WHERE
+		ANS_QUE_ID = #{queId}
+	AND ANS_ROLE = '1'
+	UNION ALL
+	SELECT
+		<include refid="Base_Column_List" />
+	    ,
+	    <include refid="Blob_Column_List" />
+	    , IFNULL(USER_NICKNAME, USER_ID) AS ANS_NAME
+	    , USER_HEAD_M AS ANS_HEAD
+	FROM
+		tp_answer
+	INNER JOIN tp_user ON ANS_USER_NO = USER_NO
+	WHERE
+		ANS_QUE_ID = #{queId}
+	AND ANS_ROLE = '2'
+	ORDER BY
+		ANS_TIME ASC	  
+  </select>
+  
+  <!-- getAnsreply start -->
+  <resultMap id="AnswerReplyMap" type="com.chinasofti.cetp.question.model.AnswerReply" >
+    <id column="ANS_REP_ID" property="ansRepId" jdbcType="INTEGER" />
+    <result column="ANS_REP_ANS" property="ansRepAns" jdbcType="INTEGER" />
+    <result column="ANS_REP_TYPE" property="ansRepType" jdbcType="CHAR" />
+    <result column="ANS_REP_TIME" property="ansRepTime" jdbcType="TIMESTAMP" />
+    <result column="ANS_REP_CONTENT" property="ansRepContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="AR_Column_List" >
+    ANS_REP_ID, ANS_REP_ANS, ANS_REP_TYPE, ANS_REP_TIME,ANS_REP_CONTENT
+  </sql>
+  <select id="getAnswerReply" resultMap="AnswerReplyMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="AR_Column_List" />
+    from tp_answer_reply
+    where ANS_REP_ANS = #{ansQueId,jdbcType=INTEGER}  
+  </select>
+  <!-- getAnsreply end -->
+</mapper>

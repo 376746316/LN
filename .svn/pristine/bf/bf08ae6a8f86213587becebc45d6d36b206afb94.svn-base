@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.UserGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.UserGroup" >
+    <id column="UG_ID" property="ugId" jdbcType="INTEGER" />
+    <result column="UG_LEVEL" property="ugLevel" jdbcType="INTEGER" />
+    <result column="UG_NAME" property="ugName" jdbcType="VARCHAR" />
+    <result column="UG_TOPSCORE" property="ugTopscore" jdbcType="INTEGER" />
+    <result column="UG_LOWESTSCORE" property="ugLowestscore" jdbcType="INTEGER" />
+    <result column="UG_COIN" property="ugCoin" jdbcType="INTEGER" />
+    <result column="UG_LIVE_FLAG" property="ugLiveFlag" jdbcType="CHAR" />
+    <result column="UG_DOWNLOAD_FLAG" property="ugDownloadFlag" jdbcType="CHAR" />
+    <result column="UG_EXCHANGE_FLAG" property="ugExchangeFlag" jdbcType="CHAR" />
+    <result column="UG_SALON_FLAG" property="ugSalonFlag" jdbcType="CHAR" />
+    <result column="UG_REGTIME" property="ugRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UG_ID, UG_LEVEL, UG_NAME, UG_TOPSCORE, UG_LOWESTSCORE, UG_COIN, UG_LIVE_FLAG, UG_DOWNLOAD_FLAG, 
+    UG_EXCHANGE_FLAG, UG_SALON_FLAG, UG_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.UserGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_user_group
+    where UG_ID = #{ugId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_user_group
+    where UG_ID = #{ugId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.UserGroupExample" >
+    delete from tp_user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.UserGroup" >
+    insert into tp_user_group (UG_ID, UG_LEVEL, UG_NAME, 
+      UG_TOPSCORE, UG_LOWESTSCORE, UG_COIN, 
+      UG_LIVE_FLAG, UG_DOWNLOAD_FLAG, UG_EXCHANGE_FLAG, 
+      UG_SALON_FLAG, UG_REGTIME)
+    values (#{ugId,jdbcType=INTEGER}, #{ugLevel,jdbcType=INTEGER}, #{ugName,jdbcType=VARCHAR}, 
+      #{ugTopscore,jdbcType=INTEGER}, #{ugLowestscore,jdbcType=INTEGER}, #{ugCoin,jdbcType=INTEGER}, 
+      #{ugLiveFlag,jdbcType=CHAR}, #{ugDownloadFlag,jdbcType=CHAR}, #{ugExchangeFlag,jdbcType=CHAR}, 
+      #{ugSalonFlag,jdbcType=CHAR}, #{ugRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.UserGroup" >
+    insert into tp_user_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ugId != null" >
+        UG_ID,
+      </if>
+      <if test="ugLevel != null" >
+        UG_LEVEL,
+      </if>
+      <if test="ugName != null" >
+        UG_NAME,
+      </if>
+      <if test="ugTopscore != null" >
+        UG_TOPSCORE,
+      </if>
+      <if test="ugLowestscore != null" >
+        UG_LOWESTSCORE,
+      </if>
+      <if test="ugCoin != null" >
+        UG_COIN,
+      </if>
+      <if test="ugLiveFlag != null" >
+        UG_LIVE_FLAG,
+      </if>
+      <if test="ugDownloadFlag != null" >
+        UG_DOWNLOAD_FLAG,
+      </if>
+      <if test="ugExchangeFlag != null" >
+        UG_EXCHANGE_FLAG,
+      </if>
+      <if test="ugSalonFlag != null" >
+        UG_SALON_FLAG,
+      </if>
+      <if test="ugRegtime != null" >
+        UG_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ugId != null" >
+        #{ugId,jdbcType=INTEGER},
+      </if>
+      <if test="ugLevel != null" >
+        #{ugLevel,jdbcType=INTEGER},
+      </if>
+      <if test="ugName != null" >
+        #{ugName,jdbcType=VARCHAR},
+      </if>
+      <if test="ugTopscore != null" >
+        #{ugTopscore,jdbcType=INTEGER},
+      </if>
+      <if test="ugLowestscore != null" >
+        #{ugLowestscore,jdbcType=INTEGER},
+      </if>
+      <if test="ugCoin != null" >
+        #{ugCoin,jdbcType=INTEGER},
+      </if>
+      <if test="ugLiveFlag != null" >
+        #{ugLiveFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugDownloadFlag != null" >
+        #{ugDownloadFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugExchangeFlag != null" >
+        #{ugExchangeFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugSalonFlag != null" >
+        #{ugSalonFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugRegtime != null" >
+        #{ugRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.UserGroupExample" resultType="java.lang.Integer" >
+    select count(*) from tp_user_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_user_group
+    <set >
+      <if test="record.ugId != null" >
+        UG_ID = #{record.ugId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ugLevel != null" >
+        UG_LEVEL = #{record.ugLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.ugName != null" >
+        UG_NAME = #{record.ugName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ugTopscore != null" >
+        UG_TOPSCORE = #{record.ugTopscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.ugLowestscore != null" >
+        UG_LOWESTSCORE = #{record.ugLowestscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.ugCoin != null" >
+        UG_COIN = #{record.ugCoin,jdbcType=INTEGER},
+      </if>
+      <if test="record.ugLiveFlag != null" >
+        UG_LIVE_FLAG = #{record.ugLiveFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.ugDownloadFlag != null" >
+        UG_DOWNLOAD_FLAG = #{record.ugDownloadFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.ugExchangeFlag != null" >
+        UG_EXCHANGE_FLAG = #{record.ugExchangeFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.ugSalonFlag != null" >
+        UG_SALON_FLAG = #{record.ugSalonFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.ugRegtime != null" >
+        UG_REGTIME = #{record.ugRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_user_group
+    set UG_ID = #{record.ugId,jdbcType=INTEGER},
+      UG_LEVEL = #{record.ugLevel,jdbcType=INTEGER},
+      UG_NAME = #{record.ugName,jdbcType=VARCHAR},
+      UG_TOPSCORE = #{record.ugTopscore,jdbcType=INTEGER},
+      UG_LOWESTSCORE = #{record.ugLowestscore,jdbcType=INTEGER},
+      UG_COIN = #{record.ugCoin,jdbcType=INTEGER},
+      UG_LIVE_FLAG = #{record.ugLiveFlag,jdbcType=CHAR},
+      UG_DOWNLOAD_FLAG = #{record.ugDownloadFlag,jdbcType=CHAR},
+      UG_EXCHANGE_FLAG = #{record.ugExchangeFlag,jdbcType=CHAR},
+      UG_SALON_FLAG = #{record.ugSalonFlag,jdbcType=CHAR},
+      UG_REGTIME = #{record.ugRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.UserGroup" >
+    update tp_user_group
+    <set >
+      <if test="ugLevel != null" >
+        UG_LEVEL = #{ugLevel,jdbcType=INTEGER},
+      </if>
+      <if test="ugName != null" >
+        UG_NAME = #{ugName,jdbcType=VARCHAR},
+      </if>
+      <if test="ugTopscore != null" >
+        UG_TOPSCORE = #{ugTopscore,jdbcType=INTEGER},
+      </if>
+      <if test="ugLowestscore != null" >
+        UG_LOWESTSCORE = #{ugLowestscore,jdbcType=INTEGER},
+      </if>
+      <if test="ugCoin != null" >
+        UG_COIN = #{ugCoin,jdbcType=INTEGER},
+      </if>
+      <if test="ugLiveFlag != null" >
+        UG_LIVE_FLAG = #{ugLiveFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugDownloadFlag != null" >
+        UG_DOWNLOAD_FLAG = #{ugDownloadFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugExchangeFlag != null" >
+        UG_EXCHANGE_FLAG = #{ugExchangeFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugSalonFlag != null" >
+        UG_SALON_FLAG = #{ugSalonFlag,jdbcType=CHAR},
+      </if>
+      <if test="ugRegtime != null" >
+        UG_REGTIME = #{ugRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UG_ID = #{ugId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.UserGroup" >
+    update tp_user_group
+    set UG_LEVEL = #{ugLevel,jdbcType=INTEGER},
+      UG_NAME = #{ugName,jdbcType=VARCHAR},
+      UG_TOPSCORE = #{ugTopscore,jdbcType=INTEGER},
+      UG_LOWESTSCORE = #{ugLowestscore,jdbcType=INTEGER},
+      UG_COIN = #{ugCoin,jdbcType=INTEGER},
+      UG_LIVE_FLAG = #{ugLiveFlag,jdbcType=CHAR},
+      UG_DOWNLOAD_FLAG = #{ugDownloadFlag,jdbcType=CHAR},
+      UG_EXCHANGE_FLAG = #{ugExchangeFlag,jdbcType=CHAR},
+      UG_SALON_FLAG = #{ugSalonFlag,jdbcType=CHAR},
+      UG_REGTIME = #{ugRegtime,jdbcType=TIMESTAMP}
+    where UG_ID = #{ugId,jdbcType=INTEGER}
+  </update>
+</mapper>

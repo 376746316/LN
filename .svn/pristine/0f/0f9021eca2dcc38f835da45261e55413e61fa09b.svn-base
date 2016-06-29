@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.CommentVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.CommentVideo" >
+    <id column="COMMV_STU_NO" property="commvStuNo" jdbcType="INTEGER" />
+    <id column="COMMV_V_ID" property="commvVId" jdbcType="INTEGER" />
+    <result column="COMMV_FLAG" property="commvFlag" jdbcType="CHAR" />
+    <result column="COMMV_UPDATETIME" property="commvUpdatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    COMMV_STU_NO, COMMV_V_ID, COMMV_FLAG, COMMV_UPDATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.CommentVideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_comment_video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.CommentVideoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_comment_video
+    where COMMV_STU_NO = #{commvStuNo,jdbcType=INTEGER}
+      and COMMV_V_ID = #{commvVId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.CommentVideoKey" >
+    delete from tp_comment_video
+    where COMMV_STU_NO = #{commvStuNo,jdbcType=INTEGER}
+      and COMMV_V_ID = #{commvVId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.resource.model.CommentVideo" >
+    insert into tp_comment_video (COMMV_STU_NO, COMMV_V_ID, COMMV_FLAG, 
+      COMMV_UPDATETIME)
+    values (#{commvStuNo,jdbcType=INTEGER}, #{commvVId,jdbcType=INTEGER}, #{commvFlag,jdbcType=CHAR}, 
+      #{commvUpdatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.CommentVideo" >
+    insert into tp_comment_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commvStuNo != null" >
+        COMMV_STU_NO,
+      </if>
+      <if test="commvVId != null" >
+        COMMV_V_ID,
+      </if>
+      <if test="commvFlag != null" >
+        COMMV_FLAG,
+      </if>
+      <if test="commvUpdatetime != null" >
+        COMMV_UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commvStuNo != null" >
+        #{commvStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="commvVId != null" >
+        #{commvVId,jdbcType=INTEGER},
+      </if>
+      <if test="commvFlag != null" >
+        #{commvFlag,jdbcType=CHAR},
+      </if>
+      <if test="commvUpdatetime != null" >
+        #{commvUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.CommentVideoExample" resultType="java.lang.Integer" >
+    select count(*) from tp_comment_video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.CommentVideo" >
+    update tp_comment_video
+    <set >
+      <if test="commvFlag != null" >
+        COMMV_FLAG = #{commvFlag,jdbcType=CHAR},
+      </if>
+      <if test="commvUpdatetime != null" >
+        COMMV_UPDATETIME = #{commvUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where COMMV_STU_NO = #{commvStuNo,jdbcType=INTEGER}
+      and COMMV_V_ID = #{commvVId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.CommentVideo" >
+    update tp_comment_video
+    set COMMV_FLAG = #{commvFlag,jdbcType=CHAR},
+      COMMV_UPDATETIME = #{commvUpdatetime,jdbcType=TIMESTAMP}
+    where COMMV_STU_NO = #{commvStuNo,jdbcType=INTEGER}
+      and COMMV_V_ID = #{commvVId,jdbcType=INTEGER}
+  </update>
+</mapper>

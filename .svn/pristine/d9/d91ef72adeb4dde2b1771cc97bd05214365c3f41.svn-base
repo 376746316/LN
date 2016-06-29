@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.ReferenceMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.Reference">
+		<id column="REF_ID" property="refId" jdbcType="INTEGER" />
+		<result column="REF_NAME" property="refName" jdbcType="VARCHAR" />
+		<result column="REF_PLAY_COUNT" property="refPlayCount" jdbcType="INTEGER" />
+		<result column="REF_DOWNLOAD_COUNT" property="refDownloadCount" jdbcType="INTEGER" />
+		<result column="REF_COST" property="refCost" jdbcType="INTEGER" />
+		<result column="REF_COMMENT" property="refComment" jdbcType="VARCHAR" />
+		<result column="REF_REGTIME" property="refRegtime" jdbcType="TIMESTAMP" />
+		<result column="REF_USER_NO" property="refUserNo" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.resource.model.ReferenceWithBLOBs" extends="BaseResultMap">
+		<result column="REF_PLAY_URL" property="refPlayUrl" jdbcType="LONGVARCHAR" />
+		<result column="REF_DOWNLOAD_URL" property="refDownloadUrl" jdbcType="LONGVARCHAR" />
+		<result column="REF_THUMB" property="refThumb" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		REF_ID, REF_NAME, REF_PLAY_COUNT, REF_DOWNLOAD_COUNT, REF_COST, REF_COMMENT, REF_REGTIME,
+		REF_USER_NO
+	</sql>
+	<sql id="Blob_Column_List">
+		REF_PLAY_URL, REF_DOWNLOAD_URL, REF_THUMB
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.ReferenceExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_reference
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.ReferenceExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_reference
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_reference
+		where REF_ID = #{refId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_reference
+		where REF_ID = #{refId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.resource.model.ReferenceWithBLOBs" useGeneratedKeys="true" keyProperty="refId">
+		insert into tp_reference (REF_ID, REF_NAME, REF_PLAY_COUNT,
+		REF_DOWNLOAD_COUNT, REF_COST, REF_COMMENT,
+		REF_REGTIME, REF_USER_NO, REF_PLAY_URL,
+		REF_DOWNLOAD_URL, REF_THUMB)
+		values (#{refId,jdbcType=INTEGER}, #{refName,jdbcType=VARCHAR}, #{refPlayCount,jdbcType=INTEGER},
+		#{refDownloadCount,jdbcType=INTEGER}, #{refCost,jdbcType=INTEGER}, #{refComment,jdbcType=VARCHAR},
+		#{refRegtime,jdbcType=TIMESTAMP}, #{refUserNo,jdbcType=INTEGER}, #{refPlayUrl,jdbcType=LONGVARCHAR},
+		#{refDownloadUrl,jdbcType=LONGVARCHAR}, #{refThumb,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.ReferenceWithBLOBs" useGeneratedKeys="true" keyProperty="refId">
+		insert into tp_reference
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="refId != null">
+				REF_ID,
+			</if>
+			<if test="refName != null">
+				REF_NAME,
+			</if>
+			<if test="refPlayCount != null">
+				REF_PLAY_COUNT,
+			</if>
+			<if test="refDownloadCount != null">
+				REF_DOWNLOAD_COUNT,
+			</if>
+			<if test="refCost != null">
+				REF_COST,
+			</if>
+			<if test="refComment != null">
+				REF_COMMENT,
+			</if>
+			<if test="refRegtime != null">
+				REF_REGTIME,
+			</if>
+			<if test="refUserNo != null">
+				REF_USER_NO,
+			</if>
+			<if test="refPlayUrl != null">
+				REF_PLAY_URL,
+			</if>
+			<if test="refDownloadUrl != null">
+				REF_DOWNLOAD_URL,
+			</if>
+			<if test="refThumb != null">
+				REF_THUMB,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="refId != null">
+				#{refId,jdbcType=INTEGER},
+			</if>
+			<if test="refName != null">
+				#{refName,jdbcType=VARCHAR},
+			</if>
+			<if test="refPlayCount != null">
+				#{refPlayCount,jdbcType=INTEGER},
+			</if>
+			<if test="refDownloadCount != null">
+				#{refDownloadCount,jdbcType=INTEGER},
+			</if>
+			<if test="refCost != null">
+				#{refCost,jdbcType=INTEGER},
+			</if>
+			<if test="refComment != null">
+				#{refComment,jdbcType=VARCHAR},
+			</if>
+			<if test="refRegtime != null">
+				#{refRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="refUserNo != null">
+				#{refUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="refPlayUrl != null">
+				#{refPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="refDownloadUrl != null">
+				#{refDownloadUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="refThumb != null">
+				#{refThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.ReferenceExample" resultType="java.lang.Integer">
+		select count(*) from tp_reference
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.ReferenceWithBLOBs">
+		update tp_reference
+		<set>
+			<if test="refName != null">
+				REF_NAME = #{refName,jdbcType=VARCHAR},
+			</if>
+			<if test="refPlayCount != null">
+				REF_PLAY_COUNT = #{refPlayCount,jdbcType=INTEGER},
+			</if>
+			<if test="refDownloadCount != null">
+				REF_DOWNLOAD_COUNT = #{refDownloadCount,jdbcType=INTEGER},
+			</if>
+			<if test="refCost != null">
+				REF_COST = #{refCost,jdbcType=INTEGER},
+			</if>
+			<if test="refComment != null">
+				REF_COMMENT = #{refComment,jdbcType=VARCHAR},
+			</if>
+			<if test="refRegtime != null">
+				REF_REGTIME = #{refRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="refUserNo != null">
+				REF_USER_NO = #{refUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="refPlayUrl != null">
+				REF_PLAY_URL = #{refPlayUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="refDownloadUrl != null">
+				REF_DOWNLOAD_URL = #{refDownloadUrl,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="refThumb != null">
+				REF_THUMB = #{refThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where REF_ID = #{refId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.resource.model.ReferenceWithBLOBs">
+		update tp_reference
+		set REF_NAME = #{refName,jdbcType=VARCHAR},
+		REF_PLAY_COUNT = #{refPlayCount,jdbcType=INTEGER},
+		REF_DOWNLOAD_COUNT = #{refDownloadCount,jdbcType=INTEGER},
+		REF_COST = #{refCost,jdbcType=INTEGER},
+		REF_COMMENT = #{refComment,jdbcType=VARCHAR},
+		REF_REGTIME = #{refRegtime,jdbcType=TIMESTAMP},
+		REF_USER_NO = #{refUserNo,jdbcType=INTEGER},
+		REF_PLAY_URL = #{refPlayUrl,jdbcType=LONGVARCHAR},
+		REF_DOWNLOAD_URL = #{refDownloadUrl,jdbcType=LONGVARCHAR},
+		REF_THUMB = #{refThumb,jdbcType=LONGVARCHAR}
+		where REF_ID = #{refId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.Reference">
+		update tp_reference
+		set REF_NAME = #{refName,jdbcType=VARCHAR},
+		REF_PLAY_COUNT = #{refPlayCount,jdbcType=INTEGER},
+		REF_DOWNLOAD_COUNT = #{refDownloadCount,jdbcType=INTEGER},
+		REF_COST = #{refCost,jdbcType=INTEGER},
+		REF_COMMENT = #{refComment,jdbcType=VARCHAR},
+		REF_REGTIME = #{refRegtime,jdbcType=TIMESTAMP},
+		REF_USER_NO = #{refUserNo,jdbcType=INTEGER}
+		where REF_ID = #{refId,jdbcType=INTEGER}
+	</update>
+	<select id="selectBySpecId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_reference_sc INNER JOIN tp_reference ON RSC_REF_ID = REF_ID
+		WHERE
+		RSC_SPEC_ID =#{specId,jdbcType=INTEGER}
+		ORDER BY REF_REGTIME DESC
+	</select>
+	<select id="selectNotWithSpecId" resultMap="ResultMapWithBLOBs" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_reference
+		WHERE REF_ID not IN
+		(
+
+		SELECT
+		RSC_REF_ID
+		FROM tp_reference_sc
+		where RSC_SPEC_ID = #{specId,jdbcType=INTEGER}
+		)
+		<if test="seachName != null">
+			AND REF_NAME LIKE #{seachName}
+		</if>
+	</select>
+	<select id="selectReferenceNotWithSpecId" resultMap="ResultMapWithBLOBs" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_reference
+		WHERE REF_ID not IN
+		(
+
+		SELECT
+		RSC_REF_ID
+		FROM tp_reference_sc
+		where RSC_SPEC_ID = #{specId}
+		)
+		and REF_USER_NO = #{userNo}
+	</select>
+	<select id="selectNotWithClassId" resultMap="ResultMapWithBLOBs" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_reference b
+		WHERE b.REF_ID not IN
+		(
+
+		SELECT
+		a.RLC_REF_ID
+		FROM tp_reference_lc a
+		where a.RLC_LC_ID = #{liveClassId}
+		)
+		and REF_USER_NO = #{userNo}
+	</select>
+	<select id="selectByLiveClassId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_reference b
+		INNER JOIN tp_reference_lc a ON a.RLC_REF_ID = b.REF_ID
+		WHERE a.RLC_LC_ID = #{liveClassId}
+	</select>
+</mapper>

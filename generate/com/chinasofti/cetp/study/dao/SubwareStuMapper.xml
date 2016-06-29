@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.SubwareStuMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.SubwareStu" >
+    <id column="WT_SUBWARE_ID" property="wtSubwareId" jdbcType="INTEGER" />
+    <id column="WT_STU_ID" property="wtStuId" jdbcType="INTEGER" />
+    <result column="WT_STUDY_TIME" property="wtStudyTime" jdbcType="VARCHAR" />
+    <result column="WT_STATUS" property="wtStatus" jdbcType="CHAR" />
+    <result column="WT_UPDATE_TIME" property="wtUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WT_SUBWARE_ID, WT_STU_ID, WT_STUDY_TIME, WT_STATUS, WT_UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SubwareStuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_subware_stu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SubwareStuKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_subware_stu
+    where WT_SUBWARE_ID = #{wtSubwareId,jdbcType=INTEGER}
+      and WT_STU_ID = #{wtStuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SubwareStuKey" >
+    delete from tp_subware_stu
+    where WT_SUBWARE_ID = #{wtSubwareId,jdbcType=INTEGER}
+      and WT_STU_ID = #{wtStuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.SubwareStu" >
+    insert into tp_subware_stu (WT_SUBWARE_ID, WT_STU_ID, WT_STUDY_TIME, 
+      WT_STATUS, WT_UPDATE_TIME)
+    values (#{wtSubwareId,jdbcType=INTEGER}, #{wtStuId,jdbcType=INTEGER}, #{wtStudyTime,jdbcType=VARCHAR}, 
+      #{wtStatus,jdbcType=CHAR}, #{wtUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.SubwareStu" >
+    insert into tp_subware_stu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wtSubwareId != null" >
+        WT_SUBWARE_ID,
+      </if>
+      <if test="wtStuId != null" >
+        WT_STU_ID,
+      </if>
+      <if test="wtStudyTime != null" >
+        WT_STUDY_TIME,
+      </if>
+      <if test="wtStatus != null" >
+        WT_STATUS,
+      </if>
+      <if test="wtUpdateTime != null" >
+        WT_UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wtSubwareId != null" >
+        #{wtSubwareId,jdbcType=INTEGER},
+      </if>
+      <if test="wtStuId != null" >
+        #{wtStuId,jdbcType=INTEGER},
+      </if>
+      <if test="wtStudyTime != null" >
+        #{wtStudyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wtStatus != null" >
+        #{wtStatus,jdbcType=CHAR},
+      </if>
+      <if test="wtUpdateTime != null" >
+        #{wtUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.SubwareStuExample" resultType="java.lang.Integer" >
+    select count(*) from tp_subware_stu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.SubwareStu" >
+    update tp_subware_stu
+    <set >
+      <if test="wtStudyTime != null" >
+        WT_STUDY_TIME = #{wtStudyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wtStatus != null" >
+        WT_STATUS = #{wtStatus,jdbcType=CHAR},
+      </if>
+      <if test="wtUpdateTime != null" >
+        WT_UPDATE_TIME = #{wtUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where WT_SUBWARE_ID = #{wtSubwareId,jdbcType=INTEGER}
+      and WT_STU_ID = #{wtStuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SubwareStu" >
+    update tp_subware_stu
+    set WT_STUDY_TIME = #{wtStudyTime,jdbcType=VARCHAR},
+      WT_STATUS = #{wtStatus,jdbcType=CHAR},
+      WT_UPDATE_TIME = #{wtUpdateTime,jdbcType=TIMESTAMP}
+    where WT_SUBWARE_ID = #{wtSubwareId,jdbcType=INTEGER}
+      and WT_STU_ID = #{wtStuId,jdbcType=INTEGER}
+  </update>
+  <select id="getCourseStudyProgress" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+		CEIL(
+			IFNULL(
+				(
+					SELECT
+						COUNT(0)
+					FROM
+						tp_subware_stu
+					INNER JOIN tp_sub_courseware ON WT_SUBWARE_ID = SC_ID
+					INNER JOIN tp_chapter ON (
+						CHAP_ID = SC_CHAPTER_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+					WHERE
+						WT_STU_ID = #{stuNo}
+					AND (WT_STATUS = 2 or WT_STATUS = 3)
+				) / (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_sub_courseware
+					INNER JOIN tp_chapter ON (
+						CHAP_ID = SC_CHAPTER_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				) * 100,
+				0
+			)
+		)    
+  </select>
+  <select id="getHomeworkFinishedProgress" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+	CEIL(
+		IFNULL(
+			(
+				(
+					SELECT
+						COUNT(0)
+					FROM
+						tp_homework
+					JOIN tp_chapter ON (
+						HW_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+					JOIN tp_homework_stu ON (
+						HW_CHAP_ID = HS_CHAP_ID
+						AND HW_EXER_ID = HS_EXER_ID
+						AND HS_STU_ID = #{stuNo}
+					)
+					WHERE
+						HS_STATUS = 2
+					OR HS_STATUS = 3
+				) 
+			) / (
+				 (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_homework
+					JOIN tp_chapter ON (
+						HW_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				) 
+			) * 100,
+			0
+		)
+	)
+  </select>
+  <select id="getExamFinishedProgress" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+	CEIL(
+		IFNULL(
+			(
+				 (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_exam_answ
+					JOIN tp_chapter ON (
+						EA_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+						AND EA_STU_NO = #{stuNo}
+					)
+				)
+			) / (
+				(
+					SELECT
+						COUNT(0)
+					FROM
+						tp_chapter_ques
+					JOIN tp_chapter ON (
+						CQ_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				)
+			) * 100,
+			0
+		)
+	) 
+  </select>
+  <select id="getStudyProgress" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+	CEIL(
+		IFNULL(
+			(
+				(
+					SELECT
+						COUNT(0)
+					FROM
+						tp_subware_stu
+					INNER JOIN tp_sub_courseware ON WT_SUBWARE_ID = SC_ID
+					INNER JOIN tp_chapter ON (
+						CHAP_ID = SC_CHAPTER_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+					WHERE
+						WT_STU_ID = #{stuNo}
+					AND WT_STATUS = 2
+				) + (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_homework
+					JOIN tp_chapter ON (
+						HW_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+					JOIN tp_homework_stu ON (
+						HW_CHAP_ID = HS_CHAP_ID
+						AND HW_EXER_ID = HS_EXER_ID
+						AND HS_STU_ID = #{stuNo}
+					)
+					WHERE
+						HS_STATUS = 2
+					OR HS_STATUS = 3
+				) + (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_exam_answ
+					JOIN tp_chapter ON (
+						EA_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+						AND EA_STU_NO = #{stuNo}
+					)
+				)
+			) / (
+				(
+					SELECT
+						COUNT(0)
+					FROM
+						tp_sub_courseware
+					INNER JOIN tp_chapter ON (
+						CHAP_ID = SC_CHAPTER_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				) + (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_homework
+					JOIN tp_chapter ON (
+						HW_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				) + (
+					SELECT
+						COUNT(0)
+					FROM
+						tp_chapter_ques
+					JOIN tp_chapter ON (
+						CQ_CHAP_ID = CHAP_ID
+						AND CHAP_SPEC_ID = #{specId}
+					)
+				)
+			) * 100,
+			0
+		)
+	)
+  </select>
+</mapper>

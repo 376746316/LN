@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.StudyQuestionMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.StudyQuestion">
+		<id column="SQ_QUESTION_ID" property="sqQuestionId" jdbcType="INTEGER" />
+		<result column="SQ_COURSE_ID" property="sqCourseId" jdbcType="INTEGER" />
+		<result column="SQ_STU_ID" property="sqStuId" jdbcType="INTEGER" />
+		<result column="SQ_TITLE" property="sqTitle" jdbcType="VARCHAR" />
+		<result column="SQ_KRYWORD" property="sqKryword" jdbcType="VARCHAR" />
+		<result column="SQ_TYPE_ID" property="sqTypeId" jdbcType="INTEGER" />
+		<result column="SQ_EMERGENCY" property="sqEmergency" jdbcType="CHAR" />
+		<result column="SQ_QUE_TIME" property="sqQueTime" jdbcType="TIMESTAMP" />
+		<result column="SQ_STATUS" property="sqStatus" jdbcType="CHAR" />
+		<result column="SQ_BEST_ANSWER" property="sqBestAnswer"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.StudyQuestion"
+		extends="BaseResultMap">
+		<result column="SQ_CONTENT" property="sqContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="MoreResultMap"
+		type="com.chinasofti.cetp.study.model.MoreStudyQuestion" extends="ResultMapWithBLOBs">
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="STU_NICKNAME" property="stuName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SQ_QUESTION_ID, SQ_COURSE_ID, SQ_STU_ID, SQ_TITLE,
+		SQ_KRYWORD, SQ_TYPE_ID,
+		SQ_EMERGENCY,
+		SQ_QUE_TIME, SQ_STATUS,
+		SQ_BEST_ANSWER
+	</sql>
+	<sql id="Blob_Column_List">
+		SQ_CONTENT
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.chinasofti.cetp.study.model.StudyQuestionExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_study_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.study.model.StudyQuestionExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_study_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_study_question
+		where SQ_QUESTION_ID =
+		#{sqQuestionId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_study_question
+		where SQ_QUESTION_ID =
+		#{sqQuestionId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.StudyQuestion">
+		insert into tp_study_question
+		(SQ_QUESTION_ID, SQ_COURSE_ID,
+		SQ_STU_ID,
+		SQ_TITLE, SQ_KRYWORD,
+		SQ_TYPE_ID,
+		SQ_EMERGENCY, SQ_QUE_TIME, SQ_STATUS,
+		SQ_BEST_ANSWER,
+		SQ_CONTENT)
+		values (#{sqQuestionId,jdbcType=INTEGER},
+		#{sqCourseId,jdbcType=INTEGER},
+		#{sqStuId,jdbcType=INTEGER},
+		#{sqTitle,jdbcType=VARCHAR}, #{sqKryword,jdbcType=VARCHAR},
+		#{sqTypeId,jdbcType=INTEGER},
+		#{sqEmergency,jdbcType=CHAR},
+		#{sqQueTime,jdbcType=TIMESTAMP},
+		#{sqStatus,jdbcType=CHAR},
+		#{sqBestAnswer,jdbcType=INTEGER}, #{sqContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.StudyQuestion">
+		insert into tp_study_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sqQuestionId != null">
+				SQ_QUESTION_ID,
+			</if>
+			<if test="sqCourseId != null">
+				SQ_COURSE_ID,
+			</if>
+			<if test="sqStuId != null">
+				SQ_STU_ID,
+			</if>
+			<if test="sqTitle != null">
+				SQ_TITLE,
+			</if>
+			<if test="sqKryword != null">
+				SQ_KRYWORD,
+			</if>
+			<if test="sqTypeId != null">
+				SQ_TYPE_ID,
+			</if>
+			<if test="sqEmergency != null">
+				SQ_EMERGENCY,
+			</if>
+			<if test="sqQueTime != null">
+				SQ_QUE_TIME,
+			</if>
+			<if test="sqStatus != null">
+				SQ_STATUS,
+			</if>
+			<if test="sqBestAnswer != null">
+				SQ_BEST_ANSWER,
+			</if>
+			<if test="sqContent != null">
+				SQ_CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sqQuestionId != null">
+				#{sqQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="sqCourseId != null">
+				#{sqCourseId,jdbcType=INTEGER},
+			</if>
+			<if test="sqStuId != null">
+				#{sqStuId,jdbcType=INTEGER},
+			</if>
+			<if test="sqTitle != null">
+				#{sqTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="sqKryword != null">
+				#{sqKryword,jdbcType=VARCHAR},
+			</if>
+			<if test="sqTypeId != null">
+				#{sqTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="sqEmergency != null">
+				#{sqEmergency,jdbcType=CHAR},
+			</if>
+			<if test="sqQueTime != null">
+				#{sqQueTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sqStatus != null">
+				#{sqStatus,jdbcType=CHAR},
+			</if>
+			<if test="sqBestAnswer != null">
+				#{sqBestAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="sqContent != null">
+				#{sqContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.chinasofti.cetp.study.model.StudyQuestionExample"
+		resultType="java.lang.Integer">
+		select count(*) from tp_study_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.StudyQuestion">
+		update tp_study_question
+		<set>
+			<if test="sqCourseId != null">
+				SQ_COURSE_ID = #{sqCourseId,jdbcType=INTEGER},
+			</if>
+			<if test="sqStuId != null">
+				SQ_STU_ID = #{sqStuId,jdbcType=INTEGER},
+			</if>
+			<if test="sqTitle != null">
+				SQ_TITLE = #{sqTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="sqKryword != null">
+				SQ_KRYWORD = #{sqKryword,jdbcType=VARCHAR},
+			</if>
+			<if test="sqTypeId != null">
+				SQ_TYPE_ID = #{sqTypeId,jdbcType=INTEGER},
+			</if>
+			<if test="sqEmergency != null">
+				SQ_EMERGENCY = #{sqEmergency,jdbcType=CHAR},
+			</if>
+			<if test="sqQueTime != null">
+				SQ_QUE_TIME = #{sqQueTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="sqStatus != null">
+				SQ_STATUS = #{sqStatus,jdbcType=CHAR},
+			</if>
+			<if test="sqBestAnswer != null">
+				SQ_BEST_ANSWER = #{sqBestAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="sqContent != null">
+				SQ_CONTENT = #{sqContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where SQ_QUESTION_ID = #{sqQuestionId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.StudyQuestion">
+		update
+		tp_study_question
+		set SQ_COURSE_ID = #{sqCourseId,jdbcType=INTEGER},
+		SQ_STU_ID = #{sqStuId,jdbcType=INTEGER},
+		SQ_TITLE =
+		#{sqTitle,jdbcType=VARCHAR},
+		SQ_KRYWORD =
+		#{sqKryword,jdbcType=VARCHAR},
+		SQ_TYPE_ID =
+		#{sqTypeId,jdbcType=INTEGER},
+		SQ_EMERGENCY =
+		#{sqEmergency,jdbcType=CHAR},
+		SQ_QUE_TIME =
+		#{sqQueTime,jdbcType=TIMESTAMP},
+		SQ_STATUS = #{sqStatus,jdbcType=CHAR},
+		SQ_BEST_ANSWER = #{sqBestAnswer,jdbcType=INTEGER},
+		SQ_CONTENT =
+		#{sqContent,jdbcType=LONGVARCHAR}
+		where SQ_QUESTION_ID =
+		#{sqQuestionId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.StudyQuestion">
+		update
+		tp_study_question
+		set SQ_COURSE_ID = #{sqCourseId,jdbcType=INTEGER},
+		SQ_STU_ID = #{sqStuId,jdbcType=INTEGER},
+		SQ_TITLE =
+		#{sqTitle,jdbcType=VARCHAR},
+		SQ_KRYWORD =
+		#{sqKryword,jdbcType=VARCHAR},
+		SQ_TYPE_ID =
+		#{sqTypeId,jdbcType=INTEGER},
+		SQ_EMERGENCY =
+		#{sqEmergency,jdbcType=CHAR},
+		SQ_QUE_TIME =
+		#{sqQueTime,jdbcType=TIMESTAMP},
+		SQ_STATUS = #{sqStatus,jdbcType=CHAR},
+		SQ_BEST_ANSWER = #{sqBestAnswer,jdbcType=INTEGER}
+		where SQ_QUESTION_ID
+		= #{sqQuestionId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 自定义接口实现 -->
+	<select id="selectStudyQuestionForShow" resultMap="MoreResultMap"
+		parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_study_question B
+		WHERE B.SQ_STU_ID = #{stuNo}
+		AND B.SQ_COURSE_ID
+		= #{specId}
+		ORDER BY SQ_QUESTION_ID DESC
+
+	</select>
+	<select id="selectStudyQuestionBySqQuestionId" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		C.count,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		(
+		SELECT
+		count(0) AS count,
+		A.SA_QUESTION_ID,
+		A.SA_PUMP
+		FROM
+		tp_study_answer A
+		WHERE A.SA_PUMP is NULL
+		GROUP BY
+		A.SA_QUESTION_ID
+		) C
+		RIGHT JOIN
+		tp_study_question B
+		ON (C.SA_QUESTION_ID = B.SQ_QUESTION_ID )
+		WHERE B.SQ_QUESTION_ID = #{sqId}
+
+	</select>
+
+	<select id="getQuestionAnswerCount" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		SELECT
+		count(A.SA_ANSWER_ID)
+		FROM tp_study_answer A
+		WHERE
+		A.SA_QUESTION_ID = #{sqId}
+		AND A.SA_PUMP is NULL
+	</select>
+
+	<select id="getMyAnswerQuestion" resultMap="MoreResultMap"
+		parameterType="HashMap">
+		select
+		C.STU_NICKNAME,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_study_question B,tp_student C
+		WHERE B.SQ_QUESTION_ID IN(
+		SELECT
+		A.SA_QUESTION_ID
+		FROM tp_study_answer A
+		WHERE A.SA_ANSWER_USER =
+		#{stuNo}
+		AND A.SA_PUMP IS NULL)
+		AND B.SQ_COURSE_ID =#{specId}
+		AND
+		B.SQ_STU_ID =C.STU_NO
+
+	</select>
+
+	<select id="getMyBestAnswerQuestion" resultMap="MoreResultMap"
+		parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_study_question B
+		WHERE B.SQ_QUESTION_ID IN(
+		SELECT
+		A.SA_QUESTION_ID
+		FROM tp_study_answer A
+		WHERE A.SA_ANSWER_USER =
+		#{stuNo}
+		AND A.SA_PUMP IS NULL)
+		AND B.SQ_COURSE_ID =#{specId}
+		AND
+		B.SQ_BEST_ANSWER IN (SELECT
+		C.SA_ANSWER_ID
+		FROM tp_study_answer C
+		WHERE
+		C.SA_ANSWER_USER = #{stuNo}
+		AND C.SA_PUMP IS NULL);
+
+	</select>
+
+	<select id="getAllQuestionForSpecId" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		C.STU_NICKNAME,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_study_question B,tp_student C
+		WHERE B.SQ_COURSE_ID = #{specId}
+		AND B.SQ_STU_ID =C.STU_NO
+		ORDER BY
+		SQ_QUESTION_ID DESC
+
+	</select>
+</mapper>

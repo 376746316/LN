@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.StudentMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.Student">
+		<id column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="STU_NUM" property="stuNum" jdbcType="VARCHAR" />
+		<result column="STU_ORGID" property="stuOrgid" jdbcType="INTEGER" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_USERID" property="stuUserid" jdbcType="VARCHAR" />
+		<result column="STU_PWD" property="stuPwd" jdbcType="VARCHAR" />
+		<result column="STU_NICKNAME" property="stuNickname" jdbcType="VARCHAR" />
+		<result column="STU_MOBILE" property="stuMobile" jdbcType="VARCHAR" />
+		<result column="STU_PHONE" property="stuPhone" jdbcType="VARCHAR" />
+		<result column="STU_MAIL" property="stuMail" jdbcType="VARCHAR" />
+		<result column="STU_QQ" property="stuQq" jdbcType="VARCHAR" />
+		<result column="STU_GRP_QQ" property="stuGrpQq" jdbcType="VARCHAR" />
+		<result column="STU_SEX" property="stuSex" jdbcType="CHAR" />
+		<result column="STU_TITLE" property="stuTitle" jdbcType="VARCHAR" />
+		<result column="STU_BIRTH" property="stuBirth" jdbcType="DATE" />
+		<result column="STU_ADDRESS" property="stuAddress" jdbcType="VARCHAR" />
+		<result column="STU_POSTCODE" property="stuPostcode" jdbcType="CHAR" />
+		<result column="STU_IS_LEADER" property="stuIsLeader" jdbcType="CHAR" />
+		<result column="STU_EDU_LEVEL" property="stuEduLevel" jdbcType="CHAR" />
+		<result column="STU_IDCARD" property="stuIdcard" jdbcType="VARCHAR" />
+		<result column="STU_MAJOR" property="stuMajor" jdbcType="VARCHAR" />
+		<result column="STU_CLASS_ID" property="stuClassId" jdbcType="INTEGER" />
+		<result column="AREA_CODE" property="areaCode" jdbcType="CHAR" />
+		<result column="STU_SCHOOL_ID" property="stuSchoolId" jdbcType="INTEGER" />
+		<result column="STU_GRADE" property="stuGrade" jdbcType="INTEGER" />
+		<result column="STU_POLITIC" property="stuPolitic" jdbcType="CHAR" />
+		<result column="STU_LINK" property="stuLink" jdbcType="VARCHAR" />
+		<result column="STU_LINK_TEL" property="stuLinkTel" jdbcType="VARCHAR" />
+		<result column="STU_ENROL" property="stuEnrol" jdbcType="DATE" />
+		<result column="STU_GRADEUATE" property="stuGradeuate" jdbcType="DATE" />
+		<result column="STU_JOIN_BASE" property="stuJoinBase" jdbcType="DATE" />
+		<result column="STU_CYCLE" property="stuCycle" jdbcType="VARCHAR" />
+		<result column="STU_TIME_CARD" property="stuTimeCard" jdbcType="VARCHAR" />
+		<result column="STU_TYPE" property="stuType" jdbcType="CHAR" />
+		<result column="STU_MARK" property="stuMark" jdbcType="VARCHAR" />
+		<result column="STU_USER_NO" property="stuUserNo" jdbcType="INTEGER" />
+		<result column="STU_REGTIME" property="stuRegtime" jdbcType="TIMESTAMP" />
+		<result column="STU_LASTLOGIN" property="stuLastlogin" jdbcType="TIMESTAMP" />
+		<result column="STU_SCORE" property="stuScore" jdbcType="INTEGER" />
+		<result column="STU_HISTORY_SCORE" property="stuHistoryScore" jdbcType="INTEGER" />
+		<result column="STU_COIN" property="stuCoin" jdbcType="INTEGER" />
+		<result column="STU_MSG_CFG" property="stuMsgCfg" jdbcType="CHAR" />
+		<result column="STU_MAIL_CFG" property="stuMailCfg" jdbcType="CHAR" />
+		<result column="STU_GROUP_ID" property="stuGroupId" jdbcType="INTEGER" />
+		<result column="STU_ISACTIVATE" property="stuIsactivate" jdbcType="INTEGER" />
+		<result column="STU_FLAG" property="stuFlag" jdbcType="VARCHAR" />
+		<result column="STU_PAYMENT" property="stuPayment" jdbcType="INTEGER" />
+	    <result column="STU_QACOUNT" property="stuQacount" jdbcType="INTEGER" />
+	    <result column="STU_JOB_CONTEXT" property="stuJobContext" jdbcType="VARCHAR" />
+	    <result column="STU_PROF" property="stuProf" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.admin.model.StudentWithBLOBs" extends="BaseResultMap">
+		<result column="STU_TECH_DIRECT" property="stuTechDirect" jdbcType="LONGVARCHAR" />
+		<result column="STU_HOBBY" property="stuHobby" jdbcType="LONGVARCHAR" />
+		<result column="STU_TRAIN" property="stuTrain" jdbcType="LONGVARCHAR" />
+		<result column="STU_WORK_EXP" property="stuWorkExp" jdbcType="LONGVARCHAR" />
+		<result column="STU_EDU_BG" property="stuEduBg" jdbcType="LONGVARCHAR" />
+		<result column="STU_INTRO" property="stuIntro" jdbcType="LONGVARCHAR" />
+		<result column="STU_HEAD" property="stuHead" jdbcType="LONGVARCHAR" />
+		<result column="STU_HEAD_M" property="stuHeadM" jdbcType="LONGVARCHAR" />
+		<result column="STU_HEAD_S" property="stuHeadS" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		STU_NO, STU_NUM, STU_ORGID, STU_NAME, STU_USERID, STU_PWD, STU_NICKNAME, STU_MOBILE,
+		STU_PHONE, STU_MAIL, STU_QQ, STU_GRP_QQ, STU_SEX, STU_TITLE, STU_BIRTH, STU_ADDRESS,
+		STU_POSTCODE, STU_IS_LEADER, STU_EDU_LEVEL, STU_IDCARD, STU_MAJOR, STU_CLASS_ID,
+		AREA_CODE, STU_SCHOOL_ID, STU_GRADE, STU_POLITIC, STU_LINK, STU_LINK_TEL, STU_ENROL,
+		STU_GRADEUATE, STU_JOIN_BASE, STU_CYCLE, STU_TIME_CARD, STU_TYPE, STU_MARK, STU_USER_NO,
+		STU_REGTIME, STU_LASTLOGIN, STU_SCORE, STU_HISTORY_SCORE, STU_COIN, STU_MSG_CFG,
+    STU_MAIL_CFG, STU_GROUP_ID, STU_ISACTIVATE, STU_FLAG, STU_PAYMENT, STU_QACOUNT, STU_JOB_CONTEXT, 
+    STU_PROF
+  </sql>
+  <sql id="Blob_Column_List" >
+    STU_TECH_DIRECT, STU_HOBBY, STU_TRAIN, STU_WORK_EXP, STU_EDU_BG, STU_INTRO, STU_HEAD, 
+    STU_HEAD_M, STU_HEAD_S
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_student
+    where STU_NO = #{stuNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_student
+    where STU_NO = #{stuNo,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.StudentExample" >
+    delete from tp_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.StudentWithBLOBs" >
+    insert into tp_student (STU_NO, STU_NUM, STU_ORGID, 
+      STU_NAME, STU_USERID, STU_PWD, 
+      STU_NICKNAME, STU_MOBILE, STU_PHONE, 
+      STU_MAIL, STU_QQ, STU_GRP_QQ, 
+      STU_SEX, STU_TITLE, STU_BIRTH, 
+      STU_ADDRESS, STU_POSTCODE, STU_IS_LEADER, 
+      STU_EDU_LEVEL, STU_IDCARD, STU_MAJOR, 
+      STU_CLASS_ID, AREA_CODE, STU_SCHOOL_ID, 
+      STU_GRADE, STU_POLITIC, STU_LINK, 
+      STU_LINK_TEL, STU_ENROL, STU_GRADEUATE, 
+      STU_JOIN_BASE, STU_CYCLE, STU_TIME_CARD, 
+      STU_TYPE, STU_MARK, STU_USER_NO, 
+      STU_REGTIME, STU_LASTLOGIN, STU_SCORE, 
+      STU_HISTORY_SCORE, STU_COIN, STU_MSG_CFG, 
+      STU_MAIL_CFG, STU_GROUP_ID, STU_ISACTIVATE, 
+      STU_FLAG, STU_PAYMENT, STU_QACOUNT, 
+      STU_JOB_CONTEXT, STU_PROF, STU_TECH_DIRECT, 
+      STU_HOBBY, STU_TRAIN, STU_WORK_EXP, 
+      STU_EDU_BG, STU_INTRO, STU_HEAD, 
+      STU_HEAD_M, STU_HEAD_S)
+    values (#{stuNo,jdbcType=INTEGER}, #{stuNum,jdbcType=VARCHAR}, #{stuOrgid,jdbcType=INTEGER}, 
+      #{stuName,jdbcType=VARCHAR}, #{stuUserid,jdbcType=VARCHAR}, #{stuPwd,jdbcType=VARCHAR}, 
+      #{stuNickname,jdbcType=VARCHAR}, #{stuMobile,jdbcType=VARCHAR}, #{stuPhone,jdbcType=VARCHAR}, 
+      #{stuMail,jdbcType=VARCHAR}, #{stuQq,jdbcType=VARCHAR}, #{stuGrpQq,jdbcType=VARCHAR}, 
+      #{stuSex,jdbcType=CHAR}, #{stuTitle,jdbcType=VARCHAR}, #{stuBirth,jdbcType=DATE}, 
+      #{stuAddress,jdbcType=VARCHAR}, #{stuPostcode,jdbcType=CHAR}, #{stuIsLeader,jdbcType=CHAR}, 
+      #{stuEduLevel,jdbcType=CHAR}, #{stuIdcard,jdbcType=VARCHAR}, #{stuMajor,jdbcType=VARCHAR}, 
+      #{stuClassId,jdbcType=INTEGER}, #{areaCode,jdbcType=CHAR}, #{stuSchoolId,jdbcType=INTEGER}, 
+      #{stuGrade,jdbcType=INTEGER}, #{stuPolitic,jdbcType=CHAR}, #{stuLink,jdbcType=VARCHAR}, 
+      #{stuLinkTel,jdbcType=VARCHAR}, #{stuEnrol,jdbcType=DATE}, #{stuGradeuate,jdbcType=DATE}, 
+      #{stuJoinBase,jdbcType=DATE}, #{stuCycle,jdbcType=VARCHAR}, #{stuTimeCard,jdbcType=VARCHAR}, 
+      #{stuType,jdbcType=CHAR}, #{stuMark,jdbcType=VARCHAR}, #{stuUserNo,jdbcType=INTEGER}, 
+      #{stuRegtime,jdbcType=TIMESTAMP}, #{stuLastlogin,jdbcType=TIMESTAMP}, #{stuScore,jdbcType=INTEGER}, 
+      #{stuHistoryScore,jdbcType=INTEGER}, #{stuCoin,jdbcType=INTEGER}, #{stuMsgCfg,jdbcType=CHAR}, 
+      #{stuMailCfg,jdbcType=CHAR}, #{stuGroupId,jdbcType=INTEGER}, #{stuIsactivate,jdbcType=INTEGER}, 
+      #{stuFlag,jdbcType=VARCHAR}, #{stuPayment,jdbcType=INTEGER}, #{stuQacount,jdbcType=INTEGER}, 
+      #{stuJobContext,jdbcType=VARCHAR}, #{stuProf,jdbcType=INTEGER}, #{stuTechDirect,jdbcType=LONGVARCHAR}, 
+      #{stuHobby,jdbcType=LONGVARCHAR}, #{stuTrain,jdbcType=LONGVARCHAR}, #{stuWorkExp,jdbcType=LONGVARCHAR}, 
+      #{stuEduBg,jdbcType=LONGVARCHAR}, #{stuIntro,jdbcType=LONGVARCHAR}, #{stuHead,jdbcType=LONGVARCHAR}, 
+      #{stuHeadM,jdbcType=LONGVARCHAR}, #{stuHeadS,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.StudentWithBLOBs" useGeneratedKeys="true" keyProperty="stuNo">
+    insert into tp_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuNo != null" >
+        STU_NO,
+      </if>
+      <if test="stuNum != null" >
+        STU_NUM,
+      </if>
+      <if test="stuOrgid != null" >
+        STU_ORGID,
+      </if>
+      <if test="stuName != null" >
+        STU_NAME,
+      </if>
+      <if test="stuUserid != null" >
+        STU_USERID,
+      </if>
+      <if test="stuPwd != null" >
+        STU_PWD,
+      </if>
+      <if test="stuNickname != null" >
+        STU_NICKNAME,
+      </if>
+      <if test="stuMobile != null" >
+        STU_MOBILE,
+      </if>
+      <if test="stuPhone != null" >
+        STU_PHONE,
+      </if>
+      <if test="stuMail != null" >
+        STU_MAIL,
+      </if>
+      <if test="stuQq != null" >
+        STU_QQ,
+      </if>
+      <if test="stuGrpQq != null" >
+        STU_GRP_QQ,
+      </if>
+      <if test="stuSex != null" >
+        STU_SEX,
+      </if>
+      <if test="stuTitle != null" >
+        STU_TITLE,
+      </if>
+      <if test="stuBirth != null" >
+        STU_BIRTH,
+      </if>
+      <if test="stuAddress != null" >
+        STU_ADDRESS,
+      </if>
+      <if test="stuPostcode != null" >
+        STU_POSTCODE,
+      </if>
+      <if test="stuIsLeader != null" >
+        STU_IS_LEADER,
+      </if>
+      <if test="stuEduLevel != null" >
+        STU_EDU_LEVEL,
+      </if>
+      <if test="stuIdcard != null" >
+        STU_IDCARD,
+      </if>
+      <if test="stuMajor != null" >
+        STU_MAJOR,
+      </if>
+      <if test="stuClassId != null" >
+        STU_CLASS_ID,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="stuSchoolId != null" >
+        STU_SCHOOL_ID,
+      </if>
+      <if test="stuGrade != null" >
+        STU_GRADE,
+      </if>
+      <if test="stuPolitic != null" >
+        STU_POLITIC,
+      </if>
+      <if test="stuLink != null" >
+        STU_LINK,
+      </if>
+      <if test="stuLinkTel != null" >
+        STU_LINK_TEL,
+      </if>
+      <if test="stuEnrol != null" >
+        STU_ENROL,
+      </if>
+      <if test="stuGradeuate != null" >
+        STU_GRADEUATE,
+      </if>
+      <if test="stuJoinBase != null" >
+        STU_JOIN_BASE,
+      </if>
+      <if test="stuCycle != null" >
+        STU_CYCLE,
+      </if>
+      <if test="stuTimeCard != null" >
+        STU_TIME_CARD,
+      </if>
+      <if test="stuType != null" >
+        STU_TYPE,
+      </if>
+      <if test="stuMark != null" >
+        STU_MARK,
+      </if>
+      <if test="stuUserNo != null" >
+        STU_USER_NO,
+      </if>
+      <if test="stuRegtime != null" >
+        STU_REGTIME,
+      </if>
+      <if test="stuLastlogin != null" >
+        STU_LASTLOGIN,
+      </if>
+      <if test="stuScore != null" >
+        STU_SCORE,
+      </if>
+      <if test="stuHistoryScore != null" >
+        STU_HISTORY_SCORE,
+      </if>
+      <if test="stuCoin != null" >
+        STU_COIN,
+      </if>
+      <if test="stuMsgCfg != null" >
+        STU_MSG_CFG,
+      </if>
+      <if test="stuMailCfg != null" >
+        STU_MAIL_CFG,
+      </if>
+      <if test="stuGroupId != null" >
+        STU_GROUP_ID,
+      </if>
+      <if test="stuIsactivate != null" >
+        STU_ISACTIVATE,
+      </if>
+      <if test="stuFlag != null" >
+        STU_FLAG,
+      </if>
+      <if test="stuPayment != null" >
+        STU_PAYMENT,
+      </if>
+      <if test="stuQacount != null" >
+        STU_QACOUNT,
+      </if>
+      <if test="stuJobContext != null" >
+        STU_JOB_CONTEXT,
+      </if>
+      <if test="stuProf != null" >
+        STU_PROF,
+      </if>
+      <if test="stuTechDirect != null" >
+        STU_TECH_DIRECT,
+      </if>
+      <if test="stuHobby != null" >
+        STU_HOBBY,
+      </if>
+      <if test="stuTrain != null" >
+        STU_TRAIN,
+      </if>
+      <if test="stuWorkExp != null" >
+        STU_WORK_EXP,
+      </if>
+      <if test="stuEduBg != null" >
+        STU_EDU_BG,
+      </if>
+      <if test="stuIntro != null" >
+        STU_INTRO,
+      </if>
+      <if test="stuHead != null" >
+        STU_HEAD,
+      </if>
+      <if test="stuHeadM != null" >
+        STU_HEAD_M,
+      </if>
+      <if test="stuHeadS != null" >
+        STU_HEAD_S,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuNo != null" >
+        #{stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="stuNum != null" >
+        #{stuNum,jdbcType=VARCHAR},
+      </if>
+      <if test="stuOrgid != null" >
+        #{stuOrgid,jdbcType=INTEGER},
+      </if>
+      <if test="stuName != null" >
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUserid != null" >
+        #{stuUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPwd != null" >
+        #{stuPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNickname != null" >
+        #{stuNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMobile != null" >
+        #{stuMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPhone != null" >
+        #{stuPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMail != null" >
+        #{stuMail,jdbcType=VARCHAR},
+      </if>
+      <if test="stuQq != null" >
+        #{stuQq,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGrpQq != null" >
+        #{stuGrpQq,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSex != null" >
+        #{stuSex,jdbcType=CHAR},
+      </if>
+      <if test="stuTitle != null" >
+        #{stuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stuBirth != null" >
+        #{stuBirth,jdbcType=DATE},
+      </if>
+      <if test="stuAddress != null" >
+        #{stuAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPostcode != null" >
+        #{stuPostcode,jdbcType=CHAR},
+      </if>
+      <if test="stuIsLeader != null" >
+        #{stuIsLeader,jdbcType=CHAR},
+      </if>
+      <if test="stuEduLevel != null" >
+        #{stuEduLevel,jdbcType=CHAR},
+      </if>
+      <if test="stuIdcard != null" >
+        #{stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMajor != null" >
+        #{stuMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClassId != null" >
+        #{stuClassId,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=CHAR},
+      </if>
+      <if test="stuSchoolId != null" >
+        #{stuSchoolId,jdbcType=INTEGER},
+      </if>
+      <if test="stuGrade != null" >
+        #{stuGrade,jdbcType=INTEGER},
+      </if>
+      <if test="stuPolitic != null" >
+        #{stuPolitic,jdbcType=CHAR},
+      </if>
+      <if test="stuLink != null" >
+        #{stuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLinkTel != null" >
+        #{stuLinkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEnrol != null" >
+        #{stuEnrol,jdbcType=DATE},
+      </if>
+      <if test="stuGradeuate != null" >
+        #{stuGradeuate,jdbcType=DATE},
+      </if>
+      <if test="stuJoinBase != null" >
+        #{stuJoinBase,jdbcType=DATE},
+      </if>
+      <if test="stuCycle != null" >
+        #{stuCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTimeCard != null" >
+        #{stuTimeCard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuType != null" >
+        #{stuType,jdbcType=CHAR},
+      </if>
+      <if test="stuMark != null" >
+        #{stuMark,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUserNo != null" >
+        #{stuUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="stuRegtime != null" >
+        #{stuRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuLastlogin != null" >
+        #{stuLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuScore != null" >
+        #{stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuHistoryScore != null" >
+        #{stuHistoryScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuCoin != null" >
+        #{stuCoin,jdbcType=INTEGER},
+      </if>
+      <if test="stuMsgCfg != null" >
+        #{stuMsgCfg,jdbcType=CHAR},
+      </if>
+      <if test="stuMailCfg != null" >
+        #{stuMailCfg,jdbcType=CHAR},
+      </if>
+      <if test="stuGroupId != null" >
+        #{stuGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="stuIsactivate != null" >
+        #{stuIsactivate,jdbcType=INTEGER},
+      </if>
+      <if test="stuFlag != null" >
+        #{stuFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPayment != null" >
+        #{stuPayment,jdbcType=INTEGER},
+      </if>
+      <if test="stuQacount != null" >
+        #{stuQacount,jdbcType=INTEGER},
+      </if>
+      <if test="stuJobContext != null" >
+        #{stuJobContext,jdbcType=VARCHAR},
+      </if>
+      <if test="stuProf != null" >
+        #{stuProf,jdbcType=INTEGER},
+      </if>
+      <if test="stuTechDirect != null" >
+        #{stuTechDirect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHobby != null" >
+        #{stuHobby,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuTrain != null" >
+        #{stuTrain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuWorkExp != null" >
+        #{stuWorkExp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuEduBg != null" >
+        #{stuEduBg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuIntro != null" >
+        #{stuIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHead != null" >
+        #{stuHead,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHeadM != null" >
+        #{stuHeadM,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHeadS != null" >
+        #{stuHeadS,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from tp_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_student
+    <set >
+      <if test="record.stuNo != null" >
+        STU_NO = #{record.stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuNum != null" >
+        STU_NUM = #{record.stuNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuOrgid != null" >
+        STU_ORGID = #{record.stuOrgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuName != null" >
+        STU_NAME = #{record.stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuUserid != null" >
+        STU_USERID = #{record.stuUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPwd != null" >
+        STU_PWD = #{record.stuPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuNickname != null" >
+        STU_NICKNAME = #{record.stuNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuMobile != null" >
+        STU_MOBILE = #{record.stuMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPhone != null" >
+        STU_PHONE = #{record.stuPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuMail != null" >
+        STU_MAIL = #{record.stuMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuQq != null" >
+        STU_QQ = #{record.stuQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuGrpQq != null" >
+        STU_GRP_QQ = #{record.stuGrpQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuSex != null" >
+        STU_SEX = #{record.stuSex,jdbcType=CHAR},
+      </if>
+      <if test="record.stuTitle != null" >
+        STU_TITLE = #{record.stuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuBirth != null" >
+        STU_BIRTH = #{record.stuBirth,jdbcType=DATE},
+      </if>
+      <if test="record.stuAddress != null" >
+        STU_ADDRESS = #{record.stuAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPostcode != null" >
+        STU_POSTCODE = #{record.stuPostcode,jdbcType=CHAR},
+      </if>
+      <if test="record.stuIsLeader != null" >
+        STU_IS_LEADER = #{record.stuIsLeader,jdbcType=CHAR},
+      </if>
+      <if test="record.stuEduLevel != null" >
+        STU_EDU_LEVEL = #{record.stuEduLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.stuIdcard != null" >
+        STU_IDCARD = #{record.stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuMajor != null" >
+        STU_MAJOR = #{record.stuMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuClassId != null" >
+        STU_CLASS_ID = #{record.stuClassId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=CHAR},
+      </if>
+      <if test="record.stuSchoolId != null" >
+        STU_SCHOOL_ID = #{record.stuSchoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuGrade != null" >
+        STU_GRADE = #{record.stuGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuPolitic != null" >
+        STU_POLITIC = #{record.stuPolitic,jdbcType=CHAR},
+      </if>
+      <if test="record.stuLink != null" >
+        STU_LINK = #{record.stuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuLinkTel != null" >
+        STU_LINK_TEL = #{record.stuLinkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuEnrol != null" >
+        STU_ENROL = #{record.stuEnrol,jdbcType=DATE},
+      </if>
+      <if test="record.stuGradeuate != null" >
+        STU_GRADEUATE = #{record.stuGradeuate,jdbcType=DATE},
+      </if>
+      <if test="record.stuJoinBase != null" >
+        STU_JOIN_BASE = #{record.stuJoinBase,jdbcType=DATE},
+      </if>
+      <if test="record.stuCycle != null" >
+        STU_CYCLE = #{record.stuCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuTimeCard != null" >
+        STU_TIME_CARD = #{record.stuTimeCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuType != null" >
+        STU_TYPE = #{record.stuType,jdbcType=CHAR},
+      </if>
+      <if test="record.stuMark != null" >
+        STU_MARK = #{record.stuMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuUserNo != null" >
+        STU_USER_NO = #{record.stuUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuRegtime != null" >
+        STU_REGTIME = #{record.stuRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stuLastlogin != null" >
+        STU_LASTLOGIN = #{record.stuLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stuScore != null" >
+        STU_SCORE = #{record.stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuHistoryScore != null" >
+        STU_HISTORY_SCORE = #{record.stuHistoryScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuCoin != null" >
+        STU_COIN = #{record.stuCoin,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuMsgCfg != null" >
+        STU_MSG_CFG = #{record.stuMsgCfg,jdbcType=CHAR},
+      </if>
+      <if test="record.stuMailCfg != null" >
+        STU_MAIL_CFG = #{record.stuMailCfg,jdbcType=CHAR},
+      </if>
+      <if test="record.stuGroupId != null" >
+        STU_GROUP_ID = #{record.stuGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuIsactivate != null" >
+        STU_ISACTIVATE = #{record.stuIsactivate,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuFlag != null" >
+        STU_FLAG = #{record.stuFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPayment != null" >
+        STU_PAYMENT = #{record.stuPayment,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuQacount != null" >
+        STU_QACOUNT = #{record.stuQacount,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuJobContext != null" >
+        STU_JOB_CONTEXT = #{record.stuJobContext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuProf != null" >
+        STU_PROF = #{record.stuProf,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuTechDirect != null" >
+        STU_TECH_DIRECT = #{record.stuTechDirect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuHobby != null" >
+        STU_HOBBY = #{record.stuHobby,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuTrain != null" >
+        STU_TRAIN = #{record.stuTrain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuWorkExp != null" >
+        STU_WORK_EXP = #{record.stuWorkExp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuEduBg != null" >
+        STU_EDU_BG = #{record.stuEduBg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuIntro != null" >
+        STU_INTRO = #{record.stuIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuHead != null" >
+        STU_HEAD = #{record.stuHead,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuHeadM != null" >
+        STU_HEAD_M = #{record.stuHeadM,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuHeadS != null" >
+        STU_HEAD_S = #{record.stuHeadS,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_student
+    set STU_NO = #{record.stuNo,jdbcType=INTEGER},
+      STU_NUM = #{record.stuNum,jdbcType=VARCHAR},
+      STU_ORGID = #{record.stuOrgid,jdbcType=INTEGER},
+      STU_NAME = #{record.stuName,jdbcType=VARCHAR},
+      STU_USERID = #{record.stuUserid,jdbcType=VARCHAR},
+      STU_PWD = #{record.stuPwd,jdbcType=VARCHAR},
+      STU_NICKNAME = #{record.stuNickname,jdbcType=VARCHAR},
+      STU_MOBILE = #{record.stuMobile,jdbcType=VARCHAR},
+      STU_PHONE = #{record.stuPhone,jdbcType=VARCHAR},
+      STU_MAIL = #{record.stuMail,jdbcType=VARCHAR},
+      STU_QQ = #{record.stuQq,jdbcType=VARCHAR},
+      STU_GRP_QQ = #{record.stuGrpQq,jdbcType=VARCHAR},
+      STU_SEX = #{record.stuSex,jdbcType=CHAR},
+      STU_TITLE = #{record.stuTitle,jdbcType=VARCHAR},
+      STU_BIRTH = #{record.stuBirth,jdbcType=DATE},
+      STU_ADDRESS = #{record.stuAddress,jdbcType=VARCHAR},
+      STU_POSTCODE = #{record.stuPostcode,jdbcType=CHAR},
+      STU_IS_LEADER = #{record.stuIsLeader,jdbcType=CHAR},
+      STU_EDU_LEVEL = #{record.stuEduLevel,jdbcType=CHAR},
+      STU_IDCARD = #{record.stuIdcard,jdbcType=VARCHAR},
+      STU_MAJOR = #{record.stuMajor,jdbcType=VARCHAR},
+      STU_CLASS_ID = #{record.stuClassId,jdbcType=INTEGER},
+      AREA_CODE = #{record.areaCode,jdbcType=CHAR},
+      STU_SCHOOL_ID = #{record.stuSchoolId,jdbcType=INTEGER},
+      STU_GRADE = #{record.stuGrade,jdbcType=INTEGER},
+      STU_POLITIC = #{record.stuPolitic,jdbcType=CHAR},
+      STU_LINK = #{record.stuLink,jdbcType=VARCHAR},
+      STU_LINK_TEL = #{record.stuLinkTel,jdbcType=VARCHAR},
+      STU_ENROL = #{record.stuEnrol,jdbcType=DATE},
+      STU_GRADEUATE = #{record.stuGradeuate,jdbcType=DATE},
+      STU_JOIN_BASE = #{record.stuJoinBase,jdbcType=DATE},
+      STU_CYCLE = #{record.stuCycle,jdbcType=VARCHAR},
+      STU_TIME_CARD = #{record.stuTimeCard,jdbcType=VARCHAR},
+      STU_TYPE = #{record.stuType,jdbcType=CHAR},
+      STU_MARK = #{record.stuMark,jdbcType=VARCHAR},
+      STU_USER_NO = #{record.stuUserNo,jdbcType=INTEGER},
+      STU_REGTIME = #{record.stuRegtime,jdbcType=TIMESTAMP},
+      STU_LASTLOGIN = #{record.stuLastlogin,jdbcType=TIMESTAMP},
+      STU_SCORE = #{record.stuScore,jdbcType=INTEGER},
+      STU_HISTORY_SCORE = #{record.stuHistoryScore,jdbcType=INTEGER},
+      STU_COIN = #{record.stuCoin,jdbcType=INTEGER},
+      STU_MSG_CFG = #{record.stuMsgCfg,jdbcType=CHAR},
+      STU_MAIL_CFG = #{record.stuMailCfg,jdbcType=CHAR},
+      STU_GROUP_ID = #{record.stuGroupId,jdbcType=INTEGER},
+      STU_ISACTIVATE = #{record.stuIsactivate,jdbcType=INTEGER},
+      STU_FLAG = #{record.stuFlag,jdbcType=VARCHAR},
+      STU_PAYMENT = #{record.stuPayment,jdbcType=INTEGER},
+      STU_QACOUNT = #{record.stuQacount,jdbcType=INTEGER},
+      STU_JOB_CONTEXT = #{record.stuJobContext,jdbcType=VARCHAR},
+      STU_PROF = #{record.stuProf,jdbcType=INTEGER},
+      STU_TECH_DIRECT = #{record.stuTechDirect,jdbcType=LONGVARCHAR},
+      STU_HOBBY = #{record.stuHobby,jdbcType=LONGVARCHAR},
+      STU_TRAIN = #{record.stuTrain,jdbcType=LONGVARCHAR},
+      STU_WORK_EXP = #{record.stuWorkExp,jdbcType=LONGVARCHAR},
+      STU_EDU_BG = #{record.stuEduBg,jdbcType=LONGVARCHAR},
+      STU_INTRO = #{record.stuIntro,jdbcType=LONGVARCHAR},
+      STU_HEAD = #{record.stuHead,jdbcType=LONGVARCHAR},
+      STU_HEAD_M = #{record.stuHeadM,jdbcType=LONGVARCHAR},
+      STU_HEAD_S = #{record.stuHeadS,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_student
+    set STU_NO = #{record.stuNo,jdbcType=INTEGER},
+      STU_NUM = #{record.stuNum,jdbcType=VARCHAR},
+      STU_ORGID = #{record.stuOrgid,jdbcType=INTEGER},
+      STU_NAME = #{record.stuName,jdbcType=VARCHAR},
+      STU_USERID = #{record.stuUserid,jdbcType=VARCHAR},
+      STU_PWD = #{record.stuPwd,jdbcType=VARCHAR},
+      STU_NICKNAME = #{record.stuNickname,jdbcType=VARCHAR},
+      STU_MOBILE = #{record.stuMobile,jdbcType=VARCHAR},
+      STU_PHONE = #{record.stuPhone,jdbcType=VARCHAR},
+      STU_MAIL = #{record.stuMail,jdbcType=VARCHAR},
+      STU_QQ = #{record.stuQq,jdbcType=VARCHAR},
+      STU_GRP_QQ = #{record.stuGrpQq,jdbcType=VARCHAR},
+      STU_SEX = #{record.stuSex,jdbcType=CHAR},
+      STU_TITLE = #{record.stuTitle,jdbcType=VARCHAR},
+      STU_BIRTH = #{record.stuBirth,jdbcType=DATE},
+      STU_ADDRESS = #{record.stuAddress,jdbcType=VARCHAR},
+      STU_POSTCODE = #{record.stuPostcode,jdbcType=CHAR},
+      STU_IS_LEADER = #{record.stuIsLeader,jdbcType=CHAR},
+      STU_EDU_LEVEL = #{record.stuEduLevel,jdbcType=CHAR},
+      STU_IDCARD = #{record.stuIdcard,jdbcType=VARCHAR},
+      STU_MAJOR = #{record.stuMajor,jdbcType=VARCHAR},
+      STU_CLASS_ID = #{record.stuClassId,jdbcType=INTEGER},
+      AREA_CODE = #{record.areaCode,jdbcType=CHAR},
+      STU_SCHOOL_ID = #{record.stuSchoolId,jdbcType=INTEGER},
+      STU_GRADE = #{record.stuGrade,jdbcType=INTEGER},
+      STU_POLITIC = #{record.stuPolitic,jdbcType=CHAR},
+      STU_LINK = #{record.stuLink,jdbcType=VARCHAR},
+      STU_LINK_TEL = #{record.stuLinkTel,jdbcType=VARCHAR},
+      STU_ENROL = #{record.stuEnrol,jdbcType=DATE},
+      STU_GRADEUATE = #{record.stuGradeuate,jdbcType=DATE},
+      STU_JOIN_BASE = #{record.stuJoinBase,jdbcType=DATE},
+      STU_CYCLE = #{record.stuCycle,jdbcType=VARCHAR},
+      STU_TIME_CARD = #{record.stuTimeCard,jdbcType=VARCHAR},
+      STU_TYPE = #{record.stuType,jdbcType=CHAR},
+      STU_MARK = #{record.stuMark,jdbcType=VARCHAR},
+      STU_USER_NO = #{record.stuUserNo,jdbcType=INTEGER},
+      STU_REGTIME = #{record.stuRegtime,jdbcType=TIMESTAMP},
+      STU_LASTLOGIN = #{record.stuLastlogin,jdbcType=TIMESTAMP},
+      STU_SCORE = #{record.stuScore,jdbcType=INTEGER},
+      STU_HISTORY_SCORE = #{record.stuHistoryScore,jdbcType=INTEGER},
+      STU_COIN = #{record.stuCoin,jdbcType=INTEGER},
+      STU_MSG_CFG = #{record.stuMsgCfg,jdbcType=CHAR},
+      STU_MAIL_CFG = #{record.stuMailCfg,jdbcType=CHAR},
+      STU_GROUP_ID = #{record.stuGroupId,jdbcType=INTEGER},
+      STU_ISACTIVATE = #{record.stuIsactivate,jdbcType=INTEGER},
+      STU_FLAG = #{record.stuFlag,jdbcType=VARCHAR},
+      STU_PAYMENT = #{record.stuPayment,jdbcType=INTEGER},
+      STU_QACOUNT = #{record.stuQacount,jdbcType=INTEGER},
+      STU_JOB_CONTEXT = #{record.stuJobContext,jdbcType=VARCHAR},
+      STU_PROF = #{record.stuProf,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.StudentWithBLOBs" >
+    update tp_student
+    <set >
+      <if test="stuNum != null" >
+        STU_NUM = #{stuNum,jdbcType=VARCHAR},
+      </if>
+      <if test="stuOrgid != null" >
+        STU_ORGID = #{stuOrgid,jdbcType=INTEGER},
+      </if>
+      <if test="stuName != null" >
+        STU_NAME = #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUserid != null" >
+        STU_USERID = #{stuUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPwd != null" >
+        STU_PWD = #{stuPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNickname != null" >
+        STU_NICKNAME = #{stuNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMobile != null" >
+        STU_MOBILE = #{stuMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPhone != null" >
+        STU_PHONE = #{stuPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMail != null" >
+        STU_MAIL = #{stuMail,jdbcType=VARCHAR},
+      </if>
+      <if test="stuQq != null" >
+        STU_QQ = #{stuQq,jdbcType=VARCHAR},
+      </if>
+      <if test="stuGrpQq != null" >
+        STU_GRP_QQ = #{stuGrpQq,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSex != null" >
+        STU_SEX = #{stuSex,jdbcType=CHAR},
+      </if>
+      <if test="stuTitle != null" >
+        STU_TITLE = #{stuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stuBirth != null" >
+        STU_BIRTH = #{stuBirth,jdbcType=DATE},
+      </if>
+      <if test="stuAddress != null" >
+        STU_ADDRESS = #{stuAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPostcode != null" >
+        STU_POSTCODE = #{stuPostcode,jdbcType=CHAR},
+      </if>
+      <if test="stuIsLeader != null" >
+        STU_IS_LEADER = #{stuIsLeader,jdbcType=CHAR},
+      </if>
+      <if test="stuEduLevel != null" >
+        STU_EDU_LEVEL = #{stuEduLevel,jdbcType=CHAR},
+      </if>
+      <if test="stuIdcard != null" >
+        STU_IDCARD = #{stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuMajor != null" >
+        STU_MAJOR = #{stuMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClassId != null" >
+        STU_CLASS_ID = #{stuClassId,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=CHAR},
+      </if>
+      <if test="stuSchoolId != null" >
+        STU_SCHOOL_ID = #{stuSchoolId,jdbcType=INTEGER},
+      </if>
+      <if test="stuGrade != null" >
+        STU_GRADE = #{stuGrade,jdbcType=INTEGER},
+      </if>
+      <if test="stuPolitic != null" >
+        STU_POLITIC = #{stuPolitic,jdbcType=CHAR},
+      </if>
+      <if test="stuLink != null" >
+        STU_LINK = #{stuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="stuLinkTel != null" >
+        STU_LINK_TEL = #{stuLinkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEnrol != null" >
+        STU_ENROL = #{stuEnrol,jdbcType=DATE},
+      </if>
+      <if test="stuGradeuate != null" >
+        STU_GRADEUATE = #{stuGradeuate,jdbcType=DATE},
+      </if>
+      <if test="stuJoinBase != null" >
+        STU_JOIN_BASE = #{stuJoinBase,jdbcType=DATE},
+      </if>
+      <if test="stuCycle != null" >
+        STU_CYCLE = #{stuCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="stuTimeCard != null" >
+        STU_TIME_CARD = #{stuTimeCard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuType != null" >
+        STU_TYPE = #{stuType,jdbcType=CHAR},
+      </if>
+      <if test="stuMark != null" >
+        STU_MARK = #{stuMark,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUserNo != null" >
+        STU_USER_NO = #{stuUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="stuRegtime != null" >
+        STU_REGTIME = #{stuRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuLastlogin != null" >
+        STU_LASTLOGIN = #{stuLastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuScore != null" >
+        STU_SCORE = #{stuScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuHistoryScore != null" >
+        STU_HISTORY_SCORE = #{stuHistoryScore,jdbcType=INTEGER},
+      </if>
+      <if test="stuCoin != null" >
+        STU_COIN = #{stuCoin,jdbcType=INTEGER},
+      </if>
+      <if test="stuMsgCfg != null" >
+        STU_MSG_CFG = #{stuMsgCfg,jdbcType=CHAR},
+      </if>
+      <if test="stuMailCfg != null" >
+        STU_MAIL_CFG = #{stuMailCfg,jdbcType=CHAR},
+      </if>
+      <if test="stuGroupId != null" >
+        STU_GROUP_ID = #{stuGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="stuIsactivate != null" >
+        STU_ISACTIVATE = #{stuIsactivate,jdbcType=INTEGER},
+      </if>
+      <if test="stuFlag != null" >
+        STU_FLAG = #{stuFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPayment != null" >
+        STU_PAYMENT = #{stuPayment,jdbcType=INTEGER},
+      </if>
+      <if test="stuQacount != null" >
+        STU_QACOUNT = #{stuQacount,jdbcType=INTEGER},
+      </if>
+      <if test="stuJobContext != null" >
+        STU_JOB_CONTEXT = #{stuJobContext,jdbcType=VARCHAR},
+      </if>
+      <if test="stuProf != null" >
+        STU_PROF = #{stuProf,jdbcType=INTEGER},
+      </if>
+      <if test="stuTechDirect != null" >
+        STU_TECH_DIRECT = #{stuTechDirect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHobby != null" >
+        STU_HOBBY = #{stuHobby,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuTrain != null" >
+        STU_TRAIN = #{stuTrain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuWorkExp != null" >
+        STU_WORK_EXP = #{stuWorkExp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuEduBg != null" >
+        STU_EDU_BG = #{stuEduBg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuIntro != null" >
+        STU_INTRO = #{stuIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHead != null" >
+        STU_HEAD = #{stuHead,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHeadM != null" >
+        STU_HEAD_M = #{stuHeadM,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuHeadS != null" >
+        STU_HEAD_S = #{stuHeadS,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where STU_NO = #{stuNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.StudentWithBLOBs" >
+    update tp_student
+    set STU_NUM = #{stuNum,jdbcType=VARCHAR},
+      STU_ORGID = #{stuOrgid,jdbcType=INTEGER},
+      STU_NAME = #{stuName,jdbcType=VARCHAR},
+      STU_USERID = #{stuUserid,jdbcType=VARCHAR},
+      STU_PWD = #{stuPwd,jdbcType=VARCHAR},
+      STU_NICKNAME = #{stuNickname,jdbcType=VARCHAR},
+      STU_MOBILE = #{stuMobile,jdbcType=VARCHAR},
+      STU_PHONE = #{stuPhone,jdbcType=VARCHAR},
+      STU_MAIL = #{stuMail,jdbcType=VARCHAR},
+      STU_QQ = #{stuQq,jdbcType=VARCHAR},
+      STU_GRP_QQ = #{stuGrpQq,jdbcType=VARCHAR},
+      STU_SEX = #{stuSex,jdbcType=CHAR},
+      STU_TITLE = #{stuTitle,jdbcType=VARCHAR},
+      STU_BIRTH = #{stuBirth,jdbcType=DATE},
+      STU_ADDRESS = #{stuAddress,jdbcType=VARCHAR},
+      STU_POSTCODE = #{stuPostcode,jdbcType=CHAR},
+      STU_IS_LEADER = #{stuIsLeader,jdbcType=CHAR},
+      STU_EDU_LEVEL = #{stuEduLevel,jdbcType=CHAR},
+      STU_IDCARD = #{stuIdcard,jdbcType=VARCHAR},
+      STU_MAJOR = #{stuMajor,jdbcType=VARCHAR},
+      STU_CLASS_ID = #{stuClassId,jdbcType=INTEGER},
+      AREA_CODE = #{areaCode,jdbcType=CHAR},
+      STU_SCHOOL_ID = #{stuSchoolId,jdbcType=INTEGER},
+      STU_GRADE = #{stuGrade,jdbcType=INTEGER},
+      STU_POLITIC = #{stuPolitic,jdbcType=CHAR},
+      STU_LINK = #{stuLink,jdbcType=VARCHAR},
+      STU_LINK_TEL = #{stuLinkTel,jdbcType=VARCHAR},
+      STU_ENROL = #{stuEnrol,jdbcType=DATE},
+      STU_GRADEUATE = #{stuGradeuate,jdbcType=DATE},
+      STU_JOIN_BASE = #{stuJoinBase,jdbcType=DATE},
+      STU_CYCLE = #{stuCycle,jdbcType=VARCHAR},
+      STU_TIME_CARD = #{stuTimeCard,jdbcType=VARCHAR},
+      STU_TYPE = #{stuType,jdbcType=CHAR},
+      STU_MARK = #{stuMark,jdbcType=VARCHAR},
+      STU_USER_NO = #{stuUserNo,jdbcType=INTEGER},
+      STU_REGTIME = #{stuRegtime,jdbcType=TIMESTAMP},
+      STU_LASTLOGIN = #{stuLastlogin,jdbcType=TIMESTAMP},
+      STU_SCORE = #{stuScore,jdbcType=INTEGER},
+      STU_HISTORY_SCORE = #{stuHistoryScore,jdbcType=INTEGER},
+      STU_COIN = #{stuCoin,jdbcType=INTEGER},
+      STU_MSG_CFG = #{stuMsgCfg,jdbcType=CHAR},
+      STU_MAIL_CFG = #{stuMailCfg,jdbcType=CHAR},
+      STU_GROUP_ID = #{stuGroupId,jdbcType=INTEGER},
+      STU_ISACTIVATE = #{stuIsactivate,jdbcType=INTEGER},
+      STU_FLAG = #{stuFlag,jdbcType=VARCHAR},
+      STU_PAYMENT = #{stuPayment,jdbcType=INTEGER},
+      STU_QACOUNT = #{stuQacount,jdbcType=INTEGER},
+      STU_JOB_CONTEXT = #{stuJobContext,jdbcType=VARCHAR},
+      STU_PROF = #{stuProf,jdbcType=INTEGER},
+      STU_TECH_DIRECT = #{stuTechDirect,jdbcType=LONGVARCHAR},
+      STU_HOBBY = #{stuHobby,jdbcType=LONGVARCHAR},
+		STU_TRAIN = #{stuTrain,jdbcType=LONGVARCHAR},
+		STU_WORK_EXP = #{stuWorkExp,jdbcType=LONGVARCHAR},
+		STU_EDU_BG = #{stuEduBg,jdbcType=LONGVARCHAR},
+		STU_INTRO = #{stuIntro,jdbcType=LONGVARCHAR},
+		STU_HEAD = #{stuHead,jdbcType=LONGVARCHAR},
+		STU_HEAD_M = #{stuHeadM,jdbcType=LONGVARCHAR},
+		STU_HEAD_S = #{stuHeadS,jdbcType=LONGVARCHAR}
+		where STU_NO = #{stuNo,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Student">
+		update tp_student
+		set STU_NUM = #{stuNum,jdbcType=VARCHAR},
+		STU_ORGID = #{stuOrgid,jdbcType=INTEGER},
+		STU_NAME = #{stuName,jdbcType=VARCHAR},
+		STU_USERID = #{stuUserid,jdbcType=VARCHAR},
+		STU_PWD = #{stuPwd,jdbcType=VARCHAR},
+		STU_NICKNAME = #{stuNickname,jdbcType=VARCHAR},
+		STU_MOBILE = #{stuMobile,jdbcType=VARCHAR},
+		STU_PHONE = #{stuPhone,jdbcType=VARCHAR},
+		STU_MAIL = #{stuMail,jdbcType=VARCHAR},
+		STU_QQ = #{stuQq,jdbcType=VARCHAR},
+		STU_GRP_QQ = #{stuGrpQq,jdbcType=VARCHAR},
+		STU_SEX = #{stuSex,jdbcType=CHAR},
+		STU_TITLE = #{stuTitle,jdbcType=VARCHAR},
+		STU_BIRTH = #{stuBirth,jdbcType=DATE},
+		STU_ADDRESS = #{stuAddress,jdbcType=VARCHAR},
+		STU_POSTCODE = #{stuPostcode,jdbcType=CHAR},
+		STU_IS_LEADER = #{stuIsLeader,jdbcType=CHAR},
+		STU_EDU_LEVEL = #{stuEduLevel,jdbcType=CHAR},
+		STU_IDCARD = #{stuIdcard,jdbcType=VARCHAR},
+		STU_MAJOR = #{stuMajor,jdbcType=VARCHAR},
+		STU_CLASS_ID = #{stuClassId,jdbcType=INTEGER},
+		AREA_CODE = #{areaCode,jdbcType=CHAR},
+      STU_SCHOOL_ID = #{stuSchoolId,jdbcType=INTEGER},
+		STU_GRADE = #{stuGrade,jdbcType=INTEGER},
+		STU_POLITIC = #{stuPolitic,jdbcType=CHAR},
+		STU_LINK = #{stuLink,jdbcType=VARCHAR},
+		STU_LINK_TEL = #{stuLinkTel,jdbcType=VARCHAR},
+		STU_ENROL = #{stuEnrol,jdbcType=DATE},
+		STU_GRADEUATE = #{stuGradeuate,jdbcType=DATE},
+		STU_JOIN_BASE = #{stuJoinBase,jdbcType=DATE},
+		STU_CYCLE = #{stuCycle,jdbcType=VARCHAR},
+		STU_TIME_CARD = #{stuTimeCard,jdbcType=VARCHAR},
+		STU_TYPE = #{stuType,jdbcType=CHAR},
+		STU_MARK = #{stuMark,jdbcType=VARCHAR},
+		STU_USER_NO = #{stuUserNo,jdbcType=INTEGER},
+		STU_REGTIME = #{stuRegtime,jdbcType=TIMESTAMP},
+		STU_LASTLOGIN = #{stuLastlogin,jdbcType=TIMESTAMP},
+		STU_SCORE = #{stuScore,jdbcType=INTEGER},
+		STU_HISTORY_SCORE = #{stuHistoryScore,jdbcType=INTEGER},
+		STU_COIN = #{stuCoin,jdbcType=INTEGER},
+		STU_MSG_CFG = #{stuMsgCfg,jdbcType=CHAR},
+		STU_MAIL_CFG = #{stuMailCfg,jdbcType=CHAR},
+      STU_GROUP_ID = #{stuGroupId,jdbcType=INTEGER},
+      STU_ISACTIVATE = #{stuIsactivate,jdbcType=INTEGER},
+      STU_FLAG = #{stuFlag,jdbcType=VARCHAR},
+      STU_PAYMENT = #{stuPayment,jdbcType=INTEGER},
+      STU_QACOUNT = #{stuQacount,jdbcType=INTEGER},
+      STU_JOB_CONTEXT = #{stuJobContext,jdbcType=VARCHAR},
+      STU_PROF = #{stuProf,jdbcType=INTEGER}
+		where STU_NO = #{stuNo,jdbcType=INTEGER}
+	</update>
+	<select id="getStuListForPrac" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_student
+		INNER JOIN tp_prac_person ON (
+		STU_NO = PP_STU_ID
+		AND PP_PRAC_ID = #{pracId}
+		)
+	</select>
+	<select id="getStuNotInTeam" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_student
+		INNER JOIN tp_prac_person ON STU_NO = PP_STU_ID
+		WHERE
+		PP_PRAC_ID = #{pracId}
+		AND NOT STU_NO IN (
+		SELECT
+		TM_MEMBER_NO
+		FROM
+		tp_team_member
+		INNER JOIN tp_practice_team ON TM_TEAM_ID = TEAM_ID
+		WHERE
+		TEAM_PRAC_ID = #{pracId}
+		)
+	</select>
+	<select id="getStuInTeam" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_student
+		INNER JOIN tp_team_member ON STU_NO = TM_MEMBER_NO
+		WHERE
+		TM_TEAM_ID = #{teamId}
+	</select>
+	<select id="getLearningStusByLiveId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_student
+		WHERE
+		STU_NO IN (
+		SELECT
+		b.LCS_STU_NO
+		FROM
+		tp_live_class_stu b
+		WHERE
+		b.LCS_CLASS_ID IN (
+		SELECT
+		a.LIVE_CLASS_ID
+		FROM
+		tp_live_class a
+		WHERE
+		a.LIVE_CLASS_LIVEID = #{liveId}
+		)
+		)
+	</select>
+	
+</mapper>

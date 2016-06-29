@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	margin:0 auto;
+	}
+.fucengdi{
+	background:url(http://www.qiyipic.com/vip/fix/imgfuceng/tanchuang_03.jpg) no-repeat;
+	width:396px;
+	height:163px;
+	}
+.guanbi{
+	background:url(http://www.qiyipic.com/vip/fix/imgfuceng/fuchoufucengguanbi.png) no-repeat;
+	 display: block;
+    float: right;
+    height: 15px;
+    margin-right: 7px;
+    margin-top: 7px;
+    width: 15px;
+	}
+.neirong{
+	color: #2F5393;
+    float: left;
+    font: bold 24px/35px "微软雅黑";
+    padding-top: 26px;
+    text-align: center;
+    width: 396px;
+	}

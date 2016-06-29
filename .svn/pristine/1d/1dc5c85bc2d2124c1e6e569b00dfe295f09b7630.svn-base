@@ -1,0 +1,105 @@
+@charset "utf-8";
+/* CSS Document */
+html { overflow-y:scroll; overflow-x:visible; }
+div, ul, dl { zoom:1; }
+ul, li, p { list-style:none; padding:0; margin:0; }
+img { border:0; }
+a { color:#ff0000; text-decoration:none; }
+a:hover { color:ff0000; text-decoration:underline; }
+div:after, ul:after, dl:after { content:"."; display:block; clear:both; height:0; visibility:hidden; }
+body { margin:0; }
+.huapi2warp { background:url(http://www.qiyipic.com/vip/fix/images/fuchouzhelianmengtoutut.jpg) no-repeat top center #042c44; }
+.huapi2 { width:970px; height:auto; margin:0 auto; }
+.huapikongtop { width:970px; height:321px; }
+.bofangzhengti { width:970px; }
+.bofangkuang { background:url(http://www.qiyipic.com/vip/fix/huapi2bofangkuang.jpg) no-repeat; float: left; height: 401px; margin-left: 13px; _margin-left: 10px; margin-top: 2px; width: 633px; position:relative; display:inline; overflow:hidden; }
+.sucaitu { width:541px; height:353px; margin-left:43px; margin-top:22px; display:block; outline:none; position:relative; }
+a.bofanganiu { background:url(http://www.qiyipic.com/vip/fix/images/Focus_btn.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/Focus_btn.png);
+_background:0; cursor: pointer; display: block; height: 52px; left: 55px; position: absolute; top: 303px; width: 52px; }
+a.bofanganiu:hover { background:url(http://www.qiyipic.com/vip/fix/images/Focus_2.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/Focus_2.png);
+_background:0; }
+.neirongright { width:306px; height:405px; float:left; }
+.neirongtop { color: #FFFFFF; font: bold 16px/25px "宋体"; height: 210px; padding: 15px 13px 0 20px; }
+.kaitonghuiyuan { background:url(http://www.qiyipic.com/vip/fix/images/fuchoukaitong.jpg) no-repeat; width:279px; height:163px; margin-left: 19px; }
+.kaitongneileft { color: #FFFFFF; float: left; font: bold 16px/35px "宋体"; padding-left: 26px; padding-top: 37px }
+.kaitonganniuright { float: left; padding-left: 10px; padding-top: 66px; width: 110px; }
+.lijigoumai { background:url(http://www.qiyipic.com/vip/fix/images/huapi2erttkaitong.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/huapi2erttkaitong.png);
+_background:0; width:110px; height:32px; display:block; outline:none; text-indent:-9999px; margin-bottom:10px; cursor:pointer; }
+.goumai { background:url(http://www.qiyipic.com/vip/fix/images/huapi2eegoumai.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/huapi2eegoumai.png);
+_background:0; width:110px; height:32px; display:block; outline:none; text-indent:-9999px; cursor:pointer; }
+.lijiguankan { background:url(http://www.qiyipic.com/vip/fix/images/huapi2lijiguankan.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/huapi2lijiguankan.png);
+_background:0; width:110px; height:32px; display:block; outline:none; text-indent:-9999px; cursor:pointer; }
+.bom { padding-left: 81px; padding-top: 84px; }
+.jdt_tiao { background-color: #000000; bottom: 59px; clear: both; float: left; height: 64px; opacity: 0.8; padding: 10px 10px 0; position: absolute; right: 127px; width: 524px;filter:alpha(opacity=80); }
+.jdt_c { clear: both; float: left; height: 62px; padding: 10px 10px 0; width: 502px; }
+.fLeft { color: #FFFFFF; display: inline; float: left; font-size: 12px; height: 45px; padding-left: 24px; }
+.fLeft strong { color:#FFF; font: 16px/28px "微软雅黑"; word-spacing: normal; word-wrap: break-word; }
+a.jdt_btn { background:url(http://www.qiyipic.com/vip/fix/images/Focus_btn.png) no-repeat; cursor: pointer; float: left; height: 52px; width: 52px; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/Focus_btn.png);
+_background:0; }
+a.jdt_btn:hover { background:url(http://www.qiyipic.com/vip/fix/images/Focus_2.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src=http://www.qiyipic.com/vip/fix/images/Focus_2.png);
+_background:0 }
+.fla_video { width:707px; height:464px; float:left; background:url(http://www.qiyipic.com/vip/fix/images/video.png) no-repeat; }
+.fLeft strong { color:#FFF; font: 16px/28px "微软雅黑"; word-spacing: normal; word-wrap: break-word; }
+.sucai_h { width:596px; height:390px; padding-left:36px; padding-top:22px; }
+.lipinkuang { background:url(http://www.qiyipic.com/vip/fix/images/jiangpingehertut.jpg) no-repeat; width:970px; height:277px; }
+.lipinlefet { width:477px; height:277px; float:left; }
+.lipinlright { width:469px; float:left; padding-top:8px; }
+.lipinwenzi { color: #7F90AD; font: 12px/20px "宋体"; }
+.lipintianxiexinxi { background:#1d314c; width:393px; padding-top:5px; color: #86D9F4; font:14px/26px "微软雅黑"; height:145px; }
+.hongdong_rightd { width:430px; height:170px; float:left; }
+.userText { color: #86d9f4; font-family: "微软雅黑"; font-size: 14px; line-height: 26px; padding-left: 13px; _line-height: 32px; }
+.hongdong_bom { height: 31px; padding-left: 21px; padding-top: 10px; }
+.huodong_bom { width:99px; height:27px; background:url(http://www.qiyipic.com/vip/fix/images/fuchoutijiaoxinxi.jpg) no-repeat; font-size:14px; line-height:31px; text-align:center; font:bold; font-family:"微软雅黑"; text-indent:-99999px; float:left; }
+.huodong_bomr { width:99px; height:27px; background:url(http://www.qiyipic.com/vip/fix/images/fuchoulijigoumai.jpg) no-repeat; margin-left:17px; float:left; font-size:14px; line-height:31px; text-align:center; text-indent:-99999px; font:bold; font-family:"微软雅黑"; }
+.fuchoulianmen { background:url(http://www.qiyipic.com/vip/fix/images/fuchouzhelianmengchengyuan.jpg) no-repeat; height:45px; width:970px; }
+.jieshuo1 { background:url(http://www.qiyipic.com/vip/fix/images/jieshuo1.jpg) no-repeat; width:970px; height:158px; }
+.jieshuotu1 { float:left; width:334px; padding-left:5px; }
+.jieshuotu1 img { border:#294d70 1px solid; }
+.jieshuowenzi1 { color: #7F90AD; float: left; font: 12px/27px "宋体"; padding-left: 42px; padding-top: 9px; }
+.jieshuo2 { background:url(http://www.qiyipic.com/vip/fix/images/jeishuo2.jpg) no-repeat; width:970px; height:157px; }
+.jieshuowenzi2 { color: #7F90AD; float: left; font: 12px/27px "宋体"; padding-left: 90px; padding-top: 9px; }
+.jieshuowenzi6 { color: #7F90AD; float: left; font: 12px/27px "宋体"; padding-left:158px; padding-top: 9px; }
+.jieshuotu2 { float: right; padding-right: 16px; width: 334px; }
+.jieshuotu2 img { border:#294d70 1px solid; }
+.jieshuo3 { background:url(http://www.qiyipic.com/vip/fix/images/jieshuo3.jpg) no-repeat; width:970px; height:158px; }
+.jieshuo4 { background:url(http://www.qiyipic.com/vip/fix/images/jieshuo4.jpg) no-repeat; width:970px; height:158px; }
+.jieshuo5 { background:url(http://www.qiyipic.com/vip/fix/images/jieshuo5.jpg) no-repeat; width:970px; height:158px; }
+.jieshuo6 { background:url(http://www.qiyipic.com/vip/fix/images/jieshuo6.jpg) no-repeat; width:970px; height:158px; }
+.yingsong { background:url(http://www.qiyipic.com/vip/fix/images/shenbiannvren.jpg) no-repeat; height:67px; width:970px; }
+.gezhongnvren { background: none repeat scroll 0 0 #16253C; height: 419px; padding-top: 14px; }
+.gezhongnvren ul { margin-left:5px; }
+.gezhongnvren ul li { float:left; display:inline; overflow:hidden; padding-left:7px; }
+.yangming { display:block; }
+.yangtopzi { font: bold 16px/20px "宋体"; color:#FFF; text-align:center; width:183px; display:block; }
+.xiantunei { background: none repeat scroll 0 0 #202F47; color: #7F90AD; font: 12px/20px "宋体"; padding: 2px 0 0; width: 184px; }
+.xiantunei p { padding:2px 5px 0 5px; }
+.xiantunei span img { border:1px #30587e solid; display:block; }
+.fuchouhoubiejun { background:url(http://www.qiyipic.com/vip/fix/images/fuchouzhehoubiejun.jpg) no-repeat; width:970px; height:56px; }
+.beiujun { width:970px; height:579px; background:#16253c; }
+.bizhu { background:url(http://www.qiyipic.com/vip/fix/images/bianzhufuchou.jpg) no-repeat; width:970px; height:30px; }
+.diyipaifuchou { height: 243px; padding: 0 12px; }
+.zhizhuxia { width:371px; height:243px; background:#1e324d; float:left; }
+.zhizhuxia ul li { float:left; font:12px/20px "宋体"; color:#7f90ad; text-align:center; margin-left: 7px; margin-top: 7px; display:inline; overflow:hidden; }
+.zhizhuxia ul li a { font:12px/20px "宋体"; color:#7f90ad; }
+.zhizhuxia ul li a img { border:1px #7f90ad solid; }
+.zhizhuxia ul li a:hover { color:#7f90ad; text-decoration:none; }
+.bianxingjinggang { width:553px; height:243px; background:#1e324d; float:left; margin-left:20px; }
+.bianxingjinggang ul li { float:left; font:12px/20px "宋体"; color:#7f90ad; text-align:center; margin-left: 7px; margin-top: 7px; display:inline; overflow:hidden; }
+.bianxingjinggang ul li a { font:12px/20px "宋体"; color:#7f90ad; }
+.bianxingjinggang ul li a img { border:1px #7f90ad solid; vertical-align:middle; }
+.bianxingjinggang ul li a:hover { color:#7f90ad; text-decoration:none; }
+.bianchao { background:url(http://www.qiyipic.com/vip/fix/images/bianchaofushou.jpg) no-repeat; width:970px; height:31px; }
+.biachasidu { background: none repeat scroll 0 0 #1E324D; float: left; height: 236px; width: 189px; text-align:center; padding-top:7px; }
+.biachasidu p a img { border:1px #7f90ad solid; }
+.biachasidu p a { font:12px/20px "宋体"; color:#7f90ad; }
+.baischidfd { background: none repeat scroll 0 0 #1E324D; float: left; height: 243px; margin-left: 20px; width: 734px; }
+.baischidfd ul li { float:left; font:12px/20px "宋体"; color:#7f90ad; text-align:center; margin-left: 7px; margin-top: 7px; display:inline; overflow:hidden; }
+.baischidfd ul li a { font:12px/20px "宋体"; color:#7f90ad; }
+.baischidfd ul li a img { border:1px #7f90ad solid; vertical-align:middle; }
+.baischidfd ul li a:hover { color:#7f90ad; text-decoration:none; }
+/*footer */
+.footer { line-height:20px; text-align:center; padding:20px 0 40px; background:#fff; clear:both; color:#848484; border-top:1px solid #dddddd; }
+.footer a { color:#5e5e5e; }
+.footer a:hover { color:#4c7d08; }
+.fEn { font-family:Arial; }
+.fGray { color:#c4c3c3!important; }

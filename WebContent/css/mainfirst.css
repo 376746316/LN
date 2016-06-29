@@ -1,0 +1,75 @@
+/* CSS Document */
+#sybody{
+	background:url(../images/main/swtp_index_01.jpg) top #4291ca repeat-x;
+	padding-top:150px;
+}
+#wrapper{
+	width:725px;
+	text-align:left;
+}
+#logo{
+	text-align:left;
+	width:725px;
+}
+#content{
+	width:725px;
+	height:189px;
+}
+#login_left{
+	float:left;
+	background:url(../images/main/swtp_index_06.jpg) no-repeat;
+	width:453px;
+	height:402px;
+	padding-left:47px;
+	padding-top:87px;
+	font-size:12px;
+	color:#607b84;
+	text-align:left;
+}
+#dl{
+	height:30px;
+}
+#yhm{
+	float:left;
+	width:180px;
+	height:30px;
+}
+#mm{
+	float:left;
+	margin-left:52px;
+	_margin-left:26px;
+	*margin-left:26px;
+	width:175px;
+	height:30px;
+}
+#cb{
+    clear:both;}
+.qd{
+	background:url(../images/main/button_26.jpg) no-repeat; 
+	padding-left:19px;
+	line-height:20px;
+	width:60px;
+    height:20px; 
+    border:none;
+    cursor:pointer;
+    margin-right:10px;
+    margin-top:4px;
+    color:#999;}
+#login_right{
+	float:left;
+	background:url(../images/main/swtp_index_07.jpg) no-repeat;
+	width:136px;
+	height:63px;
+	padding-top:126px;
+	padding-left:89px;
+}
+#sm{
+	width:113px;
+	height:42px;
+}
+#qd{
+	text-align:right;
+	margin-right:35px;
+	margin-top:10px;
+}
+

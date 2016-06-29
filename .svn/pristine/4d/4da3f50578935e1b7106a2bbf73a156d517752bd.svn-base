@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.SpecStuMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.SpecStu">
+		<id column="SU_SPEC_ID" property="suSpecId" jdbcType="INTEGER" />
+		<id column="SU_STU_ID" property="suStuId" jdbcType="INTEGER" />
+		<result column="SU_STATUS" property="suStatus" jdbcType="CHAR" />
+		<result column="SU_COURSE_PROGRESS" property="suCourseProgress" jdbcType="INTEGER" />
+		<result column="SU_HW_PROGRESS" property="suHwProgress" jdbcType="INTEGER" />
+		<result column="SU_EXAM_PROGRESS" property="suExamProgress" jdbcType="INTEGER" />
+		<result column="SU_PROGRESS" property="suProgress" jdbcType="INTEGER" />
+		<result column="SU_STUDY_TIME" property="suStudyTime" jdbcType="BIGINT" />
+		<result column="SU_REGTIME" property="suRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="StuMap" type="com.chinasofti.cetp.admin.model.StudentWithBLOBs">
+		<id column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="STU_HEAD_M" property="stuHeadM" jdbcType="LONGVARCHAR" />
+		<result column="STU_USERID" property="stuUserid" jdbcType="VARCHAR" />
+		<result column="STU_NICKNAME" property="stuNickname" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SU_SPEC_ID, SU_STU_ID, SU_STATUS, SU_COURSE_PROGRESS, SU_HW_PROGRESS, SU_EXAM_PROGRESS,
+		SU_PROGRESS, SU_STUDY_TIME, SU_REGTIME
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SpecStuExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_spec_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SpecStuKey">
+		select
+		<include refid="Base_Column_List" />
+		from tp_spec_stu
+		where SU_SPEC_ID = #{suSpecId,jdbcType=INTEGER}
+		and SU_STU_ID = #{suStuId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SpecStuKey">
+		delete from tp_spec_stu
+		where SU_SPEC_ID = #{suSpecId,jdbcType=INTEGER}
+		and SU_STU_ID = #{suStuId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.SpecStuExample">
+		delete from tp_spec_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.SpecStu">
+		insert into tp_spec_stu (SU_SPEC_ID, SU_STU_ID, SU_STATUS,
+		SU_COURSE_PROGRESS, SU_HW_PROGRESS, SU_EXAM_PROGRESS,
+		SU_PROGRESS, SU_STUDY_TIME, SU_REGTIME
+		)
+		values (#{suSpecId,jdbcType=INTEGER}, #{suStuId,jdbcType=INTEGER}, #{suStatus,jdbcType=CHAR},
+		#{suCourseProgress,jdbcType=INTEGER}, #{suHwProgress,jdbcType=INTEGER}, #{suExamProgress,jdbcType=INTEGER},
+		#{suProgress,jdbcType=INTEGER}, #{suStudyTime,jdbcType=BIGINT}, #{suRegtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.SpecStu">
+		insert into tp_spec_stu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="suSpecId != null">
+				SU_SPEC_ID,
+			</if>
+			<if test="suStuId != null">
+				SU_STU_ID,
+			</if>
+			<if test="suStatus != null">
+				SU_STATUS,
+			</if>
+			<if test="suCourseProgress != null">
+				SU_COURSE_PROGRESS,
+			</if>
+			<if test="suHwProgress != null">
+				SU_HW_PROGRESS,
+			</if>
+			<if test="suExamProgress != null">
+				SU_EXAM_PROGRESS,
+			</if>
+			<if test="suProgress != null">
+				SU_PROGRESS,
+			</if>
+			<if test="suStudyTime != null">
+				SU_STUDY_TIME,
+			</if>
+			<if test="suRegtime != null">
+				SU_REGTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="suSpecId != null">
+				#{suSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="suStuId != null">
+				#{suStuId,jdbcType=INTEGER},
+			</if>
+			<if test="suStatus != null">
+				#{suStatus,jdbcType=CHAR},
+			</if>
+			<if test="suCourseProgress != null">
+				#{suCourseProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suHwProgress != null">
+				#{suHwProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suExamProgress != null">
+				#{suExamProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suProgress != null">
+				#{suProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suStudyTime != null">
+				#{suStudyTime,jdbcType=BIGINT},
+			</if>
+			<if test="suRegtime != null">
+				#{suRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.SpecStuExample" resultType="java.lang.Integer">
+		select count(*) from tp_spec_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_spec_stu
+		<set>
+			<if test="record.suSpecId != null">
+				SU_SPEC_ID = #{record.suSpecId,jdbcType=INTEGER},
+			</if>
+			<if test="record.suStuId != null">
+				SU_STU_ID = #{record.suStuId,jdbcType=INTEGER},
+			</if>
+			<if test="record.suStatus != null">
+				SU_STATUS = #{record.suStatus,jdbcType=CHAR},
+			</if>
+			<if test="record.suStudyTime != null">
+				SU_STUDY_TIME = #{record.suStudyTime,jdbcType=BIGINT},
+			</if>
+			<if test="record.suRegtime != null">
+				SU_REGTIME = #{record.suRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_spec_stu
+		set SU_SPEC_ID = #{record.suSpecId,jdbcType=INTEGER},
+		SU_STU_ID = #{record.suStuId,jdbcType=INTEGER},
+		SU_STATUS = #{record.suStatus,jdbcType=CHAR},
+		SU_STUDY_TIME = #{record.suStudyTime,jdbcType=BIGINT},
+		SU_REGTIME = #{record.suRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.SpecStu">
+		update tp_spec_stu
+		<set>
+			<if test="suStatus != null">
+				SU_STATUS = #{suStatus,jdbcType=CHAR},
+			</if>
+			<if test="suCourseProgress != null">
+				SU_COURSE_PROGRESS = #{suCourseProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suHwProgress != null">
+				SU_HW_PROGRESS = #{suHwProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suExamProgress != null">
+				SU_EXAM_PROGRESS = #{suExamProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suProgress != null">
+				SU_PROGRESS = #{suProgress,jdbcType=INTEGER},
+			</if>
+			<if test="suStudyTime != null">
+				SU_STUDY_TIME = #{suStudyTime,jdbcType=BIGINT},
+			</if>
+			<if test="suRegtime != null">
+				SU_REGTIME = #{suRegtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where SU_SPEC_ID = #{suSpecId,jdbcType=INTEGER}
+		and SU_STU_ID = #{suStuId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.SpecStu">
+		update tp_spec_stu
+		set SU_STATUS = #{suStatus,jdbcType=CHAR},
+		SU_COURSE_PROGRESS = #{suCourseProgress,jdbcType=INTEGER},
+		SU_HW_PROGRESS = #{suHwProgress,jdbcType=INTEGER},
+		SU_EXAM_PROGRESS = #{suExamProgress,jdbcType=INTEGER},
+		SU_PROGRESS = #{suProgress,jdbcType=INTEGER},
+		SU_STUDY_TIME = #{suStudyTime,jdbcType=BIGINT},
+		SU_REGTIME = #{suRegtime,jdbcType=TIMESTAMP}
+		where SU_SPEC_ID = #{suSpecId,jdbcType=INTEGER}
+		and SU_STU_ID = #{suStuId,jdbcType=INTEGER}
+	</update>
+	<select id="selectLearningStu" parameterType="java.lang.Integer" resultMap="StuMap">
+		SELECT
+		STU_NO,
+		STU_HEAD_M,
+		STU_USERID,
+		STU_NICKNAME
+		FROM
+		tp_spec_stu
+		INNER JOIN tp_student ON STU_NO = SU_STU_ID
+		WHERE
+		SU_SPEC_ID = #{suSpecId,jdbcType=INTEGER}
+	</select>
+	<insert id="addSpecStu" parameterType="map" >
+		INSERT INTO tp_spec_stu 
+			(
+				SELECT
+					${specId},
+					STU_NO,
+					'1',
+					'0',
+					'0',
+					'0',
+					'0',
+					'0',
+					NOW()
+				FROM
+					tp_student
+				WHERE
+					STU_FLAG = '-2'
+				ORDER BY
+					RAND()
+				LIMIT ${limit}
+			)
+	</insert>
+</mapper>

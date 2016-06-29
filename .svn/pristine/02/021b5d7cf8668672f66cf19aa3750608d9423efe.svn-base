@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveCourse" >
+    <id column="LIVE_COURSE_ID" property="liveCourseId" jdbcType="INTEGER" />
+    <result column="LIVE_COURSE_CHAP_ID" property="liveCourseChapId" jdbcType="INTEGER" />
+    <result column="LIVE_COURSE_TITLE" property="liveCourseTitle" jdbcType="VARCHAR" />
+    <result column="LIVE_COURSE_START" property="liveCourseStart" jdbcType="TIMESTAMP" />
+    <result column="LIVE_COURSE_END" property="liveCourseEnd" jdbcType="TIMESTAMP" />
+    <result column="LIVE_COURSE_TIME" property="liveCourseTime" jdbcType="INTEGER" />
+    <result column="LIVE_COURSE_STATUS" property="liveCourseStatus" jdbcType="CHAR" />
+    <result column="LIVE_CHAP_NAME" property="liveCourseChapterName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.live.model.LiveCourse" extends="BaseResultMap" >
+    <result column="LIVE_COURSE_INTRO" property="liveCourseIntro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LIVE_COURSE_ID, LIVE_COURSE_CHAP_ID, LIVE_COURSE_TITLE, LIVE_COURSE_START, LIVE_COURSE_END, 
+    LIVE_COURSE_TIME, LIVE_COURSE_STATUS
+  </sql>
+  <sql id="Blob_Column_List" >
+    LIVE_COURSE_INTRO
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveCourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveCourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_live_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_live_course
+    where LIVE_COURSE_ID = #{liveCourseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_live_course
+    where LIVE_COURSE_ID = #{liveCourseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveCourse" keyProperty="liveCourseId" useGeneratedKeys="true" >
+    insert into tp_live_course (LIVE_COURSE_ID, LIVE_COURSE_CHAP_ID, LIVE_COURSE_TITLE, 
+      LIVE_COURSE_START, LIVE_COURSE_END, LIVE_COURSE_TIME, 
+      LIVE_COURSE_STATUS, LIVE_COURSE_INTRO)
+    values (#{liveCourseId,jdbcType=INTEGER}, #{liveCourseChapId,jdbcType=INTEGER}, #{liveCourseTitle,jdbcType=VARCHAR}, 
+      #{liveCourseStart,jdbcType=TIMESTAMP}, #{liveCourseEnd,jdbcType=TIMESTAMP}, #{liveCourseTime,jdbcType=INTEGER}, 
+      #{liveCourseStatus,jdbcType=CHAR}, #{liveCourseIntro,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveCourse" keyProperty="liveCourseId" useGeneratedKeys="true" >
+    insert into tp_live_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="liveCourseId != null" >
+        LIVE_COURSE_ID,
+      </if>
+      <if test="liveCourseChapId != null" >
+        LIVE_COURSE_CHAP_ID,
+      </if>
+      <if test="liveCourseTitle != null" >
+        LIVE_COURSE_TITLE,
+      </if>
+      <if test="liveCourseStart != null" >
+        LIVE_COURSE_START,
+      </if>
+      <if test="liveCourseEnd != null" >
+        LIVE_COURSE_END,
+      </if>
+      <if test="liveCourseTime != null" >
+        LIVE_COURSE_TIME,
+      </if>
+      <if test="liveCourseStatus != null" >
+        LIVE_COURSE_STATUS,
+      </if>
+      <if test="liveCourseIntro != null" >
+        LIVE_COURSE_INTRO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="liveCourseId != null" >
+        #{liveCourseId,jdbcType=INTEGER},
+      </if>
+      <if test="liveCourseChapId != null" >
+        #{liveCourseChapId,jdbcType=INTEGER},
+      </if>
+      <if test="liveCourseTitle != null" >
+        #{liveCourseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCourseStart != null" >
+        #{liveCourseStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveCourseEnd != null" >
+        #{liveCourseEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveCourseTime != null" >
+        #{liveCourseTime,jdbcType=INTEGER},
+      </if>
+      <if test="liveCourseStatus != null" >
+        #{liveCourseStatus,jdbcType=CHAR},
+      </if>
+      <if test="liveCourseIntro != null" >
+        #{liveCourseIntro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveCourseExample" resultType="java.lang.Integer" >
+    select count(*) from tp_live_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+   <select id="selectByLiveClassId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+   FROM tp_live_course course
+WHERE course.LIVE_COURSE_CHAP_ID IN
+(SELECT
+LIVE_CHAP_ID
+FROM tp_live_chapter chapter
+WHERE chapter.LIVE_CHAP_CLASS_ID = #{liveClassId})
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveCourse" >
+    update tp_live_course
+    <set >
+      <if test="liveCourseChapId != null" >
+        LIVE_COURSE_CHAP_ID = #{liveCourseChapId,jdbcType=INTEGER},
+      </if>
+      <if test="liveCourseTitle != null" >
+        LIVE_COURSE_TITLE = #{liveCourseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCourseStart != null" >
+        LIVE_COURSE_START = #{liveCourseStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveCourseEnd != null" >
+        LIVE_COURSE_END = #{liveCourseEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveCourseTime != null" >
+        LIVE_COURSE_TIME = #{liveCourseTime,jdbcType=INTEGER},
+      </if>
+      <if test="liveCourseStatus != null" >
+        LIVE_COURSE_STATUS = #{liveCourseStatus,jdbcType=CHAR},
+      </if>
+      <if test="liveCourseIntro != null" >
+        LIVE_COURSE_INTRO = #{liveCourseIntro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LIVE_COURSE_ID = #{liveCourseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveCourse" >
+    update tp_live_course
+    set LIVE_COURSE_CHAP_ID = #{liveCourseChapId,jdbcType=INTEGER},
+      LIVE_COURSE_TITLE = #{liveCourseTitle,jdbcType=VARCHAR},
+      LIVE_COURSE_START = #{liveCourseStart,jdbcType=TIMESTAMP},
+      LIVE_COURSE_END = #{liveCourseEnd,jdbcType=TIMESTAMP},
+      LIVE_COURSE_TIME = #{liveCourseTime,jdbcType=INTEGER},
+      LIVE_COURSE_STATUS = #{liveCourseStatus,jdbcType=CHAR},
+      LIVE_COURSE_INTRO = #{liveCourseIntro,jdbcType=LONGVARCHAR}
+    where LIVE_COURSE_ID = #{liveCourseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveCourse" >
+    update tp_live_course
+    set LIVE_COURSE_CHAP_ID = #{liveCourseChapId,jdbcType=INTEGER},
+      LIVE_COURSE_TITLE = #{liveCourseTitle,jdbcType=VARCHAR},
+      LIVE_COURSE_START = #{liveCourseStart,jdbcType=TIMESTAMP},
+      LIVE_COURSE_END = #{liveCourseEnd,jdbcType=TIMESTAMP},
+      LIVE_COURSE_TIME = #{liveCourseTime,jdbcType=INTEGER},
+      LIVE_COURSE_STATUS = #{liveCourseStatus,jdbcType=CHAR}
+    where LIVE_COURSE_ID = #{liveCourseId,jdbcType=INTEGER}
+  </update>
+</mapper>

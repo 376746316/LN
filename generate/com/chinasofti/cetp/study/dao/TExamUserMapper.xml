@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.TExamUserMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.TExamUser" >
+    <id column="EU_ID" property="euId" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="E_ID" property="eId" jdbcType="BIGINT" />
+    <result column="EU_TIME" property="euTime" jdbcType="TIMESTAMP" />
+    <result column="EU_IP" property="euIp" jdbcType="VARCHAR" />
+    <result column="EU_SCORE" property="euScore" jdbcType="DOUBLE" />
+    <result column="EU_STATUS" property="euStatus" jdbcType="BIGINT" />
+    <result column="EU_ESCORE" property="euEscore" jdbcType="DOUBLE" />
+    <result column="EU_SSCORE" property="euSscore" jdbcType="DOUBLE" />
+    <result column="EU_EOSCORE" property="euEoscore" jdbcType="DOUBLE" />
+    <result column="EU_EXAMPATH" property="euExampath" jdbcType="VARCHAR" />
+    <result column="EU_ENDTIME" property="euEndtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EU_ID, USER_ID, E_ID, EU_TIME, EU_IP, EU_SCORE, EU_STATUS, EU_ESCORE, EU_SSCORE, 
+    EU_EOSCORE, EU_EXAMPATH, EU_ENDTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.TExamUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_exam_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_exam_user
+    where EU_ID = #{euId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_exam_user
+    where EU_ID = #{euId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.TExamUserExample" >
+    delete from t_exam_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.TExamUser" >
+    insert into t_exam_user (EU_ID, USER_ID, E_ID, 
+      EU_TIME, EU_IP, EU_SCORE, 
+      EU_STATUS, EU_ESCORE, EU_SSCORE, 
+      EU_EOSCORE, EU_EXAMPATH, EU_ENDTIME
+      )
+    values (#{euId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{eId,jdbcType=BIGINT}, 
+      #{euTime,jdbcType=TIMESTAMP}, #{euIp,jdbcType=VARCHAR}, #{euScore,jdbcType=DOUBLE}, 
+      #{euStatus,jdbcType=BIGINT}, #{euEscore,jdbcType=DOUBLE}, #{euSscore,jdbcType=DOUBLE}, 
+      #{euEoscore,jdbcType=DOUBLE}, #{euExampath,jdbcType=VARCHAR}, #{euEndtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.TExamUser" useGeneratedKeys="true" keyProperty="euId">
+    insert into t_exam_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="euId != null" >
+        EU_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="eId != null" >
+        E_ID,
+      </if>
+      <if test="euTime != null" >
+        EU_TIME,
+      </if>
+      <if test="euIp != null" >
+        EU_IP,
+      </if>
+      <if test="euScore != null" >
+        EU_SCORE,
+      </if>
+      <if test="euStatus != null" >
+        EU_STATUS,
+      </if>
+      <if test="euEscore != null" >
+        EU_ESCORE,
+      </if>
+      <if test="euSscore != null" >
+        EU_SSCORE,
+      </if>
+      <if test="euEoscore != null" >
+        EU_EOSCORE,
+      </if>
+      <if test="euExampath != null" >
+        EU_EXAMPATH,
+      </if>
+      <if test="euEndtime != null" >
+        EU_ENDTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="euId != null" >
+        #{euId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null" >
+        #{eId,jdbcType=BIGINT},
+      </if>
+      <if test="euTime != null" >
+        #{euTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="euIp != null" >
+        #{euIp,jdbcType=VARCHAR},
+      </if>
+      <if test="euScore != null" >
+        #{euScore,jdbcType=DOUBLE},
+      </if>
+      <if test="euStatus != null" >
+        #{euStatus,jdbcType=BIGINT},
+      </if>
+      <if test="euEscore != null" >
+        #{euEscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euSscore != null" >
+        #{euSscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euEoscore != null" >
+        #{euEoscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euExampath != null" >
+        #{euExampath,jdbcType=VARCHAR},
+      </if>
+      <if test="euEndtime != null" >
+        #{euEndtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.TExamUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_exam_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_exam_user
+    <set >
+      <if test="record.euId != null" >
+        EU_ID = #{record.euId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eId != null" >
+        E_ID = #{record.eId,jdbcType=BIGINT},
+      </if>
+      <if test="record.euTime != null" >
+        EU_TIME = #{record.euTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.euIp != null" >
+        EU_IP = #{record.euIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.euScore != null" >
+        EU_SCORE = #{record.euScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.euStatus != null" >
+        EU_STATUS = #{record.euStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.euEscore != null" >
+        EU_ESCORE = #{record.euEscore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.euSscore != null" >
+        EU_SSCORE = #{record.euSscore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.euEoscore != null" >
+        EU_EOSCORE = #{record.euEoscore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.euExampath != null" >
+        EU_EXAMPATH = #{record.euExampath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.euEndtime != null" >
+        EU_ENDTIME = #{record.euEndtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_exam_user
+    set EU_ID = #{record.euId,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=INTEGER},
+      E_ID = #{record.eId,jdbcType=BIGINT},
+      EU_TIME = #{record.euTime,jdbcType=TIMESTAMP},
+      EU_IP = #{record.euIp,jdbcType=VARCHAR},
+      EU_SCORE = #{record.euScore,jdbcType=DOUBLE},
+      EU_STATUS = #{record.euStatus,jdbcType=BIGINT},
+      EU_ESCORE = #{record.euEscore,jdbcType=DOUBLE},
+      EU_SSCORE = #{record.euSscore,jdbcType=DOUBLE},
+      EU_EOSCORE = #{record.euEoscore,jdbcType=DOUBLE},
+      EU_EXAMPATH = #{record.euExampath,jdbcType=VARCHAR},
+      EU_ENDTIME = #{record.euEndtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.TExamUser" >
+    update t_exam_user
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null" >
+        E_ID = #{eId,jdbcType=BIGINT},
+      </if>
+      <if test="euTime != null" >
+        EU_TIME = #{euTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="euIp != null" >
+        EU_IP = #{euIp,jdbcType=VARCHAR},
+      </if>
+      <if test="euScore != null" >
+        EU_SCORE = #{euScore,jdbcType=DOUBLE},
+      </if>
+      <if test="euStatus != null" >
+        EU_STATUS = #{euStatus,jdbcType=BIGINT},
+      </if>
+      <if test="euEscore != null" >
+        EU_ESCORE = #{euEscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euSscore != null" >
+        EU_SSCORE = #{euSscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euEoscore != null" >
+        EU_EOSCORE = #{euEoscore,jdbcType=DOUBLE},
+      </if>
+      <if test="euExampath != null" >
+        EU_EXAMPATH = #{euExampath,jdbcType=VARCHAR},
+      </if>
+      <if test="euEndtime != null" >
+        EU_ENDTIME = #{euEndtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where EU_ID = #{euId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.TExamUser" >
+    update t_exam_user
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      E_ID = #{eId,jdbcType=BIGINT},
+      EU_TIME = #{euTime,jdbcType=TIMESTAMP},
+      EU_IP = #{euIp,jdbcType=VARCHAR},
+      EU_SCORE = #{euScore,jdbcType=DOUBLE},
+      EU_STATUS = #{euStatus,jdbcType=BIGINT},
+      EU_ESCORE = #{euEscore,jdbcType=DOUBLE},
+      EU_SSCORE = #{euSscore,jdbcType=DOUBLE},
+      EU_EOSCORE = #{euEoscore,jdbcType=DOUBLE},
+      EU_EXAMPATH = #{euExampath,jdbcType=VARCHAR},
+      EU_ENDTIME = #{euEndtime,jdbcType=TIMESTAMP}
+    where EU_ID = #{euId,jdbcType=BIGINT}
+  </update>
+</mapper>

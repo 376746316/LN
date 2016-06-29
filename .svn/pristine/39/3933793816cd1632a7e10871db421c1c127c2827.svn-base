@@ -1,0 +1,51 @@
+package com.lidezheng.mybatis.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.lidezheng.Author.model.AuthorMore;
+import com.lidezheng.Blog.model.BlogMore;
+import com.lidezheng.mybatis.service.MybatisService;
+
+@Controller
+public class MybatisController {
+	@Autowired
+	 MybatisService mybatisService;
+	
+	@RequestMapping("getInfo.do")
+	public String getInfo(HttpServletRequest request,HttpServletResponse response,String id){
+		AuthorMore authorMore = mybatisService.getInfo(id);
+		
+//		List<Blog> blogList = author.getBlogList();
+//		for (Blog blog : blogList) {
+//			System.out.println(blog);
+//		}
+		request.setAttribute("authorMore", authorMore);
+		return "MybatisTest";
+	}
+	
+	
+	@RequestMapping("getinfoByBlogId.do")
+	public String getinfoByBlogId(HttpServletRequest request,HttpServletResponse response,@RequestParam("id") Integer id){
+		List<BlogMore> blogMorelist = mybatisService.getinfoByBlogId(id);	
+		request.setAttribute("blogMorelist", blogMorelist);
+		return "MybatisTest";
+	}
+	
+	@RequestMapping("getInfoView.do")
+	public String getInfoView(){
+		return "MybatisTest";
+	}
+	@RequestMapping("/getinfoByBlogIdView.do")
+	public String getinfoByBlogId(){
+		return "MybatisTest";
+	}
+}

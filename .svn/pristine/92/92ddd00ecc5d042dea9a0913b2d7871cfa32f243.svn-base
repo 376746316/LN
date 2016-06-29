@@ -1,0 +1,370 @@
+@charset "utf-8";
+/* CSS Document */
+body,div,p,table,tr,th,td,form,fieldset,input,textarea,fieldset,blockquote,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,span,input,img,marquee
+	{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: "宋体", arial;
+	line-height: 22px;
+	color: #333333;
+}
+
+.top ul,ol,li {
+	display: block;
+	list-style: none
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+	font-weight: normal
+}
+
+img {
+	vertical-align: middle;
+	border: none;
+	display: block
+}
+
+input,select {
+	vertical-align: middle
+}
+
+a:link { /*color: blue;*/
+	text-decoration: none;
+}
+
+a:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #bcbcbc;
+	text-decoration: none;
+}
+
+.clear {
+	clear: both;
+	height: 0;
+	overflow: hidden;
+	border: none;
+	line-height: 0;
+	font-size: 1px;
+}
+
+.ding {
+	width: 100%;
+	height: 18px;
+	background: url(../images/bg1.jpg);
+}
+
+.top_m { 
+	width: 1200px; 
+	margin: 0 auto;
+}
+
+.ding_right {
+	float: right;
+	height: 18px;
+	line-height: 18px;
+	width: 300px;
+	clear: both;
+}
+
+.ding_right a:link {
+	color: #fff;
+	text-decoration: none;
+}
+
+.ding_right a:visited {
+	color: #fff;
+	text-decoration: none;
+}
+
+.ding_right a:hover {
+	color: #bcbcbc;
+	text-decoration: none;
+}
+
+.ding_right ul li {
+	float: left;
+	margin-left: 20px;
+	color: #FFF;
+}
+
+.top {
+	background: url(../images/bg.jpg) repeat-x;
+	/* width: 100%; */
+	min-width:1200px;
+	height: 100px;
+}
+
+.top_i {
+	clear: both;
+	margin: 0 auto;
+}
+
+.top_img {
+	width: 550px;
+	height: 58px;
+	margin: 0 auto;
+}
+
+.top_img img {
+	padding-top: 10px;
+	padding-left: 25px;
+	float: left;
+}
+
+.top_img label {
+	float: right;
+	margin-right: 45px;
+	margin-top: 20px;
+}
+
+.banner {
+	width: 100%;
+	text-align: center;
+	background: url(../images/banner.jpg) center no-repeat;
+	height: 394px;
+	clear: both;
+}
+
+.foot {
+	/* width: 100%; */
+	min-width:1200px;
+	height: 194px;
+	background: url(../images/footbg.jpg);
+/* 	margin-top: 15px;
+ */	text-align: center;
+}
+
+.foot_img {
+	width: 910px;
+	margin: 0 auto;
+}
+
+.foot_img img {
+	float: left;
+	padding-left: 75px;
+	margin-top: 20px;
+}
+
+.foot_img p {
+	text-align: center;
+	display: block;
+	clear: both;
+	padding-top: 20px;
+}
+
+.topmenu {
+	clear: both;
+	margin: 0 auto;
+	width: 900px;
+}
+
+.serch {
+	width: 200px;
+	float: right;
+}
+/*二级页面*/
+.banner1 {
+	width: 100%;
+	/* text-align: center; */
+	height: 497px;
+	clear: both;
+	background-color: f6f6f6;
+}
+
+.content {
+	width: 1200px;
+	height: 497px;
+	margin: 0 auto;
+	/* margin-left: 90px; */
+/* 	background: #f1f1f1; */
+}
+
+.con-title {
+	text-align: right;
+	font-weight: bold;
+	padding: 5px 20px;
+}
+
+.tabcon {
+	position: relative;
+	top: -81; /*兼容实训 应该为-471*/
+	left: 131;
+	z-index: 1;
+	background: #FCFCFC;
+	height: 497px;
+	width: 1050px;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.tabcon h2 {
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	color: #333;
+	padding: 10px 0 10px 25px;
+}
+
+/* .tabcon li {
+	float: left;
+	width: 152px;
+	overflow: hidden;
+	margin: 0 0 10px 24px;
+	display: inline;
+} */
+.tabcon li .pic {
+	display: block;
+	border: solid 1px #ddd;
+	width: 150px;
+	height: 150px;
+}
+
+.tabcon li .pic:hover {
+	border: solid 1px #C00F15;
+}
+
+.tabcon li .tit {
+	height: 20px;
+	line-height: 20px;
+	display: block;
+	margin: 5px 0 0 0;
+}
+
+.tabcon li .tit a {
+	font-size: 12px;
+	color: #5e5e5e;
+	text-decoration: none;
+}
+
+.topmenu ul li a,.topmenu ul li a:visited {
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	width: 142px;
+	height: 28px;
+	text-align: center;
+	color: #fff;
+	background: url(../images/bg01.jpg);
+	font-size: 13px;
+	line-height: 28px;
+	font-family: "微软雅黑";
+	overflow: hidden;
+}
+
+.topmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	background: url(../images/bg01.jpg);
+}
+
+.topmenu ul li {
+	float: left;
+	position: relative;
+}
+
+.topmenu ul li ul {
+	display: none;
+}
+/* specific to non IE browsers */
+.topmenu ul li:hover a {
+	color: #fff;
+}
+
+.topmenu ul li:hover ul {
+	display: block;
+	position: absolute;
+	top: 29px;
+	left: 0;
+	width: 105px;
+}
+
+.topmenu ul li:hover ul li a.hide {
+	color: #fff;
+}
+
+.topmenu ul li:hover ul li:hover a.hide {
+	background: #71b94b;
+	color: #165912;
+}
+
+.topmenu ul li:hover ul li ul {
+	display: none;
+}
+
+.topmenu ul li:hover ul li a {
+	display: block;
+	background: #e9f5e7;
+	color: #165912;
+	border: 1px solid #fff;
+}
+
+.topmenu ul li:hover ul li a:hover {
+	background: #71b94b;
+	color: #fff;
+}
+
+.topmenu ul li:hover ul li:hover ul {
+	display: block;
+	position: absolute;
+	left: 105px;
+	top: 0;
+}
+
+.topmenu ul li {
+	width: 95px;
+	float: left;
+	text-align: center;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	border-left: 1px solid #CCC;
+}
+
+.topmenu ul li a:link {
+	color: #000 !important;
+	text-decoration: none;
+	width: 95px;
+	height: 26px;
+}
+
+.topmenu ul li a:visited {
+	color: #000 !important;
+	text-decoration: none;
+	width: 95px;
+	height: 26px;
+}
+
+.topmenu ul li a:hover {
+	color: #ffffff !important;
+	text-decoration: none;
+	background: url(../images/menubg.jpg) repeat-x !important;
+	width: 95px;
+	height: 26px;
+	display: block;
+}
+
+.topmenuhover a {
+	color: #fff !important;
+	text-decoration: none;
+	background: url(../images/menubg.jpg) repeat-x !important;
+	width: 95px;
+	height: 26px;
+	display: block;
+}
+.infoDiv {
+	font-size: 12px;
+}
+
+.infoSpan {
+	text-indent: 2em;
+}

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.NoteMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.Note">
+		<id column="NOTE_ID" property="noteId" jdbcType="INTEGER" />
+		<result column="NOTE_SCID" property="noteScid" jdbcType="INTEGER" />
+		<result column="NOTE_STU_NO" property="noteStuNo" jdbcType="INTEGER" />
+		<result column="NOTE_PLAY_TIME" property="notePlayTime"
+			jdbcType="VARCHAR" />
+		<result column="NOTE_REGTIME" property="noteRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.Note"
+		extends="BaseResultMap">
+		<result column="NOTE_CONTENT" property="noteContent" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="NoteWithSC" type="com.chinasofti.cetp.study.model.MoreNote"
+		extends="ResultMapWithBLOBs">
+		<result column="SC_NAME" property="scName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="CourseNote" type="com.chinasofti.cetp.study.model.CourseNote">
+		<result column="SPEC_ID" property="specId" jdbcType="INTEGER" />
+		<result column="SPEC_NAME" property="specName" jdbcType="VARCHAR" />
+		<result column="SPEC_THUMB" property="specThumb" jdbcType="LONGVARCHAR" />
+		<result column="NOTE_NUM" property="noteNum" jdbcType="INTEGER" />
+		<result column="LAST_EDIT" property="lastEdit" jdbcType="TIMESTAMP" />
+		<result column="SC_NUM" property="scNum" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		NOTE_ID, NOTE_SCID, NOTE_STU_NO, NOTE_PLAY_TIME,
+		NOTE_REGTIME
+	</sql>
+	<sql id="Blob_Column_List">
+		NOTE_CONTENT
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.chinasofti.cetp.study.model.NoteExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_note
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.study.model.NoteExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_note
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_note
+		where NOTE_ID = #{noteId,jdbcType=INTEGER}
+	</select>
+	<select id="selectNoteListBySpecId" resultMap="ResultMapWithBLOBs"
+		parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_note D
+		WHERE
+		D.NOTE_STU_NO = #{stuNo,jdbcType=INTEGER}
+		AND
+		D.NOTE_SCID IN(
+		SELECT
+		SC_ID
+		FROM
+		tp_sub_courseware C
+		WHERE
+		C.SC_CHAPTER_ID
+		IN (
+		SELECT
+		A.CHAP_ID
+		FROM
+		tp_chapter A,
+		tp_spec_course B
+		WHERE
+		A.CHAP_SPEC_ID = B.SPEC_ID
+		AND B.SPEC_ID =
+		#{specId,jdbcType=INTEGER}
+		)
+		)
+		ORDER BY D.NOTE_REGTIME DESC
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_note
+		where NOTE_ID = #{noteId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.NoteExample">
+		delete from tp_note
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.Note"
+		useGeneratedKeys="true" keyProperty="noteId">
+		insert into tp_note (NOTE_ID,
+		NOTE_SCID, NOTE_STU_NO,
+		NOTE_PLAY_TIME, NOTE_REGTIME, NOTE_CONTENT
+		)
+		values (#{noteId,jdbcType=INTEGER}, #{noteScid,jdbcType=INTEGER},
+		#{noteStuNo,jdbcType=INTEGER},
+		#{notePlayTime,jdbcType=VARCHAR},
+		#{noteRegtime,jdbcType=TIMESTAMP},
+		#{noteContent,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.Note"
+		useGeneratedKeys="true" keyProperty="noteId">
+		insert into tp_note
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="noteId != null">
+				NOTE_ID,
+			</if>
+			<if test="noteScid != null">
+				NOTE_SCID,
+			</if>
+			<if test="noteStuNo != null">
+				NOTE_STU_NO,
+			</if>
+			<if test="notePlayTime != null">
+				NOTE_PLAY_TIME,
+			</if>
+			<if test="noteRegtime != null">
+				NOTE_REGTIME,
+			</if>
+			<if test="noteContent != null">
+				NOTE_CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="noteId != null">
+				#{noteId,jdbcType=INTEGER},
+			</if>
+			<if test="noteScid != null">
+				#{noteScid,jdbcType=INTEGER},
+			</if>
+			<if test="noteStuNo != null">
+				#{noteStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="notePlayTime != null">
+				#{notePlayTime,jdbcType=VARCHAR},
+			</if>
+			<if test="noteRegtime != null">
+				#{noteRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="noteContent != null">
+				#{noteContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.NoteExample"
+		resultType="java.lang.Integer">
+		select count(*) from tp_note
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_note
+		<set>
+			<if test="record.noteId != null">
+				NOTE_ID = #{record.noteId,jdbcType=INTEGER},
+			</if>
+			<if test="record.noteScid != null">
+				NOTE_SCID = #{record.noteScid,jdbcType=INTEGER},
+			</if>
+			<if test="record.noteStuNo != null">
+				NOTE_STU_NO = #{record.noteStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.notePlayTime != null">
+				NOTE_PLAY_TIME = #{record.notePlayTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.noteRegtime != null">
+				NOTE_REGTIME = #{record.noteRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.noteContent != null">
+				NOTE_CONTENT =
+				#{record.noteContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_note
+		set NOTE_ID = #{record.noteId,jdbcType=INTEGER},
+		NOTE_SCID = #{record.noteScid,jdbcType=INTEGER},
+		NOTE_STU_NO =
+		#{record.noteStuNo,jdbcType=INTEGER},
+		NOTE_PLAY_TIME =
+		#{record.notePlayTime,jdbcType=VARCHAR},
+		NOTE_REGTIME =
+		#{record.noteRegtime,jdbcType=TIMESTAMP},
+		NOTE_CONTENT =
+		#{record.noteContent,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_note
+		set NOTE_ID = #{record.noteId,jdbcType=INTEGER},
+		NOTE_SCID = #{record.noteScid,jdbcType=INTEGER},
+		NOTE_STU_NO =
+		#{record.noteStuNo,jdbcType=INTEGER},
+		NOTE_PLAY_TIME =
+		#{record.notePlayTime,jdbcType=VARCHAR},
+		NOTE_REGTIME =
+		#{record.noteRegtime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.Note">
+		update tp_note
+		<set>
+			<if test="noteScid != null">
+				NOTE_SCID = #{noteScid,jdbcType=INTEGER},
+			</if>
+			<if test="noteStuNo != null">
+				NOTE_STU_NO = #{noteStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="notePlayTime != null">
+				NOTE_PLAY_TIME = #{notePlayTime,jdbcType=VARCHAR},
+			</if>
+			<if test="noteRegtime != null">
+				NOTE_REGTIME = #{noteRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="noteContent != null">
+				NOTE_CONTENT = #{noteContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where NOTE_ID = #{noteId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.Note">
+		update
+		tp_note
+		set NOTE_SCID = #{noteScid,jdbcType=INTEGER},
+		NOTE_STU_NO =
+		#{noteStuNo,jdbcType=INTEGER},
+		NOTE_PLAY_TIME =
+		#{notePlayTime,jdbcType=VARCHAR},
+		NOTE_REGTIME =
+		#{noteRegtime,jdbcType=TIMESTAMP},
+		NOTE_CONTENT =
+		#{noteContent,jdbcType=LONGVARCHAR}
+		where NOTE_ID =
+		#{noteId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.Note">
+		update tp_note
+		set
+		NOTE_SCID = #{noteScid,jdbcType=INTEGER},
+		NOTE_STU_NO =
+		#{noteStuNo,jdbcType=INTEGER},
+		NOTE_PLAY_TIME =
+		#{notePlayTime,jdbcType=VARCHAR},
+		NOTE_REGTIME =
+		#{noteRegtime,jdbcType=TIMESTAMP}
+		where NOTE_ID =
+		#{noteId,jdbcType=INTEGER}
+	</update>
+	<select id="getCourses" parameterType="java.lang.Integer"
+		resultMap="CourseNote">
+		SELECT
+		s1.SPEC_ID AS SPEC_ID,
+		s1.SPEC_NAME AS SPEC_NAME,
+		s1.SPEC_THUMB AS SPEC_THUMB,
+		COUNT(NOTE_ID) AS NOTE_NUM,
+		MAX(NOTE_REGTIME) AS LAST_EDIT,
+		SC_NUM
+		FROM
+		tp_note
+		INNER JOIN tp_sub_courseware AS sc1 ON NOTE_SCID = sc1.SC_ID
+		INNER JOIN
+		tp_chapter AS c1 ON sc1.SC_CHAPTER_ID = c1.CHAP_ID
+		INNER JOIN
+		tp_spec_course AS s1 ON c1.CHAP_SPEC_ID = s1.SPEC_ID
+		INNER JOIN (
+		SELECT
+		COUNT(sc2.SC_ID) AS SC_NUM,
+		s2.SPEC_ID
+		FROM
+		tp_sub_courseware AS sc2
+		INNER JOIN tp_chapter AS c2 ON sc2.SC_CHAPTER_ID = c2.CHAP_ID
+		INNER JOIN tp_spec_course AS s2 ON c2.CHAP_SPEC_ID = s2.SPEC_ID
+		GROUP BY
+		s2.SPEC_ID
+		) tt_SC_NUM ON tt_SC_NUM.SPEC_ID = s1.SPEC_ID
+		WHERE
+		NOTE_STU_NO = #{stuNo}
+		GROUP BY
+		s1.SPEC_ID
+		ORDER BY
+		LAST_EDIT DESC
+	</select>
+	<select id="selectWithSC" resultMap="NoteWithSC" parameterType="map">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,SC_NAME
+		FROM
+		tp_note
+		INNER JOIN tp_sub_courseware ON NOTE_SCID = SC_ID
+		INNER JOIN tp_chapter
+		ON SC_CHAPTER_ID = CHAP_ID
+		WHERE
+		NOTE_STU_NO = #{stuNo}
+		AND CHAP_ID = #{chapId}
+		<if test="search != null">
+			AND NOTE_CONTENT LIKE #{search}
+		</if>
+		ORDER BY
+		NOTE_ID ASC
+	</select>
+</mapper>

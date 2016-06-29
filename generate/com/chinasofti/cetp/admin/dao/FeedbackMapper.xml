@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.FeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.Feedback" >
+    <id column="FB_ID" property="fbId" jdbcType="INTEGER" />
+    <result column="FB_TITLE" property="fbTitle" jdbcType="VARCHAR" />
+    <result column="FB_MAIL" property="fbMail" jdbcType="VARCHAR" />
+    <result column="FB_PHONE" property="fbPhone" jdbcType="VARCHAR" />
+    <result column="FB_ATTACHMENT" property="fbAttachment" jdbcType="VARCHAR" />
+    <result column="FB_REGTIME" property="fbRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.admin.model.Feedback" extends="BaseResultMap" >
+    <result column="FB_CONTENT" property="fbContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FB_ID, FB_TITLE, FB_MAIL, FB_PHONE, FB_ATTACHMENT, FB_REGTIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    FB_CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.FeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.FeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_feedback
+    where FB_ID = #{fbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_feedback
+    where FB_ID = #{fbId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.FeedbackExample" >
+    delete from tp_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.Feedback" >
+    insert into tp_feedback (FB_ID, FB_TITLE, FB_MAIL, 
+      FB_PHONE, FB_ATTACHMENT, FB_REGTIME, 
+      FB_CONTENT)
+    values (#{fbId,jdbcType=INTEGER}, #{fbTitle,jdbcType=VARCHAR}, #{fbMail,jdbcType=VARCHAR}, 
+      #{fbPhone,jdbcType=VARCHAR}, #{fbAttachment,jdbcType=VARCHAR}, #{fbRegtime,jdbcType=TIMESTAMP}, 
+      #{fbContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.Feedback" useGeneratedKeys="true" keyProperty="fbId">
+    insert into tp_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fbId != null" >
+        FB_ID,
+      </if>
+      <if test="fbTitle != null" >
+        FB_TITLE,
+      </if>
+      <if test="fbMail != null" >
+        FB_MAIL,
+      </if>
+      <if test="fbPhone != null" >
+        FB_PHONE,
+      </if>
+      <if test="fbAttachment != null" >
+        FB_ATTACHMENT,
+      </if>
+      <if test="fbRegtime != null" >
+        FB_REGTIME,
+      </if>
+      <if test="fbContent != null" >
+        FB_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fbId != null" >
+        #{fbId,jdbcType=INTEGER},
+      </if>
+      <if test="fbTitle != null" >
+        #{fbTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="fbMail != null" >
+        #{fbMail,jdbcType=VARCHAR},
+      </if>
+      <if test="fbPhone != null" >
+        #{fbPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fbAttachment != null" >
+        #{fbAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="fbRegtime != null" >
+        #{fbRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fbContent != null" >
+        #{fbContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.FeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from tp_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_feedback
+    <set >
+      <if test="record.fbId != null" >
+        FB_ID = #{record.fbId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fbTitle != null" >
+        FB_TITLE = #{record.fbTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbMail != null" >
+        FB_MAIL = #{record.fbMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbPhone != null" >
+        FB_PHONE = #{record.fbPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbAttachment != null" >
+        FB_ATTACHMENT = #{record.fbAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fbRegtime != null" >
+        FB_REGTIME = #{record.fbRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fbContent != null" >
+        FB_CONTENT = #{record.fbContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_feedback
+    set FB_ID = #{record.fbId,jdbcType=INTEGER},
+      FB_TITLE = #{record.fbTitle,jdbcType=VARCHAR},
+      FB_MAIL = #{record.fbMail,jdbcType=VARCHAR},
+      FB_PHONE = #{record.fbPhone,jdbcType=VARCHAR},
+      FB_ATTACHMENT = #{record.fbAttachment,jdbcType=VARCHAR},
+      FB_REGTIME = #{record.fbRegtime,jdbcType=TIMESTAMP},
+      FB_CONTENT = #{record.fbContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_feedback
+    set FB_ID = #{record.fbId,jdbcType=INTEGER},
+      FB_TITLE = #{record.fbTitle,jdbcType=VARCHAR},
+      FB_MAIL = #{record.fbMail,jdbcType=VARCHAR},
+      FB_PHONE = #{record.fbPhone,jdbcType=VARCHAR},
+      FB_ATTACHMENT = #{record.fbAttachment,jdbcType=VARCHAR},
+      FB_REGTIME = #{record.fbRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.Feedback" >
+    update tp_feedback
+    <set >
+      <if test="fbTitle != null" >
+        FB_TITLE = #{fbTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="fbMail != null" >
+        FB_MAIL = #{fbMail,jdbcType=VARCHAR},
+      </if>
+      <if test="fbPhone != null" >
+        FB_PHONE = #{fbPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fbAttachment != null" >
+        FB_ATTACHMENT = #{fbAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="fbRegtime != null" >
+        FB_REGTIME = #{fbRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fbContent != null" >
+        FB_CONTENT = #{fbContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where FB_ID = #{fbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.Feedback" >
+    update tp_feedback
+    set FB_TITLE = #{fbTitle,jdbcType=VARCHAR},
+      FB_MAIL = #{fbMail,jdbcType=VARCHAR},
+      FB_PHONE = #{fbPhone,jdbcType=VARCHAR},
+      FB_ATTACHMENT = #{fbAttachment,jdbcType=VARCHAR},
+      FB_REGTIME = #{fbRegtime,jdbcType=TIMESTAMP},
+      FB_CONTENT = #{fbContent,jdbcType=LONGVARCHAR}
+    where FB_ID = #{fbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Feedback" >
+    update tp_feedback
+    set FB_TITLE = #{fbTitle,jdbcType=VARCHAR},
+      FB_MAIL = #{fbMail,jdbcType=VARCHAR},
+      FB_PHONE = #{fbPhone,jdbcType=VARCHAR},
+      FB_ATTACHMENT = #{fbAttachment,jdbcType=VARCHAR},
+      FB_REGTIME = #{fbRegtime,jdbcType=TIMESTAMP}
+    where FB_ID = #{fbId,jdbcType=INTEGER}
+  </update>
+</mapper>

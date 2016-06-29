@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.ProUserMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.ProUserKey" >
+    <id column="PU_USER_NO" property="puUserNo" jdbcType="INTEGER" />
+    <id column="PU_PRO_ID" property="puProId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ProUserMap" type="com.chinasofti.cetp.practice.model.ProUser"  extends="BaseResultMap">
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NICKNAME" property="userNickName" jdbcType="VARCHAR" />
+    <result column="TECH_TYPE" property="techType" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="USER_HEAD" property="userHead" jdbcType="VARCHAR" />
+    <result column="PRAC_COUNT" property="pracCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PU_USER_NO, PU_PRO_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.practice.model.ProUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_pro_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.ProUserKey" >
+    delete from tp_pro_user
+    where PU_USER_NO = #{puUserNo,jdbcType=INTEGER}
+      and PU_PRO_ID = #{puProId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.practice.model.ProUserExample" >
+    delete from tp_pro_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.practice.model.ProUserKey" >
+    insert into tp_pro_user (PU_USER_NO, PU_PRO_ID)
+    values (#{puUserNo,jdbcType=INTEGER}, #{puProId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.ProUserKey" >
+    insert into tp_pro_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="puUserNo != null" >
+        PU_USER_NO,
+      </if>
+      <if test="puProId != null" >
+        PU_PRO_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="puUserNo != null" >
+        #{puUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="puProId != null" >
+        #{puProId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.practice.model.ProUserExample" resultType="java.lang.Integer" >
+    select count(*) from tp_pro_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_pro_user
+    <set >
+      <if test="record.puUserNo != null" >
+        PU_USER_NO = #{record.puUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.puProId != null" >
+        PU_PRO_ID = #{record.puProId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_pro_user
+    set PU_USER_NO = #{record.puUserNo,jdbcType=INTEGER},
+      PU_PRO_ID = #{record.puProId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="getProUser" parameterType="java.lang.Integer" resultMap="ProUserMap" >
+  	SELECT
+		PU_PRO_ID,
+		PU_USER_NO,
+		USER_ID,
+		USER_NICKNAME,
+		TECH_TYPE,
+		ORG_NAME,
+		USER_HEAD,
+		IFNULL(PRAC_COUNT, 0) AS PRAC_COUNT
+	FROM
+		tp_pro_user
+	INNER JOIN tp_user ON PU_USER_NO = USER_NO
+	LEFT JOIN (
+		SELECT
+			UT_USER_NO,
+			GROUP_CONCAT(TECH_TYPE_NAME) AS TECH_TYPE
+		FROM
+			tp_user_tech_type
+		INNER JOIN tp_tech_type ON UT_TECHTYPE_ID = TECH_TYPE_ID
+		GROUP BY
+			UT_USER_NO
+	) AS utt ON UT_USER_NO = USER_NO
+	LEFT JOIN tp_org ON ORG_ID = USER_ORGID
+	LEFT JOIN (
+		SELECT
+			PRAC_TEACHER,
+			COUNT(PRAC_ID) AS PRAC_COUNT
+		FROM
+			tp_practice
+		WHERE
+			PRAC_STATUS = '3'
+		OR PRAC_STATUS = '4'
+		GROUP BY
+			PRAC_TEACHER
+	) pc ON PRAC_TEACHER = USER_NO
+	WHERE
+		PU_PRO_ID = #{proId,jdbcType=INTEGER}
+	ORDER BY
+		PRAC_COUNT DESC
+  </select>
+  <select id="getProUserUnselected" parameterType="map" resultMap="ProUserMap" >
+  	SELECT
+		USER_NO AS PU_USER_NO,
+		USER_ID,
+		USER_NICKNAME,
+		TECH_TYPE,
+		ORG_NAME
+	FROM
+		tp_user
+	<choose>
+	<when test="techType != null">
+	INNER JOIN (
+	</when>
+	<otherwise>
+	LEFT JOIN (
+	</otherwise>
+	</choose>
+			SELECT
+				UT_USER_NO,
+				GROUP_CONCAT(TECH_TYPE_NAME) AS TECH_TYPE
+			FROM
+				tp_user_tech_type
+			INNER JOIN tp_tech_type ON UT_TECHTYPE_ID = TECH_TYPE_ID
+			<if test="techType != null" >
+			WHERE
+				FIND_IN_SET(
+					UT_TECHTYPE_ID,
+					getChildTechType (#{techType})
+				)
+			</if>
+			GROUP BY
+				UT_USER_NO
+		) AS utt ON UT_USER_NO = USER_NO
+	LEFT JOIN tp_org ON ORG_ID = USER_ORGID
+	WHERE
+		USER_NO NOT IN (
+			SELECT PU_USER_NO
+			FROM tp_pro_user
+			WHERE PU_PRO_ID = #{proId,jdbcType=INTEGER}
+		)
+	<if test="userId != null" >
+	AND USER_ID LIKE #{userId}
+	</if>	
+	<if test="userNickName != null" >
+	AND USER_NICKNAME LIKE #{userNickName}
+	</if>	
+	<if test="orgName != null" >
+	AND ORG_NAME LIKE #{orgName}
+	</if>	
+  </select>
+  <insert id="insProUser" parameterType="map">
+      insert into tp_pro_user (PU_PRO_ID, PU_USER_NO)
+	    values
+	    <foreach collection="users" item="user" separator=",">
+	    (#{proId,jdbcType=INTEGER},#{user})
+	    </foreach>
+  </insert>
+</mapper>

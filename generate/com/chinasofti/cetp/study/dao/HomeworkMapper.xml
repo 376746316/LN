@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.HomeworkMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.Homework" >
+    <id column="HW_EXER_ID" property="hwExerId" jdbcType="INTEGER" />
+    <id column="HW_CHAP_ID" property="hwChapId" jdbcType="INTEGER" />
+    <result column="HW_SEQ" property="hwSeq" jdbcType="INTEGER" />
+    <result column="HW_USER_NO" property="hwUserNo" jdbcType="INTEGER" />
+    <result column="HW_REGTIME" property="hwRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    HW_EXER_ID, HW_CHAP_ID, HW_SEQ, HW_USER_NO, HW_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.HomeworkExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.HomeworkKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_homework
+    where HW_EXER_ID = #{hwExerId,jdbcType=INTEGER}
+      and HW_CHAP_ID = #{hwChapId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.HomeworkKey" >
+    delete from tp_homework
+    where HW_EXER_ID = #{hwExerId,jdbcType=INTEGER}
+      and HW_CHAP_ID = #{hwChapId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.Homework" >
+    insert into tp_homework (HW_EXER_ID, HW_CHAP_ID, HW_SEQ, 
+      HW_USER_NO, HW_REGTIME)
+    values (#{hwExerId,jdbcType=INTEGER}, #{hwChapId,jdbcType=INTEGER}, #{hwSeq,jdbcType=INTEGER}, 
+      #{hwUserNo,jdbcType=INTEGER}, #{hwRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.Homework" >
+    insert into tp_homework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hwExerId != null" >
+        HW_EXER_ID,
+      </if>
+      <if test="hwChapId != null" >
+        HW_CHAP_ID,
+      </if>
+      <if test="hwSeq != null" >
+        HW_SEQ,
+      </if>
+      <if test="hwUserNo != null" >
+        HW_USER_NO,
+      </if>
+      <if test="hwRegtime != null" >
+        HW_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hwExerId != null" >
+        #{hwExerId,jdbcType=INTEGER},
+      </if>
+      <if test="hwChapId != null" >
+        #{hwChapId,jdbcType=INTEGER},
+      </if>
+      <if test="hwSeq != null" >
+        #{hwSeq,jdbcType=INTEGER},
+      </if>
+      <if test="hwUserNo != null" >
+        #{hwUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="hwRegtime != null" >
+        #{hwRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.HomeworkExample" resultType="java.lang.Integer" >
+    select count(*) from tp_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.Homework" >
+    update tp_homework
+    <set >
+      <if test="hwSeq != null" >
+        HW_SEQ = #{hwSeq,jdbcType=INTEGER},
+      </if>
+      <if test="hwUserNo != null" >
+        HW_USER_NO = #{hwUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="hwRegtime != null" >
+        HW_REGTIME = #{hwRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where HW_EXER_ID = #{hwExerId,jdbcType=INTEGER}
+      and HW_CHAP_ID = #{hwChapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.Homework" >
+    update tp_homework
+    set HW_SEQ = #{hwSeq,jdbcType=INTEGER},
+      HW_USER_NO = #{hwUserNo,jdbcType=INTEGER},
+      HW_REGTIME = #{hwRegtime,jdbcType=TIMESTAMP}
+    where HW_EXER_ID = #{hwExerId,jdbcType=INTEGER}
+      and HW_CHAP_ID = #{hwChapId,jdbcType=INTEGER}
+  </update>
+</mapper>

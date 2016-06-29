@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.exam.dao.ChapterQuesMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.exam.model.ChapterQues" >
+    <id column="CQ_ID" property="cqId" jdbcType="BIGINT" />
+    <result column="CQ_CHAP_ID" property="cqChapId" jdbcType="INTEGER" />
+    <result column="CQ_Q_ID" property="cqQId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CQ_ID, CQ_CHAP_ID, CQ_Q_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.exam.model.ChapterQuesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_chapter_ques
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_chapter_ques
+    where CQ_ID = #{cqId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_chapter_ques
+    where CQ_ID = #{cqId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.exam.model.ChapterQuesExample" >
+    delete from tp_chapter_ques
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.exam.model.ChapterQues" >
+    insert into tp_chapter_ques (CQ_ID, CQ_CHAP_ID, CQ_Q_ID
+      )
+    values (#{cqId,jdbcType=BIGINT}, #{cqChapId,jdbcType=INTEGER}, #{cqQId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.exam.model.ChapterQues" >
+    insert into tp_chapter_ques
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cqId != null" >
+        CQ_ID,
+      </if>
+      <if test="cqChapId != null" >
+        CQ_CHAP_ID,
+      </if>
+      <if test="cqQId != null" >
+        CQ_Q_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cqId != null" >
+        #{cqId,jdbcType=BIGINT},
+      </if>
+      <if test="cqChapId != null" >
+        #{cqChapId,jdbcType=INTEGER},
+      </if>
+      <if test="cqQId != null" >
+        #{cqQId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.exam.model.ChapterQuesExample" resultType="java.lang.Integer" >
+    select count(*) from tp_chapter_ques
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_chapter_ques
+    <set >
+      <if test="record.cqId != null" >
+        CQ_ID = #{record.cqId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cqChapId != null" >
+        CQ_CHAP_ID = #{record.cqChapId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cqQId != null" >
+        CQ_Q_ID = #{record.cqQId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_chapter_ques
+    set CQ_ID = #{record.cqId,jdbcType=BIGINT},
+      CQ_CHAP_ID = #{record.cqChapId,jdbcType=INTEGER},
+      CQ_Q_ID = #{record.cqQId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.exam.model.ChapterQues" >
+    update tp_chapter_ques
+    <set >
+      <if test="cqChapId != null" >
+        CQ_CHAP_ID = #{cqChapId,jdbcType=INTEGER},
+      </if>
+      <if test="cqQId != null" >
+        CQ_Q_ID = #{cqQId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where CQ_ID = #{cqId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.exam.model.ChapterQues" >
+    update tp_chapter_ques
+    set CQ_CHAP_ID = #{cqChapId,jdbcType=INTEGER},
+      CQ_Q_ID = #{cqQId,jdbcType=BIGINT}
+    where CQ_ID = #{cqId,jdbcType=BIGINT}
+  </update>
+</mapper>

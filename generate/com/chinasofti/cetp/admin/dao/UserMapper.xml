@@ -1,0 +1,1179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.User">
+		<id column="USER_NO" property="userNo" jdbcType="INTEGER" />
+		<result column="USER_ORGID" property="userOrgid" jdbcType="INTEGER" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+		<result column="USER_NICKNAME" property="userNickname" jdbcType="VARCHAR" />
+		<result column="USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+		<result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+		<result column="USER_MAIL" property="userMail" jdbcType="VARCHAR" />
+		<result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+		<result column="USER_GRP_QQ" property="userGrpQq" jdbcType="VARCHAR" />
+		<result column="USER_TITLE" property="userTitle" jdbcType="VARCHAR" />
+		<result column="USER_SEX" property="userSex" jdbcType="CHAR" />
+		<result column="USER_BIRTH" property="userBirth" jdbcType="DATE" />
+		<result column="USER_AREA_CODE" property="userAreaCode" jdbcType="CHAR" />
+		<result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+		<result column="USER_POST_CODE" property="userPostCode" jdbcType="CHAR" />
+		<result column="USER_IS_LEADER" property="userIsLeader" jdbcType="CHAR" />
+		<result column="USER_EDU_LEVEL" property="userEduLevel" jdbcType="CHAR" />
+		<result column="USER_SUBJECT" property="userSubject" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+		<result column="USER_MARK" property="userMark" jdbcType="VARCHAR" />
+		<result column="USER_REGTIME" property="userRegtime" jdbcType="TIMESTAMP" />
+		<result column="USER_SCORE" property="userScore" jdbcType="INTEGER" />
+		<result column="USER_HISTORY_SCORE" property="userHistoryScore" jdbcType="INTEGER" />
+		<result column="USER_COIN" property="userCoin" jdbcType="INTEGER" />
+		<result column="USER_GROUP_ID" property="userGroupId" jdbcType="INTEGER" />
+		<result column="USER_ONLINE" property="userOnline" jdbcType="CHAR" />
+		<result column="USER_LASTLOGIN" property="userLastlogin" jdbcType="TIMESTAMP" />
+		<result column="USER_ISACTIVATE" property="userIsactivate" jdbcType="INTEGER" />
+		<result column="USER_FLAG" property="userFlag" jdbcType="VARCHAR" />
+    <result column="USER_JOB_CONTEXT" property="userJobContext" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.admin.model.UserWithBLOBs" extends="BaseResultMap">
+		<result column="USER_INTRO" property="userIntro" jdbcType="LONGVARCHAR" />
+		<result column="USER_HEAD" property="userHead" jdbcType="LONGVARCHAR" />
+		<result column="USER_TECH_DIRECT" property="userTechDirect" jdbcType="LONGVARCHAR" />
+		<result column="USER_HOBBY" property="userHobby" jdbcType="LONGVARCHAR" />
+		<result column="USER_TRAIN" property="userTrain" jdbcType="LONGVARCHAR" />
+		<result column="USER_WORK_EXP" property="userWorkExp" jdbcType="LONGVARCHAR" />
+		<result column="USER_PRO_EXPER" property="userProExper" jdbcType="LONGVARCHAR" />
+		<result column="USER_EDU_BG" property="userEduBg" jdbcType="LONGVARCHAR" />
+		<result column="USER_HEAD_M" property="userHeadM" jdbcType="LONGVARCHAR" />
+		<result column="USER_HEAD_S" property="userHeadS" jdbcType="LONGVARCHAR" />
+		<result column="USER_MSG_CFG" property="userMsgCfg" jdbcType="LONGVARCHAR" />
+		<result column="USER_MAIL_CFG" property="userMailCfg" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="MoreUserWithBLOBs" type="com.chinasofti.cetp.admin.model.MoreUserWithBLOBs" extends="ResultMapWithBLOBs">
+		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+		<result column="USER_TECHTYPE" property="userTechType" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		USER_NO, USER_ORGID, USER_NAME, USER_ID, USER_PWD, USER_NICKNAME, USER_MOBILE, USER_PHONE,
+		USER_MAIL, USER_QQ, USER_GRP_QQ, USER_TITLE, USER_SEX, USER_BIRTH, USER_AREA_CODE,
+		USER_ADDRESS, USER_POST_CODE, USER_IS_LEADER, USER_EDU_LEVEL, USER_SUBJECT, USER_TYPE,
+		USER_MARK, USER_REGTIME, USER_SCORE, USER_HISTORY_SCORE, USER_COIN, USER_GROUP_ID,
+    USER_ONLINE, USER_LASTLOGIN, USER_ISACTIVATE, USER_FLAG, USER_JOB_CONTEXT
+	</sql>
+	<sql id="Blob_Column_List">
+		USER_INTRO, USER_HEAD, USER_TECH_DIRECT, USER_HOBBY, USER_TRAIN, USER_WORK_EXP, USER_PRO_EXPER,
+		USER_EDU_BG, USER_HEAD_M, USER_HEAD_S, USER_MSG_CFG, USER_MAIL_CFG
+	</sql>
+	<sql id="More_Column_List">
+		ORG_NAME, USER_TECHTYPE
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.UserExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.UserExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_user
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</select>
+	<select id="selectMoreByExample" resultMap="MoreUserWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.UserExample">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="More_Column_List" />
+		from tp_user
+		left join tp_org on USER_ORGID = ORG_ID
+		LEFT JOIN (
+		SELECT
+		UT_USER_NO,
+		GROUP_CONCAT(TECH_TYPE_NAME) AS USER_TECHTYPE
+		FROM
+		tp_user_tech_type
+		INNER JOIN tp_tech_type ON UT_TECHTYPE_ID = TECH_TYPE_ID
+		GROUP BY
+		UT_USER_NO
+		) AS utt ON UT_USER_NO = USER_NO
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectMoreByPrimaryKey" resultMap="MoreUserWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="More_Column_List" />
+		from tp_user
+		left join tp_org on USER_ORGID = ORG_ID
+		LEFT JOIN (
+		SELECT
+		UT_USER_NO,
+		GROUP_CONCAT(TECH_TYPE_NAME) AS USER_TECHTYPE
+		FROM
+		tp_user_tech_type
+		INNER JOIN tp_tech_type ON UT_TECHTYPE_ID = TECH_TYPE_ID
+		GROUP BY
+		UT_USER_NO
+		) AS utt ON UT_USER_NO = USER_NO
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_user
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.UserExample">
+		delete from tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.admin.model.UserWithBLOBs">
+		insert into tp_user (USER_NO, USER_ORGID, USER_NAME,
+		USER_ID, USER_PWD, USER_NICKNAME,
+		USER_MOBILE, USER_PHONE, USER_MAIL,
+		USER_QQ, USER_GRP_QQ, USER_TITLE,
+		USER_SEX, USER_BIRTH, USER_AREA_CODE,
+		USER_ADDRESS, USER_POST_CODE, USER_IS_LEADER,
+		USER_EDU_LEVEL, USER_SUBJECT, USER_TYPE,
+		USER_MARK, USER_REGTIME, USER_SCORE,
+		USER_HISTORY_SCORE, USER_COIN, USER_GROUP_ID,
+		USER_ONLINE, USER_LASTLOGIN, USER_ISACTIVATE,
+      USER_FLAG, USER_JOB_CONTEXT, USER_INTRO, 
+      USER_HEAD, USER_TECH_DIRECT, USER_HOBBY, 
+      USER_TRAIN, USER_WORK_EXP, USER_PRO_EXPER, 
+      USER_EDU_BG, USER_HEAD_M, USER_HEAD_S, 
+      USER_MSG_CFG, USER_MAIL_CFG)
+		values (#{userNo,jdbcType=INTEGER}, #{userOrgid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{userNickname,jdbcType=VARCHAR},
+		#{userMobile,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userMail,jdbcType=VARCHAR},
+		#{userQq,jdbcType=VARCHAR}, #{userGrpQq,jdbcType=VARCHAR}, #{userTitle,jdbcType=VARCHAR},
+		#{userSex,jdbcType=CHAR}, #{userBirth,jdbcType=DATE}, #{userAreaCode,jdbcType=CHAR},
+		#{userAddress,jdbcType=VARCHAR}, #{userPostCode,jdbcType=CHAR}, #{userIsLeader,jdbcType=CHAR},
+		#{userEduLevel,jdbcType=CHAR}, #{userSubject,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR},
+		#{userMark,jdbcType=VARCHAR}, #{userRegtime,jdbcType=TIMESTAMP}, #{userScore,jdbcType=INTEGER},
+		#{userHistoryScore,jdbcType=INTEGER}, #{userCoin,jdbcType=INTEGER}, #{userGroupId,jdbcType=INTEGER},
+		#{userOnline,jdbcType=CHAR}, #{userLastlogin,jdbcType=TIMESTAMP}, #{userIsactivate,jdbcType=INTEGER},
+      #{userFlag,jdbcType=VARCHAR}, #{userJobContext,jdbcType=VARCHAR}, #{userIntro,jdbcType=LONGVARCHAR}, 
+      #{userHead,jdbcType=LONGVARCHAR}, #{userTechDirect,jdbcType=LONGVARCHAR}, #{userHobby,jdbcType=LONGVARCHAR}, 
+      #{userTrain,jdbcType=LONGVARCHAR}, #{userWorkExp,jdbcType=LONGVARCHAR}, #{userProExper,jdbcType=LONGVARCHAR}, 
+      #{userEduBg,jdbcType=LONGVARCHAR}, #{userHeadM,jdbcType=LONGVARCHAR}, #{userHeadS,jdbcType=LONGVARCHAR}, 
+      #{userMsgCfg,jdbcType=LONGVARCHAR}, #{userMailCfg,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.UserWithBLOBs" useGeneratedKeys="true" keyProperty="userNo">
+		insert into tp_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userNo != null">
+				USER_NO,
+			</if>
+			<if test="userOrgid != null">
+				USER_ORGID,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="userPwd != null">
+				USER_PWD,
+			</if>
+			<if test="userNickname != null">
+				USER_NICKNAME,
+			</if>
+			<if test="userMobile != null">
+				USER_MOBILE,
+			</if>
+			<if test="userPhone != null">
+				USER_PHONE,
+			</if>
+			<if test="userMail != null">
+				USER_MAIL,
+			</if>
+			<if test="userQq != null">
+				USER_QQ,
+			</if>
+			<if test="userGrpQq != null">
+				USER_GRP_QQ,
+			</if>
+			<if test="userTitle != null">
+				USER_TITLE,
+			</if>
+			<if test="userSex != null">
+				USER_SEX,
+			</if>
+			<if test="userBirth != null">
+				USER_BIRTH,
+			</if>
+			<if test="userAreaCode != null">
+				USER_AREA_CODE,
+			</if>
+			<if test="userAddress != null">
+				USER_ADDRESS,
+			</if>
+			<if test="userPostCode != null">
+				USER_POST_CODE,
+			</if>
+			<if test="userIsLeader != null">
+				USER_IS_LEADER,
+			</if>
+			<if test="userEduLevel != null">
+				USER_EDU_LEVEL,
+			</if>
+			<if test="userSubject != null">
+				USER_SUBJECT,
+			</if>
+			<if test="userType != null">
+				USER_TYPE,
+			</if>
+			<if test="userMark != null">
+				USER_MARK,
+			</if>
+			<if test="userRegtime != null">
+				USER_REGTIME,
+			</if>
+			<if test="userScore != null">
+				USER_SCORE,
+			</if>
+			<if test="userHistoryScore != null">
+				USER_HISTORY_SCORE,
+			</if>
+			<if test="userCoin != null">
+				USER_COIN,
+			</if>
+			<if test="userGroupId != null">
+				USER_GROUP_ID,
+			</if>
+			<if test="userOnline != null">
+				USER_ONLINE,
+			</if>
+			<if test="userLastlogin != null">
+				USER_LASTLOGIN,
+			</if>
+			<if test="userIsactivate != null">
+				USER_ISACTIVATE,
+			</if>
+			<if test="userFlag != null">
+				USER_FLAG,
+			</if>
+      <if test="userJobContext != null" >
+        USER_JOB_CONTEXT,
+      </if>
+			<if test="userIntro != null">
+				USER_INTRO,
+			</if>
+			<if test="userHead != null">
+				USER_HEAD,
+			</if>
+			<if test="userTechDirect != null">
+				USER_TECH_DIRECT,
+			</if>
+			<if test="userHobby != null">
+				USER_HOBBY,
+			</if>
+			<if test="userTrain != null">
+				USER_TRAIN,
+			</if>
+			<if test="userWorkExp != null">
+				USER_WORK_EXP,
+			</if>
+			<if test="userProExper != null">
+				USER_PRO_EXPER,
+			</if>
+			<if test="userEduBg != null">
+				USER_EDU_BG,
+			</if>
+			<if test="userHeadM != null">
+				USER_HEAD_M,
+			</if>
+			<if test="userHeadS != null">
+				USER_HEAD_S,
+			</if>
+			<if test="userMsgCfg != null">
+				USER_MSG_CFG,
+			</if>
+			<if test="userMailCfg != null">
+				USER_MAIL_CFG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userNo != null">
+				#{userNo,jdbcType=INTEGER},
+			</if>
+			<if test="userOrgid != null">
+				#{userOrgid,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				#{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userNickname != null">
+				#{userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null">
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				#{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="userMail != null">
+				#{userMail,jdbcType=VARCHAR},
+			</if>
+			<if test="userQq != null">
+				#{userQq,jdbcType=VARCHAR},
+			</if>
+			<if test="userGrpQq != null">
+				#{userGrpQq,jdbcType=VARCHAR},
+			</if>
+			<if test="userTitle != null">
+				#{userTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=CHAR},
+			</if>
+			<if test="userBirth != null">
+				#{userBirth,jdbcType=DATE},
+			</if>
+			<if test="userAreaCode != null">
+				#{userAreaCode,jdbcType=CHAR},
+			</if>
+			<if test="userAddress != null">
+				#{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userPostCode != null">
+				#{userPostCode,jdbcType=CHAR},
+			</if>
+			<if test="userIsLeader != null">
+				#{userIsLeader,jdbcType=CHAR},
+			</if>
+			<if test="userEduLevel != null">
+				#{userEduLevel,jdbcType=CHAR},
+			</if>
+			<if test="userSubject != null">
+				#{userSubject,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=CHAR},
+			</if>
+			<if test="userMark != null">
+				#{userMark,jdbcType=VARCHAR},
+			</if>
+			<if test="userRegtime != null">
+				#{userRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userScore != null">
+				#{userScore,jdbcType=INTEGER},
+			</if>
+			<if test="userHistoryScore != null">
+				#{userHistoryScore,jdbcType=INTEGER},
+			</if>
+			<if test="userCoin != null">
+				#{userCoin,jdbcType=INTEGER},
+			</if>
+			<if test="userGroupId != null">
+				#{userGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="userOnline != null">
+				#{userOnline,jdbcType=CHAR},
+			</if>
+			<if test="userLastlogin != null">
+				#{userLastlogin,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userIsactivate != null">
+				#{userIsactivate,jdbcType=INTEGER},
+			</if>
+			<if test="userFlag != null">
+				#{userFlag,jdbcType=VARCHAR},
+			</if>
+      <if test="userJobContext != null" >
+        #{userJobContext,jdbcType=VARCHAR},
+      </if>
+			<if test="userIntro != null">
+				#{userIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHead != null">
+				#{userHead,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userTechDirect != null">
+				#{userTechDirect,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHobby != null">
+				#{userHobby,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userTrain != null">
+				#{userTrain,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userWorkExp != null">
+				#{userWorkExp,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userProExper != null">
+				#{userProExper,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userEduBg != null">
+				#{userEduBg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHeadM != null">
+				#{userHeadM,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHeadS != null">
+				#{userHeadS,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userMsgCfg != null">
+				#{userMsgCfg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userMailCfg != null">
+				#{userMailCfg,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.UserExample" resultType="java.lang.Integer">
+		select count(*) from tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_user
+		<set>
+			<if test="record.userNo != null">
+				USER_NO = #{record.userNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.userOrgid != null">
+				USER_ORGID = #{record.userOrgid,jdbcType=INTEGER},
+			</if>
+			<if test="record.userName != null">
+				USER_NAME = #{record.userName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userId != null">
+				USER_ID = #{record.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPwd != null">
+				USER_PWD = #{record.userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userNickname != null">
+				USER_NICKNAME = #{record.userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userMobile != null">
+				USER_MOBILE = #{record.userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPhone != null">
+				USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userMail != null">
+				USER_MAIL = #{record.userMail,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userQq != null">
+				USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userGrpQq != null">
+				USER_GRP_QQ = #{record.userGrpQq,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userTitle != null">
+				USER_TITLE = #{record.userTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userSex != null">
+				USER_SEX = #{record.userSex,jdbcType=CHAR},
+			</if>
+			<if test="record.userBirth != null">
+				USER_BIRTH = #{record.userBirth,jdbcType=DATE},
+			</if>
+			<if test="record.userAreaCode != null">
+				USER_AREA_CODE = #{record.userAreaCode,jdbcType=CHAR},
+			</if>
+			<if test="record.userAddress != null">
+				USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userPostCode != null">
+				USER_POST_CODE = #{record.userPostCode,jdbcType=CHAR},
+			</if>
+			<if test="record.userIsLeader != null">
+				USER_IS_LEADER = #{record.userIsLeader,jdbcType=CHAR},
+			</if>
+			<if test="record.userEduLevel != null">
+				USER_EDU_LEVEL = #{record.userEduLevel,jdbcType=CHAR},
+			</if>
+			<if test="record.userSubject != null">
+				USER_SUBJECT = #{record.userSubject,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userType != null">
+				USER_TYPE = #{record.userType,jdbcType=CHAR},
+			</if>
+			<if test="record.userMark != null">
+				USER_MARK = #{record.userMark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.userRegtime != null">
+				USER_REGTIME = #{record.userRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.userScore != null">
+				USER_SCORE = #{record.userScore,jdbcType=INTEGER},
+			</if>
+			<if test="record.userHistoryScore != null">
+				USER_HISTORY_SCORE = #{record.userHistoryScore,jdbcType=INTEGER},
+			</if>
+			<if test="record.userCoin != null">
+				USER_COIN = #{record.userCoin,jdbcType=INTEGER},
+			</if>
+			<if test="record.userGroupId != null">
+				USER_GROUP_ID = #{record.userGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userOnline != null">
+				USER_ONLINE = #{record.userOnline,jdbcType=CHAR},
+			</if>
+			<if test="record.userLastlogin != null">
+				USER_LASTLOGIN = #{record.userLastlogin,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.userIsactivate != null">
+				USER_ISACTIVATE = #{record.userIsactivate,jdbcType=INTEGER},
+			</if>
+			<if test="record.userFlag != null">
+				USER_FLAG = #{record.userFlag,jdbcType=VARCHAR},
+			</if>
+      <if test="record.userJobContext != null" >
+        USER_JOB_CONTEXT = #{record.userJobContext,jdbcType=VARCHAR},
+      </if>
+			<if test="record.userIntro != null">
+				USER_INTRO = #{record.userIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userHead != null">
+				USER_HEAD = #{record.userHead,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userTechDirect != null">
+				USER_TECH_DIRECT = #{record.userTechDirect,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userHobby != null">
+				USER_HOBBY = #{record.userHobby,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userTrain != null">
+				USER_TRAIN = #{record.userTrain,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userWorkExp != null">
+				USER_WORK_EXP = #{record.userWorkExp,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userProExper != null">
+				USER_PRO_EXPER = #{record.userProExper,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userEduBg != null">
+				USER_EDU_BG = #{record.userEduBg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userHeadM != null">
+				USER_HEAD_M = #{record.userHeadM,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userHeadS != null">
+				USER_HEAD_S = #{record.userHeadS,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userMsgCfg != null">
+				USER_MSG_CFG = #{record.userMsgCfg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.userMailCfg != null">
+				USER_MAIL_CFG = #{record.userMailCfg,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_user
+		set USER_NO = #{record.userNo,jdbcType=INTEGER},
+		USER_ORGID = #{record.userOrgid,jdbcType=INTEGER},
+		USER_NAME = #{record.userName,jdbcType=VARCHAR},
+		USER_ID = #{record.userId,jdbcType=VARCHAR},
+		USER_PWD = #{record.userPwd,jdbcType=VARCHAR},
+		USER_NICKNAME = #{record.userNickname,jdbcType=VARCHAR},
+		USER_MOBILE = #{record.userMobile,jdbcType=VARCHAR},
+		USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+		USER_MAIL = #{record.userMail,jdbcType=VARCHAR},
+		USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+		USER_GRP_QQ = #{record.userGrpQq,jdbcType=VARCHAR},
+		USER_TITLE = #{record.userTitle,jdbcType=VARCHAR},
+		USER_SEX = #{record.userSex,jdbcType=CHAR},
+		USER_BIRTH = #{record.userBirth,jdbcType=DATE},
+		USER_AREA_CODE = #{record.userAreaCode,jdbcType=CHAR},
+		USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+		USER_POST_CODE = #{record.userPostCode,jdbcType=CHAR},
+		USER_IS_LEADER = #{record.userIsLeader,jdbcType=CHAR},
+		USER_EDU_LEVEL = #{record.userEduLevel,jdbcType=CHAR},
+		USER_SUBJECT = #{record.userSubject,jdbcType=VARCHAR},
+		USER_TYPE = #{record.userType,jdbcType=CHAR},
+		USER_MARK = #{record.userMark,jdbcType=VARCHAR},
+		USER_REGTIME = #{record.userRegtime,jdbcType=TIMESTAMP},
+		USER_SCORE = #{record.userScore,jdbcType=INTEGER},
+		USER_HISTORY_SCORE = #{record.userHistoryScore,jdbcType=INTEGER},
+		USER_COIN = #{record.userCoin,jdbcType=INTEGER},
+		USER_GROUP_ID = #{record.userGroupId,jdbcType=INTEGER},
+		USER_ONLINE = #{record.userOnline,jdbcType=CHAR},
+		USER_LASTLOGIN = #{record.userLastlogin,jdbcType=TIMESTAMP},
+		USER_ISACTIVATE = #{record.userIsactivate,jdbcType=INTEGER},
+		USER_FLAG = #{record.userFlag,jdbcType=VARCHAR},
+      USER_JOB_CONTEXT = #{record.userJobContext,jdbcType=VARCHAR},
+		USER_INTRO = #{record.userIntro,jdbcType=LONGVARCHAR},
+		USER_HEAD = #{record.userHead,jdbcType=LONGVARCHAR},
+		USER_TECH_DIRECT = #{record.userTechDirect,jdbcType=LONGVARCHAR},
+		USER_HOBBY = #{record.userHobby,jdbcType=LONGVARCHAR},
+		USER_TRAIN = #{record.userTrain,jdbcType=LONGVARCHAR},
+		USER_WORK_EXP = #{record.userWorkExp,jdbcType=LONGVARCHAR},
+		USER_PRO_EXPER = #{record.userProExper,jdbcType=LONGVARCHAR},
+		USER_EDU_BG = #{record.userEduBg,jdbcType=LONGVARCHAR},
+		USER_HEAD_M = #{record.userHeadM,jdbcType=LONGVARCHAR},
+		USER_HEAD_S = #{record.userHeadS,jdbcType=LONGVARCHAR},
+		USER_MSG_CFG = #{record.userMsgCfg,jdbcType=LONGVARCHAR},
+		USER_MAIL_CFG = #{record.userMailCfg,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_user
+		set USER_NO = #{record.userNo,jdbcType=INTEGER},
+		USER_ORGID = #{record.userOrgid,jdbcType=INTEGER},
+		USER_NAME = #{record.userName,jdbcType=VARCHAR},
+		USER_ID = #{record.userId,jdbcType=VARCHAR},
+		USER_PWD = #{record.userPwd,jdbcType=VARCHAR},
+		USER_NICKNAME = #{record.userNickname,jdbcType=VARCHAR},
+		USER_MOBILE = #{record.userMobile,jdbcType=VARCHAR},
+		USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+		USER_MAIL = #{record.userMail,jdbcType=VARCHAR},
+		USER_QQ = #{record.userQq,jdbcType=VARCHAR},
+		USER_GRP_QQ = #{record.userGrpQq,jdbcType=VARCHAR},
+		USER_TITLE = #{record.userTitle,jdbcType=VARCHAR},
+		USER_SEX = #{record.userSex,jdbcType=CHAR},
+		USER_BIRTH = #{record.userBirth,jdbcType=DATE},
+		USER_AREA_CODE = #{record.userAreaCode,jdbcType=CHAR},
+		USER_ADDRESS = #{record.userAddress,jdbcType=VARCHAR},
+		USER_POST_CODE = #{record.userPostCode,jdbcType=CHAR},
+		USER_IS_LEADER = #{record.userIsLeader,jdbcType=CHAR},
+		USER_EDU_LEVEL = #{record.userEduLevel,jdbcType=CHAR},
+		USER_SUBJECT = #{record.userSubject,jdbcType=VARCHAR},
+		USER_TYPE = #{record.userType,jdbcType=CHAR},
+		USER_MARK = #{record.userMark,jdbcType=VARCHAR},
+		USER_REGTIME = #{record.userRegtime,jdbcType=TIMESTAMP},
+		USER_SCORE = #{record.userScore,jdbcType=INTEGER},
+		USER_HISTORY_SCORE = #{record.userHistoryScore,jdbcType=INTEGER},
+		USER_COIN = #{record.userCoin,jdbcType=INTEGER},
+		USER_GROUP_ID = #{record.userGroupId,jdbcType=INTEGER},
+		USER_ONLINE = #{record.userOnline,jdbcType=CHAR},
+		USER_LASTLOGIN = #{record.userLastlogin,jdbcType=TIMESTAMP},
+		USER_ISACTIVATE = #{record.userIsactivate,jdbcType=INTEGER},
+      USER_FLAG = #{record.userFlag,jdbcType=VARCHAR},
+      USER_JOB_CONTEXT = #{record.userJobContext,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.UserWithBLOBs">
+		update tp_user
+		<set>
+			<if test="userOrgid != null">
+				USER_ORGID = #{userOrgid,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="userPwd != null">
+				USER_PWD = #{userPwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userNickname != null">
+				USER_NICKNAME = #{userNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null">
+				USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null">
+				USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="userMail != null">
+				USER_MAIL = #{userMail,jdbcType=VARCHAR},
+			</if>
+			<if test="userQq != null">
+				USER_QQ = #{userQq,jdbcType=VARCHAR},
+			</if>
+			<if test="userGrpQq != null">
+				USER_GRP_QQ = #{userGrpQq,jdbcType=VARCHAR},
+			</if>
+			<if test="userTitle != null">
+				USER_TITLE = #{userTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				USER_SEX = #{userSex,jdbcType=CHAR},
+			</if>
+			<if test="userBirth != null">
+				USER_BIRTH = #{userBirth,jdbcType=DATE},
+			</if>
+			<if test="userAreaCode != null">
+				USER_AREA_CODE = #{userAreaCode,jdbcType=CHAR},
+			</if>
+			<if test="userAddress != null">
+				USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="userPostCode != null">
+				USER_POST_CODE = #{userPostCode,jdbcType=CHAR},
+			</if>
+			<if test="userIsLeader != null">
+				USER_IS_LEADER = #{userIsLeader,jdbcType=CHAR},
+			</if>
+			<if test="userEduLevel != null">
+				USER_EDU_LEVEL = #{userEduLevel,jdbcType=CHAR},
+			</if>
+			<if test="userSubject != null">
+				USER_SUBJECT = #{userSubject,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				USER_TYPE = #{userType,jdbcType=CHAR},
+			</if>
+			<if test="userMark != null">
+				USER_MARK = #{userMark,jdbcType=VARCHAR},
+			</if>
+			<if test="userRegtime != null">
+				USER_REGTIME = #{userRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userScore != null">
+				USER_SCORE = #{userScore,jdbcType=INTEGER},
+			</if>
+			<if test="userHistoryScore != null">
+				USER_HISTORY_SCORE = #{userHistoryScore,jdbcType=INTEGER},
+			</if>
+			<if test="userCoin != null">
+				USER_COIN = #{userCoin,jdbcType=INTEGER},
+			</if>
+			<if test="userGroupId != null">
+				USER_GROUP_ID = #{userGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="userOnline != null">
+				USER_ONLINE = #{userOnline,jdbcType=CHAR},
+			</if>
+			<if test="userLastlogin != null">
+				USER_LASTLOGIN = #{userLastlogin,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userIsactivate != null">
+				USER_ISACTIVATE = #{userIsactivate,jdbcType=INTEGER},
+			</if>
+			<if test="userFlag != null">
+				USER_FLAG = #{userFlag,jdbcType=VARCHAR},
+			</if>
+      <if test="userJobContext != null" >
+        USER_JOB_CONTEXT = #{userJobContext,jdbcType=VARCHAR},
+      </if>
+			<if test="userIntro != null">
+				USER_INTRO = #{userIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHead != null">
+				USER_HEAD = #{userHead,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userTechDirect != null">
+				USER_TECH_DIRECT = #{userTechDirect,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHobby != null">
+				USER_HOBBY = #{userHobby,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userTrain != null">
+				USER_TRAIN = #{userTrain,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userWorkExp != null">
+				USER_WORK_EXP = #{userWorkExp,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userProExper != null">
+				USER_PRO_EXPER = #{userProExper,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userEduBg != null">
+				USER_EDU_BG = #{userEduBg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHeadM != null">
+				USER_HEAD_M = #{userHeadM,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userHeadS != null">
+				USER_HEAD_S = #{userHeadS,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userMsgCfg != null">
+				USER_MSG_CFG = #{userMsgCfg,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userMailCfg != null">
+				USER_MAIL_CFG = #{userMailCfg,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.UserWithBLOBs">
+		update tp_user
+		set USER_ORGID = #{userOrgid,jdbcType=INTEGER},
+		USER_NAME = #{userName,jdbcType=VARCHAR},
+		USER_ID = #{userId,jdbcType=VARCHAR},
+		USER_PWD = #{userPwd,jdbcType=VARCHAR},
+		USER_NICKNAME = #{userNickname,jdbcType=VARCHAR},
+		USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+		USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+		USER_MAIL = #{userMail,jdbcType=VARCHAR},
+		USER_QQ = #{userQq,jdbcType=VARCHAR},
+		USER_GRP_QQ = #{userGrpQq,jdbcType=VARCHAR},
+		USER_TITLE = #{userTitle,jdbcType=VARCHAR},
+		USER_SEX = #{userSex,jdbcType=CHAR},
+		USER_BIRTH = #{userBirth,jdbcType=DATE},
+		USER_AREA_CODE = #{userAreaCode,jdbcType=CHAR},
+		USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+		USER_POST_CODE = #{userPostCode,jdbcType=CHAR},
+		USER_IS_LEADER = #{userIsLeader,jdbcType=CHAR},
+		USER_EDU_LEVEL = #{userEduLevel,jdbcType=CHAR},
+		USER_SUBJECT = #{userSubject,jdbcType=VARCHAR},
+		USER_TYPE = #{userType,jdbcType=CHAR},
+		USER_MARK = #{userMark,jdbcType=VARCHAR},
+		USER_REGTIME = #{userRegtime,jdbcType=TIMESTAMP},
+		USER_SCORE = #{userScore,jdbcType=INTEGER},
+		USER_HISTORY_SCORE = #{userHistoryScore,jdbcType=INTEGER},
+		USER_COIN = #{userCoin,jdbcType=INTEGER},
+		USER_GROUP_ID = #{userGroupId,jdbcType=INTEGER},
+		USER_ONLINE = #{userOnline,jdbcType=CHAR},
+		USER_LASTLOGIN = #{userLastlogin,jdbcType=TIMESTAMP},
+		USER_ISACTIVATE = #{userIsactivate,jdbcType=INTEGER},
+		USER_FLAG = #{userFlag,jdbcType=VARCHAR},
+      USER_JOB_CONTEXT = #{userJobContext,jdbcType=VARCHAR},
+		USER_INTRO = #{userIntro,jdbcType=LONGVARCHAR},
+		USER_HEAD = #{userHead,jdbcType=LONGVARCHAR},
+		USER_TECH_DIRECT = #{userTechDirect,jdbcType=LONGVARCHAR},
+		USER_HOBBY = #{userHobby,jdbcType=LONGVARCHAR},
+		USER_TRAIN = #{userTrain,jdbcType=LONGVARCHAR},
+		USER_WORK_EXP = #{userWorkExp,jdbcType=LONGVARCHAR},
+		USER_PRO_EXPER = #{userProExper,jdbcType=LONGVARCHAR},
+		USER_EDU_BG = #{userEduBg,jdbcType=LONGVARCHAR},
+		USER_HEAD_M = #{userHeadM,jdbcType=LONGVARCHAR},
+		USER_HEAD_S = #{userHeadS,jdbcType=LONGVARCHAR},
+		USER_MSG_CFG = #{userMsgCfg,jdbcType=LONGVARCHAR},
+		USER_MAIL_CFG = #{userMailCfg,jdbcType=LONGVARCHAR}
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.User">
+		update tp_user
+		set USER_ORGID = #{userOrgid,jdbcType=INTEGER},
+		USER_NAME = #{userName,jdbcType=VARCHAR},
+		USER_ID = #{userId,jdbcType=VARCHAR},
+		USER_PWD = #{userPwd,jdbcType=VARCHAR},
+		USER_NICKNAME = #{userNickname,jdbcType=VARCHAR},
+		USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+		USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+		USER_MAIL = #{userMail,jdbcType=VARCHAR},
+		USER_QQ = #{userQq,jdbcType=VARCHAR},
+		USER_GRP_QQ = #{userGrpQq,jdbcType=VARCHAR},
+		USER_TITLE = #{userTitle,jdbcType=VARCHAR},
+		USER_SEX = #{userSex,jdbcType=CHAR},
+		USER_BIRTH = #{userBirth,jdbcType=DATE},
+		USER_AREA_CODE = #{userAreaCode,jdbcType=CHAR},
+		USER_ADDRESS = #{userAddress,jdbcType=VARCHAR},
+		USER_POST_CODE = #{userPostCode,jdbcType=CHAR},
+		USER_IS_LEADER = #{userIsLeader,jdbcType=CHAR},
+		USER_EDU_LEVEL = #{userEduLevel,jdbcType=CHAR},
+		USER_SUBJECT = #{userSubject,jdbcType=VARCHAR},
+		USER_TYPE = #{userType,jdbcType=CHAR},
+		USER_MARK = #{userMark,jdbcType=VARCHAR},
+		USER_REGTIME = #{userRegtime,jdbcType=TIMESTAMP},
+		USER_SCORE = #{userScore,jdbcType=INTEGER},
+		USER_HISTORY_SCORE = #{userHistoryScore,jdbcType=INTEGER},
+		USER_COIN = #{userCoin,jdbcType=INTEGER},
+		USER_GROUP_ID = #{userGroupId,jdbcType=INTEGER},
+		USER_ONLINE = #{userOnline,jdbcType=CHAR},
+		USER_LASTLOGIN = #{userLastlogin,jdbcType=TIMESTAMP},
+		USER_ISACTIVATE = #{userIsactivate,jdbcType=INTEGER},
+      USER_FLAG = #{userFlag,jdbcType=VARCHAR},
+      USER_JOB_CONTEXT = #{userJobContext,jdbcType=VARCHAR}
+		where USER_NO = #{userNo,jdbcType=INTEGER}
+	</update>
+
+
+	<!-- 新增MoreUser表映射配置 -->
+	<resultMap id="SelUserResultMap" type="com.chinasofti.cetp.admin.model.MoreUser">
+		<id column="USER_NO" property="userNo" jdbcType="INTEGER" />
+		<result column="USER_ORGID" property="userOrgid" jdbcType="INTEGER" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+		<result column="USER_NICKNAME" property="userNickname" jdbcType="VARCHAR" />
+		<result column="USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+		<result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+		<result column="USER_MAIL" property="userMail" jdbcType="VARCHAR" />
+		<result column="USER_QQ" property="userQq" jdbcType="VARCHAR" />
+		<result column="USER_GRP_QQ" property="userGrpQq" jdbcType="VARCHAR" />
+		<result column="USER_TITLE" property="userTitle" jdbcType="VARCHAR" />
+		<result column="USER_SEX" property="userSex" jdbcType="CHAR" />
+		<result column="USER_BIRTH" property="userBirth" jdbcType="DATE" />
+		<result column="USER_AREA_CODE" property="userAreaCode" jdbcType="CHAR" />
+		<result column="USER_ADDRESS" property="userAddress" jdbcType="VARCHAR" />
+		<result column="USER_POST_CODE" property="userPostCode" jdbcType="CHAR" />
+		<result column="USER_IS_LEADER" property="userIsLeader" jdbcType="CHAR" />
+		<result column="USER_EDU_LEVEL" property="userEduLevel" jdbcType="CHAR" />
+		<result column="USER_SUBJECT" property="userSubject" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+		<result column="USER_MARK" property="userMark" jdbcType="VARCHAR" />
+		<result column="USER_REGTIME" property="userRegtime" jdbcType="TIMESTAMP" />
+		<result column="ORG_NAME" property="userOrg" jdbcType="VARCHAR" />
+		<result column="area_name" property="araeName" jdbcType="VARCHAR" />
+		<result column="province_code" property="provinceCode" jdbcType="CHAR" />
+	</resultMap>
+	<select id="getOrgIdByUserNo" resultMap="BaseResultMap">
+		select
+		u.user_orgid
+		from tp_user u
+		where u.user_no = #{userNo}
+	</select>
+	<select id="validUserId" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(0) from tp_user
+		where user_id = #{vUserId}
+	</select>
+	<!-- 所有没分配角色的用户 -->
+	<select id="getNoRoleUser" resultMap="BaseResultMap">
+		select
+		u.user_name as userName,u.user_no as userNo
+		from tp_user u
+		where
+		u.user_no not in (select ur.ur_user_id
+		from tp_user_role ur)
+	</select>
+	<!-- 新增模糊查找 -->
+	<select id="queryUser" resultMap="SelUserResultMap" parameterType="map">
+		select
+		u.USER_NO,u.USER_ORGID,u.USER_NAME,
+		u.USER_ID,u.USER_PWD,u.USER_NICKNAME,
+		u.USER_MOBILE,u.USER_PHONE,
+		u.USER_MAIL,u.USER_QQ,u.USER_GRP_QQ,
+		u.USER_TITLE,u.USER_SEX,u.USER_BIRTH,
+		u.USER_AREA_CODE,u.USER_ADDRESS,
+		u.USER_POST_CODE,u.USER_IS_LEADER,
+		u.USER_EDU_LEVEL,u.USER_SUBJECT,
+		u.USER_TYPE,u.USER_MARK,u.USER_REGTIME
+		from tp_user u
+		left join tp_org o on u.USER_ORGID = o.ORG_ID
+		left join
+		tp_area a on u.USER_AREA_CODE = a.AREA_CODE
+		where 1=1
+		<if test="s_userNickname != null">
+			and u.USER_NICKNAME like #{s_userNickname}
+		</if>
+	</select>
+	<!-- 新增查询所有列表 -->
+	<select id="selectUserList" resultMap="SelUserResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		o.ORG_ID as orgId,a.AREA_CODE as areaCode,o.org_name as userOrg,a.area_name as areaName,ap.area_code as province_code
+		from tp_user
+		left join tp_org o
+		on USER_ORGID = o.ORG_ID
+		left join tp_area a
+		on USER_AREA_CODE = a.AREA_CODE
+		left join tp_area ap
+		on a.area_parent = ap.area_code
+		<if test="userName != null">
+			where USER_NAME like #{userName}
+		</if>
+	</select>
+	<!-- 加载“性别” 下拉框 -->
+	<select id="loadUserSex" resultMap="BaseResultMap">
+		select USER_NO,USER_SEX
+		from tp_user
+	</select>
+	<!-- 加载“学历” 下拉框 -->
+	<select id="loadUserEduLev" resultMap="BaseResultMap">
+		select USER_NO,USER_EDU_LEVEL
+		from tp_user
+	</select>
+	<!-- 加载“用户性质” 下拉框 -->
+	<select id="loadUserType" resultMap="BaseResultMap">
+		select USER_NO,USER_Type
+		from tp_user
+	</select>
+	<!-- 加载“地区编码” 下拉框 -->
+	<select id="loadUserAreaCode" resultMap="BaseResultMap">
+		select AREA_CODE,AREA_NAME
+		from tp_area
+	</select>
+	<!-- 加载“所属组织” 下拉框 -->
+	<select id="loadStuOrg" resultMap="BaseResultMap">
+		select org_id,org_name
+		from tp_org
+	</select>
+	<select id="loginByExample" parameterType="com.chinasofti.cetp.admin.model.User" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tp_user where USER_ID=#{userName} and USER_PWD=#{userPwd}
+	</select>
+	<select id="queryUserPwd" parameterType="map" resultMap="BaseResultMap">
+		select *
+		FROM tp_user
+		WHERE user_No = #{userNo}
+		and user_PWD = #{old_pwd}
+	</select>
+	<update id="updateUserPwd" parameterType="map">
+		update tp_user
+		set user_PWD = #{new_pwd,jdbcType=VARCHAR}
+		WHERE user_No = #{userNo}
+	</update>
+	<resultMap type="com.chinasofti.cetp.study.model.RqaUser" id="RqaUser">
+		<id column="USER_NO" property="userNo" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_HEAD" property="userHead" />
+		<result column="TECH_TYPE" property="userTechType" />
+	</resultMap>
+	<select id="getRqaUser" resultMap="RqaUser" parameterType="map">
+		SELECT
+		USER_NO,
+		IFNULL(USER_NICKNAME,USER_ID) AS USER_NAME,
+		USER_HEAD,
+		TECH_TYPE,
+		RQA_COUNT,
+		RQA_QUALITY
+		FROM
+		tp_user
+		INNER JOIN (
+		SELECT
+		UT_USER_NO,
+		GROUP_CONCAT(TECH_TYPE_NAME) AS TECH_TYPE
+		FROM
+		tp_user_tech_type
+		INNER JOIN tp_tech_type ON UT_TECHTYPE_ID = TECH_TYPE_ID
+		WHERE
+		FIND_IN_SET(
+		UT_TECHTYPE_ID,
+		getChildTechType (#{techType})
+		)
+		GROUP BY
+		UT_USER_NO
+		) AS utt ON UT_USER_NO = USER_NO
+		LEFT JOIN (
+		SELECT
+		RQA_USER_NO,
+		COUNT(0) AS RQA_COUNT,
+		IFNULL(
+		AVG(IFNULL(RQA_QUALITY, 0)),
+		0
+		) AS RQA_QUALITY
+		FROM
+		tp_realtime_qa
+		WHERE
+		NOT RQA_USER_NO IS NULL
+		GROUP BY
+		RQA_USER_NO
+		) rqa ON RQA_USER_NO = USER_NO
+		WHERE
+		USER_ONLINE = 1
+		<if test="orderBy == 'count'.toString()">
+			ORDER BY
+			RQA_COUNT DESC,
+			RQA_QUALITY DESC
+		</if>
+		<if test="orderBy == 'quality'.toString()">
+			ORDER BY
+			RQA_QUALITY DESC,
+			RQA_COUNT DESC
+		</if>
+	</select>
+
+	<!-- 查询当前有课程的老师 -->
+	<select id="selectTeachCourseUser" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM tp_user
+		WHERE USER_NO IN (
+		SELECT
+		SPEC_USER_NO
+		FROM tp_spec_course
+		)
+	</select>
+</mapper>

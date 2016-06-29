@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.StudyAnswerMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.StudyAnswer">
+		<id column="SA_ANSWER_ID" property="saAnswerId" jdbcType="INTEGER" />
+		<result column="SA_QUESTION_ID" property="saQuestionId"
+			jdbcType="INTEGER" />
+		<result column="SA_ANSWER_USER" property="saAnswerUser"
+			jdbcType="INTEGER" />
+		<result column="SA_ANSWER_ROLE" property="saAnswerRole"
+			jdbcType="CHAR" />
+		<result column="SA_REPLY_ATTACH" property="saReplyAttach"
+			jdbcType="VARCHAR" />
+		<result column="SA_REPLY_TIME" property="saReplyTime" jdbcType="TIMESTAMP" />
+		<result column="SA_PUMP" property="saPump" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.StudyAnswer"
+		extends="BaseResultMap">
+		<result column="SA_REPLY_CONTENT" property="saReplyContent"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="MoreResultMap"
+		type="com.chinasofti.cetp.study.model.MoreStudyAnswer" extends="ResultMapWithBLOBs">
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="HEAD_URL" property="headUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SA_ANSWER_ID, SA_QUESTION_ID, SA_ANSWER_USER,
+		SA_ANSWER_ROLE, SA_REPLY_ATTACH,
+		SA_REPLY_TIME,
+		SA_PUMP
+	</sql>
+	<sql id="Blob_Column_List">
+		SA_REPLY_CONTENT
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.chinasofti.cetp.study.model.StudyAnswerExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_study_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.study.model.StudyAnswerExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_study_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_study_answer
+		where SA_ANSWER_ID =
+		#{saAnswerId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_study_answer
+		where SA_ANSWER_ID = #{saAnswerId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.StudyAnswer">
+		insert into tp_study_answer
+		(SA_ANSWER_ID, SA_QUESTION_ID,
+		SA_ANSWER_USER,
+		SA_ANSWER_ROLE,
+		SA_REPLY_ATTACH, SA_REPLY_TIME,
+		SA_PUMP, SA_REPLY_CONTENT)
+		values
+		(#{saAnswerId,jdbcType=INTEGER}, #{saQuestionId,jdbcType=INTEGER},
+		#{saAnswerUser,jdbcType=INTEGER},
+		#{saAnswerRole,jdbcType=CHAR},
+		#{saReplyAttach,jdbcType=VARCHAR}, #{saReplyTime,jdbcType=TIMESTAMP},
+		#{saPump,jdbcType=INTEGER}, #{saReplyContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.StudyAnswer">
+		insert into tp_study_answer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="saAnswerId != null">
+				SA_ANSWER_ID,
+			</if>
+			<if test="saQuestionId != null">
+				SA_QUESTION_ID,
+			</if>
+			<if test="saAnswerUser != null">
+				SA_ANSWER_USER,
+			</if>
+			<if test="saAnswerRole != null">
+				SA_ANSWER_ROLE,
+			</if>
+			<if test="saReplyAttach != null">
+				SA_REPLY_ATTACH,
+			</if>
+			<if test="saReplyTime != null">
+				SA_REPLY_TIME,
+			</if>
+			<if test="saPump != null">
+				SA_PUMP,
+			</if>
+			<if test="saReplyContent != null">
+				SA_REPLY_CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="saAnswerId != null">
+				#{saAnswerId,jdbcType=INTEGER},
+			</if>
+			<if test="saQuestionId != null">
+				#{saQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="saAnswerUser != null">
+				#{saAnswerUser,jdbcType=INTEGER},
+			</if>
+			<if test="saAnswerRole != null">
+				#{saAnswerRole,jdbcType=CHAR},
+			</if>
+			<if test="saReplyAttach != null">
+				#{saReplyAttach,jdbcType=VARCHAR},
+			</if>
+			<if test="saReplyTime != null">
+				#{saReplyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="saPump != null">
+				#{saPump,jdbcType=INTEGER},
+			</if>
+			<if test="saReplyContent != null">
+				#{saReplyContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.StudyAnswerExample"
+		resultType="java.lang.Integer">
+		select count(*) from tp_study_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.StudyAnswer">
+		update tp_study_answer
+		<set>
+			<if test="saQuestionId != null">
+				SA_QUESTION_ID = #{saQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="saAnswerUser != null">
+				SA_ANSWER_USER = #{saAnswerUser,jdbcType=INTEGER},
+			</if>
+			<if test="saAnswerRole != null">
+				SA_ANSWER_ROLE = #{saAnswerRole,jdbcType=CHAR},
+			</if>
+			<if test="saReplyAttach != null">
+				SA_REPLY_ATTACH = #{saReplyAttach,jdbcType=VARCHAR},
+			</if>
+			<if test="saReplyTime != null">
+				SA_REPLY_TIME = #{saReplyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="saPump != null">
+				SA_PUMP = #{saPump,jdbcType=INTEGER},
+			</if>
+			<if test="saReplyContent != null">
+				SA_REPLY_CONTENT =
+				#{saReplyContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where SA_ANSWER_ID = #{saAnswerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.StudyAnswer">
+		update
+		tp_study_answer
+		set SA_QUESTION_ID = #{saQuestionId,jdbcType=INTEGER},
+		SA_ANSWER_USER = #{saAnswerUser,jdbcType=INTEGER},
+		SA_ANSWER_ROLE =
+		#{saAnswerRole,jdbcType=CHAR},
+		SA_REPLY_ATTACH =
+		#{saReplyAttach,jdbcType=VARCHAR},
+		SA_REPLY_TIME =
+		#{saReplyTime,jdbcType=TIMESTAMP},
+		SA_PUMP =
+		#{saPump,jdbcType=INTEGER},
+		SA_REPLY_CONTENT =
+		#{saReplyContent,jdbcType=LONGVARCHAR}
+		where SA_ANSWER_ID =
+		#{saAnswerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.StudyAnswer">
+		update
+		tp_study_answer
+		set SA_QUESTION_ID = #{saQuestionId,jdbcType=INTEGER},
+		SA_ANSWER_USER = #{saAnswerUser,jdbcType=INTEGER},
+		SA_ANSWER_ROLE =
+		#{saAnswerRole,jdbcType=CHAR},
+		SA_REPLY_ATTACH =
+		#{saReplyAttach,jdbcType=VARCHAR},
+		SA_REPLY_TIME =
+		#{saReplyTime,jdbcType=TIMESTAMP},
+		SA_PUMP = #{saPump,jdbcType=INTEGER}
+		where SA_ANSWER_ID = #{saAnswerId,jdbcType=INTEGER}
+	</update>
+	<!-- 自定义接口实现 -->
+	<select id="selectStudyAnswerBySqQuestionId" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		IF (
+		SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		stu_nickname
+		FROM
+		tp_student
+		WHERE
+		stu_no =
+		A.SA_ANSWER_USER
+		),
+		(
+		SELECT
+		USER_NICKNAME
+		FROM
+		TP_USER
+		WHERE
+		USER_NO
+		=
+		A.SA_ANSWER_USER
+		)
+		) AS USER_NAME,
+		IF (
+		SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		STU_HEAD_M
+		FROM
+		tp_student
+		WHERE
+		stu_no = A.SA_ANSWER_USER
+		),(
+		SELECT
+		USER_HEAD
+		FROM
+		TP_USER
+		WHERE
+		USER_NO = A.SA_ANSWER_USER
+		))AS HEAD_URL
+		FROM
+		TP_STUDY_ANSWER A
+		WHERE
+		A.SA_QUESTION_ID = #{sqId}
+		AND A.SA_PUMP IS NULL
+	</select>
+
+	<select id="selsectMoreStudyAnswerByParentSaId" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		A.SA_ANSWER_ID,
+		A.SA_QUESTION_ID,
+		A.SA_ANSWER_USER,
+		A.SA_ANSWER_ROLE,
+		A.SA_REPLY_ATTACH,
+		A.SA_REPLY_TIME,
+		A.SA_PUMP,
+		A.SA_REPLY_CONTENT
+		,IF (
+		A.SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		stu_nickname
+		FROM
+		tp_student
+		WHERE
+		stu_no =
+		A.SA_ANSWER_USER
+		),
+		(
+		SELECT
+		USER_NICKNAME
+		FROM
+		TP_USER
+		WHERE
+		USER_NO =
+		A.SA_ANSWER_USER
+		)
+		) AS USER_NAME,
+		IF (
+		A.SA_ANSWER_ROLE =
+		'1',
+		(
+		SELECT
+		STU_HEAD_M
+		FROM
+		tp_student
+		WHERE
+		stu_no =
+		A.SA_ANSWER_USER
+		),(
+		SELECT
+		USER_HEAD
+		FROM
+		TP_USER
+		WHERE
+		USER_NO =
+		A.SA_ANSWER_USER
+		))AS HEAD_URL
+		FROM
+		tp_study_answer A,tp_study_answer B
+		WHERE A.SA_PUMP =
+		B.SA_ANSWER_ID
+		AND B.SA_ANSWER_ID = #{saId}
+	</select>
+
+	<select id="selsectMoreStudyAnswerByParimaryKey" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		A.SA_ANSWER_ID,
+		A.SA_QUESTION_ID,
+		A.SA_ANSWER_USER,
+		A.SA_ANSWER_ROLE,
+		A.SA_REPLY_ATTACH,
+		A.SA_REPLY_TIME,
+		A.SA_PUMP,
+		A.SA_REPLY_CONTENT
+		,IF (
+		A.SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		stu_nickname
+		FROM
+		tp_student
+		WHERE
+		stu_no =
+		A.SA_ANSWER_USER
+		),
+		(
+		SELECT
+		USER_NICKNAME
+		FROM
+		TP_USER
+		WHERE
+		USER_NO =
+		A.SA_ANSWER_USER
+		)
+		) AS USER_NAME,
+		IF (
+		A.SA_ANSWER_ROLE =
+		'1',
+		(
+		SELECT
+		STU_HEAD_M
+		FROM
+		tp_student
+		WHERE
+		stu_no =
+		A.SA_ANSWER_USER
+		),(
+		SELECT
+		USER_HEAD
+		FROM
+		TP_USER
+		WHERE
+		USER_NO =
+		A.SA_ANSWER_USER
+		))AS HEAD_URL
+		FROM
+		tp_study_answer A
+		WHERE A.SA_ANSWER_ID
+		= #{saId}
+
+	</select>
+
+	<select id="selectStudyAnswerNotBestAnswer" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		IF (
+		D.SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		STU_NICKNAME
+		FROM
+		tp_student
+		WHERE
+		stu_no = D.SA_ANSWER_USER
+		),
+		(
+		SELECT
+		USER_NICKNAME
+		FROM
+		TP_USER
+		WHERE
+		USER_NO = D.SA_ANSWER_USER
+		)
+		) AS USER_NAME,
+		IF (
+		D.SA_ANSWER_ROLE = '1',
+		(
+		SELECT
+		STU_HEAD_M
+		FROM
+		tp_student
+		WHERE
+		stu_no =D.SA_ANSWER_USER
+		),(
+		SELECT
+		USER_HEAD
+		FROM
+		TP_USER
+		WHERE
+		USER_NO =D.SA_ANSWER_USER
+		))AS HEAD_URL
+		FROM
+		tp_study_answer D
+		WHERE D.SA_PUMP IS NULL
+		AND D.SA_ANSWER_ID IN
+		(SELECT
+		C.SA_ANSWER_ID
+		FROM (
+		SELECT
+		A.SA_ANSWER_ID
+		FROM tp_study_answer A
+		WHERE
+		A.SA_QUESTION_ID =#{sqId}) C
+		WHERE C.SA_ANSWER_ID NOT IN(
+		SELECT
+		B.SQ_BEST_ANSWER
+		FROM tp_study_question B
+		WHERE B.SQ_QUESTION_ID
+		=#{sqId}))
+	</select>
+</mapper>

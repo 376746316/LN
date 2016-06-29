@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.StuTechTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.StuTechTypeKey" >
+    <id column="ST_STU_NO" property="stStuNo" jdbcType="INTEGER" />
+    <id column="ST_TECHTYPE_ID" property="stTechtypeId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ST_STU_NO, ST_TECHTYPE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_stu_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeKey" >
+    delete from tp_stu_tech_type
+    where ST_STU_NO = #{stStuNo,jdbcType=INTEGER}
+      and ST_TECHTYPE_ID = #{stTechtypeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeExample" >
+    delete from tp_stu_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeKey" >
+    insert into tp_stu_tech_type (ST_STU_NO, ST_TECHTYPE_ID)
+    values (#{stStuNo,jdbcType=INTEGER}, #{stTechtypeId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertList" parameterType="map" >
+    insert into tp_stu_tech_type (ST_STU_NO, ST_TECHTYPE_ID)
+    values
+    <foreach collection="stuTechTypes" item="techTypeId" separator=",">
+    (#{stuNo,jdbcType=INTEGER},#{techTypeId})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeKey" >
+    insert into tp_stu_tech_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stStuNo != null" >
+        ST_STU_NO,
+      </if>
+      <if test="stTechtypeId != null" >
+        ST_TECHTYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stStuNo != null" >
+        #{stStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="stTechtypeId != null" >
+        #{stTechtypeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.StuTechTypeExample" resultType="java.lang.Integer" >
+    select count(*) from tp_stu_tech_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_stu_tech_type
+    <set >
+      <if test="record.stStuNo != null" >
+        ST_STU_NO = #{record.stStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.stTechtypeId != null" >
+        ST_TECHTYPE_ID = #{record.stTechtypeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_stu_tech_type
+    set ST_STU_NO = #{record.stStuNo,jdbcType=INTEGER},
+      ST_TECHTYPE_ID = #{record.stTechtypeId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

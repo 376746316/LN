@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.ExerciseStuMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.ExerciseStu">
+		<id column="ES_ID" property="esId" jdbcType="INTEGER" />
+		<result column="ES_SUBCW_ID" property="esSubcwId" jdbcType="INTEGER" />
+		<result column="ES_LIVE_COURSEID" property="esLiveCourseid" jdbcType="INTEGER" />
+		<result column="ES_EXER_ID" property="esExerId" jdbcType="INTEGER" />
+		<result column="ES_STU_ID" property="esStuId" jdbcType="INTEGER" />
+		<result column="ES_STATUS" property="esStatus" jdbcType="CHAR" />
+		<result column="ES_TEXT_ANSWER" property="esTextAnswer" jdbcType="VARCHAR" />
+		<result column="ES_ATTACH_ANSWER" property="esAttachAnswer" jdbcType="VARCHAR" />
+		<result column="ES_COMMIT_TIME" property="esCommitTime" jdbcType="TIMESTAMP" />
+		<result column="ES_SCORE" property="esScore" jdbcType="INTEGER" />
+		<result column="ES_TEACHER_ID" property="esTeacherId" jdbcType="INTEGER" />
+		<result column="ES_CHECK_FLAG" property="esCheckFlag" jdbcType="CHAR" />
+		<result column="ES_CHECK_TIME" property="esCheckTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="MoreResultMap" extends="BaseResultMap" type="com.chinasofti.cetp.study.model.MoreExerciseStu">
+		<result column="EXER_ID" property="exerId" jdbcType="INTEGER" />
+		<result column="EXER_TITLE" property="exerTitle" jdbcType="VARCHAR" />
+		<result column="EXER_CONTEXT" property="exerContext" jdbcType="VARCHAR" />
+		<result column="EXER_TEXT_ANSWER" property="exerTextAnswer" jdbcType="VARCHAR" />
+		<result column="EXER_STEP" property="exerStep" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="StuResultMap" extends="BaseResultMap" type="com.chinasofti.cetp.study.model.CheckExerciseStu">
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_NICKNAME" property="stuNickName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ES_ID, ES_SUBCW_ID, ES_EXER_ID, ES_STU_ID, ES_STATUS,
+		ES_TEXT_ANSWER,
+		ES_ATTACH_ANSWER,
+		ES_COMMIT_TIME, ES_SCORE,
+		ES_TEACHER_ID, ES_CHECK_FLAG, ES_CHECK_TIME, ES_LIVE_COURSEID
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.ExerciseStuExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_exercise_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tp_exercise_stu
+		where ES_ID = #{esId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_exercise_stu
+		where ES_ID = #{esId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.ExerciseStuExample">
+		delete from tp_exercise_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.ExerciseStu" keyProperty="esId" useGeneratedKeys="true">
+		insert into tp_exercise_stu (ES_ID, ES_SUBCW_ID, ES_EXER_ID,
+		ES_STU_ID, ES_STATUS, ES_TEXT_ANSWER,
+		ES_ATTACH_ANSWER, ES_COMMIT_TIME, ES_SCORE,
+		ES_TEACHER_ID, ES_CHECK_FLAG, ES_CHECK_TIME,
+		ES_LIVE_COURSEID)
+		values (#{esId,jdbcType=INTEGER}, #{esSubcwId,jdbcType=INTEGER}, #{esExerId,jdbcType=INTEGER},
+		#{esStuId,jdbcType=INTEGER}, #{esStatus,jdbcType=CHAR}, #{esTextAnswer,jdbcType=VARCHAR},
+		#{esAttachAnswer,jdbcType=VARCHAR}, #{esCommitTime,jdbcType=TIMESTAMP}, #{esScore,jdbcType=INTEGER},
+		#{esTeacherId,jdbcType=INTEGER}, #{esCheckFlag,jdbcType=CHAR}, #{esCheckTime,jdbcType=TIMESTAMP},
+		#{esLiveCourseid,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.ExerciseStu">
+		insert into tp_exercise_stu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="esId != null">
+				ES_ID,
+			</if>
+			<if test="esSubcwId != null">
+				ES_SUBCW_ID,
+			</if>
+			<if test="esExerId != null">
+				ES_EXER_ID,
+			</if>
+			<if test="esStuId != null">
+				ES_STU_ID,
+			</if>
+			<if test="esStatus != null">
+				ES_STATUS,
+			</if>
+			<if test="esTextAnswer != null">
+				ES_TEXT_ANSWER,
+			</if>
+			<if test="esAttachAnswer != null">
+				ES_ATTACH_ANSWER,
+			</if>
+			<if test="esCommitTime != null">
+				ES_COMMIT_TIME,
+			</if>
+			<if test="esScore != null">
+				ES_SCORE,
+			</if>
+			<if test="esTeacherId != null">
+				ES_TEACHER_ID,
+			</if>
+			<if test="esCheckFlag != null">
+				ES_CHECK_FLAG,
+			</if>
+			<if test="esCheckTime != null">
+				ES_CHECK_TIME,
+			</if>
+			<if test="esLiveCourseid != null">
+				ES_LIVE_COURSEID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="esId != null">
+				#{esId,jdbcType=INTEGER},
+			</if>
+			<if test="esSubcwId != null">
+				#{esSubcwId,jdbcType=INTEGER},
+			</if>
+			<if test="esExerId != null">
+				#{esExerId,jdbcType=INTEGER},
+			</if>
+			<if test="esStuId != null">
+				#{esStuId,jdbcType=INTEGER},
+			</if>
+			<if test="esStatus != null">
+				#{esStatus,jdbcType=CHAR},
+			</if>
+			<if test="esTextAnswer != null">
+				#{esTextAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="esAttachAnswer != null">
+				#{esAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="esCommitTime != null">
+				#{esCommitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="esScore != null">
+				#{esScore,jdbcType=INTEGER},
+			</if>
+			<if test="esTeacherId != null">
+				#{esTeacherId,jdbcType=INTEGER},
+			</if>
+			<if test="esCheckFlag != null">
+				#{esCheckFlag,jdbcType=CHAR},
+			</if>
+			<if test="esCheckTime != null">
+				#{esCheckTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="esLiveCourseid != null">
+				#{esLiveCourseid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.ExerciseStuExample" resultType="java.lang.Integer">
+		select count(*) from tp_exercise_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_exercise_stu
+		<set>
+			<if test="record.esId != null">
+				ES_ID = #{record.esId,jdbcType=INTEGER},
+			</if>
+			<if test="record.esSubcwId != null">
+				ES_SUBCW_ID = #{record.esSubcwId,jdbcType=INTEGER},
+			</if>
+			<if test="record.esExerId != null">
+				ES_EXER_ID = #{record.esExerId,jdbcType=INTEGER},
+			</if>
+			<if test="record.esStuId != null">
+				ES_STU_ID = #{record.esStuId,jdbcType=INTEGER},
+			</if>
+			<if test="record.esStatus != null">
+				ES_STATUS = #{record.esStatus,jdbcType=CHAR},
+			</if>
+			<if test="record.esTextAnswer != null">
+				ES_TEXT_ANSWER = #{record.esTextAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="record.esAttachAnswer != null">
+				ES_ATTACH_ANSWER =
+				#{record.esAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="record.esCommitTime != null">
+				ES_COMMIT_TIME =
+				#{record.esCommitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.esScore != null">
+				ES_SCORE = #{record.esScore,jdbcType=INTEGER},
+			</if>
+			<if test="record.esTeacherId != null">
+				ES_TEACHER_ID = #{record.esTeacherId,jdbcType=INTEGER},
+			</if>
+			<if test="record.esCheckFlag != null">
+				ES_CHECK_FLAG = #{record.esCheckFlag,jdbcType=CHAR},
+			</if>
+			<if test="record.esCheckTime != null">
+				ES_CHECK_TIME = #{record.esCheckTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_exercise_stu
+		set ES_ID = #{record.esId,jdbcType=INTEGER},
+		ES_SUBCW_ID = #{record.esSubcwId,jdbcType=INTEGER},
+		ES_EXER_ID =
+		#{record.esExerId,jdbcType=INTEGER},
+		ES_STU_ID =
+		#{record.esStuId,jdbcType=INTEGER},
+		ES_STATUS =
+		#{record.esStatus,jdbcType=CHAR},
+		ES_TEXT_ANSWER =
+		#{record.esTextAnswer,jdbcType=VARCHAR},
+		ES_ATTACH_ANSWER =
+		#{record.esAttachAnswer,jdbcType=VARCHAR},
+		ES_COMMIT_TIME =
+		#{record.esCommitTime,jdbcType=TIMESTAMP},
+		ES_SCORE =
+		#{record.esScore,jdbcType=INTEGER},
+		ES_TEACHER_ID =
+		#{record.esTeacherId,jdbcType=INTEGER},
+		ES_CHECK_FLAG =
+		#{record.esCheckFlag,jdbcType=CHAR},
+		ES_CHECK_TIME =
+		#{record.esCheckTime,jdbcType=TIMESTAMP},
+		ES_LIVE_COURSEID = #{esLiveCourseid,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.ExerciseStu">
+		update tp_exercise_stu
+		<set>
+			<if test="esSubcwId != null">
+				ES_SUBCW_ID = #{esSubcwId,jdbcType=INTEGER},
+			</if>
+			<if test="esExerId != null">
+				ES_EXER_ID = #{esExerId,jdbcType=INTEGER},
+			</if>
+			<if test="esStuId != null">
+				ES_STU_ID = #{esStuId,jdbcType=INTEGER},
+			</if>
+			<if test="esStatus != null">
+				ES_STATUS = #{esStatus,jdbcType=CHAR},
+			</if>
+			<if test="esTextAnswer != null">
+				ES_TEXT_ANSWER = #{esTextAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="esAttachAnswer != null">
+				ES_ATTACH_ANSWER = #{esAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="esCommitTime != null">
+				ES_COMMIT_TIME = #{esCommitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="esScore != null">
+				ES_SCORE = #{esScore,jdbcType=INTEGER},
+			</if>
+			<if test="esTeacherId != null">
+				ES_TEACHER_ID = #{esTeacherId,jdbcType=INTEGER},
+			</if>
+			<if test="esCheckFlag != null">
+				ES_CHECK_FLAG = #{esCheckFlag,jdbcType=CHAR},
+			</if>
+			<if test="esCheckTime != null">
+				ES_CHECK_TIME = #{esCheckTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="esLiveCourseid != null">
+				ES_LIVE_COURSEID = #{esLiveCourseid,jdbcType=INTEGER},
+			</if>
+		</set>
+		where ES_ID = #{esId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.ExerciseStu">
+		update
+		tp_exercise_stu
+		set ES_SUBCW_ID = #{esSubcwId,jdbcType=INTEGER},
+		ES_EXER_ID = #{esExerId,jdbcType=INTEGER},
+		ES_STU_ID =
+		#{esStuId,jdbcType=INTEGER},
+		ES_STATUS = #{esStatus,jdbcType=CHAR},
+		ES_TEXT_ANSWER = #{esTextAnswer,jdbcType=VARCHAR},
+		ES_ATTACH_ANSWER =
+		#{esAttachAnswer,jdbcType=VARCHAR},
+		ES_COMMIT_TIME =
+		#{esCommitTime,jdbcType=TIMESTAMP},
+		ES_SCORE =
+		#{esScore,jdbcType=INTEGER},
+		ES_TEACHER_ID =
+		#{esTeacherId,jdbcType=INTEGER},
+		ES_CHECK_FLAG =
+		#{esCheckFlag,jdbcType=CHAR},
+		ES_CHECK_TIME =
+		#{esCheckTime,jdbcType=TIMESTAMP}
+		where ES_ID =
+		#{esId,jdbcType=INTEGER}
+	</update>
+	<select id="selectExerciseStuForShow" resultMap="MoreResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,B.EXER_TITLE,B.EXER_CONTEXT,B.EXER_ID,B.EXER_STEP,B.EXER_TEXT_ANSWER
+		FROM tp_exercise_stu A
+		,tp_exercise B
+		WHERE A.ES_EXER_ID = B.EXER_ID
+		AND A.ES_EXER_ID =
+		#{exerId}
+		AND A.ES_SUBCW_ID = #{scId}
+		AND A.ES_STU_ID = #{stuNo}
+	</select>
+	<select id="selectAllExerForScIdAndExerId" resultMap="StuResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,STU_NAME,STU_NICKNAME
+		FROM tp_exercise_stu JOIN tp_student
+		ON(ES_STU_ID = STU_NO)
+		WHERE ES_SUBCW_ID = #{scId}
+		AND ES_EXER_ID = #{exerId}
+		<if test="selectName != null">
+			AND (STU_NICKNAME LIKE #{selectName} OR STU_NAME LIKE #{selectName})
+		</if>
+		<if test="selectFlag != null">
+			AND ES_CHECK_FLAG = #{selectFlag}
+		</if>
+	</select>
+</mapper>

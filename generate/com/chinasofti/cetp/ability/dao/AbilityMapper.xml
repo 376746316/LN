@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.ability.dao.AbilityMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.ability.model.Ability" >
+    <id column="ABI_ID" property="abiId" jdbcType="INTEGER" />
+    <result column="ABI_NAME" property="abiName" jdbcType="VARCHAR" />
+    <result column="ABI_CODE" property="abiCode" jdbcType="CHAR" />
+    <result column="ABI_PARENT" property="abiParent" jdbcType="INTEGER" />
+    <result column="ABI_LEVEL" property="abiLevel" jdbcType="INTEGER" />
+    <result column="ABI_SEQ" property="abiSeq" jdbcType="INTEGER" />
+    <result column="ABI_CONTENT" property="abiContent" jdbcType="VARCHAR" />
+    <result column="ABI_REGTIME" property="abiRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="MoreResultMap" type="com.chinasofti.cetp.ability.model.MoreAbility" >
+    <id column="ABI_ID" property="abiId" jdbcType="INTEGER" />
+    <result column="ABI_NAME" property="abiName" jdbcType="VARCHAR" />
+    <result column="ABI_CODE" property="abiCode" jdbcType="CHAR" />
+    <result column="ABI_PARENT" property="abiParent" jdbcType="INTEGER" />
+    <result column="ABI_LEVEL" property="abiLevel" jdbcType="INTEGER" />
+    <result column="ABI_SEQ" property="abiSeq" jdbcType="INTEGER" />
+    <result column="ABI_CONTENT" property="abiContent" jdbcType="VARCHAR" />
+    <result column="ABI_REGTIME" property="abiRegtime" jdbcType="TIMESTAMP" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TEXT" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="getAbilityTreeData" resultMap="MoreResultMap" parameterType="HashMap">
+		select 
+		      ABI_ID
+		      ,ABI_ID as ID
+		      ,ABI_NAME
+		      ,ABI_NAME as TEXT
+		from 
+		     TP_ABILITY 
+		where 
+		     ABI_PARENT = #{parentId}
+ </select>
+ <select id="getMaxAbilityCode" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select 
+		      max(ABI_CODE)
+		from 
+		     TP_ABILITY
+		where 
+		     ABI_PARENT = #{selParent}
+ </select>
+ <select id="getAbilityCode" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select 
+		      ABI_CODE
+		from 
+		     TP_ABILITY
+		where 
+		     ABI_ID = #{selParent}
+ </select>
+ <select id="selectExistAbility" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select 
+		     count(*)
+		from 
+		     TP_ABILITY
+		where 
+		     ABI_PARENT = #{abiId}
+ </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ABI_ID, ABI_NAME, ABI_CODE, ABI_PARENT, ABI_LEVEL, ABI_SEQ, ABI_CONTENT, ABI_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.ability.model.AbilityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_ability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    group by ABI_CODE
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_ability
+    where ABI_ID = #{abiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_ability
+    where ABI_ID = #{abiId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.ability.model.AbilityExample" >
+    delete from tp_ability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.ability.model.Ability" >
+    insert into tp_ability (ABI_ID, ABI_NAME, ABI_CODE, 
+      ABI_PARENT, ABI_LEVEL, ABI_SEQ, 
+      ABI_CONTENT, ABI_REGTIME)
+    values (#{abiId,jdbcType=INTEGER}, #{abiName,jdbcType=VARCHAR}, #{abiCode,jdbcType=CHAR}, 
+      #{abiParent,jdbcType=INTEGER}, #{abiLevel,jdbcType=INTEGER}, #{abiSeq,jdbcType=INTEGER}, 
+      #{abiContent,jdbcType=VARCHAR}, #{abiRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.ability.model.Ability" >
+    insert into tp_ability
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="abiId != null" >
+        ABI_ID,
+      </if>
+      <if test="abiName != null" >
+        ABI_NAME,
+      </if>
+      <if test="abiCode != null" >
+        ABI_CODE,
+      </if>
+      <if test="abiParent != null" >
+        ABI_PARENT,
+      </if>
+      <if test="abiLevel != null" >
+        ABI_LEVEL,
+      </if>
+      <if test="abiSeq != null" >
+        ABI_SEQ,
+      </if>
+      <if test="abiContent != null" >
+        ABI_CONTENT,
+      </if>
+      <if test="abiRegtime != null" >
+        ABI_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="abiId != null" >
+        #{abiId,jdbcType=INTEGER},
+      </if>
+      <if test="abiName != null" >
+        #{abiName,jdbcType=VARCHAR},
+      </if>
+      <if test="abiCode != null" >
+        #{abiCode,jdbcType=CHAR},
+      </if>
+      <if test="abiParent != null" >
+        #{abiParent,jdbcType=INTEGER},
+      </if>
+      <if test="abiLevel != null" >
+        #{abiLevel,jdbcType=INTEGER},
+      </if>
+      <if test="abiSeq != null" >
+        #{abiSeq,jdbcType=INTEGER},
+      </if>
+      <if test="abiContent != null" >
+        #{abiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="abiRegtime != null" >
+        #{abiRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.ability.model.AbilityExample" resultType="java.lang.Integer" >
+    select count(*) from tp_ability
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_ability
+    <set >
+      <if test="record.abiId != null" >
+        ABI_ID = #{record.abiId,jdbcType=INTEGER},
+      </if>
+      <if test="record.abiName != null" >
+        ABI_NAME = #{record.abiName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abiCode != null" >
+        ABI_CODE = #{record.abiCode,jdbcType=CHAR},
+      </if>
+      <if test="record.abiParent != null" >
+        ABI_PARENT = #{record.abiParent,jdbcType=INTEGER},
+      </if>
+      <if test="record.abiLevel != null" >
+        ABI_LEVEL = #{record.abiLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.abiSeq != null" >
+        ABI_SEQ = #{record.abiSeq,jdbcType=INTEGER},
+      </if>
+      <if test="record.abiContent != null" >
+        ABI_CONTENT = #{record.abiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abiRegtime != null" >
+        ABI_REGTIME = #{record.abiRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_ability
+    set ABI_ID = #{record.abiId,jdbcType=INTEGER},
+      ABI_NAME = #{record.abiName,jdbcType=VARCHAR},
+      ABI_CODE = #{record.abiCode,jdbcType=CHAR},
+      ABI_PARENT = #{record.abiParent,jdbcType=INTEGER},
+      ABI_LEVEL = #{record.abiLevel,jdbcType=INTEGER},
+      ABI_SEQ = #{record.abiSeq,jdbcType=INTEGER},
+      ABI_CONTENT = #{record.abiContent,jdbcType=VARCHAR},
+      ABI_REGTIME = #{record.abiRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.ability.model.Ability" >
+    update tp_ability
+    <set >
+      <if test="abiName != null" >
+        ABI_NAME = #{abiName,jdbcType=VARCHAR},
+      </if>
+      <if test="abiCode != null" >
+        ABI_CODE = #{abiCode,jdbcType=CHAR},
+      </if>
+      <if test="abiParent != null" >
+        ABI_PARENT = #{abiParent,jdbcType=INTEGER},
+      </if>
+      <if test="abiLevel != null" >
+        ABI_LEVEL = #{abiLevel,jdbcType=INTEGER},
+      </if>
+      <if test="abiSeq != null" >
+        ABI_SEQ = #{abiSeq,jdbcType=INTEGER},
+      </if>
+      <if test="abiContent != null" >
+        ABI_CONTENT = #{abiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="abiRegtime != null" >
+        ABI_REGTIME = #{abiRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ABI_ID = #{abiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.ability.model.Ability" >
+    update tp_ability
+    set ABI_NAME = #{abiName,jdbcType=VARCHAR},
+      ABI_CODE = #{abiCode,jdbcType=CHAR},
+      ABI_PARENT = #{abiParent,jdbcType=INTEGER},
+      ABI_LEVEL = #{abiLevel,jdbcType=INTEGER},
+      ABI_SEQ = #{abiSeq,jdbcType=INTEGER},
+      ABI_CONTENT = #{abiContent,jdbcType=VARCHAR},
+      ABI_REGTIME = #{abiRegtime,jdbcType=TIMESTAMP}
+    where ABI_ID = #{abiId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.attendance.dao.VacationMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.attendance.model.Vacation">
+		<id column="VN_ID" property="vnId" jdbcType="INTEGER" />
+		<result column="VN_STATE" property="vnState" jdbcType="CHAR" />
+		<result column="VN_TYPE" property="vnType" jdbcType="CHAR" />
+		<result column="VN_PRAC_ID" property="vnPracId" jdbcType="INTEGER" />
+		<result column="VN_START_DATE" property="vnStartDate" jdbcType="TIMESTAMP" />
+		<result column="VN_END_DATE" property="vnEndDate" jdbcType="TIMESTAMP" />
+		<result column="VN_STU_NO" property="vnStuNo" jdbcType="INTEGER" />
+		<result column="VN_USER_NO" property="vnUserNo" jdbcType="INTEGER" />
+		<result column="VN_REGTIME" property="vnRegtime" jdbcType="DATE" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.attendance.model.Vacation"
+		extends="BaseResultMap">
+		<result column="VN_REASON" property="vnReason" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		VN_ID, VN_STATE, VN_TYPE, VN_PRAC_ID, VN_START_DATE, VN_END_DATE, VN_STU_NO,
+		VN_USER_NO,
+		VN_REGTIME
+	</sql>
+	<sql id="Blob_Column_List">
+		VN_REASON
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.chinasofti.cetp.attendance.model.VacationExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_vacation
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.attendance.model.VacationExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from tp_vacation
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_vacation
+		where VN_ID = #{vnId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_vacation
+		where VN_ID = #{vnId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.chinasofti.cetp.attendance.model.VacationExample">
+		delete from tp_vacation
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.attendance.model.Vacation">
+		insert into tp_vacation (VN_ID, VN_STATE, VN_TYPE,
+		VN_PRAC_ID, VN_START_DATE, VN_END_DATE,
+		VN_STU_NO, VN_USER_NO, VN_REGTIME,
+		VN_REASON)
+		values (#{vnId,jdbcType=INTEGER}, #{vnState,jdbcType=CHAR},
+		#{vnType,jdbcType=CHAR},
+		#{vnPracId,jdbcType=INTEGER}, #{vnStartDate,jdbcType=TIMESTAMP}, #{vnEndDate,jdbcType=TIMESTAMP},
+		#{vnStuNo,jdbcType=INTEGER}, #{vnUserNo,jdbcType=INTEGER},
+		#{vnRegtime,jdbcType=DATE},
+		#{vnReason,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.attendance.model.Vacation">
+		insert into tp_vacation
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="vnId != null">
+				VN_ID,
+			</if>
+			<if test="vnState != null">
+				VN_STATE,
+			</if>
+			<if test="vnType != null">
+				VN_TYPE,
+			</if>
+			<if test="vnPracId != null">
+				VN_PRAC_ID,
+			</if>
+			<if test="vnStartDate != null">
+				VN_START_DATE,
+			</if>
+			<if test="vnEndDate != null">
+				VN_END_DATE,
+			</if>
+			<if test="vnStuNo != null">
+				VN_STU_NO,
+			</if>
+			<if test="vnUserNo != null">
+				VN_USER_NO,
+			</if>
+			<if test="vnRegtime != null">
+				VN_REGTIME,
+			</if>
+			<if test="vnReason != null">
+				VN_REASON,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="vnId != null">
+				#{vnId,jdbcType=INTEGER},
+			</if>
+			<if test="vnState != null">
+				#{vnState,jdbcType=CHAR},
+			</if>
+			<if test="vnType != null">
+				#{vnType,jdbcType=CHAR},
+			</if>
+			<if test="vnPracId != null">
+				#{vnPracId,jdbcType=INTEGER},
+			</if>
+			<if test="vnStartDate != null">
+				#{vnStartDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vnEndDate != null">
+				#{vnEndDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vnStuNo != null">
+				#{vnStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="vnUserNo != null">
+				#{vnUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="vnRegtime != null">
+				#{vnRegtime,jdbcType=DATE},
+			</if>
+			<if test="vnReason != null">
+				#{vnReason,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.chinasofti.cetp.attendance.model.VacationExample"
+		resultType="java.lang.Integer">
+		select count(*) from tp_vacation
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_vacation
+		<set>
+			<if test="record.vnId != null">
+				VN_ID = #{record.vnId,jdbcType=INTEGER},
+			</if>
+			<if test="record.vnState != null">
+				VN_STATE = #{record.vnState,jdbcType=CHAR},
+			</if>
+			<if test="record.vnType != null">
+				VN_TYPE = #{record.vnType,jdbcType=CHAR},
+			</if>
+			<if test="record.vnPracId != null">
+				VN_PRAC_ID = #{record.vnPracId,jdbcType=INTEGER},
+			</if>
+			<if test="record.vnStartDate != null">
+				VN_START_DATE = #{record.vnStartDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.vnEndDate != null">
+				VN_END_DATE = #{record.vnEndDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.vnStuNo != null">
+				VN_STU_NO = #{record.vnStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.vnUserNo != null">
+				VN_USER_NO = #{record.vnUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.vnRegtime != null">
+				VN_REGTIME = #{record.vnRegtime,jdbcType=DATE},
+			</if>
+			<if test="record.vnReason != null">
+				VN_REASON = #{record.vnReason,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_vacation
+		set VN_ID = #{record.vnId,jdbcType=INTEGER},
+		VN_STATE = #{record.vnState,jdbcType=CHAR},
+		VN_TYPE = #{record.vnType,jdbcType=CHAR},
+		VN_PRAC_ID = #{record.vnPracId,jdbcType=INTEGER},
+		VN_START_DATE = #{record.vnStartDate,jdbcType=TIMESTAMP},
+		VN_END_DATE = #{record.vnEndDate,jdbcType=TIMESTAMP},
+		VN_STU_NO = #{record.vnStuNo,jdbcType=INTEGER},
+		VN_USER_NO = #{record.vnUserNo,jdbcType=INTEGER},
+		VN_REGTIME = #{record.vnRegtime,jdbcType=DATE},
+		VN_REASON = #{record.vnReason,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_vacation
+		set VN_ID = #{record.vnId,jdbcType=INTEGER},
+		VN_STATE = #{record.vnState,jdbcType=CHAR},
+		VN_TYPE = #{record.vnType,jdbcType=CHAR},
+		VN_PRAC_ID = #{record.vnPracId,jdbcType=INTEGER},
+		VN_START_DATE = #{record.vnStartDate,jdbcType=TIMESTAMP},
+		VN_END_DATE = #{record.vnEndDate,jdbcType=TIMESTAMP},
+		VN_STU_NO = #{record.vnStuNo,jdbcType=INTEGER},
+		VN_USER_NO = #{record.vnUserNo,jdbcType=INTEGER},
+		VN_REGTIME = #{record.vnRegtime,jdbcType=DATE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.attendance.model.Vacation">
+		update tp_vacation
+		<set>
+			<if test="vnState != null">
+				VN_STATE = #{vnState,jdbcType=CHAR},
+			</if>
+			<if test="vnType != null">
+				VN_TYPE = #{vnType,jdbcType=CHAR},
+			</if>
+			<if test="vnPracId != null">
+				VN_PRAC_ID = #{vnPracId,jdbcType=INTEGER},
+			</if>
+			<if test="vnStartDate != null">
+				VN_START_DATE = #{vnStartDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vnEndDate != null">
+				VN_END_DATE = #{vnEndDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="vnStuNo != null">
+				VN_STU_NO = #{vnStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="vnUserNo != null">
+				VN_USER_NO = #{vnUserNo,jdbcType=INTEGER},
+			</if>
+			<if test="vnRegtime != null">
+				VN_REGTIME = #{vnRegtime,jdbcType=DATE},
+			</if>
+			<if test="vnReason != null">
+				VN_REASON = #{vnReason,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where VN_ID = #{vnId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.attendance.model.Vacation">
+		update tp_vacation
+		set VN_STATE = #{vnState,jdbcType=CHAR},
+		VN_TYPE = #{vnType,jdbcType=CHAR},
+		VN_PRAC_ID = #{vnPracId,jdbcType=INTEGER},
+		VN_START_DATE = #{vnStartDate,jdbcType=TIMESTAMP},
+		VN_END_DATE = #{vnEndDate,jdbcType=TIMESTAMP},
+		VN_STU_NO = #{vnStuNo,jdbcType=INTEGER},
+		VN_USER_NO = #{vnUserNo,jdbcType=INTEGER},
+		VN_REGTIME = #{vnRegtime,jdbcType=DATE},
+		VN_REASON = #{vnReason,jdbcType=LONGVARCHAR}
+		where VN_ID = #{vnId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.attendance.model.Vacation">
+		update tp_vacation
+		set VN_STATE = #{vnState,jdbcType=CHAR},
+		VN_TYPE = #{vnType,jdbcType=CHAR},
+		VN_PRAC_ID = #{vnPracId,jdbcType=INTEGER},
+		VN_START_DATE = #{vnStartDate,jdbcType=TIMESTAMP},
+		VN_END_DATE = #{vnEndDate,jdbcType=TIMESTAMP},
+		VN_STU_NO = #{vnStuNo,jdbcType=INTEGER},
+		VN_USER_NO = #{vnUserNo,jdbcType=INTEGER},
+		VN_REGTIME = #{vnRegtime,jdbcType=DATE}
+		where VN_ID = #{vnId,jdbcType=INTEGER}
+	</update>
+	<!-- ======================华丽的分割线===================== -->
+	<resultMap id="ResultMapWithVacationComplete"
+		type="com.chinasofti.cetp.attendance.model.VacationComplete" extends="ResultMapWithBLOBs">
+		<result column="STU_NAME" property="vnStuName" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="VnUserName" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectVacationComplete" resultMap="ResultMapWithVacationComplete"
+		parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		STU_NAME,USER_NAME
+		FROM
+		tp_vacation AS v
+		LEFT JOIN tp_student AS s ON v.VN_STU_NO = s.STU_NO
+		LEFT JOIN
+		tp_user AS u ON v.VN_USER_NO = u.USER_NO
+		<where>
+			<if test="VN_PRAC_ID != null">
+				VN_PRAC_ID = #{pracId,jdbcType=INTEGER}
+			</if>
+			<if test="vnStuName != null">
+				AND STU_NAME like #{vnStuName,jdbcType=VARCHAR}
+			</if>
+			<if test="vnType != null">
+				AND VN_TYPE = #{vnType,jdbcType=CHAR}
+			</if>
+			<if test="vnState != null">
+				AND VN_STATE = #{vnState,jdbcType=CHAR}
+			</if>
+			<if test="vnRegtime != null">
+				AND VN_REGTIME = #{vnRegtime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="pracId != null">
+				AND VN_PRAC_ID = #{pracId,jdbcType=INTEGER}
+			</if>  
+			<if test="vnStuNo != null">
+				AND VN_STU_NO = #{vnStuNo,jdbcType=INTEGER}
+			</if>
+		</where>
+		ORDER BY
+		VN_REGTIME DESC
+	</select>
+
+	<update id="updateStateByVnId" parameterType="map">
+		UPDATE tp_vacation
+		SET VN_STATE = #{vnState},
+		VN_USER_NO = #{vnUserNo,jdbcType=INTEGER}
+		WHERE
+		VN_ID IN ${vnIds}
+	</update>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.resource.dao.CollectVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.resource.model.CollectVideo" >
+    <id column="COLLV_STU_NO" property="collvStuNo" jdbcType="INTEGER" />
+    <id column="COLLV_V_ID" property="collvVId" jdbcType="INTEGER" />
+    <result column="COLLV_UPDATETIME" property="collvUpdatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    COLLV_STU_NO, COLLV_V_ID, COLLV_UPDATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.CollectVideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_collect_video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.resource.model.CollectVideoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_collect_video
+    where COLLV_STU_NO = #{collvStuNo,jdbcType=INTEGER}
+      and COLLV_V_ID = #{collvVId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.CollectVideoKey" >
+    delete from tp_collect_video
+    where COLLV_STU_NO = #{collvStuNo,jdbcType=INTEGER}
+      and COLLV_V_ID = #{collvVId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.resource.model.CollectVideo" >
+    insert into tp_collect_video (COLLV_STU_NO, COLLV_V_ID, COLLV_UPDATETIME
+      )
+    values (#{collvStuNo,jdbcType=INTEGER}, #{collvVId,jdbcType=INTEGER}, #{collvUpdatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.resource.model.CollectVideo" >
+    insert into tp_collect_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collvStuNo != null" >
+        COLLV_STU_NO,
+      </if>
+      <if test="collvVId != null" >
+        COLLV_V_ID,
+      </if>
+      <if test="collvUpdatetime != null" >
+        COLLV_UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collvStuNo != null" >
+        #{collvStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="collvVId != null" >
+        #{collvVId,jdbcType=INTEGER},
+      </if>
+      <if test="collvUpdatetime != null" >
+        #{collvUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.resource.model.CollectVideoExample" resultType="java.lang.Integer" >
+    select count(*) from tp_collect_video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.resource.model.CollectVideo" >
+    update tp_collect_video
+    <set >
+      <if test="collvUpdatetime != null" >
+        COLLV_UPDATETIME = #{collvUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where COLLV_STU_NO = #{collvStuNo,jdbcType=INTEGER}
+      and COLLV_V_ID = #{collvVId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.resource.model.CollectVideo" >
+    update tp_collect_video
+    set COLLV_UPDATETIME = #{collvUpdatetime,jdbcType=TIMESTAMP}
+    where COLLV_STU_NO = #{collvStuNo,jdbcType=INTEGER}
+      and COLLV_V_ID = #{collvVId,jdbcType=INTEGER}
+  </update>
+</mapper>

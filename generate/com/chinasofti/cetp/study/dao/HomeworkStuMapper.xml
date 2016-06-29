@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.HomeworkStuMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.HomeworkStu">
+		<id column="HS_CHAP_ID" property="hsChapId" jdbcType="INTEGER" />
+		<id column="HS_STU_ID" property="hsStuId" jdbcType="INTEGER" />
+		<id column="HS_EXER_ID" property="hsExerId" jdbcType="INTEGER" />
+		<result column="HS_STATUS" property="hsStatus" jdbcType="CHAR" />
+		<result column="HS_TEXT_ANSWER" property="hsTextAnswer" jdbcType="VARCHAR" />
+		<result column="HS_ATTACH_ANSWER" property="hsAttachAnswer" jdbcType="VARCHAR" />
+		<result column="HS_COMMIT_TIME" property="hsCommitTime" jdbcType="TIMESTAMP" />
+		<result column="HS_SCORE" property="hsScore" jdbcType="INTEGER" />
+		<result column="HS_TEACHER_ID" property="hsTeacherId" jdbcType="INTEGER" />
+		<result column="HS_CHECK_FLAG" property="hsCheckFlag" jdbcType="CHAR" />
+		<result column="HS_CHECK_TIME" property="hsCheckTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="MoreResultMap" extends="BaseResultMap" type="com.chinasofti.cetp.study.model.MoreHomework">
+		<result column="CHAP_ID" property="chapId" jdbcType="INTEGER" />
+		<result column="CHAP_SPEC_ID" property="chapSpecId" jdbcType="INTEGER" />
+		<result column="CHAP_NAME" property="chapName" jdbcType="VARCHAR" />
+		<result column="CHAP_EXAM" property="chapExam" jdbcType="BIGINT" />
+		<result column="CHAP_USER_NO" property="chapUserNo" jdbcType="INTEGER" />
+		<result column="CHAP_REGTIME" property="chapRegtime" jdbcType="TIMESTAMP" />
+		<result column="CHAP_HOMEWORK" property="chapHomework" jdbcType="LONGVARCHAR" />
+		<result column="CHAP_HW_ANS" property="chapHwAns" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<resultMap id="StuResultMap" extends="BaseResultMap" type="com.chinasofti.cetp.study.model.MoreHomeworkStu">
+		<result column="EXER_TITLE" property="exerTitle" jdbcType="VARCHAR" />
+		<result column="EXER_ID" property="exerId" jdbcType="INTEGER" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_NICKNAME" property="stuNickName" jdbcType="VARCHAR" />
+		<result column="EXER_SCORE" property="exerScore" jdbcType="INTEGER" />
+		<result column="EXER_TEXT_ANSWER" property="exerTextAnswer" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		HS_CHAP_ID, HS_STU_ID, HS_EXER_ID, HS_STATUS, HS_TEXT_ANSWER, HS_ATTACH_ANSWER, HS_COMMIT_TIME,
+		HS_SCORE, HS_TEACHER_ID, HS_CHECK_FLAG, HS_CHECK_TIME
+	</sql>
+	<sql id="More_Column_List">
+		CHAP_ID, CHAP_SPEC_ID, CHAP_NAME, CHAP_EXAM, CHAP_USER_NO, CHAP_REGTIME,
+		CHAP_HOMEWORK, CHAP_HW_ANS
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.HomeworkStuExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_homework_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.HomeworkStuKey">
+		select
+		<include refid="Base_Column_List" />
+		from tp_homework_stu
+		where HS_CHAP_ID = #{hsChapId,jdbcType=INTEGER}
+		and HS_STU_ID = #{hsStuId,jdbcType=INTEGER}
+		and HS_EXER_ID = #{hsExerId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.HomeworkStuKey">
+		delete from tp_homework_stu
+		where HS_CHAP_ID = #{hsChapId,jdbcType=INTEGER}
+		and HS_STU_ID = #{hsStuId,jdbcType=INTEGER}
+		and HS_EXER_ID = #{hsExerId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.study.model.HomeworkStu">
+		insert into tp_homework_stu (HS_CHAP_ID, HS_STU_ID, HS_EXER_ID,
+		HS_STATUS, HS_TEXT_ANSWER, HS_ATTACH_ANSWER,
+		HS_COMMIT_TIME, HS_SCORE, HS_TEACHER_ID,
+		HS_CHECK_FLAG, HS_CHECK_TIME)
+		values (#{hsChapId,jdbcType=INTEGER}, #{hsStuId,jdbcType=INTEGER}, #{hsExerId,jdbcType=INTEGER},
+		#{hsStatus,jdbcType=CHAR}, #{hsTextAnswer,jdbcType=VARCHAR}, #{hsAttachAnswer,jdbcType=VARCHAR},
+		#{hsCommitTime,jdbcType=TIMESTAMP}, #{hsScore,jdbcType=INTEGER}, #{hsTeacherId,jdbcType=INTEGER},
+		#{hsCheckFlag,jdbcType=CHAR}, #{hsCheckTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.HomeworkStu">
+		insert into tp_homework_stu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hsChapId != null">
+				HS_CHAP_ID,
+			</if>
+			<if test="hsStuId != null">
+				HS_STU_ID,
+			</if>
+			<if test="hsExerId != null">
+				HS_EXER_ID,
+			</if>
+			<if test="hsStatus != null">
+				HS_STATUS,
+			</if>
+			<if test="hsTextAnswer != null">
+				HS_TEXT_ANSWER,
+			</if>
+			<if test="hsAttachAnswer != null">
+				HS_ATTACH_ANSWER,
+			</if>
+			<if test="hsCommitTime != null">
+				HS_COMMIT_TIME,
+			</if>
+			<if test="hsScore != null">
+				HS_SCORE,
+			</if>
+			<if test="hsTeacherId != null">
+				HS_TEACHER_ID,
+			</if>
+			<if test="hsCheckFlag != null">
+				HS_CHECK_FLAG,
+			</if>
+			<if test="hsCheckTime != null">
+				HS_CHECK_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hsChapId != null">
+				#{hsChapId,jdbcType=INTEGER},
+			</if>
+			<if test="hsStuId != null">
+				#{hsStuId,jdbcType=INTEGER},
+			</if>
+			<if test="hsExerId != null">
+				#{hsExerId,jdbcType=INTEGER},
+			</if>
+			<if test="hsStatus != null">
+				#{hsStatus,jdbcType=CHAR},
+			</if>
+			<if test="hsTextAnswer != null">
+				#{hsTextAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="hsAttachAnswer != null">
+				#{hsAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="hsCommitTime != null">
+				#{hsCommitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hsScore != null">
+				#{hsScore,jdbcType=INTEGER},
+			</if>
+			<if test="hsTeacherId != null">
+				#{hsTeacherId,jdbcType=INTEGER},
+			</if>
+			<if test="hsCheckFlag != null">
+				#{hsCheckFlag,jdbcType=CHAR},
+			</if>
+			<if test="hsCheckTime != null">
+				#{hsCheckTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.HomeworkStuExample" resultType="java.lang.Integer">
+		select count(*) from tp_homework_stu
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.HomeworkStu">
+		update tp_homework_stu
+		<set>
+			<if test="hsStatus != null">
+				HS_STATUS = #{hsStatus,jdbcType=CHAR},
+			</if>
+			<if test="hsTextAnswer != null">
+				HS_TEXT_ANSWER = #{hsTextAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="hsAttachAnswer != null">
+				HS_ATTACH_ANSWER = #{hsAttachAnswer,jdbcType=VARCHAR},
+			</if>
+			<if test="hsCommitTime != null">
+				HS_COMMIT_TIME = #{hsCommitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="hsScore != null">
+				HS_SCORE = #{hsScore,jdbcType=INTEGER},
+			</if>
+			<if test="hsTeacherId != null">
+				HS_TEACHER_ID = #{hsTeacherId,jdbcType=INTEGER},
+			</if>
+			<if test="hsCheckFlag != null">
+				HS_CHECK_FLAG = #{hsCheckFlag,jdbcType=CHAR},
+			</if>
+			<if test="hsCheckTime != null">
+				HS_CHECK_TIME = #{hsCheckTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where HS_CHAP_ID = #{hsChapId,jdbcType=INTEGER}
+		and HS_STU_ID = #{hsStuId,jdbcType=INTEGER}
+		and HS_EXER_ID = #{hsExerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.HomeworkStu">
+		update tp_homework_stu
+		set HS_STATUS = #{hsStatus,jdbcType=CHAR},
+		HS_TEXT_ANSWER = #{hsTextAnswer,jdbcType=VARCHAR},
+		HS_ATTACH_ANSWER = #{hsAttachAnswer,jdbcType=VARCHAR},
+		HS_COMMIT_TIME = #{hsCommitTime,jdbcType=TIMESTAMP},
+		HS_SCORE = #{hsScore,jdbcType=INTEGER},
+		HS_TEACHER_ID = #{hsTeacherId,jdbcType=INTEGER},
+		HS_CHECK_FLAG = #{hsCheckFlag,jdbcType=CHAR},
+		HS_CHECK_TIME = #{hsCheckTime,jdbcType=TIMESTAMP}
+		where HS_CHAP_ID = #{hsChapId,jdbcType=INTEGER}
+		and HS_STU_ID = #{hsStuId,jdbcType=INTEGER}
+		and HS_EXER_ID = #{hsExerId,jdbcType=INTEGER}
+	</update>
+	<select id="getChapterHomeworkForChapIdList" resultMap="StuResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		STU_NAME,STU_NICKNAME
+		from tp_homework_stu,TP_STUDENT
+		where tp_homework_stu.HS_STU_ID = TP_STUDENT.STU_NO
+		AND tp_homework_stu.HS_STATUS = "2"
+		AND tp_homework_stu.HS_CHAP_ID = #{chapId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectMyCourseChpaterHomework" resultMap="MoreResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="More_Column_List" />
+		from tp_homework_stu A RIGHT JOIN (
+		SELECT
+		<include refid="More_Column_List" />
+		FROM tp_chapter B
+		WHERE B.CHAP_SPEC_ID = #{specId}) C
+		ON (A.HS_CHAP_ID = C.CHAP_ID)
+		AND A.HS_STU_ID = #{stuNo}
+	</select>
+	<select id="selectHomeworkForChapIdAndStuNo" resultMap="StuResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,D.EXER_TITLE,D.EXER_SCORE,D.EXER_TEXT_ANSWER,STU_NICKNAME,D.exer_id
+		FROM tp_homework_stu C RIGHT JOIN
+		(
+		SELECT
+		A.HW_EXER_ID,B.EXER_TITLE,B.EXER_SCORE,B.EXER_TEXT_ANSWER,B.exer_Id
+		FROM tp_homework A,tp_exercise B
+		WHERE A.HW_CHAP_ID =#{chapId}
+		AND A.HW_EXER_ID = B.EXER_ID)D
+		ON (C.HS_EXER_ID = D.HW_EXER_ID AND C.HS_STU_ID=#{stuNo})
+		JOIN TP_STUDENT E
+		ON(E.STU_NO=#{stuNo})
+	</select>
+	<select id="checkChapHomeworkByChapAndExerId" resultMap="StuResultMap" parameterType="HashMap">
+		select
+		<include refid="Base_Column_List" />
+		,STU_NAME,STU_NICKNAME
+		FROM tp_homework_stu JOIN tp_student ON (HS_STU_ID = STU_NO)
+		WHERE HS_CHAP_ID = #{chapId}
+		AND HS_EXER_ID = #{exerId}
+		<if test="selectName != null">
+			AND (STU_NICKNAME LIKE #{selectName} OR STU_NAME LIKE #{selectName})
+		</if>
+		<if test="selectFlag != null">
+			AND HS_CHECK_FLAG = #{selectFlag}
+		</if>
+	</select>
+</mapper>

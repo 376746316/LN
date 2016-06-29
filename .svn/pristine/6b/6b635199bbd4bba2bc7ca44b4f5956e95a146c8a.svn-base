@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.Message" >
+    <id column="MSG_ID" property="msgId" jdbcType="BIGINT" />
+    <result column="MSG_TYPE" property="msgType" jdbcType="CHAR" />
+    <result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+    <result column="MSG_STU_NO" property="msgStuNo" jdbcType="INTEGER" />
+    <result column="MSG_USER_NO" property="msgUserNo" jdbcType="INTEGER" />
+    <result column="MSG_STATUS" property="msgStatus" jdbcType="CHAR" />
+    <result column="MSG_TIME" property="msgTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MSG_ID, MSG_TYPE, MSG_CONTENT, MSG_STU_NO, MSG_USER_NO, MSG_STATUS, MSG_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_message
+    where MSG_ID = #{msgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_message
+    where MSG_ID = #{msgId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.MessageExample" >
+    delete from tp_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.Message" >
+    insert into tp_message (MSG_ID, MSG_TYPE, MSG_CONTENT, 
+      MSG_STU_NO, MSG_USER_NO, MSG_STATUS, 
+      MSG_TIME)
+    values (#{msgId,jdbcType=BIGINT}, #{msgType,jdbcType=CHAR}, #{msgContent,jdbcType=VARCHAR}, 
+      #{msgStuNo,jdbcType=INTEGER}, #{msgUserNo,jdbcType=INTEGER}, #{msgStatus,jdbcType=CHAR}, 
+      #{msgTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.Message" >
+    insert into tp_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        MSG_ID,
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE,
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT,
+      </if>
+      <if test="msgStuNo != null" >
+        MSG_STU_NO,
+      </if>
+      <if test="msgUserNo != null" >
+        MSG_USER_NO,
+      </if>
+      <if test="msgStatus != null" >
+        MSG_STATUS,
+      </if>
+      <if test="msgTime != null" >
+        MSG_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        #{msgId,jdbcType=BIGINT},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=CHAR},
+      </if>
+      <if test="msgContent != null" >
+        #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStuNo != null" >
+        #{msgStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="msgUserNo != null" >
+        #{msgUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null" >
+        #{msgStatus,jdbcType=CHAR},
+      </if>
+      <if test="msgTime != null" >
+        #{msgTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from tp_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_message
+    <set >
+      <if test="record.msgId != null" >
+        MSG_ID = #{record.msgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.msgType != null" >
+        MSG_TYPE = #{record.msgType,jdbcType=CHAR},
+      </if>
+      <if test="record.msgContent != null" >
+        MSG_CONTENT = #{record.msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgStuNo != null" >
+        MSG_STU_NO = #{record.msgStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgUserNo != null" >
+        MSG_USER_NO = #{record.msgUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgStatus != null" >
+        MSG_STATUS = #{record.msgStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.msgTime != null" >
+        MSG_TIME = #{record.msgTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_message
+    set MSG_ID = #{record.msgId,jdbcType=BIGINT},
+      MSG_TYPE = #{record.msgType,jdbcType=CHAR},
+      MSG_CONTENT = #{record.msgContent,jdbcType=VARCHAR},
+      MSG_STU_NO = #{record.msgStuNo,jdbcType=INTEGER},
+      MSG_USER_NO = #{record.msgUserNo,jdbcType=INTEGER},
+      MSG_STATUS = #{record.msgStatus,jdbcType=CHAR},
+      MSG_TIME = #{record.msgTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.Message" >
+    update tp_message
+    <set >
+      <if test="msgType != null" >
+        MSG_TYPE = #{msgType,jdbcType=CHAR},
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgStuNo != null" >
+        MSG_STU_NO = #{msgStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="msgUserNo != null" >
+        MSG_USER_NO = #{msgUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="msgStatus != null" >
+        MSG_STATUS = #{msgStatus,jdbcType=CHAR},
+      </if>
+      <if test="msgTime != null" >
+        MSG_TIME = #{msgTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where MSG_ID = #{msgId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.Message" >
+    update tp_message
+    set MSG_TYPE = #{msgType,jdbcType=CHAR},
+      MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      MSG_STU_NO = #{msgStuNo,jdbcType=INTEGER},
+      MSG_USER_NO = #{msgUserNo,jdbcType=INTEGER},
+      MSG_STATUS = #{msgStatus,jdbcType=CHAR},
+      MSG_TIME = #{msgTime,jdbcType=TIMESTAMP}
+    where MSG_ID = #{msgId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.TExamMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.TExam" >
+    <id column="E_ID" property="eId" jdbcType="BIGINT" />
+    <result column="EP_ID" property="epId" jdbcType="BIGINT" />
+    <result column="E_NAME" property="eName" jdbcType="VARCHAR" />
+    <result column="E_STATUS" property="eStatus" jdbcType="BIGINT" />
+    <result column="E_STARTDATE" property="eStartdate" jdbcType="TIMESTAMP" />
+    <result column="E_ENDDATE" property="eEnddate" jdbcType="TIMESTAMP" />
+    <result column="E_STARTTIME" property="eStarttime" jdbcType="VARCHAR" />
+    <result column="E_ENDTIME" property="eEndtime" jdbcType="VARCHAR" />
+    <result column="E_DURATION" property="eDuration" jdbcType="BIGINT" />
+    <result column="E_ALLOWTIMES" property="eAllowtimes" jdbcType="BIGINT" />
+    <result column="E_MODE" property="eMode" jdbcType="VARCHAR" />
+    <result column="E_ANSMODE" property="eAnsmode" jdbcType="VARCHAR" />
+    <result column="E_SINGLETIME" property="eSingletime" jdbcType="BIGINT" />
+    <result column="E_CONFUSIONQUES" property="eConfusionques" jdbcType="BIGINT" />
+    <result column="E_CONFUSIONANS" property="eConfusionans" jdbcType="BIGINT" />
+    <result column="E_VIEWANSTIME" property="eViewanstime" jdbcType="BIGINT" />
+    <result column="E_NUMPEOPLE" property="eNumpeople" jdbcType="BIGINT" />
+    <result column="E_SCENE" property="eScene" jdbcType="BIGINT" />
+    <result column="E_SCENESCALE" property="eScenescale" jdbcType="VARCHAR" />
+    <result column="E_INSTIME" property="eInstime" jdbcType="TIMESTAMP" />
+    <result column="E_SELFTEST" property="eSelftest" jdbcType="BIGINT" />
+    <result column="E_CREATE_EP_MODEL" property="eCreateEpModel" jdbcType="BIGINT" />
+    <result column="E_CREATE_EP_TIME" property="eCreateEpTime" jdbcType="TIMESTAMP" />
+    <result column="E_DECIDE_EP_MODEL" property="eDecideEpModel" jdbcType="BIGINT" />
+    <result column="E_DECIDE_EP_TIME" property="eDecideEpTime" jdbcType="TIMESTAMP" />
+    <result column="E_TIMES" property="eTimes" jdbcType="BIGINT" />
+    <result column="E_GENERATE_STATUS" property="eGenerateStatus" jdbcType="BIGINT" />
+    <result column="E_PASSSCORE" property="ePassscore" jdbcType="DOUBLE" />
+    <result column="E_PID" property="ePid" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.TExam" extends="BaseResultMap" >
+    <result column="E_CAPTION" property="eCaption" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    E_ID, EP_ID, E_NAME, E_STATUS, E_STARTDATE, E_ENDDATE, E_STARTTIME, E_ENDTIME, E_DURATION, 
+    E_ALLOWTIMES, E_MODE, E_ANSMODE, E_SINGLETIME, E_CONFUSIONQUES, E_CONFUSIONANS, E_VIEWANSTIME, 
+    E_NUMPEOPLE, E_SCENE, E_SCENESCALE, E_INSTIME, E_SELFTEST, E_CREATE_EP_MODEL, E_CREATE_EP_TIME, 
+    E_DECIDE_EP_MODEL, E_DECIDE_EP_TIME, E_TIMES, E_GENERATE_STATUS, E_PASSSCORE, E_PID
+  </sql>
+  <sql id="Blob_Column_List" >
+    E_CAPTION
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.study.model.TExamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_exam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.TExamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_exam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_exam
+    where E_ID = #{eId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_exam
+    where E_ID = #{eId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.TExamExample" >
+    delete from t_exam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.TExam" >
+    insert into t_exam (E_ID, EP_ID, E_NAME, 
+      E_STATUS, E_STARTDATE, E_ENDDATE, 
+      E_STARTTIME, E_ENDTIME, E_DURATION, 
+      E_ALLOWTIMES, E_MODE, E_ANSMODE, 
+      E_SINGLETIME, E_CONFUSIONQUES, E_CONFUSIONANS, 
+      E_VIEWANSTIME, E_NUMPEOPLE, E_SCENE, 
+      E_SCENESCALE, E_INSTIME, E_SELFTEST, 
+      E_CREATE_EP_MODEL, E_CREATE_EP_TIME, E_DECIDE_EP_MODEL, 
+      E_DECIDE_EP_TIME, E_TIMES, E_GENERATE_STATUS, 
+      E_PASSSCORE, E_PID, E_CAPTION
+      )
+    values (#{eId,jdbcType=BIGINT}, #{epId,jdbcType=BIGINT}, #{eName,jdbcType=VARCHAR}, 
+      #{eStatus,jdbcType=BIGINT}, #{eStartdate,jdbcType=TIMESTAMP}, #{eEnddate,jdbcType=TIMESTAMP}, 
+      #{eStarttime,jdbcType=VARCHAR}, #{eEndtime,jdbcType=VARCHAR}, #{eDuration,jdbcType=BIGINT}, 
+      #{eAllowtimes,jdbcType=BIGINT}, #{eMode,jdbcType=VARCHAR}, #{eAnsmode,jdbcType=VARCHAR}, 
+      #{eSingletime,jdbcType=BIGINT}, #{eConfusionques,jdbcType=BIGINT}, #{eConfusionans,jdbcType=BIGINT}, 
+      #{eViewanstime,jdbcType=BIGINT}, #{eNumpeople,jdbcType=BIGINT}, #{eScene,jdbcType=BIGINT}, 
+      #{eScenescale,jdbcType=VARCHAR}, #{eInstime,jdbcType=TIMESTAMP}, #{eSelftest,jdbcType=BIGINT}, 
+      #{eCreateEpModel,jdbcType=BIGINT}, #{eCreateEpTime,jdbcType=TIMESTAMP}, #{eDecideEpModel,jdbcType=BIGINT}, 
+      #{eDecideEpTime,jdbcType=TIMESTAMP}, #{eTimes,jdbcType=BIGINT}, #{eGenerateStatus,jdbcType=BIGINT}, 
+      #{ePassscore,jdbcType=DOUBLE}, #{ePid,jdbcType=BIGINT}, #{eCaption,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.TExam" >
+    insert into t_exam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        E_ID,
+      </if>
+      <if test="epId != null" >
+        EP_ID,
+      </if>
+      <if test="eName != null" >
+        E_NAME,
+      </if>
+      <if test="eStatus != null" >
+        E_STATUS,
+      </if>
+      <if test="eStartdate != null" >
+        E_STARTDATE,
+      </if>
+      <if test="eEnddate != null" >
+        E_ENDDATE,
+      </if>
+      <if test="eStarttime != null" >
+        E_STARTTIME,
+      </if>
+      <if test="eEndtime != null" >
+        E_ENDTIME,
+      </if>
+      <if test="eDuration != null" >
+        E_DURATION,
+      </if>
+      <if test="eAllowtimes != null" >
+        E_ALLOWTIMES,
+      </if>
+      <if test="eMode != null" >
+        E_MODE,
+      </if>
+      <if test="eAnsmode != null" >
+        E_ANSMODE,
+      </if>
+      <if test="eSingletime != null" >
+        E_SINGLETIME,
+      </if>
+      <if test="eConfusionques != null" >
+        E_CONFUSIONQUES,
+      </if>
+      <if test="eConfusionans != null" >
+        E_CONFUSIONANS,
+      </if>
+      <if test="eViewanstime != null" >
+        E_VIEWANSTIME,
+      </if>
+      <if test="eNumpeople != null" >
+        E_NUMPEOPLE,
+      </if>
+      <if test="eScene != null" >
+        E_SCENE,
+      </if>
+      <if test="eScenescale != null" >
+        E_SCENESCALE,
+      </if>
+      <if test="eInstime != null" >
+        E_INSTIME,
+      </if>
+      <if test="eSelftest != null" >
+        E_SELFTEST,
+      </if>
+      <if test="eCreateEpModel != null" >
+        E_CREATE_EP_MODEL,
+      </if>
+      <if test="eCreateEpTime != null" >
+        E_CREATE_EP_TIME,
+      </if>
+      <if test="eDecideEpModel != null" >
+        E_DECIDE_EP_MODEL,
+      </if>
+      <if test="eDecideEpTime != null" >
+        E_DECIDE_EP_TIME,
+      </if>
+      <if test="eTimes != null" >
+        E_TIMES,
+      </if>
+      <if test="eGenerateStatus != null" >
+        E_GENERATE_STATUS,
+      </if>
+      <if test="ePassscore != null" >
+        E_PASSSCORE,
+      </if>
+      <if test="ePid != null" >
+        E_PID,
+      </if>
+      <if test="eCaption != null" >
+        E_CAPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=BIGINT},
+      </if>
+      <if test="epId != null" >
+        #{epId,jdbcType=BIGINT},
+      </if>
+      <if test="eName != null" >
+        #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eStatus != null" >
+        #{eStatus,jdbcType=BIGINT},
+      </if>
+      <if test="eStartdate != null" >
+        #{eStartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eEnddate != null" >
+        #{eEnddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eStarttime != null" >
+        #{eStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="eEndtime != null" >
+        #{eEndtime,jdbcType=VARCHAR},
+      </if>
+      <if test="eDuration != null" >
+        #{eDuration,jdbcType=BIGINT},
+      </if>
+      <if test="eAllowtimes != null" >
+        #{eAllowtimes,jdbcType=BIGINT},
+      </if>
+      <if test="eMode != null" >
+        #{eMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eAnsmode != null" >
+        #{eAnsmode,jdbcType=VARCHAR},
+      </if>
+      <if test="eSingletime != null" >
+        #{eSingletime,jdbcType=BIGINT},
+      </if>
+      <if test="eConfusionques != null" >
+        #{eConfusionques,jdbcType=BIGINT},
+      </if>
+      <if test="eConfusionans != null" >
+        #{eConfusionans,jdbcType=BIGINT},
+      </if>
+      <if test="eViewanstime != null" >
+        #{eViewanstime,jdbcType=BIGINT},
+      </if>
+      <if test="eNumpeople != null" >
+        #{eNumpeople,jdbcType=BIGINT},
+      </if>
+      <if test="eScene != null" >
+        #{eScene,jdbcType=BIGINT},
+      </if>
+      <if test="eScenescale != null" >
+        #{eScenescale,jdbcType=VARCHAR},
+      </if>
+      <if test="eInstime != null" >
+        #{eInstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eSelftest != null" >
+        #{eSelftest,jdbcType=BIGINT},
+      </if>
+      <if test="eCreateEpModel != null" >
+        #{eCreateEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="eCreateEpTime != null" >
+        #{eCreateEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eDecideEpModel != null" >
+        #{eDecideEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="eDecideEpTime != null" >
+        #{eDecideEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eTimes != null" >
+        #{eTimes,jdbcType=BIGINT},
+      </if>
+      <if test="eGenerateStatus != null" >
+        #{eGenerateStatus,jdbcType=BIGINT},
+      </if>
+      <if test="ePassscore != null" >
+        #{ePassscore,jdbcType=DOUBLE},
+      </if>
+      <if test="ePid != null" >
+        #{ePid,jdbcType=BIGINT},
+      </if>
+      <if test="eCaption != null" >
+        #{eCaption,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.TExamExample" resultType="java.lang.Integer" >
+    select count(*) from t_exam
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_exam
+    <set >
+      <if test="record.eId != null" >
+        E_ID = #{record.eId,jdbcType=BIGINT},
+      </if>
+      <if test="record.epId != null" >
+        EP_ID = #{record.epId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eName != null" >
+        E_NAME = #{record.eName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eStatus != null" >
+        E_STATUS = #{record.eStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.eStartdate != null" >
+        E_STARTDATE = #{record.eStartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eEnddate != null" >
+        E_ENDDATE = #{record.eEnddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eStarttime != null" >
+        E_STARTTIME = #{record.eStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eEndtime != null" >
+        E_ENDTIME = #{record.eEndtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eDuration != null" >
+        E_DURATION = #{record.eDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.eAllowtimes != null" >
+        E_ALLOWTIMES = #{record.eAllowtimes,jdbcType=BIGINT},
+      </if>
+      <if test="record.eMode != null" >
+        E_MODE = #{record.eMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eAnsmode != null" >
+        E_ANSMODE = #{record.eAnsmode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eSingletime != null" >
+        E_SINGLETIME = #{record.eSingletime,jdbcType=BIGINT},
+      </if>
+      <if test="record.eConfusionques != null" >
+        E_CONFUSIONQUES = #{record.eConfusionques,jdbcType=BIGINT},
+      </if>
+      <if test="record.eConfusionans != null" >
+        E_CONFUSIONANS = #{record.eConfusionans,jdbcType=BIGINT},
+      </if>
+      <if test="record.eViewanstime != null" >
+        E_VIEWANSTIME = #{record.eViewanstime,jdbcType=BIGINT},
+      </if>
+      <if test="record.eNumpeople != null" >
+        E_NUMPEOPLE = #{record.eNumpeople,jdbcType=BIGINT},
+      </if>
+      <if test="record.eScene != null" >
+        E_SCENE = #{record.eScene,jdbcType=BIGINT},
+      </if>
+      <if test="record.eScenescale != null" >
+        E_SCENESCALE = #{record.eScenescale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eInstime != null" >
+        E_INSTIME = #{record.eInstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eSelftest != null" >
+        E_SELFTEST = #{record.eSelftest,jdbcType=BIGINT},
+      </if>
+      <if test="record.eCreateEpModel != null" >
+        E_CREATE_EP_MODEL = #{record.eCreateEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="record.eCreateEpTime != null" >
+        E_CREATE_EP_TIME = #{record.eCreateEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eDecideEpModel != null" >
+        E_DECIDE_EP_MODEL = #{record.eDecideEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="record.eDecideEpTime != null" >
+        E_DECIDE_EP_TIME = #{record.eDecideEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eTimes != null" >
+        E_TIMES = #{record.eTimes,jdbcType=BIGINT},
+      </if>
+      <if test="record.eGenerateStatus != null" >
+        E_GENERATE_STATUS = #{record.eGenerateStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.ePassscore != null" >
+        E_PASSSCORE = #{record.ePassscore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ePid != null" >
+        E_PID = #{record.ePid,jdbcType=BIGINT},
+      </if>
+      <if test="record.eCaption != null" >
+        E_CAPTION = #{record.eCaption,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_exam
+    set E_ID = #{record.eId,jdbcType=BIGINT},
+      EP_ID = #{record.epId,jdbcType=BIGINT},
+      E_NAME = #{record.eName,jdbcType=VARCHAR},
+      E_STATUS = #{record.eStatus,jdbcType=BIGINT},
+      E_STARTDATE = #{record.eStartdate,jdbcType=TIMESTAMP},
+      E_ENDDATE = #{record.eEnddate,jdbcType=TIMESTAMP},
+      E_STARTTIME = #{record.eStarttime,jdbcType=VARCHAR},
+      E_ENDTIME = #{record.eEndtime,jdbcType=VARCHAR},
+      E_DURATION = #{record.eDuration,jdbcType=BIGINT},
+      E_ALLOWTIMES = #{record.eAllowtimes,jdbcType=BIGINT},
+      E_MODE = #{record.eMode,jdbcType=VARCHAR},
+      E_ANSMODE = #{record.eAnsmode,jdbcType=VARCHAR},
+      E_SINGLETIME = #{record.eSingletime,jdbcType=BIGINT},
+      E_CONFUSIONQUES = #{record.eConfusionques,jdbcType=BIGINT},
+      E_CONFUSIONANS = #{record.eConfusionans,jdbcType=BIGINT},
+      E_VIEWANSTIME = #{record.eViewanstime,jdbcType=BIGINT},
+      E_NUMPEOPLE = #{record.eNumpeople,jdbcType=BIGINT},
+      E_SCENE = #{record.eScene,jdbcType=BIGINT},
+      E_SCENESCALE = #{record.eScenescale,jdbcType=VARCHAR},
+      E_INSTIME = #{record.eInstime,jdbcType=TIMESTAMP},
+      E_SELFTEST = #{record.eSelftest,jdbcType=BIGINT},
+      E_CREATE_EP_MODEL = #{record.eCreateEpModel,jdbcType=BIGINT},
+      E_CREATE_EP_TIME = #{record.eCreateEpTime,jdbcType=TIMESTAMP},
+      E_DECIDE_EP_MODEL = #{record.eDecideEpModel,jdbcType=BIGINT},
+      E_DECIDE_EP_TIME = #{record.eDecideEpTime,jdbcType=TIMESTAMP},
+      E_TIMES = #{record.eTimes,jdbcType=BIGINT},
+      E_GENERATE_STATUS = #{record.eGenerateStatus,jdbcType=BIGINT},
+      E_PASSSCORE = #{record.ePassscore,jdbcType=DOUBLE},
+      E_PID = #{record.ePid,jdbcType=BIGINT},
+      E_CAPTION = #{record.eCaption,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_exam
+    set E_ID = #{record.eId,jdbcType=BIGINT},
+      EP_ID = #{record.epId,jdbcType=BIGINT},
+      E_NAME = #{record.eName,jdbcType=VARCHAR},
+      E_STATUS = #{record.eStatus,jdbcType=BIGINT},
+      E_STARTDATE = #{record.eStartdate,jdbcType=TIMESTAMP},
+      E_ENDDATE = #{record.eEnddate,jdbcType=TIMESTAMP},
+      E_STARTTIME = #{record.eStarttime,jdbcType=VARCHAR},
+      E_ENDTIME = #{record.eEndtime,jdbcType=VARCHAR},
+      E_DURATION = #{record.eDuration,jdbcType=BIGINT},
+      E_ALLOWTIMES = #{record.eAllowtimes,jdbcType=BIGINT},
+      E_MODE = #{record.eMode,jdbcType=VARCHAR},
+      E_ANSMODE = #{record.eAnsmode,jdbcType=VARCHAR},
+      E_SINGLETIME = #{record.eSingletime,jdbcType=BIGINT},
+      E_CONFUSIONQUES = #{record.eConfusionques,jdbcType=BIGINT},
+      E_CONFUSIONANS = #{record.eConfusionans,jdbcType=BIGINT},
+      E_VIEWANSTIME = #{record.eViewanstime,jdbcType=BIGINT},
+      E_NUMPEOPLE = #{record.eNumpeople,jdbcType=BIGINT},
+      E_SCENE = #{record.eScene,jdbcType=BIGINT},
+      E_SCENESCALE = #{record.eScenescale,jdbcType=VARCHAR},
+      E_INSTIME = #{record.eInstime,jdbcType=TIMESTAMP},
+      E_SELFTEST = #{record.eSelftest,jdbcType=BIGINT},
+      E_CREATE_EP_MODEL = #{record.eCreateEpModel,jdbcType=BIGINT},
+      E_CREATE_EP_TIME = #{record.eCreateEpTime,jdbcType=TIMESTAMP},
+      E_DECIDE_EP_MODEL = #{record.eDecideEpModel,jdbcType=BIGINT},
+      E_DECIDE_EP_TIME = #{record.eDecideEpTime,jdbcType=TIMESTAMP},
+      E_TIMES = #{record.eTimes,jdbcType=BIGINT},
+      E_GENERATE_STATUS = #{record.eGenerateStatus,jdbcType=BIGINT},
+      E_PASSSCORE = #{record.ePassscore,jdbcType=DOUBLE},
+      E_PID = #{record.ePid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.TExam" >
+    update t_exam
+    <set >
+      <if test="epId != null" >
+        EP_ID = #{epId,jdbcType=BIGINT},
+      </if>
+      <if test="eName != null" >
+        E_NAME = #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="eStatus != null" >
+        E_STATUS = #{eStatus,jdbcType=BIGINT},
+      </if>
+      <if test="eStartdate != null" >
+        E_STARTDATE = #{eStartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eEnddate != null" >
+        E_ENDDATE = #{eEnddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eStarttime != null" >
+        E_STARTTIME = #{eStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="eEndtime != null" >
+        E_ENDTIME = #{eEndtime,jdbcType=VARCHAR},
+      </if>
+      <if test="eDuration != null" >
+        E_DURATION = #{eDuration,jdbcType=BIGINT},
+      </if>
+      <if test="eAllowtimes != null" >
+        E_ALLOWTIMES = #{eAllowtimes,jdbcType=BIGINT},
+      </if>
+      <if test="eMode != null" >
+        E_MODE = #{eMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eAnsmode != null" >
+        E_ANSMODE = #{eAnsmode,jdbcType=VARCHAR},
+      </if>
+      <if test="eSingletime != null" >
+        E_SINGLETIME = #{eSingletime,jdbcType=BIGINT},
+      </if>
+      <if test="eConfusionques != null" >
+        E_CONFUSIONQUES = #{eConfusionques,jdbcType=BIGINT},
+      </if>
+      <if test="eConfusionans != null" >
+        E_CONFUSIONANS = #{eConfusionans,jdbcType=BIGINT},
+      </if>
+      <if test="eViewanstime != null" >
+        E_VIEWANSTIME = #{eViewanstime,jdbcType=BIGINT},
+      </if>
+      <if test="eNumpeople != null" >
+        E_NUMPEOPLE = #{eNumpeople,jdbcType=BIGINT},
+      </if>
+      <if test="eScene != null" >
+        E_SCENE = #{eScene,jdbcType=BIGINT},
+      </if>
+      <if test="eScenescale != null" >
+        E_SCENESCALE = #{eScenescale,jdbcType=VARCHAR},
+      </if>
+      <if test="eInstime != null" >
+        E_INSTIME = #{eInstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eSelftest != null" >
+        E_SELFTEST = #{eSelftest,jdbcType=BIGINT},
+      </if>
+      <if test="eCreateEpModel != null" >
+        E_CREATE_EP_MODEL = #{eCreateEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="eCreateEpTime != null" >
+        E_CREATE_EP_TIME = #{eCreateEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eDecideEpModel != null" >
+        E_DECIDE_EP_MODEL = #{eDecideEpModel,jdbcType=BIGINT},
+      </if>
+      <if test="eDecideEpTime != null" >
+        E_DECIDE_EP_TIME = #{eDecideEpTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eTimes != null" >
+        E_TIMES = #{eTimes,jdbcType=BIGINT},
+      </if>
+      <if test="eGenerateStatus != null" >
+        E_GENERATE_STATUS = #{eGenerateStatus,jdbcType=BIGINT},
+      </if>
+      <if test="ePassscore != null" >
+        E_PASSSCORE = #{ePassscore,jdbcType=DOUBLE},
+      </if>
+      <if test="ePid != null" >
+        E_PID = #{ePid,jdbcType=BIGINT},
+      </if>
+      <if test="eCaption != null" >
+        E_CAPTION = #{eCaption,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where E_ID = #{eId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.TExam" >
+    update t_exam
+    set EP_ID = #{epId,jdbcType=BIGINT},
+      E_NAME = #{eName,jdbcType=VARCHAR},
+      E_STATUS = #{eStatus,jdbcType=BIGINT},
+      E_STARTDATE = #{eStartdate,jdbcType=TIMESTAMP},
+      E_ENDDATE = #{eEnddate,jdbcType=TIMESTAMP},
+      E_STARTTIME = #{eStarttime,jdbcType=VARCHAR},
+      E_ENDTIME = #{eEndtime,jdbcType=VARCHAR},
+      E_DURATION = #{eDuration,jdbcType=BIGINT},
+      E_ALLOWTIMES = #{eAllowtimes,jdbcType=BIGINT},
+      E_MODE = #{eMode,jdbcType=VARCHAR},
+      E_ANSMODE = #{eAnsmode,jdbcType=VARCHAR},
+      E_SINGLETIME = #{eSingletime,jdbcType=BIGINT},
+      E_CONFUSIONQUES = #{eConfusionques,jdbcType=BIGINT},
+      E_CONFUSIONANS = #{eConfusionans,jdbcType=BIGINT},
+      E_VIEWANSTIME = #{eViewanstime,jdbcType=BIGINT},
+      E_NUMPEOPLE = #{eNumpeople,jdbcType=BIGINT},
+      E_SCENE = #{eScene,jdbcType=BIGINT},
+      E_SCENESCALE = #{eScenescale,jdbcType=VARCHAR},
+      E_INSTIME = #{eInstime,jdbcType=TIMESTAMP},
+      E_SELFTEST = #{eSelftest,jdbcType=BIGINT},
+      E_CREATE_EP_MODEL = #{eCreateEpModel,jdbcType=BIGINT},
+      E_CREATE_EP_TIME = #{eCreateEpTime,jdbcType=TIMESTAMP},
+      E_DECIDE_EP_MODEL = #{eDecideEpModel,jdbcType=BIGINT},
+      E_DECIDE_EP_TIME = #{eDecideEpTime,jdbcType=TIMESTAMP},
+      E_TIMES = #{eTimes,jdbcType=BIGINT},
+      E_GENERATE_STATUS = #{eGenerateStatus,jdbcType=BIGINT},
+      E_PASSSCORE = #{ePassscore,jdbcType=DOUBLE},
+      E_PID = #{ePid,jdbcType=BIGINT},
+      E_CAPTION = #{eCaption,jdbcType=LONGVARCHAR}
+    where E_ID = #{eId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.TExam" >
+    update t_exam
+    set EP_ID = #{epId,jdbcType=BIGINT},
+      E_NAME = #{eName,jdbcType=VARCHAR},
+      E_STATUS = #{eStatus,jdbcType=BIGINT},
+      E_STARTDATE = #{eStartdate,jdbcType=TIMESTAMP},
+      E_ENDDATE = #{eEnddate,jdbcType=TIMESTAMP},
+      E_STARTTIME = #{eStarttime,jdbcType=VARCHAR},
+      E_ENDTIME = #{eEndtime,jdbcType=VARCHAR},
+      E_DURATION = #{eDuration,jdbcType=BIGINT},
+      E_ALLOWTIMES = #{eAllowtimes,jdbcType=BIGINT},
+      E_MODE = #{eMode,jdbcType=VARCHAR},
+      E_ANSMODE = #{eAnsmode,jdbcType=VARCHAR},
+      E_SINGLETIME = #{eSingletime,jdbcType=BIGINT},
+      E_CONFUSIONQUES = #{eConfusionques,jdbcType=BIGINT},
+      E_CONFUSIONANS = #{eConfusionans,jdbcType=BIGINT},
+      E_VIEWANSTIME = #{eViewanstime,jdbcType=BIGINT},
+      E_NUMPEOPLE = #{eNumpeople,jdbcType=BIGINT},
+      E_SCENE = #{eScene,jdbcType=BIGINT},
+      E_SCENESCALE = #{eScenescale,jdbcType=VARCHAR},
+      E_INSTIME = #{eInstime,jdbcType=TIMESTAMP},
+      E_SELFTEST = #{eSelftest,jdbcType=BIGINT},
+      E_CREATE_EP_MODEL = #{eCreateEpModel,jdbcType=BIGINT},
+      E_CREATE_EP_TIME = #{eCreateEpTime,jdbcType=TIMESTAMP},
+      E_DECIDE_EP_MODEL = #{eDecideEpModel,jdbcType=BIGINT},
+      E_DECIDE_EP_TIME = #{eDecideEpTime,jdbcType=TIMESTAMP},
+      E_TIMES = #{eTimes,jdbcType=BIGINT},
+      E_GENERATE_STATUS = #{eGenerateStatus,jdbcType=BIGINT},
+      E_PASSSCORE = #{ePassscore,jdbcType=DOUBLE},
+      E_PID = #{ePid,jdbcType=BIGINT}
+    where E_ID = #{eId,jdbcType=BIGINT}
+  </update>
+  <resultMap extends="BaseResultMap" type="com.chinasofti.cetp.study.model.MoreTExam"  id="MoreTExamMap">
+	 <result column="EP_FULLSCORE" property="epFullscore" jdbcType="INTEGER"  /> 
+	 <result column="EU_ID" property="euId" jdbcType="INTEGER"  /> 
+	 <result column="EU_STATUS" property="euStatus" jdbcType="BIGINT"  /> 
+	 <result column="CHAP_ID" property="chapId" jdbcType="INTEGER"  /> 
+	 <result column="CHAP_NAME" property="chapName" jdbcType="VARCHAR"  /> 
+  </resultMap>
+  <select id="getSpecExamListForStu" parameterType="map" resultMap="MoreTExamMap">
+	SELECT
+		e.E_ID AS E_ID,
+		e.E_NAME AS E_NAME,
+		e.E_GENERATE_STATUS AS E_GENERATE_STATUS,
+		e.E_STARTDATE AS E_STARTDATE,
+		e.E_ENDDATE AS E_ENDDATE,
+		ep.EP_FULLSCORE AS EP_FULLSCORE,
+		eu.EU_ID AS EU_ID,
+		eu.EU_STATUS AS EU_STATUS
+	FROM
+		t_exam AS e
+	INNER JOIN t_exam_spec AS es ON (
+		e.E_ID = es.E_ID
+		AND es.SPEC_ID = #{specId}
+	)
+	INNER JOIN t_exam_paper AS ep ON (e.EP_ID = ep.EP_ID)
+	LEFT JOIN t_exam_user AS eu ON (
+		e.E_ID = eu.E_ID
+		AND eu.USER_ID = #{stuNo}
+	)
+	LEFT JOIN t_exam_chapter ec ON (ec.E_ID = e.E_ID)
+	WHERE
+		e.E_STATUS = 0
+	AND ec.C_ID IS NULL
+	<if test="status=='0'.toString()">
+	AND IFNULL(EU_STATUS, 0) = 0
+	</if>
+	<if test="status=='1'.toString()">
+	AND IFNULL(EU_STATUS, 0) > 0
+	</if>
+	ORDER BY
+		e.E_STARTDATE DESC,
+		e.E_ID DESC   
+  </select>
+  <select id="getChapterExamListForStu" parameterType="map" resultMap="MoreTExamMap">
+	SELECT
+		e.E_ID AS E_ID,
+		e.E_NAME AS E_NAME,
+		e.E_GENERATE_STATUS AS E_GENERATE_STATUS,
+		e.E_STARTDATE AS E_STARTDATE,
+		e.E_ENDDATE AS E_ENDDATE,
+		ep.EP_FULLSCORE AS EP_FULLSCORE,
+		eu.EU_ID AS EU_ID,
+		eu.EU_STATUS AS EU_STATUS,
+		CHAP_ID,
+		CHAP_NAME
+	FROM
+		t_exam AS e
+	INNER JOIN t_exam_chapter AS ec ON (ec.E_ID = e.E_ID)
+	INNER JOIN tp_chapter ON (
+		ec.C_ID = CHAP_ID
+		AND CHAP_SPEC_ID = #{specId}
+	)
+	INNER JOIN t_exam_paper AS ep ON (e.EP_ID = ep.EP_ID)
+	LEFT JOIN t_exam_user AS eu ON (
+		e.E_ID = eu.E_ID
+		AND eu.USER_ID = #{stuNo}
+	)
+	WHERE
+		e.E_STATUS = 0
+	<if test="status=='0'.toString()">
+	AND IFNULL(EU_STATUS, 0) = 0
+	</if>
+	<if test="status=='1'.toString()">
+	AND IFNULL(EU_STATUS, 0) > 0
+	</if>
+	ORDER BY
+		e.E_STARTDATE DESC,
+		e.E_ID DESC   
+  </select>
+</mapper>

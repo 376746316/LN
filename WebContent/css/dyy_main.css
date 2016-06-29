@@ -1,0 +1,61 @@
+.infoTable {
+	font-size: 12px;
+	width: 100%;
+	border-color: gray;
+	border-style: solid;
+	border-width: 1px;
+	vertical-align: middle;
+	border-collapse: collapse;
+	padding: 5px;
+	text-align: center;
+}
+
+.infoTable th {
+	border-color: gray;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+	margin-top: 5px;
+}
+
+.infoTable td {
+	border-color: gray;
+	border-style: solid;
+	border-width: 1px;
+	padding-bottom: 10px;
+}
+
+.infoTable td input {
+	margin-top: 10px;
+	width: 90%;
+}
+
+.infoDiv {
+	height: auto; 
+	text-indent: 2em;
+	font-size: 12px;
+}
+.infoSourceDiv {
+	height: 40px; font-size : 12px;
+	text-indent: 2em;
+	font-size: 12px;
+}
+.projectdtl {
+	background-color: #DEEAFA;
+	height: 10px;
+	color: #003C9D;
+	font-size: 13px;
+	margin-left: 0px;
+}
+
+.projecttpbd {
+	margin-left: 60px;
+	margin-top: 2px;
+	border: 1px solid #9CB8D0;
+}
+
+.projecttpbd table td .infoDiv {
+	margin: 10px;
+}

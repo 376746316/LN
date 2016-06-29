@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.CommetScMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.CommetScKey" >
+    <id column="COSC_SPEC_ID" property="coscSpecId" jdbcType="INTEGER" />
+    <id column="COSC_CO_ID" property="coscCoId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    COSC_SPEC_ID, COSC_CO_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.CommetScExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_comment_sc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.CommetScKey" >
+    delete from tp_comment_sc
+    where COSC_SPEC_ID = #{coscSpecId,jdbcType=INTEGER}
+      and COSC_CO_ID = #{coscCoId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.CommetScExample" >
+    delete from tp_comment_sc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.CommetScKey" >
+    insert into tp_comment_sc (COSC_SPEC_ID, COSC_CO_ID)
+    values (#{coscSpecId,jdbcType=INTEGER}, #{coscCoId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.CommetScKey" >
+    insert into tp_comment_sc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coscSpecId != null" >
+        COSC_SPEC_ID,
+      </if>
+      <if test="coscCoId != null" >
+        COSC_CO_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coscSpecId != null" >
+        #{coscSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="coscCoId != null" >
+        #{coscCoId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.CommetScExample" resultType="java.lang.Integer" >
+    select count(*) from tp_comment_sc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_comment_sc
+    <set >
+      <if test="record.coscSpecId != null" >
+        COSC_SPEC_ID = #{record.coscSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="record.coscCoId != null" >
+        COSC_CO_ID = #{record.coscCoId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_comment_sc
+    set COSC_SPEC_ID = #{record.coscSpecId,jdbcType=INTEGER},
+      COSC_CO_ID = #{record.coscCoId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

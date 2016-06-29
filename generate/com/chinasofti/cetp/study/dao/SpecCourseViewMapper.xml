@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.SpecCourseViewMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.SpecCourseView">
+		<result column="SPEC_ID" property="specId" jdbcType="INTEGER" />
+		<result column="SPEC_NAME" property="specName" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="SPEC_COST" property="specCost" jdbcType="INTEGER" />
+		<result column="SPEC_CLASS" property="specClass" jdbcType="CHAR" />
+		<result column="typeId" property="typeid" jdbcType="INTEGER" />
+		<result column="SPEC_STATUS" property="specStatus" jdbcType="CHAR" />
+		<result column="hitNum" property="hitnum" jdbcType="BIGINT" />
+		<result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+		<result column="stuNum" property="stunum" jdbcType="BIGINT" />
+		<result column="typeName" property="typename" jdbcType="VARCHAR" />
+		<result column="comNum" property="comnum" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.SpecCourseView" extends="BaseResultMap">
+		<result column="imgURL" property="imgurl" jdbcType="LONGVARCHAR" />
+		<result column="SPEC_TIP_MSG" property="specTipMsg" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<resultMap type="com.chinasofti.cetp.study.model.SpecCourseViewDetail" id="courseDetail">
+		<result column="SPEC_ID" property="SPEC_ID" jdbcType="INTEGER" />
+		<result column="SPEC_TYPE_ID" property="SPEC_TYPE_ID" jdbcType="INTEGER" />
+		<result column="SPEC_NAME" property="SPEC_NAME" jdbcType="VARCHAR" />
+		<result column="SPEC_INTRO" property="SPEC_INTRO" jdbcType="VARCHAR" />
+		<result column="SPEC_TIME" property="SPEC_TIME" jdbcType="VARCHAR" />
+		<result column="USER_NAME" property="USER_NAME" jdbcType="VARCHAR" />
+		<result column="USER_INTRO" property="USER_INTRO" jdbcType="VARCHAR" />
+		<result column="USER_HEAD" property="USER_HEAD" jdbcType="VARCHAR" />
+		<result column="ORG_NAME" property="ORG_NAME" jdbcType="VARCHAR" />
+		<result column="SPEC_STATUS" property="SPEC_STATUS" jdbcType="VARCHAR" />
+		<result column="SPEC_TIP_MSG" property="SPEC_TIP_MSG" jdbcType="VARCHAR" />
+		<result column="SPEC_APP_CROWD" property="SPEC_APP_CROWD" jdbcType="VARCHAR" />
+		<result column="SPEC_THUMB" property="SPEC_THUMB" jdbcType="VARCHAR" />
+		<result column="SPEC_COST" property="SPEC_COST" jdbcType="INTEGER" />
+
+	</resultMap>
+
+	<resultMap type="com.chinasofti.cetp.study.model.CourseComment" id="commentMap">
+		<result column="SPEC_ID" property="specId" jdbcType="INTEGER" />
+		<result column="COSC_CO_ID" property="coId" jdbcType="INTEGER" />
+		<result column="CO_TOTAL" property="coTotal" jdbcType="INTEGER" />
+		<result column="CO_COMMENT" property="coComment" jdbcType="VARCHAR" />
+		<result column="CO_REGTIME" property="coRegtime" jdbcType="TIMESTAMP" />
+		<result column="STU_NO" property="stuNo" jdbcType="INTEGER" />
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="STU_HEAD" property="stuHead" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SPEC_ID, SPEC_NAME, USER_NAME, SPEC_COST, SPEC_CLASS, typeId,SPEC_STATUS, hitNum, updateTime,
+		stuNum, typeName, comNum
+	</sql>
+	<sql id="Blob_Column_List">
+		imgURL, SPEC_TIP_MSG
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.study.model.SpecCourseViewExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from v_spec_course_view
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.SpecCourseViewExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from v_spec_course_view
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.study.model.SpecCourseViewExample" resultType="java.lang.Integer">
+		select count(*) from v_spec_course_view
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 学生正在学习的课程 -->
+	<select id="selectStudingCourse" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		v_spec_course_view
+		INNER JOIN tp_spec_stu ON SPEC_ID = SU_SPEC_ID
+		WHERE
+		SU_STU_ID = #{stuNo}
+		AND (
+		SU_STATUS = '1'
+		OR SU_STATUS = '2'
+		)
+		ORDER BY
+		SU_REGTIME DESC
+	</select>
+
+	<!-- 学生学习过的课程 -->
+	<select id="selectStudiedCourse" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		v_spec_course_view
+		INNER JOIN tp_spec_stu ON SPEC_ID = SU_SPEC_ID
+		WHERE
+		SU_STU_ID = #{stuNo}
+		AND SU_COURSE_PROGRESS = 100
+		ORDER BY
+		SU_REGTIME DESC
+	</select>
+
+	<!-- 学生收藏的课程 -->
+	<select id="selectCollectedCourse" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_collect_sc
+		INNER JOIN v_spec_course_view ON CSC_SPEC_ID = SPEC_ID
+		WHERE
+		CSC_STU_NO = #{stuNo}
+		ORDER BY
+		CSC_REGTIME DESC
+	</select>
+
+	<!-- 指定课程的具体信息 -->
+	<select id="selectCourseBySpecID" resultMap="courseDetail" parameterType="java.lang.String">
+		SELECT
+		SPEC_ID,
+		SPEC_NAME,
+		USER_NAME,
+		ORG_NAME,
+		USER_INTRO,
+		USER_HEAD,
+		SPEC_THEORY_TIME AS SPEC_TIME,
+		SPEC_APP_CROWD,
+		SPEC_INTRO,
+		SPEC_STATUS,
+		SPEC_TIP_MSG,
+		SPEC_THUMB, SPEC_TIP_MSG, SPEC_STATUS,
+		IFNULL(SPEC_COST, 0) AS SPEC_COST,
+		SPEC_TYPE_ID
+		FROM
+		tp_spec_course
+		INNER JOIN tp_user ON tp_user.USER_NO = SPEC_USER_NO
+		LEFT JOIN tp_org ON tp_org.ORG_ID = USER_ORGID
+		WHERE SPEC_ID=#{specID}
+	</select>
+
+	<select id="selectCourseCommentBySpecID" resultMap="commentMap" parameterType="java.lang.String">
+		SELECT
+		SPEC_ID ,
+		COSC_CO_ID ,
+		CO_TOTAL ,
+		CO_COMMENT ,
+		CO_REGTIME ,
+		STU_NO,
+		IFNULL(STU_NICKNAME,STU_USERID) AS STU_NAME ,
+		STU_HEAD
+		from
+		tp_spec_course
+		INNER JOIN tp_comment_sc ON SPEC_ID = COSC_SPEC_ID
+		INNER JOIN tp_comment ON tp_comment.CO_ID = COSC_CO_ID
+		INNER JOIN tp_student ON tp_student.STU_NO = CO_STU_NO
+		WHERE SPEC_ID=#{specID}
+		ORDER BY CO_REGTIME DESC
+	</select>
+
+	<select id="selectOthersSpec" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		tp_spec_stu AS ta
+		INNER JOIN tp_spec_stu AS tb ON ta.SU_STU_ID = tb.SU_STU_ID
+		INNER JOIN v_spec_course_view ON SPEC_ID = tb.SU_SPEC_ID
+		WHERE
+		ta.SU_SPEC_ID = #{specID}
+		GROUP BY
+		tb.SU_SPEC_ID
+		ORDER BY
+		COUNT(tb.SU_STU_ID) DESC
+		LIMIT 0,3
+	</select>
+	<select id="selectRecByTechType" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		v_spec_course_view
+		WHERE
+		FIND_IN_SET(typeId, getChildTechType(#{techTypeId}))
+		ORDER BY
+		hitNum DESC
+		LIMIT 0,
+		5
+	</select>
+
+	<select id="selectRecommCourseByOterType" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from v_spec_course_view
+		INNER JOIN tp_recommend_spec ON SPEC_ID = RS_SPEC_ID
+		WHERE RS_TYPE=#{type} AND SPEC_STATUS = "3"
+		ORDER BY SPEC_ID DESC
+		LIMIT 0,7
+	</select>
+
+	<select id="selectRecommendByStu" resultMap="ResultMapWithBLOBs" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM
+		v_spec_course_view
+		<if test="profId != null">
+			INNER JOIN tp_profession_spec ON (
+			SPEC_ID = PS_SPEC_ID
+			AND PS_PROF_ID = #{profId}
+			)
+		</if>
+		WHERE
+		NOT SPEC_ID IN (
+		SELECT
+		SU_SPEC_ID
+		FROM
+		tp_spec_stu
+		WHERE
+		SU_STU_ID = #{stuNo}
+		)
+		and spec_status = "3"
+		ORDER BY hitNum DESC
+		LIMIT 0,8
+	</select>
+
+	<select id="selectByProfId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from v_spec_course_view
+		INNER JOIN tp_profession_spec ON SPEC_ID = PS_SPEC_ID
+		WHERE PS_PROF_ID = #{profId} AND SPEC_STATUS = "3"
+		ORDER BY PS_SEQ ASC
+	</select>
+	<select id="selectSpecCourseViewBySpecId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from v_spec_course_view
+		WHERE SPEC_ID = #{specId}
+	</select>
+	<select id="selectByTeacherId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		b.SPEC_ID,
+		b.SPEC_NAME,
+		USER_NAME,
+		b.SPEC_COST,
+		b.SPEC_CLASS,
+		b.SPEC_STATUS, b.SPEC_TIP_MSG,
+		hitNum,
+		updateTime,
+		stuNum,
+		typeName,
+		comNum,
+		imgURL
+		FROM
+		tp_spec_course a
+		INNER JOIN v_spec_course_view b ON a.SPEC_ID = b.SPEC_ID
+		WHERE
+		a.SPEC_USER_NO = #{userNo}
+	</select>
+</mapper>
+

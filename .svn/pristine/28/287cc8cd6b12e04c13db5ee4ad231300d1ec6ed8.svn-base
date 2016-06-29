@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveHomeworkMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.LiveHomework" >
+    <id column="LHW_LC_ID" property="lhwLcId" jdbcType="INTEGER" />
+    <id column="LHW_EXER_ID" property="lhwExerId" jdbcType="INTEGER" />
+    <result column="LHW_FLAG" property="lhwFlag" jdbcType="CHAR" />
+    <result column="LHW_USER_NO" property="lhwUserNo" jdbcType="INTEGER" />
+    <result column="LHW_REGTIME" property="lhwRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LHW_LC_ID, LHW_EXER_ID, LHW_FLAG, LHW_USER_NO, LHW_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveHomeworkExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_live_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveHomeworkKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_live_homework
+    where LHW_LC_ID = #{lhwLcId,jdbcType=INTEGER}
+      and LHW_EXER_ID = #{lhwExerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveHomeworkKey" >
+    delete from tp_live_homework
+    where LHW_LC_ID = #{lhwLcId,jdbcType=INTEGER}
+      and LHW_EXER_ID = #{lhwExerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveHomework" >
+    insert into tp_live_homework (LHW_LC_ID, LHW_EXER_ID, LHW_FLAG, 
+      LHW_USER_NO, LHW_REGTIME)
+    values (#{lhwLcId,jdbcType=INTEGER}, #{lhwExerId,jdbcType=INTEGER}, #{lhwFlag,jdbcType=CHAR}, 
+      #{lhwUserNo,jdbcType=INTEGER}, #{lhwRegtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveHomework" >
+    insert into tp_live_homework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lhwLcId != null" >
+        LHW_LC_ID,
+      </if>
+      <if test="lhwExerId != null" >
+        LHW_EXER_ID,
+      </if>
+      <if test="lhwFlag != null" >
+        LHW_FLAG,
+      </if>
+      <if test="lhwUserNo != null" >
+        LHW_USER_NO,
+      </if>
+      <if test="lhwRegtime != null" >
+        LHW_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lhwLcId != null" >
+        #{lhwLcId,jdbcType=INTEGER},
+      </if>
+      <if test="lhwExerId != null" >
+        #{lhwExerId,jdbcType=INTEGER},
+      </if>
+      <if test="lhwFlag != null" >
+        #{lhwFlag,jdbcType=CHAR},
+      </if>
+      <if test="lhwUserNo != null" >
+        #{lhwUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="lhwRegtime != null" >
+        #{lhwRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveHomeworkExample" resultType="java.lang.Integer" >
+    select count(*) from tp_live_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveHomework" >
+    update tp_live_homework
+    <set >
+      <if test="lhwFlag != null" >
+        LHW_FLAG = #{lhwFlag,jdbcType=CHAR},
+      </if>
+      <if test="lhwUserNo != null" >
+        LHW_USER_NO = #{lhwUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="lhwRegtime != null" >
+        LHW_REGTIME = #{lhwRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LHW_LC_ID = #{lhwLcId,jdbcType=INTEGER}
+      and LHW_EXER_ID = #{lhwExerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.LiveHomework" >
+    update tp_live_homework
+    set LHW_FLAG = #{lhwFlag,jdbcType=CHAR},
+      LHW_USER_NO = #{lhwUserNo,jdbcType=INTEGER},
+      LHW_REGTIME = #{lhwRegtime,jdbcType=TIMESTAMP}
+    where LHW_LC_ID = #{lhwLcId,jdbcType=INTEGER}
+      and LHW_EXER_ID = #{lhwExerId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lidezheng.chapter.dao.ChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.lidezheng.chapter.model.Chapter" >
+    <id column="CHAP_ID" property="chapId" jdbcType="INTEGER" />
+    <result column="CHAP_SEQ" property="chapSeq" jdbcType="INTEGER" />
+    <result column="CHAP_SPEC_ID" property="chapSpecId" jdbcType="INTEGER" />
+    <result column="CHAP_NAME" property="chapName" jdbcType="VARCHAR" />
+    <result column="CHAP_EXAM" property="chapExam" jdbcType="BIGINT" />
+    <result column="CHAP_USER_NO" property="chapUserNo" jdbcType="INTEGER" />
+    <result column="CHAP_REGTIME" property="chapRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lidezheng.chapter.model.ChapterWithBLOBs" extends="BaseResultMap" >
+    <result column="CHAP_HOMEWORK" property="chapHomework" jdbcType="LONGVARCHAR" />
+    <result column="CHAP_HW_ANS" property="chapHwAns" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CHAP_ID, CHAP_SEQ, CHAP_SPEC_ID, CHAP_NAME, CHAP_EXAM, CHAP_USER_NO, CHAP_REGTIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CHAP_HOMEWORK, CHAP_HW_ANS
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lidezheng.chapter.model.ChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lidezheng.chapter.model.ChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_chapter
+    where CHAP_ID = #{chapId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_chapter
+    where CHAP_ID = #{chapId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lidezheng.chapter.model.ChapterWithBLOBs" >
+    insert into tp_chapter (CHAP_ID, CHAP_SEQ, CHAP_SPEC_ID, 
+      CHAP_NAME, CHAP_EXAM, CHAP_USER_NO, 
+      CHAP_REGTIME, CHAP_HOMEWORK, CHAP_HW_ANS
+      )
+    values (#{chapId,jdbcType=INTEGER}, #{chapSeq,jdbcType=INTEGER}, #{chapSpecId,jdbcType=INTEGER}, 
+      #{chapName,jdbcType=VARCHAR}, #{chapExam,jdbcType=BIGINT}, #{chapUserNo,jdbcType=INTEGER}, 
+      #{chapRegtime,jdbcType=TIMESTAMP}, #{chapHomework,jdbcType=LONGVARCHAR}, #{chapHwAns,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lidezheng.chapter.model.ChapterWithBLOBs" >
+    insert into tp_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chapId != null" >
+        CHAP_ID,
+      </if>
+      <if test="chapSeq != null" >
+        CHAP_SEQ,
+      </if>
+      <if test="chapSpecId != null" >
+        CHAP_SPEC_ID,
+      </if>
+      <if test="chapName != null" >
+        CHAP_NAME,
+      </if>
+      <if test="chapExam != null" >
+        CHAP_EXAM,
+      </if>
+      <if test="chapUserNo != null" >
+        CHAP_USER_NO,
+      </if>
+      <if test="chapRegtime != null" >
+        CHAP_REGTIME,
+      </if>
+      <if test="chapHomework != null" >
+        CHAP_HOMEWORK,
+      </if>
+      <if test="chapHwAns != null" >
+        CHAP_HW_ANS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chapId != null" >
+        #{chapId,jdbcType=INTEGER},
+      </if>
+      <if test="chapSeq != null" >
+        #{chapSeq,jdbcType=INTEGER},
+      </if>
+      <if test="chapSpecId != null" >
+        #{chapSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="chapName != null" >
+        #{chapName,jdbcType=VARCHAR},
+      </if>
+      <if test="chapExam != null" >
+        #{chapExam,jdbcType=BIGINT},
+      </if>
+      <if test="chapUserNo != null" >
+        #{chapUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="chapRegtime != null" >
+        #{chapRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapHomework != null" >
+        #{chapHomework,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chapHwAns != null" >
+        #{chapHwAns,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lidezheng.chapter.model.ChapterExample" resultType="java.lang.Integer" >
+    select count(*) from tp_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lidezheng.chapter.model.ChapterWithBLOBs" >
+    update tp_chapter
+    <set >
+      <if test="chapSeq != null" >
+        CHAP_SEQ = #{chapSeq,jdbcType=INTEGER},
+      </if>
+      <if test="chapSpecId != null" >
+        CHAP_SPEC_ID = #{chapSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="chapName != null" >
+        CHAP_NAME = #{chapName,jdbcType=VARCHAR},
+      </if>
+      <if test="chapExam != null" >
+        CHAP_EXAM = #{chapExam,jdbcType=BIGINT},
+      </if>
+      <if test="chapUserNo != null" >
+        CHAP_USER_NO = #{chapUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="chapRegtime != null" >
+        CHAP_REGTIME = #{chapRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chapHomework != null" >
+        CHAP_HOMEWORK = #{chapHomework,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chapHwAns != null" >
+        CHAP_HW_ANS = #{chapHwAns,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CHAP_ID = #{chapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lidezheng.chapter.model.ChapterWithBLOBs" >
+    update tp_chapter
+    set CHAP_SEQ = #{chapSeq,jdbcType=INTEGER},
+      CHAP_SPEC_ID = #{chapSpecId,jdbcType=INTEGER},
+      CHAP_NAME = #{chapName,jdbcType=VARCHAR},
+      CHAP_EXAM = #{chapExam,jdbcType=BIGINT},
+      CHAP_USER_NO = #{chapUserNo,jdbcType=INTEGER},
+      CHAP_REGTIME = #{chapRegtime,jdbcType=TIMESTAMP},
+      CHAP_HOMEWORK = #{chapHomework,jdbcType=LONGVARCHAR},
+      CHAP_HW_ANS = #{chapHwAns,jdbcType=LONGVARCHAR}
+    where CHAP_ID = #{chapId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lidezheng.chapter.model.Chapter" >
+    update tp_chapter
+    set CHAP_SEQ = #{chapSeq,jdbcType=INTEGER},
+      CHAP_SPEC_ID = #{chapSpecId,jdbcType=INTEGER},
+      CHAP_NAME = #{chapName,jdbcType=VARCHAR},
+      CHAP_EXAM = #{chapExam,jdbcType=BIGINT},
+      CHAP_USER_NO = #{chapUserNo,jdbcType=INTEGER},
+      CHAP_REGTIME = #{chapRegtime,jdbcType=TIMESTAMP}
+    where CHAP_ID = #{chapId,jdbcType=INTEGER}
+  </update>
+</mapper>

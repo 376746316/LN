@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.practice.dao.PracAnswerMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.practice.model.PracAnswer">
+		<id column="CR_ANSWER_ID" property="crAnswerId" jdbcType="INTEGER" />
+		<result column="CR_QUESTION_ID" property="crQuestionId"
+			jdbcType="INTEGER" />
+		<result column="CR_ANSWER_USER" property="crAnswerUser"
+			jdbcType="INTEGER" />
+		<result column="CR_ANSWER_ROLE" property="crAnswerRole"
+			jdbcType="CHAR" />
+		<result column="CR_REPLY_ATTACH" property="crReplyAttach"
+			jdbcType="VARCHAR" />
+		<result column="CR_REPLY_TIME" property="crReplyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.practice.model.PracAnswer"
+		extends="BaseResultMap">
+		<result column="CR_REPLY_CONTENT" property="crReplyContent"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap type="com.chinasofti.cetp.practice.model.MorePracAnswer"
+		id="MoreResultMap" extends="ResultMapWithBLOBs">
+		<result column="ANSWER_type" property="answerType" jdbcType="VARCHAR" />
+		<result column="ANSWER_USER" property="userName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		CR_ANSWER_ID, CR_QUESTION_ID, CR_ANSWER_USER,
+		CR_ANSWER_ROLE, CR_REPLY_ATTACH,
+		CR_REPLY_TIME
+	</sql>
+	<sql id="Blob_Column_List">
+		CR_REPLY_CONTENT
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.chinasofti.cetp.practice.model.PracAnswerExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_prac_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<!-- 查询所有的问题回答 -->
+	<select id="getAllPracQuestionAnswerList" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		IF(CR_ANSWER_ROLE = "1","学生","老师")AS
+		ANSWER_type ,
+		IF(CR_ANSWER_ROLE='1',(select stu_name from tp_student where
+		stu_no=A.CR_ANSWER_USER) ,(SELECT
+		USER_NAME FROM TP_USER WHERE USER_NO
+		= A.CR_ANSWER_USER ) ) AS
+		ANSWER_USER
+		FROM tp_prac_answer A
+		WHERE
+		A.CR_QUESTION_ID = #{pqQuestionId}
+
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.chinasofti.cetp.practice.model.PracAnswerExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_prac_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="MoreResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,IF(CR_ANSWER_ROLE = "1","学生","老师")AS
+		ANSWER_type ,
+		IF(CR_ANSWER_ROLE='1',(select stu_name from tp_student where
+		stu_no=A.CR_ANSWER_USER) ,(SELECT
+		USER_NAME FROM TP_USER WHERE USER_NO
+		= A.CR_ANSWER_USER ) ) AS
+		ANSWER_USER
+		FROM
+		tp_prac_answer A
+		where CR_ANSWER_ID = #{crAnswerId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		tp_prac_answer
+		where CR_ANSWER_ID = #{crAnswerId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.chinasofti.cetp.practice.model.PracAnswerExample">
+		delete from tp_prac_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.practice.model.PracAnswer">
+		insert into tp_prac_answer
+		(CR_ANSWER_ID, CR_QUESTION_ID,
+		CR_ANSWER_USER,
+		CR_ANSWER_ROLE,
+		CR_REPLY_ATTACH, CR_REPLY_TIME,
+		CR_REPLY_CONTENT)
+		values
+		(#{crAnswerId,jdbcType=INTEGER}, #{crQuestionId,jdbcType=INTEGER},
+		#{crAnswerUser,jdbcType=INTEGER},
+		#{crAnswerRole,jdbcType=CHAR},
+		#{crReplyAttach,jdbcType=VARCHAR}, #{crReplyTime,jdbcType=TIMESTAMP},
+		#{crReplyContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.practice.model.PracAnswer">
+		insert into tp_prac_answer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="crAnswerId != null">
+				CR_ANSWER_ID,
+			</if>
+			<if test="crQuestionId != null">
+				CR_QUESTION_ID,
+			</if>
+			<if test="crAnswerUser != null">
+				CR_ANSWER_USER,
+			</if>
+			<if test="crAnswerRole != null">
+				CR_ANSWER_ROLE,
+			</if>
+			<if test="crReplyAttach != null">
+				CR_REPLY_ATTACH,
+			</if>
+			<if test="crReplyTime != null">
+				CR_REPLY_TIME,
+			</if>
+			<if test="crReplyContent != null">
+				CR_REPLY_CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="crAnswerId != null">
+				#{crAnswerId,jdbcType=INTEGER},
+			</if>
+			<if test="crQuestionId != null">
+				#{crQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="crAnswerUser != null">
+				#{crAnswerUser,jdbcType=INTEGER},
+			</if>
+			<if test="crAnswerRole != null">
+				#{crAnswerRole,jdbcType=CHAR},
+			</if>
+			<if test="crReplyAttach != null">
+				#{crReplyAttach,jdbcType=VARCHAR},
+			</if>
+			<if test="crReplyTime != null">
+				#{crReplyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="crReplyContent != null">
+				#{crReplyContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.chinasofti.cetp.practice.model.PracAnswerExample"
+		resultType="java.lang.Integer">
+		select count(*) from tp_prac_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_prac_answer
+		<set>
+			<if test="record.crAnswerId != null">
+				CR_ANSWER_ID = #{record.crAnswerId,jdbcType=INTEGER},
+			</if>
+			<if test="record.crQuestionId != null">
+				CR_QUESTION_ID = #{record.crQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="record.crAnswerUser != null">
+				CR_ANSWER_USER = #{record.crAnswerUser,jdbcType=INTEGER},
+			</if>
+			<if test="record.crAnswerRole != null">
+				CR_ANSWER_ROLE = #{record.crAnswerRole,jdbcType=CHAR},
+			</if>
+			<if test="record.crReplyAttach != null">
+				CR_REPLY_ATTACH =
+				#{record.crReplyAttach,jdbcType=VARCHAR},
+			</if>
+			<if test="record.crReplyTime != null">
+				CR_REPLY_TIME = #{record.crReplyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.crReplyContent != null">
+				CR_REPLY_CONTENT =
+				#{record.crReplyContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_prac_answer
+		set CR_ANSWER_ID =
+		#{record.crAnswerId,jdbcType=INTEGER},
+		CR_QUESTION_ID =
+		#{record.crQuestionId,jdbcType=INTEGER},
+		CR_ANSWER_USER =
+		#{record.crAnswerUser,jdbcType=INTEGER},
+		CR_ANSWER_ROLE =
+		#{record.crAnswerRole,jdbcType=CHAR},
+		CR_REPLY_ATTACH =
+		#{record.crReplyAttach,jdbcType=VARCHAR},
+		CR_REPLY_TIME =
+		#{record.crReplyTime,jdbcType=TIMESTAMP},
+		CR_REPLY_CONTENT =
+		#{record.crReplyContent,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_prac_answer
+		set CR_ANSWER_ID =
+		#{record.crAnswerId,jdbcType=INTEGER},
+		CR_QUESTION_ID =
+		#{record.crQuestionId,jdbcType=INTEGER},
+		CR_ANSWER_USER =
+		#{record.crAnswerUser,jdbcType=INTEGER},
+		CR_ANSWER_ROLE =
+		#{record.crAnswerRole,jdbcType=CHAR},
+		CR_REPLY_ATTACH =
+		#{record.crReplyAttach,jdbcType=VARCHAR},
+		CR_REPLY_TIME =
+		#{record.crReplyTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.practice.model.PracAnswer">
+		update tp_prac_answer
+		<set>
+			<if test="crQuestionId != null">
+				CR_QUESTION_ID = #{crQuestionId,jdbcType=INTEGER},
+			</if>
+			<if test="crAnswerUser != null">
+				CR_ANSWER_USER = #{crAnswerUser,jdbcType=INTEGER},
+			</if>
+			<if test="crAnswerRole != null">
+				CR_ANSWER_ROLE = #{crAnswerRole,jdbcType=CHAR},
+			</if>
+			<if test="crReplyAttach != null">
+				CR_REPLY_ATTACH = #{crReplyAttach,jdbcType=VARCHAR},
+			</if>
+			<if test="crReplyTime != null">
+				CR_REPLY_TIME = #{crReplyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="crReplyContent != null">
+				CR_REPLY_CONTENT =
+				#{crReplyContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where CR_ANSWER_ID = #{crAnswerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.practice.model.PracAnswer">
+		update
+		tp_prac_answer
+		set CR_QUESTION_ID = #{crQuestionId,jdbcType=INTEGER},
+		CR_ANSWER_USER = #{crAnswerUser,jdbcType=INTEGER},
+		CR_ANSWER_ROLE =
+		#{crAnswerRole,jdbcType=CHAR},
+		CR_REPLY_ATTACH =
+		#{crReplyAttach,jdbcType=VARCHAR},
+		CR_REPLY_TIME =
+		#{crReplyTime,jdbcType=TIMESTAMP},
+		CR_REPLY_CONTENT =
+		#{crReplyContent,jdbcType=LONGVARCHAR}
+		where CR_ANSWER_ID =
+		#{crAnswerId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.practice.model.PracAnswer">
+		update
+		tp_prac_answer
+		set CR_QUESTION_ID = #{crQuestionId,jdbcType=INTEGER},
+		CR_ANSWER_USER = #{crAnswerUser,jdbcType=INTEGER},
+		CR_ANSWER_ROLE =
+		#{crAnswerRole,jdbcType=CHAR},
+		CR_REPLY_ATTACH =
+		#{crReplyAttach,jdbcType=VARCHAR},
+		CR_REPLY_TIME =
+		#{crReplyTime,jdbcType=TIMESTAMP}
+		where CR_ANSWER_ID =
+		#{crAnswerId,jdbcType=INTEGER}
+	</update>
+</mapper>

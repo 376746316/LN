@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.attendance.dao.AttendanceSchemeMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.attendance.model.AttendanceScheme" >
+    <id column="AS_ID" property="asId" jdbcType="INTEGER" />
+    <result column="AS_NAME" property="asName" jdbcType="VARCHAR" />
+    <result column="AS_AM_FLAG" property="asAmFlag" jdbcType="CHAR" />
+    <result column="AS_AM_START" property="asAmStart" jdbcType="TIME" />
+    <result column="AS_AM_END" property="asAmEnd" jdbcType="TIME" />
+    <result column="AS_PM_FLAG" property="asPmFlag" jdbcType="CHAR" />
+    <result column="AS_PM_START" property="asPmStart" jdbcType="TIME" />
+    <result column="AS_PM_END" property="asPmEnd" jdbcType="TIME" />
+    <result column="AS_NIGHT_FLAG" property="asNightFlag" jdbcType="CHAR" />
+    <result column="AS_NIGHT_START" property="asNightStart" jdbcType="TIME" />
+    <result column="AS_NIGHT_END" property="asNightEnd" jdbcType="TIME" />
+    <result column="AS_SIGNIN_FLAG" property="asSigninFlag" jdbcType="CHAR" />
+    <result column="AS_USER_NO" property="asUserNo" jdbcType="INTEGER" />
+    <result column="AS_STU_NO" property="asStuNo" jdbcType="INTEGER" />
+    <result column="AS_REGTIME" property="asRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AS_ID, AS_NAME, AS_AM_FLAG, AS_AM_START, AS_AM_END, AS_PM_FLAG, AS_PM_START, AS_PM_END, 
+    AS_NIGHT_FLAG, AS_NIGHT_START, AS_NIGHT_END, AS_SIGNIN_FLAG, AS_USER_NO, AS_STU_NO, 
+    AS_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.attendance.model.AttendanceSchemeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_attendance_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_attendance_scheme
+    where AS_ID = #{asId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_attendance_scheme
+    where AS_ID = #{asId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.attendance.model.AttendanceSchemeExample" >
+    delete from tp_attendance_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.attendance.model.AttendanceScheme" >
+    insert into tp_attendance_scheme (AS_ID, AS_NAME, AS_AM_FLAG, 
+      AS_AM_START, AS_AM_END, AS_PM_FLAG, 
+      AS_PM_START, AS_PM_END, AS_NIGHT_FLAG, 
+      AS_NIGHT_START, AS_NIGHT_END, AS_SIGNIN_FLAG, 
+      AS_USER_NO, AS_STU_NO, AS_REGTIME
+      )
+    values (#{asId,jdbcType=INTEGER}, #{asName,jdbcType=VARCHAR}, #{asAmFlag,jdbcType=CHAR}, 
+      #{asAmStart,jdbcType=TIME}, #{asAmEnd,jdbcType=TIME}, #{asPmFlag,jdbcType=CHAR}, 
+      #{asPmStart,jdbcType=TIME}, #{asPmEnd,jdbcType=TIME}, #{asNightFlag,jdbcType=CHAR}, 
+      #{asNightStart,jdbcType=TIME}, #{asNightEnd,jdbcType=TIME}, #{asSigninFlag,jdbcType=CHAR}, 
+      #{asUserNo,jdbcType=INTEGER}, #{asStuNo,jdbcType=INTEGER}, #{asRegtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.attendance.model.AttendanceScheme"  useGeneratedKeys="true" keyProperty="asId">
+    insert into tp_attendance_scheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="asId != null" >
+        AS_ID,
+      </if>
+      <if test="asName != null" >
+        AS_NAME,
+      </if>
+      <if test="asAmFlag != null" >
+        AS_AM_FLAG,
+      </if>
+      <if test="asAmStart != null" >
+        AS_AM_START,
+      </if>
+      <if test="asAmEnd != null" >
+        AS_AM_END,
+      </if>
+      <if test="asPmFlag != null" >
+        AS_PM_FLAG,
+      </if>
+      <if test="asPmStart != null" >
+        AS_PM_START,
+      </if>
+      <if test="asPmEnd != null" >
+        AS_PM_END,
+      </if>
+      <if test="asNightFlag != null" >
+        AS_NIGHT_FLAG,
+      </if>
+      <if test="asNightStart != null" >
+        AS_NIGHT_START,
+      </if>
+      <if test="asNightEnd != null" >
+        AS_NIGHT_END,
+      </if>
+      <if test="asSigninFlag != null" >
+        AS_SIGNIN_FLAG,
+      </if>
+      <if test="asUserNo != null" >
+        AS_USER_NO,
+      </if>
+      <if test="asStuNo != null" >
+        AS_STU_NO,
+      </if>
+      <if test="asRegtime != null" >
+        AS_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="asId != null" >
+        #{asId,jdbcType=INTEGER},
+      </if>
+      <if test="asName != null" >
+        #{asName,jdbcType=VARCHAR},
+      </if>
+      <if test="asAmFlag != null" >
+        #{asAmFlag,jdbcType=CHAR},
+      </if>
+      <if test="asAmStart != null" >
+        #{asAmStart,jdbcType=TIME},
+      </if>
+      <if test="asAmEnd != null" >
+        #{asAmEnd,jdbcType=TIME},
+      </if>
+      <if test="asPmFlag != null" >
+        #{asPmFlag,jdbcType=CHAR},
+      </if>
+      <if test="asPmStart != null" >
+        #{asPmStart,jdbcType=TIME},
+      </if>
+      <if test="asPmEnd != null" >
+        #{asPmEnd,jdbcType=TIME},
+      </if>
+      <if test="asNightFlag != null" >
+        #{asNightFlag,jdbcType=CHAR},
+      </if>
+      <if test="asNightStart != null" >
+        #{asNightStart,jdbcType=TIME},
+      </if>
+      <if test="asNightEnd != null" >
+        #{asNightEnd,jdbcType=TIME},
+      </if>
+      <if test="asSigninFlag != null" >
+        #{asSigninFlag,jdbcType=CHAR},
+      </if>
+      <if test="asUserNo != null" >
+        #{asUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="asStuNo != null" >
+        #{asStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="asRegtime != null" >
+        #{asRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.attendance.model.AttendanceSchemeExample" resultType="java.lang.Integer" >
+    select count(*) from tp_attendance_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_attendance_scheme
+    <set >
+      <if test="record.asId != null" >
+        AS_ID = #{record.asId,jdbcType=INTEGER},
+      </if>
+      <if test="record.asName != null" >
+        AS_NAME = #{record.asName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.asAmFlag != null" >
+        AS_AM_FLAG = #{record.asAmFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.asAmStart != null" >
+        AS_AM_START = #{record.asAmStart,jdbcType=TIME},
+      </if>
+      <if test="record.asAmEnd != null" >
+        AS_AM_END = #{record.asAmEnd,jdbcType=TIME},
+      </if>
+      <if test="record.asPmFlag != null" >
+        AS_PM_FLAG = #{record.asPmFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.asPmStart != null" >
+        AS_PM_START = #{record.asPmStart,jdbcType=TIME},
+      </if>
+      <if test="record.asPmEnd != null" >
+        AS_PM_END = #{record.asPmEnd,jdbcType=TIME},
+      </if>
+      <if test="record.asNightFlag != null" >
+        AS_NIGHT_FLAG = #{record.asNightFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.asNightStart != null" >
+        AS_NIGHT_START = #{record.asNightStart,jdbcType=TIME},
+      </if>
+      <if test="record.asNightEnd != null" >
+        AS_NIGHT_END = #{record.asNightEnd,jdbcType=TIME},
+      </if>
+      <if test="record.asSigninFlag != null" >
+        AS_SIGNIN_FLAG = #{record.asSigninFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.asUserNo != null" >
+        AS_USER_NO = #{record.asUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.asStuNo != null" >
+        AS_STU_NO = #{record.asStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.asRegtime != null" >
+        AS_REGTIME = #{record.asRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_attendance_scheme
+    set AS_ID = #{record.asId,jdbcType=INTEGER},
+      AS_NAME = #{record.asName,jdbcType=VARCHAR},
+      AS_AM_FLAG = #{record.asAmFlag,jdbcType=CHAR},
+      AS_AM_START = #{record.asAmStart,jdbcType=TIME},
+      AS_AM_END = #{record.asAmEnd,jdbcType=TIME},
+      AS_PM_FLAG = #{record.asPmFlag,jdbcType=CHAR},
+      AS_PM_START = #{record.asPmStart,jdbcType=TIME},
+      AS_PM_END = #{record.asPmEnd,jdbcType=TIME},
+      AS_NIGHT_FLAG = #{record.asNightFlag,jdbcType=CHAR},
+      AS_NIGHT_START = #{record.asNightStart,jdbcType=TIME},
+      AS_NIGHT_END = #{record.asNightEnd,jdbcType=TIME},
+      AS_SIGNIN_FLAG = #{record.asSigninFlag,jdbcType=CHAR},
+      AS_USER_NO = #{record.asUserNo,jdbcType=INTEGER},
+      AS_STU_NO = #{record.asStuNo,jdbcType=INTEGER},
+      AS_REGTIME = #{record.asRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.attendance.model.AttendanceScheme" >
+    update tp_attendance_scheme
+    <set >
+      <if test="asName != null" >
+        AS_NAME = #{asName,jdbcType=VARCHAR},
+      </if>
+      <if test="asAmFlag != null" >
+        AS_AM_FLAG = #{asAmFlag,jdbcType=CHAR},
+      </if>
+      <if test="asAmStart != null" >
+        AS_AM_START = #{asAmStart,jdbcType=TIME},
+      </if>
+      <if test="asAmEnd != null" >
+        AS_AM_END = #{asAmEnd,jdbcType=TIME},
+      </if>
+      <if test="asPmFlag != null" >
+        AS_PM_FLAG = #{asPmFlag,jdbcType=CHAR},
+      </if>
+      <if test="asPmStart != null" >
+        AS_PM_START = #{asPmStart,jdbcType=TIME},
+      </if>
+      <if test="asPmEnd != null" >
+        AS_PM_END = #{asPmEnd,jdbcType=TIME},
+      </if>
+      <if test="asNightFlag != null" >
+        AS_NIGHT_FLAG = #{asNightFlag,jdbcType=CHAR},
+      </if>
+      <if test="asNightStart != null" >
+        AS_NIGHT_START = #{asNightStart,jdbcType=TIME},
+      </if>
+      <if test="asNightEnd != null" >
+        AS_NIGHT_END = #{asNightEnd,jdbcType=TIME},
+      </if>
+      <if test="asSigninFlag != null" >
+        AS_SIGNIN_FLAG = #{asSigninFlag,jdbcType=CHAR},
+      </if>
+      <if test="asUserNo != null" >
+        AS_USER_NO = #{asUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="asStuNo != null" >
+        AS_STU_NO = #{asStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="asRegtime != null" >
+        AS_REGTIME = #{asRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where AS_ID = #{asId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.attendance.model.AttendanceScheme" >
+    update tp_attendance_scheme
+    set AS_NAME = #{asName,jdbcType=VARCHAR},
+      AS_AM_FLAG = #{asAmFlag,jdbcType=CHAR},
+      AS_AM_START = #{asAmStart,jdbcType=TIME},
+      AS_AM_END = #{asAmEnd,jdbcType=TIME},
+      AS_PM_FLAG = #{asPmFlag,jdbcType=CHAR},
+      AS_PM_START = #{asPmStart,jdbcType=TIME},
+      AS_PM_END = #{asPmEnd,jdbcType=TIME},
+      AS_NIGHT_FLAG = #{asNightFlag,jdbcType=CHAR},
+      AS_NIGHT_START = #{asNightStart,jdbcType=TIME},
+      AS_NIGHT_END = #{asNightEnd,jdbcType=TIME},
+      AS_SIGNIN_FLAG = #{asSigninFlag,jdbcType=CHAR},
+      AS_USER_NO = #{asUserNo,jdbcType=INTEGER},
+      AS_STU_NO = #{asStuNo,jdbcType=INTEGER},
+      AS_REGTIME = #{asRegtime,jdbcType=TIMESTAMP}
+    where AS_ID = #{asId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPracCalender" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_attendance_scheme
+    inner join tp_prac_calendar on AS_ID = PAC_AS_ID
+    where 1=1
+    <if test="pacAsId != null" >
+    and PAC_AS_ID = #{pacAsId}
+    </if>
+    <if test="pacPracId != null" >
+    and PAC_PRAC_ID = #{pacPracId}
+    </if>
+    <if test="pacDate != null" >
+    and PAC_DATE = #{pacDate}
+    </if>
+  </select>
+</mapper>

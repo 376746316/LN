@@ -1,0 +1,148 @@
+<?xml version="1.0" ?>
+<config>
+    <localeversion suppressWarning="false">0.8</localeversion>
+    <help url="http://127.0.0.1/online/bigbluebutton/help.html"/>
+    <javaTest url="http://127.0.0.1/online/bigbluebutton/testjava.html"/>
+    <porttest host="127.0.0.1" application="video/portTest" timeout="10000"/>    
+    <bwMon server="127.0.0.1" application="video/bwTest"/>
+    <application uri="rtmp://127.0.0.1/bigbluebutton" host="http://127.0.0.1/online/enter.do" />
+    <language userSelectionEnabled="true" />
+    <skinning enabled="true" url="client/branding/css/BBBDefault.css.swf" />
+    <shortcutKeys showButton="true" />
+
+            
+		<modules>
+		 
+		<module name="ChatModule" url="client/ChatModule.swf" 
+			uri="rtmp://127.0.0.1/bigbluebutton" 
+			dependsOn="UsersModule"	
+			translationOn="false"
+			translationEnabled="false"	
+			privateEnabled="true"  
+			position="top-right"
+			baseTabIndex="701"
+		/>
+
+		<module name="UsersModule" url="client/UsersModule.swf" 
+			uri="rtmp://127.0.0.1/bigbluebutton" 
+			allowKickUser="true"
+			enableRaiseHand="true"
+			enableSettingsButton="true"
+			baseTabIndex="301"
+		/>
+
+		
+		<module name="DeskShareModule" 
+			url="client/DeskShareModule.swf" 
+			uri="rtmp://127.0.0.1/deskshare"
+			showButton="true"
+			autoStart="false"
+			autoFullScreen="false"
+			baseTabIndex="201"
+		/>
+		
+		<module name="PhoneModule" url="client/PhoneModule.swf" 
+			uri="rtmp://127.0.0.1/sip" 
+			autoJoin="true"
+			skipCheck="false"
+			showButton="true"
+			enabledEchoCancel="true"
+			dependsOn="UsersModule"
+		/>
+
+		<module name="VideoconfModule" url="client/VideoconfModule.swf" 
+			uri="rtmp://127.0.0.1/video"
+			dependson = "UsersModule"
+			videoQuality = "100"
+			presenterShareOnly = "false"
+			controlsForPresenter = "false"
+			resolutions = "320x240,640x480,1280x720"
+			autoStart = "false"
+			skipCamSettingsCheck="false"
+			showButton = "true"
+			showCloseButton = "true"
+			publishWindowVisible = "true"
+			viewerWindowMaxed = "false"
+			viewerWindowLocation = "top"
+			camKeyFrameInterval = "30"
+			camModeFps = "10"
+			camQualityBandwidth = "0"
+			camQualityPicture = "90"
+			smoothVideo="false"
+			applyConvolutionFilter="false"
+			convolutionFilter="-1, 0, -1, 0, 6, 0, -1, 0, -1"
+			filterBias="0"
+			filterDivisor="4"
+			enableH264 = "true"
+			h264Level = "2.1"
+			h264Profile = "main"		
+			displayAvatar = "false"
+			focusTalking = "false"
+			glowColor = "0x4A931D"
+			glowBlurSize = "30.0"	
+		/>
+		
+		<module name="WhiteboardModule" url="client/WhiteboardModule.swf" 
+			uri="rtmp://127.0.0.1/bigbluebutton" 
+			dependsOn="PresentModule"
+			baseTabIndex="601"
+			whiteboardAccess="presenter"
+			keepToolbarVisible="false"
+		/>
+
+
+<!--     <module name="PollingModule" url="PollingModule.swf" 
+      uri="rtmp://127.0.0.1/bigbluebutton" 
+      dependsOn="PresentModule"
+    /> -->
+
+    		
+		<module name="PresentModule" url="client/PresentModule.swf" 
+			uri="rtmp://127.0.0.1/bigbluebutton" 
+			host="http://127.0.0.1" 
+			showPresentWindow="true"
+			showWindowControls="true"
+			openExternalFileUploadDialog="false"
+			dependsOn="UsersModule"
+			baseTabIndex="501"
+			maxFileSize="30">
+			<document url='http://127.0.0.1/bigbluebutton/etc.pdf'/>
+		</module>
+
+		<module name="VideodockModule" url="client/VideodockModule.swf"
+			uri="rtmp://127.0.0.1/bigbluebutton" 
+			dependsOn="VideoconfModule, UsersModule"
+			autoDock="true"
+			showControls="true"
+			maximizeWindow="false"
+			position="bottom-right"
+			width="172"
+			height="179"
+			layout="smart"
+			oneAlwaysBigger="false"
+			baseTabIndex="401"
+			/>
+		
+		<module name="LayoutModule" url="client/LayoutModule.swf"
+			uri="rtmp://127.0.0.1/bigbluebutton"
+			enableEdit="false"
+		/>
+
+
+<!--     <module name="NotesModule" url="NotesModule.swf"
+      saveURL="http://127.0.0.1"
+      position="top-left"
+    />
+    
+    <module name="BroadcastModule" url="BroadcastModule.swf"
+      uri="rtmp://127.0.0.1/bigbluebutton"
+      streamsUri="http://127.0.0.1/streams.xml"
+      position="top-left"
+      showStreams="true"
+      autoPlay="false"
+      dependsOn="UsersModule"
+    /> -->
+
+    		
+	</modules>
+</config>

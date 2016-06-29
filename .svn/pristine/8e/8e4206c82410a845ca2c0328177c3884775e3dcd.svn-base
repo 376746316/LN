@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.study.dao.RealtimeQAMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.study.model.RealtimeQA" >
+    <id column="RQA_ID" property="rqaId" jdbcType="BIGINT" />
+    <result column="RQA_STU_NO" property="rqaStuNo" jdbcType="INTEGER" />
+    <result column="RQA_USER_NO" property="rqaUserNo" jdbcType="INTEGER" />
+    <result column="RQA_TYPE_ID" property="rqaTypeId" jdbcType="INTEGER" />
+    <result column="RQA_TITLE" property="rqaTitle" jdbcType="VARCHAR" />
+    <result column="RQA_STATUS" property="rqaStatus" jdbcType="CHAR" />
+    <result column="RQA_START_TIME" property="rqaStartTime" jdbcType="TIMESTAMP" />
+    <result column="RQA_END_TIME" property="rqaEndTime" jdbcType="TIMESTAMP" />
+    <result column="RQA_QUALITY" property="rqaQuality" jdbcType="CHAR" />
+    <result column="RQA_REGTIME" property="rqaRegtime" jdbcType="TIMESTAMP" />
+    <result column="RQA_CHARGEMODE" property="rqaChargemode" jdbcType="VARCHAR" />
+    <result column="RQA_PERCENTAGE" property="rqaPercentage" jdbcType="INTEGER" />
+    <result column="RQA_MONEY" property="rqaMoney" jdbcType="DOUBLE" />
+    <result column="RQA_UNIALENCE" property="rqaUnialence" jdbcType="DOUBLE" />
+    <result column="RQA_PERIODICTITY" property="rqaPeriodictity" jdbcType="INTEGER" />
+    <result column="RQA_DURATION" property="rqaDuration" jdbcType="INTEGER" />
+    <result column="RQA_CYCLETIME" property="rqaCycletime" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.study.model.RealtimeQAWithBLOBs" extends="BaseResultMap" >
+    <result column="RQA_DESCRIPTION" property="rqaDescription" jdbcType="LONGVARCHAR" />
+    <result column="RQA_LOG" property="rqaLog" jdbcType="LONGVARCHAR" />
+    <result column="RQA_UNSOLVED" property="rqaUnsolved" jdbcType="LONGVARCHAR" />
+    <result column="RQA_FEEDBACK" property="rqaFeedback" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RQA_ID, RQA_STU_NO, RQA_USER_NO, RQA_TYPE_ID, RQA_TITLE, RQA_STATUS, RQA_START_TIME, 
+    RQA_END_TIME, RQA_QUALITY, RQA_REGTIME, RQA_CHARGEMODE, RQA_PERCENTAGE, RQA_MONEY, 
+    RQA_UNIALENCE, RQA_PERIODICTITY, RQA_DURATION, RQA_CYCLETIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    RQA_DESCRIPTION, RQA_LOG, RQA_UNSOLVED, RQA_FEEDBACK
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.study.model.RealtimeQAExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_realtime_qa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.study.model.RealtimeQAExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_realtime_qa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_realtime_qa
+    where RQA_ID = #{rqaId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_realtime_qa
+    where RQA_ID = #{rqaId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.study.model.RealtimeQAExample" >
+    delete from tp_realtime_qa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.study.model.RealtimeQAWithBLOBs" >
+    insert into tp_realtime_qa (RQA_ID, RQA_STU_NO, RQA_USER_NO, 
+      RQA_TYPE_ID, RQA_TITLE, RQA_STATUS, 
+      RQA_START_TIME, RQA_END_TIME, RQA_QUALITY, 
+      RQA_REGTIME, RQA_CHARGEMODE, RQA_PERCENTAGE, 
+      RQA_MONEY, RQA_UNIALENCE, RQA_PERIODICTITY, 
+      RQA_DURATION, RQA_CYCLETIME, RQA_DESCRIPTION, 
+      RQA_LOG, RQA_UNSOLVED, RQA_FEEDBACK
+      )
+    values (#{rqaId,jdbcType=BIGINT}, #{rqaStuNo,jdbcType=INTEGER}, #{rqaUserNo,jdbcType=INTEGER}, 
+      #{rqaTypeId,jdbcType=INTEGER}, #{rqaTitle,jdbcType=VARCHAR}, #{rqaStatus,jdbcType=CHAR}, 
+      #{rqaStartTime,jdbcType=TIMESTAMP}, #{rqaEndTime,jdbcType=TIMESTAMP}, #{rqaQuality,jdbcType=CHAR}, 
+      #{rqaRegtime,jdbcType=TIMESTAMP}, #{rqaChargemode,jdbcType=VARCHAR}, #{rqaPercentage,jdbcType=INTEGER}, 
+      #{rqaMoney,jdbcType=DOUBLE}, #{rqaUnialence,jdbcType=DOUBLE}, #{rqaPeriodictity,jdbcType=INTEGER}, 
+      #{rqaDuration,jdbcType=INTEGER}, #{rqaCycletime,jdbcType=INTEGER}, #{rqaDescription,jdbcType=LONGVARCHAR}, 
+      #{rqaLog,jdbcType=LONGVARCHAR}, #{rqaUnsolved,jdbcType=LONGVARCHAR}, #{rqaFeedback,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.study.model.RealtimeQAWithBLOBs" useGeneratedKeys="true" keyProperty="rqaId">
+    insert into tp_realtime_qa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rqaId != null" >
+        RQA_ID,
+      </if>
+      <if test="rqaStuNo != null" >
+        RQA_STU_NO,
+      </if>
+      <if test="rqaUserNo != null" >
+        RQA_USER_NO,
+      </if>
+      <if test="rqaTypeId != null" >
+        RQA_TYPE_ID,
+      </if>
+      <if test="rqaTitle != null" >
+        RQA_TITLE,
+      </if>
+      <if test="rqaStatus != null" >
+        RQA_STATUS,
+      </if>
+      <if test="rqaStartTime != null" >
+        RQA_START_TIME,
+      </if>
+      <if test="rqaEndTime != null" >
+        RQA_END_TIME,
+      </if>
+      <if test="rqaQuality != null" >
+        RQA_QUALITY,
+      </if>
+      <if test="rqaRegtime != null" >
+        RQA_REGTIME,
+      </if>
+      <if test="rqaChargemode != null" >
+        RQA_CHARGEMODE,
+      </if>
+      <if test="rqaPercentage != null" >
+        RQA_PERCENTAGE,
+      </if>
+      <if test="rqaMoney != null" >
+        RQA_MONEY,
+      </if>
+      <if test="rqaUnialence != null" >
+        RQA_UNIALENCE,
+      </if>
+      <if test="rqaPeriodictity != null" >
+        RQA_PERIODICTITY,
+      </if>
+      <if test="rqaDuration != null" >
+        RQA_DURATION,
+      </if>
+      <if test="rqaCycletime != null" >
+        RQA_CYCLETIME,
+      </if>
+      <if test="rqaDescription != null" >
+        RQA_DESCRIPTION,
+      </if>
+      <if test="rqaLog != null" >
+        RQA_LOG,
+      </if>
+      <if test="rqaUnsolved != null" >
+        RQA_UNSOLVED,
+      </if>
+      <if test="rqaFeedback != null" >
+        RQA_FEEDBACK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rqaId != null" >
+        #{rqaId,jdbcType=BIGINT},
+      </if>
+      <if test="rqaStuNo != null" >
+        #{rqaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="rqaUserNo != null" >
+        #{rqaUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="rqaTypeId != null" >
+        #{rqaTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="rqaTitle != null" >
+        #{rqaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="rqaStatus != null" >
+        #{rqaStatus,jdbcType=CHAR},
+      </if>
+      <if test="rqaStartTime != null" >
+        #{rqaStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaEndTime != null" >
+        #{rqaEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaQuality != null" >
+        #{rqaQuality,jdbcType=CHAR},
+      </if>
+      <if test="rqaRegtime != null" >
+        #{rqaRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaChargemode != null" >
+        #{rqaChargemode,jdbcType=VARCHAR},
+      </if>
+      <if test="rqaPercentage != null" >
+        #{rqaPercentage,jdbcType=INTEGER},
+      </if>
+      <if test="rqaMoney != null" >
+        #{rqaMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rqaUnialence != null" >
+        #{rqaUnialence,jdbcType=DOUBLE},
+      </if>
+      <if test="rqaPeriodictity != null" >
+        #{rqaPeriodictity,jdbcType=INTEGER},
+      </if>
+      <if test="rqaDuration != null" >
+        #{rqaDuration,jdbcType=INTEGER},
+      </if>
+      <if test="rqaCycletime != null" >
+        #{rqaCycletime,jdbcType=INTEGER},
+      </if>
+      <if test="rqaDescription != null" >
+        #{rqaDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaLog != null" >
+        #{rqaLog,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaUnsolved != null" >
+        #{rqaUnsolved,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaFeedback != null" >
+        #{rqaFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.study.model.RealtimeQAExample" resultType="java.lang.Integer" >
+    select count(*) from tp_realtime_qa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_realtime_qa
+    <set >
+      <if test="record.rqaId != null" >
+        RQA_ID = #{record.rqaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rqaStuNo != null" >
+        RQA_STU_NO = #{record.rqaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaUserNo != null" >
+        RQA_USER_NO = #{record.rqaUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaTypeId != null" >
+        RQA_TYPE_ID = #{record.rqaTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaTitle != null" >
+        RQA_TITLE = #{record.rqaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rqaStatus != null" >
+        RQA_STATUS = #{record.rqaStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.rqaStartTime != null" >
+        RQA_START_TIME = #{record.rqaStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rqaEndTime != null" >
+        RQA_END_TIME = #{record.rqaEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rqaQuality != null" >
+        RQA_QUALITY = #{record.rqaQuality,jdbcType=CHAR},
+      </if>
+      <if test="record.rqaRegtime != null" >
+        RQA_REGTIME = #{record.rqaRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rqaChargemode != null" >
+        RQA_CHARGEMODE = #{record.rqaChargemode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rqaPercentage != null" >
+        RQA_PERCENTAGE = #{record.rqaPercentage,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaMoney != null" >
+        RQA_MONEY = #{record.rqaMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rqaUnialence != null" >
+        RQA_UNIALENCE = #{record.rqaUnialence,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rqaPeriodictity != null" >
+        RQA_PERIODICTITY = #{record.rqaPeriodictity,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaDuration != null" >
+        RQA_DURATION = #{record.rqaDuration,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaCycletime != null" >
+        RQA_CYCLETIME = #{record.rqaCycletime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rqaDescription != null" >
+        RQA_DESCRIPTION = #{record.rqaDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rqaLog != null" >
+        RQA_LOG = #{record.rqaLog,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rqaUnsolved != null" >
+        RQA_UNSOLVED = #{record.rqaUnsolved,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.rqaFeedback != null" >
+        RQA_FEEDBACK = #{record.rqaFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_realtime_qa
+    set RQA_ID = #{record.rqaId,jdbcType=BIGINT},
+      RQA_STU_NO = #{record.rqaStuNo,jdbcType=INTEGER},
+      RQA_USER_NO = #{record.rqaUserNo,jdbcType=INTEGER},
+      RQA_TYPE_ID = #{record.rqaTypeId,jdbcType=INTEGER},
+      RQA_TITLE = #{record.rqaTitle,jdbcType=VARCHAR},
+      RQA_STATUS = #{record.rqaStatus,jdbcType=CHAR},
+      RQA_START_TIME = #{record.rqaStartTime,jdbcType=TIMESTAMP},
+      RQA_END_TIME = #{record.rqaEndTime,jdbcType=TIMESTAMP},
+      RQA_QUALITY = #{record.rqaQuality,jdbcType=CHAR},
+      RQA_REGTIME = #{record.rqaRegtime,jdbcType=TIMESTAMP},
+      RQA_CHARGEMODE = #{record.rqaChargemode,jdbcType=VARCHAR},
+      RQA_PERCENTAGE = #{record.rqaPercentage,jdbcType=INTEGER},
+      RQA_MONEY = #{record.rqaMoney,jdbcType=DOUBLE},
+      RQA_UNIALENCE = #{record.rqaUnialence,jdbcType=DOUBLE},
+      RQA_PERIODICTITY = #{record.rqaPeriodictity,jdbcType=INTEGER},
+      RQA_DURATION = #{record.rqaDuration,jdbcType=INTEGER},
+      RQA_CYCLETIME = #{record.rqaCycletime,jdbcType=INTEGER},
+      RQA_DESCRIPTION = #{record.rqaDescription,jdbcType=LONGVARCHAR},
+      RQA_LOG = #{record.rqaLog,jdbcType=LONGVARCHAR},
+      RQA_UNSOLVED = #{record.rqaUnsolved,jdbcType=LONGVARCHAR},
+      RQA_FEEDBACK = #{record.rqaFeedback,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_realtime_qa
+    set RQA_ID = #{record.rqaId,jdbcType=BIGINT},
+      RQA_STU_NO = #{record.rqaStuNo,jdbcType=INTEGER},
+      RQA_USER_NO = #{record.rqaUserNo,jdbcType=INTEGER},
+      RQA_TYPE_ID = #{record.rqaTypeId,jdbcType=INTEGER},
+      RQA_TITLE = #{record.rqaTitle,jdbcType=VARCHAR},
+      RQA_STATUS = #{record.rqaStatus,jdbcType=CHAR},
+      RQA_START_TIME = #{record.rqaStartTime,jdbcType=TIMESTAMP},
+      RQA_END_TIME = #{record.rqaEndTime,jdbcType=TIMESTAMP},
+      RQA_QUALITY = #{record.rqaQuality,jdbcType=CHAR},
+      RQA_REGTIME = #{record.rqaRegtime,jdbcType=TIMESTAMP},
+      RQA_CHARGEMODE = #{record.rqaChargemode,jdbcType=VARCHAR},
+      RQA_PERCENTAGE = #{record.rqaPercentage,jdbcType=INTEGER},
+      RQA_MONEY = #{record.rqaMoney,jdbcType=DOUBLE},
+      RQA_UNIALENCE = #{record.rqaUnialence,jdbcType=DOUBLE},
+      RQA_PERIODICTITY = #{record.rqaPeriodictity,jdbcType=INTEGER},
+      RQA_DURATION = #{record.rqaDuration,jdbcType=INTEGER},
+      RQA_CYCLETIME = #{record.rqaCycletime,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.study.model.RealtimeQAWithBLOBs" >
+    update tp_realtime_qa
+    <set >
+      <if test="rqaStuNo != null" >
+        RQA_STU_NO = #{rqaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="rqaUserNo != null" >
+        RQA_USER_NO = #{rqaUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="rqaTypeId != null" >
+        RQA_TYPE_ID = #{rqaTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="rqaTitle != null" >
+        RQA_TITLE = #{rqaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="rqaStatus != null" >
+        RQA_STATUS = #{rqaStatus,jdbcType=CHAR},
+      </if>
+      <if test="rqaStartTime != null" >
+        RQA_START_TIME = #{rqaStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaEndTime != null" >
+        RQA_END_TIME = #{rqaEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaQuality != null" >
+        RQA_QUALITY = #{rqaQuality,jdbcType=CHAR},
+      </if>
+      <if test="rqaRegtime != null" >
+        RQA_REGTIME = #{rqaRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rqaChargemode != null" >
+        RQA_CHARGEMODE = #{rqaChargemode,jdbcType=VARCHAR},
+      </if>
+      <if test="rqaPercentage != null" >
+        RQA_PERCENTAGE = #{rqaPercentage,jdbcType=INTEGER},
+      </if>
+      <if test="rqaMoney != null" >
+        RQA_MONEY = #{rqaMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="rqaUnialence != null" >
+        RQA_UNIALENCE = #{rqaUnialence,jdbcType=DOUBLE},
+      </if>
+      <if test="rqaPeriodictity != null" >
+        RQA_PERIODICTITY = #{rqaPeriodictity,jdbcType=INTEGER},
+      </if>
+      <if test="rqaDuration != null" >
+        RQA_DURATION = #{rqaDuration,jdbcType=INTEGER},
+      </if>
+      <if test="rqaCycletime != null" >
+        RQA_CYCLETIME = #{rqaCycletime,jdbcType=INTEGER},
+      </if>
+      <if test="rqaDescription != null" >
+        RQA_DESCRIPTION = #{rqaDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaLog != null" >
+        RQA_LOG = #{rqaLog,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaUnsolved != null" >
+        RQA_UNSOLVED = #{rqaUnsolved,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="rqaFeedback != null" >
+        RQA_FEEDBACK = #{rqaFeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where RQA_ID = #{rqaId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.study.model.RealtimeQAWithBLOBs" >
+    update tp_realtime_qa
+    set RQA_STU_NO = #{rqaStuNo,jdbcType=INTEGER},
+      RQA_USER_NO = #{rqaUserNo,jdbcType=INTEGER},
+      RQA_TYPE_ID = #{rqaTypeId,jdbcType=INTEGER},
+      RQA_TITLE = #{rqaTitle,jdbcType=VARCHAR},
+      RQA_STATUS = #{rqaStatus,jdbcType=CHAR},
+      RQA_START_TIME = #{rqaStartTime,jdbcType=TIMESTAMP},
+      RQA_END_TIME = #{rqaEndTime,jdbcType=TIMESTAMP},
+      RQA_QUALITY = #{rqaQuality,jdbcType=CHAR},
+      RQA_REGTIME = #{rqaRegtime,jdbcType=TIMESTAMP},
+      RQA_CHARGEMODE = #{rqaChargemode,jdbcType=VARCHAR},
+      RQA_PERCENTAGE = #{rqaPercentage,jdbcType=INTEGER},
+      RQA_MONEY = #{rqaMoney,jdbcType=DOUBLE},
+      RQA_UNIALENCE = #{rqaUnialence,jdbcType=DOUBLE},
+      RQA_PERIODICTITY = #{rqaPeriodictity,jdbcType=INTEGER},
+      RQA_DURATION = #{rqaDuration,jdbcType=INTEGER},
+      RQA_CYCLETIME = #{rqaCycletime,jdbcType=INTEGER},
+      RQA_DESCRIPTION = #{rqaDescription,jdbcType=LONGVARCHAR},
+      RQA_LOG = #{rqaLog,jdbcType=LONGVARCHAR},
+      RQA_UNSOLVED = #{rqaUnsolved,jdbcType=LONGVARCHAR},
+      RQA_FEEDBACK = #{rqaFeedback,jdbcType=LONGVARCHAR}
+    where RQA_ID = #{rqaId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.study.model.RealtimeQA" >
+    update tp_realtime_qa
+    set RQA_STU_NO = #{rqaStuNo,jdbcType=INTEGER},
+      RQA_USER_NO = #{rqaUserNo,jdbcType=INTEGER},
+      RQA_TYPE_ID = #{rqaTypeId,jdbcType=INTEGER},
+      RQA_TITLE = #{rqaTitle,jdbcType=VARCHAR},
+      RQA_STATUS = #{rqaStatus,jdbcType=CHAR},
+      RQA_START_TIME = #{rqaStartTime,jdbcType=TIMESTAMP},
+      RQA_END_TIME = #{rqaEndTime,jdbcType=TIMESTAMP},
+      RQA_QUALITY = #{rqaQuality,jdbcType=CHAR},
+      RQA_REGTIME = #{rqaRegtime,jdbcType=TIMESTAMP},
+      RQA_CHARGEMODE = #{rqaChargemode,jdbcType=VARCHAR},
+      RQA_PERCENTAGE = #{rqaPercentage,jdbcType=INTEGER},
+      RQA_MONEY = #{rqaMoney,jdbcType=DOUBLE},
+      RQA_UNIALENCE = #{rqaUnialence,jdbcType=DOUBLE},
+      RQA_PERIODICTITY = #{rqaPeriodictity,jdbcType=INTEGER},
+      RQA_DURATION = #{rqaDuration,jdbcType=INTEGER},
+      RQA_CYCLETIME = #{rqaCycletime,jdbcType=INTEGER}
+    where RQA_ID = #{rqaId,jdbcType=BIGINT}
+  </update>
+  <select id="getRqaUsers" resultType="com.chinasofti.cetp.study.model.RqaUser" parameterType="map">
+	SELECT
+		USER_NO AS userNo,
+		USER_NAME AS userName,
+		USER_HEAD AS userHead,
+		USER_TECH_TYPE AS userTechType
+	FROM
+		(
+			SELECT
+				USER_NO,
+				USER_NAME,
+				USER_HEAD,
+				GROUP_CONCAT(DISTINCT TECH_TYPE_NAME) AS USER_TECH_TYPE,
+				GROUP_CONCAT(DISTINCT UT_TECHTYPE_ID) AS USER_TECH_TYPE_ID
+			FROM
+				tp_user
+			INNER JOIN tp_user_tech_type ON USER_NO = UT_USER_NO
+			INNER JOIN tp_tech_type ON TECH_TYPE_ID = UT_TECHTYPE_ID
+			GROUP BY
+				USER_NO
+		) AS tu
+	LEFT JOIN tp_realtime_qa ON tu.USER_NO = RQA_USER_NO
+	WHERE
+		FIND_IN_SET(#{techTypeId}, USER_TECH_TYPE_ID)
+	GROUP BY
+		tu.USER_NO
+	<choose>
+	<when test="orderBy=='num'">
+	ORDER BY
+		COUNT(RQA_USER_NO) DESC,
+		IFNULL(AVG(RQA_QUALITY), 0) DESC
+	</when>
+	<when test="orderBy=='qua'">
+	ORDER BY
+		IFNULL(AVG(RQA_QUALITY), 0) DESC,
+		COUNT(RQA_USER_NO) DESC  
+	</when>
+	</choose> 
+  </select>
+  <select id="getUserRqaEvents" parameterType="com.chinasofti.cetp.study.model.RealtimeQAExample"  resultType="com.chinasofti.cetp.utils.FCEvent">
+	SELECT
+		RQA_ID AS id,
+		CONCAT(
+			IFNULL(STU_NICKNAME, STU_USERID),
+			'-',
+			RQA_TITLE
+		) AS title,
+		DATE_FORMAT(
+			RQA_START_TIME,
+			'%Y-%m-%dT%H:%i:%s'
+		) AS 'start',
+		DATE_FORMAT(
+			RQA_END_TIME,
+			'%Y-%m-%dT%H:%i:%s'
+		) AS 'end'
+	FROM
+		tp_realtime_qa
+	INNER JOIN tp_student ON RQA_STU_NO = STU_NO
+	<if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>  
+  </select>
+  <!-- ======================================= 忧伤的分割线 ================================= -->
+  <resultMap id="RealtimeQAModelMap" type="com.chinasofti.cetp.study.model.RealtimeQAModel" extends="BaseResultMap" >
+   <result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+   <result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getRealtimeQAModelByRqaUserNo" resultMap="RealtimeQAModelMap" parameterType="map" >
+   SELECT
+		t1.RQA_REGTIME,
+		IFNULL(
+			t2.STU_NICKNAME,
+			t2.STU_USERID
+		) AS STU_NAME,
+		t1.RQA_PERIODICTITY,
+		t1.RQA_CYCLETIME,
+		t1.RQA_DURATION,
+		t1.RQA_PERCENTAGE,
+		t3.TECH_TYPE_NAME,
+		t1.RQA_UNIALENCE,
+		t1.RQA_MONEY
+	FROM
+		tp_realtime_qa t1
+	LEFT JOIN tp_student t2 ON t1.RQA_STU_NO = t2.STU_NO
+	LEFT JOIN TP_TECH_TYPE t3 ON t1.RQA_TYPE_ID = t3.TECH_TYPE_ID
+	WHERE
+		t1.RQA_USER_NO = #{userNo,jdbcType=INTEGER}
+	AND (
+		t1.RQA_STATUS = 6
+		OR t1.RQA_STATUS = 7
+	)
+	ORDER BY
+		t1.RQA_REGTIME DESC
+  </select>
+</mapper>

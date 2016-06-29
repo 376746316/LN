@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.question.dao.QuePracMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.question.model.QuePracKey" >
+    <id column="QP_QUE_ID" property="qpQueId" jdbcType="INTEGER" />
+    <id column="QP_PRAC_ID" property="qpPracId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    QP_QUE_ID, QP_PRAC_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.question.model.QuePracExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_que_prac
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.chinasofti.cetp.question.model.QuePracKey" >
+    delete from tp_que_prac
+    where QP_QUE_ID = #{qpQueId,jdbcType=INTEGER}
+      and QP_PRAC_ID = #{qpPracId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.question.model.QuePracExample" >
+    delete from tp_que_prac
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.question.model.QuePracKey" >
+    insert into tp_que_prac (QP_QUE_ID, QP_PRAC_ID)
+    values (#{qpQueId,jdbcType=INTEGER}, #{qpPracId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.question.model.QuePracKey" >
+    insert into tp_que_prac
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qpQueId != null" >
+        QP_QUE_ID,
+      </if>
+      <if test="qpPracId != null" >
+        QP_PRAC_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qpQueId != null" >
+        #{qpQueId,jdbcType=INTEGER},
+      </if>
+      <if test="qpPracId != null" >
+        #{qpPracId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.question.model.QuePracExample" resultType="java.lang.Integer" >
+    select count(*) from tp_que_prac
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_que_prac
+    <set >
+      <if test="record.qpQueId != null" >
+        QP_QUE_ID = #{record.qpQueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.qpPracId != null" >
+        QP_PRAC_ID = #{record.qpPracId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_que_prac
+    set QP_QUE_ID = #{record.qpQueId,jdbcType=INTEGER},
+      QP_PRAC_ID = #{record.qpPracId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

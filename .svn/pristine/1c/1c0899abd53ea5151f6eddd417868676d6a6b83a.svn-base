@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.exam.dao.ExamAnswMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.exam.model.ExamAnsw" >
+    <id column="EA_ID" property="eaId" jdbcType="INTEGER" />
+    <result column="EA_CHAP_ID" property="eaChapId" jdbcType="INTEGER" />
+    <result column="EA_STU_NO" property="eaStuNo" jdbcType="INTEGER" />
+    <result column="EA_Q_ID" property="eaQId" jdbcType="BIGINT" />
+    <result column="EA_STUANSW" property="eaStuansw" jdbcType="VARCHAR" />
+    <result column="EA_SCORE" property="eaScore" jdbcType="DOUBLE" />
+    <result column="EA_LIVECOURSE_ID" property="eaLivecourseId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    EA_ID, EA_CHAP_ID, EA_STU_NO, EA_Q_ID, EA_STUANSW, EA_SCORE, EA_LIVECOURSE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.exam.model.ExamAnswExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_exam_answ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_exam_answ
+    where EA_ID = #{eaId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_exam_answ
+    where EA_ID = #{eaId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.exam.model.ExamAnswExample" >
+    delete from tp_exam_answ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.exam.model.ExamAnsw" >
+    insert into tp_exam_answ (EA_ID, EA_CHAP_ID, EA_STU_NO, 
+      EA_Q_ID, EA_STUANSW, EA_SCORE, 
+      EA_LIVECOURSE_ID)
+    values (#{eaId,jdbcType=INTEGER}, #{eaChapId,jdbcType=INTEGER}, #{eaStuNo,jdbcType=INTEGER}, 
+      #{eaQId,jdbcType=BIGINT}, #{eaStuansw,jdbcType=VARCHAR}, #{eaScore,jdbcType=DOUBLE}, 
+      #{eaLivecourseId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.exam.model.ExamAnsw" >
+    insert into tp_exam_answ
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eaId != null" >
+        EA_ID,
+      </if>
+      <if test="eaChapId != null" >
+        EA_CHAP_ID,
+      </if>
+      <if test="eaStuNo != null" >
+        EA_STU_NO,
+      </if>
+      <if test="eaQId != null" >
+        EA_Q_ID,
+      </if>
+      <if test="eaStuansw != null" >
+        EA_STUANSW,
+      </if>
+      <if test="eaScore != null" >
+        EA_SCORE,
+      </if>
+      <if test="eaLivecourseId != null" >
+        EA_LIVECOURSE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eaId != null" >
+        #{eaId,jdbcType=INTEGER},
+      </if>
+      <if test="eaChapId != null" >
+        #{eaChapId,jdbcType=INTEGER},
+      </if>
+      <if test="eaStuNo != null" >
+        #{eaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="eaQId != null" >
+        #{eaQId,jdbcType=BIGINT},
+      </if>
+      <if test="eaStuansw != null" >
+        #{eaStuansw,jdbcType=VARCHAR},
+      </if>
+      <if test="eaScore != null" >
+        #{eaScore,jdbcType=DOUBLE},
+      </if>
+      <if test="eaLivecourseId != null" >
+        #{eaLivecourseId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.exam.model.ExamAnswExample" resultType="java.lang.Integer" >
+    select count(*) from tp_exam_answ
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_exam_answ
+    <set >
+      <if test="record.eaId != null" >
+        EA_ID = #{record.eaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eaChapId != null" >
+        EA_CHAP_ID = #{record.eaChapId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eaStuNo != null" >
+        EA_STU_NO = #{record.eaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.eaQId != null" >
+        EA_Q_ID = #{record.eaQId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eaStuansw != null" >
+        EA_STUANSW = #{record.eaStuansw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eaScore != null" >
+        EA_SCORE = #{record.eaScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.eaLivecourseId != null" >
+        EA_LIVECOURSE_ID = #{record.eaLivecourseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_exam_answ
+    set EA_ID = #{record.eaId,jdbcType=INTEGER},
+      EA_CHAP_ID = #{record.eaChapId,jdbcType=INTEGER},
+      EA_STU_NO = #{record.eaStuNo,jdbcType=INTEGER},
+      EA_Q_ID = #{record.eaQId,jdbcType=BIGINT},
+      EA_STUANSW = #{record.eaStuansw,jdbcType=VARCHAR},
+      EA_SCORE = #{record.eaScore,jdbcType=DOUBLE},
+      EA_LIVECOURSE_ID = #{record.eaLivecourseId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.exam.model.ExamAnsw" >
+    update tp_exam_answ
+    <set >
+      <if test="eaChapId != null" >
+        EA_CHAP_ID = #{eaChapId,jdbcType=INTEGER},
+      </if>
+      <if test="eaStuNo != null" >
+        EA_STU_NO = #{eaStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="eaQId != null" >
+        EA_Q_ID = #{eaQId,jdbcType=BIGINT},
+      </if>
+      <if test="eaStuansw != null" >
+        EA_STUANSW = #{eaStuansw,jdbcType=VARCHAR},
+      </if>
+      <if test="eaScore != null" >
+        EA_SCORE = #{eaScore,jdbcType=DOUBLE},
+      </if>
+      <if test="eaLivecourseId != null" >
+        EA_LIVECOURSE_ID = #{eaLivecourseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where EA_ID = #{eaId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.exam.model.ExamAnsw" >
+    update tp_exam_answ
+    set EA_CHAP_ID = #{eaChapId,jdbcType=INTEGER},
+      EA_STU_NO = #{eaStuNo,jdbcType=INTEGER},
+      EA_Q_ID = #{eaQId,jdbcType=BIGINT},
+      EA_STUANSW = #{eaStuansw,jdbcType=VARCHAR},
+      EA_SCORE = #{eaScore,jdbcType=DOUBLE},
+      EA_LIVECOURSE_ID = #{eaLivecourseId,jdbcType=INTEGER}
+    where EA_ID = #{eaId,jdbcType=INTEGER}
+  </update>
+</mapper>

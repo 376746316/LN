@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.exam.dao.ExamQuesTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.exam.model.ExamQuesType" >
+    <id column="QT_ID" property="qtId" jdbcType="BIGINT" />
+    <result column="QT_NAME" property="qtName" jdbcType="VARCHAR" />
+    <result column="QT_CODE" property="qtCode" jdbcType="VARCHAR" />
+    <result column="QT_OUTTYPE" property="qtOuttype" jdbcType="VARCHAR" />
+    <result column="QT_SUBJECTIVE" property="qtSubjective" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    QT_ID, QT_NAME, QT_CODE, QT_OUTTYPE, QT_SUBJECTIVE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.exam.model.ExamQuesTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_exam_ques_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_exam_ques_type
+    where QT_ID = #{qtId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_exam_ques_type
+    where QT_ID = #{qtId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.exam.model.ExamQuesTypeExample" >
+    delete from t_exam_ques_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.exam.model.ExamQuesType" >
+    insert into t_exam_ques_type (QT_ID, QT_NAME, QT_CODE, 
+      QT_OUTTYPE, QT_SUBJECTIVE)
+    values (#{qtId,jdbcType=BIGINT}, #{qtName,jdbcType=VARCHAR}, #{qtCode,jdbcType=VARCHAR}, 
+      #{qtOuttype,jdbcType=VARCHAR}, #{qtSubjective,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.exam.model.ExamQuesType" >
+    insert into t_exam_ques_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qtId != null" >
+        QT_ID,
+      </if>
+      <if test="qtName != null" >
+        QT_NAME,
+      </if>
+      <if test="qtCode != null" >
+        QT_CODE,
+      </if>
+      <if test="qtOuttype != null" >
+        QT_OUTTYPE,
+      </if>
+      <if test="qtSubjective != null" >
+        QT_SUBJECTIVE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qtId != null" >
+        #{qtId,jdbcType=BIGINT},
+      </if>
+      <if test="qtName != null" >
+        #{qtName,jdbcType=VARCHAR},
+      </if>
+      <if test="qtCode != null" >
+        #{qtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qtOuttype != null" >
+        #{qtOuttype,jdbcType=VARCHAR},
+      </if>
+      <if test="qtSubjective != null" >
+        #{qtSubjective,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.exam.model.ExamQuesTypeExample" resultType="java.lang.Integer" >
+    select count(*) from t_exam_ques_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_exam_ques_type
+    <set >
+      <if test="record.qtId != null" >
+        QT_ID = #{record.qtId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qtName != null" >
+        QT_NAME = #{record.qtName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtCode != null" >
+        QT_CODE = #{record.qtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtOuttype != null" >
+        QT_OUTTYPE = #{record.qtOuttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtSubjective != null" >
+        QT_SUBJECTIVE = #{record.qtSubjective,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_exam_ques_type
+    set QT_ID = #{record.qtId,jdbcType=BIGINT},
+      QT_NAME = #{record.qtName,jdbcType=VARCHAR},
+      QT_CODE = #{record.qtCode,jdbcType=VARCHAR},
+      QT_OUTTYPE = #{record.qtOuttype,jdbcType=VARCHAR},
+      QT_SUBJECTIVE = #{record.qtSubjective,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.exam.model.ExamQuesType" >
+    update t_exam_ques_type
+    <set >
+      <if test="qtName != null" >
+        QT_NAME = #{qtName,jdbcType=VARCHAR},
+      </if>
+      <if test="qtCode != null" >
+        QT_CODE = #{qtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qtOuttype != null" >
+        QT_OUTTYPE = #{qtOuttype,jdbcType=VARCHAR},
+      </if>
+      <if test="qtSubjective != null" >
+        QT_SUBJECTIVE = #{qtSubjective,jdbcType=BIT},
+      </if>
+    </set>
+    where QT_ID = #{qtId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.exam.model.ExamQuesType" >
+    update t_exam_ques_type
+    set QT_NAME = #{qtName,jdbcType=VARCHAR},
+      QT_CODE = #{qtCode,jdbcType=VARCHAR},
+      QT_OUTTYPE = #{qtOuttype,jdbcType=VARCHAR},
+      QT_SUBJECTIVE = #{qtSubjective,jdbcType=BIT}
+    where QT_ID = #{qtId,jdbcType=BIGINT}
+  </update>
+</mapper>

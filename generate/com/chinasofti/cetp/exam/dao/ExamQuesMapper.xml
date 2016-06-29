@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.exam.dao.ExamQuesMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.exam.model.ExamQues">
+		<id column="Q_ID" property="qId" jdbcType="BIGINT" />
+		<result column="Q_MAXNUM" property="qMaxnum" jdbcType="BIGINT" />
+		<result column="Q_SCORE" property="qScore" jdbcType="DOUBLE" />
+		<result column="Q_MAKER" property="qMaker" jdbcType="VARCHAR" />
+		<result column="Q_INSTIME" property="qInstime" jdbcType="TIMESTAMP" />
+		<result column="Q_QTID" property="qQtid" jdbcType="BIGINT" />
+		<result column="CQ_ID" property="cQid" jdbcType="BIGINT" />
+		<result column="Q_TECHTYPEID" property="qTechtypeid" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs" extends="BaseResultMap">
+		<result column="Q_DESCRIBE" property="qDescribe" jdbcType="LONGVARCHAR" />
+		<result column="Q_CONTENT" property="qContent" jdbcType="LONGVARCHAR" />
+		<result column="Q_ANSWER" property="qAnswer" jdbcType="LONGVARCHAR" />
+		<result column="Q_DETAILANS" property="qDetailans" jdbcType="LONGVARCHAR" />
+		<result column="Q_RIGHTANS" property="qRightans" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="LiveResultMap" type="com.chinasofti.cetp.live.model.LiveExam" extends="ResultMapWithBLOBs">
+		<result column="LIVE_COURSE_ID" property="liveCourseId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		Q_ID, Q_MAXNUM, Q_SCORE, Q_MAKER, Q_INSTIME, Q_QTID, Q_TECHTYPEID
+	</sql>
+	<sql id="Blob_Column_List">
+		Q_DESCRIBE, Q_CONTENT, Q_ANSWER, Q_DETAILANS, Q_RIGHTANS
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.exam.model.ExamQuesExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_exam_ques
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.exam.model.ExamQuesExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_exam_ques
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_exam_ques
+		where Q_ID = #{qId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from tp_exam_ques
+		where Q_ID = #{qId,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.exam.model.ExamQuesExample">
+		delete from tp_exam_ques
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs" useGeneratedKeys="true" keyProperty="qId">
+		insert into tp_exam_ques (Q_ID, Q_MAXNUM, Q_SCORE,
+		Q_MAKER, Q_INSTIME, Q_QTID,
+		Q_TECHTYPEID, Q_DESCRIBE, Q_CONTENT,
+		Q_ANSWER, Q_DETAILANS, Q_RIGHTANS
+		)
+		values (#{qId,jdbcType=BIGINT}, #{qMaxnum,jdbcType=BIGINT}, #{qScore,jdbcType=DOUBLE},
+		#{qMaker,jdbcType=VARCHAR}, #{qInstime,jdbcType=TIMESTAMP}, #{qQtid,jdbcType=BIGINT},
+		#{qTechtypeid,jdbcType=INTEGER}, #{qDescribe,jdbcType=LONGVARCHAR}, #{qContent,jdbcType=LONGVARCHAR},
+		#{qAnswer,jdbcType=LONGVARCHAR}, #{qDetailans,jdbcType=LONGVARCHAR}, #{qRightans,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs" useGeneratedKeys="true" keyProperty="qId">
+		insert into tp_exam_ques
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="qId != null">
+				Q_ID,
+			</if>
+			<if test="qMaxnum != null">
+				Q_MAXNUM,
+			</if>
+			<if test="qScore != null">
+				Q_SCORE,
+			</if>
+			<if test="qMaker != null">
+				Q_MAKER,
+			</if>
+			<if test="qInstime != null">
+				Q_INSTIME,
+			</if>
+			<if test="qQtid != null">
+				Q_QTID,
+			</if>
+			<if test="qTechtypeid != null">
+				Q_TECHTYPEID,
+			</if>
+			<if test="qDescribe != null">
+				Q_DESCRIBE,
+			</if>
+			<if test="qContent != null">
+				Q_CONTENT,
+			</if>
+			<if test="qAnswer != null">
+				Q_ANSWER,
+			</if>
+			<if test="qDetailans != null">
+				Q_DETAILANS,
+			</if>
+			<if test="qRightans != null">
+				Q_RIGHTANS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="qId != null">
+				#{qId,jdbcType=BIGINT},
+			</if>
+			<if test="qMaxnum != null">
+				#{qMaxnum,jdbcType=BIGINT},
+			</if>
+			<if test="qScore != null">
+				#{qScore,jdbcType=DOUBLE},
+			</if>
+			<if test="qMaker != null">
+				#{qMaker,jdbcType=VARCHAR},
+			</if>
+			<if test="qInstime != null">
+				#{qInstime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qQtid != null">
+				#{qQtid,jdbcType=BIGINT},
+			</if>
+			<if test="qTechtypeid != null">
+				#{qTechtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="qDescribe != null">
+				#{qDescribe,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qContent != null">
+				#{qContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qAnswer != null">
+				#{qAnswer,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qDetailans != null">
+				#{qDetailans,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qRightans != null">
+				#{qRightans,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.exam.model.ExamQuesExample" resultType="java.lang.Integer">
+		select count(*) from tp_exam_ques
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_exam_ques
+		<set>
+			<if test="record.qId != null">
+				Q_ID = #{record.qId,jdbcType=BIGINT},
+			</if>
+			<if test="record.qMaxnum != null">
+				Q_MAXNUM = #{record.qMaxnum,jdbcType=BIGINT},
+			</if>
+			<if test="record.qScore != null">
+				Q_SCORE = #{record.qScore,jdbcType=DOUBLE},
+			</if>
+			<if test="record.qMaker != null">
+				Q_MAKER = #{record.qMaker,jdbcType=VARCHAR},
+			</if>
+			<if test="record.qInstime != null">
+				Q_INSTIME = #{record.qInstime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.qQtid != null">
+				Q_QTID = #{record.qQtid,jdbcType=BIGINT},
+			</if>
+			<if test="record.qTechtypeid != null">
+				Q_TECHTYPEID = #{record.qTechtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="record.qDescribe != null">
+				Q_DESCRIBE = #{record.qDescribe,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.qContent != null">
+				Q_CONTENT = #{record.qContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.qAnswer != null">
+				Q_ANSWER = #{record.qAnswer,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.qDetailans != null">
+				Q_DETAILANS = #{record.qDetailans,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.qRightans != null">
+				Q_RIGHTANS = #{record.qRightans,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_exam_ques
+		set Q_ID = #{record.qId,jdbcType=BIGINT},
+		Q_MAXNUM = #{record.qMaxnum,jdbcType=BIGINT},
+		Q_SCORE = #{record.qScore,jdbcType=DOUBLE},
+		Q_MAKER = #{record.qMaker,jdbcType=VARCHAR},
+		Q_INSTIME = #{record.qInstime,jdbcType=TIMESTAMP},
+		Q_QTID = #{record.qQtid,jdbcType=BIGINT},
+		Q_TECHTYPEID = #{record.qTechtypeid,jdbcType=INTEGER},
+		Q_DESCRIBE = #{record.qDescribe,jdbcType=LONGVARCHAR},
+		Q_CONTENT = #{record.qContent,jdbcType=LONGVARCHAR},
+		Q_ANSWER = #{record.qAnswer,jdbcType=LONGVARCHAR},
+		Q_DETAILANS = #{record.qDetailans,jdbcType=LONGVARCHAR},
+		Q_RIGHTANS = #{record.qRightans,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_exam_ques
+		set Q_ID = #{record.qId,jdbcType=BIGINT},
+		Q_MAXNUM = #{record.qMaxnum,jdbcType=BIGINT},
+		Q_SCORE = #{record.qScore,jdbcType=DOUBLE},
+		Q_MAKER = #{record.qMaker,jdbcType=VARCHAR},
+		Q_INSTIME = #{record.qInstime,jdbcType=TIMESTAMP},
+		Q_QTID = #{record.qQtid,jdbcType=BIGINT},
+		Q_TECHTYPEID = #{record.qTechtypeid,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs">
+		update tp_exam_ques
+		<set>
+			<if test="qMaxnum != null">
+				Q_MAXNUM = #{qMaxnum,jdbcType=BIGINT},
+			</if>
+			<if test="qScore != null">
+				Q_SCORE = #{qScore,jdbcType=DOUBLE},
+			</if>
+			<if test="qMaker != null">
+				Q_MAKER = #{qMaker,jdbcType=VARCHAR},
+			</if>
+			<if test="qInstime != null">
+				Q_INSTIME = #{qInstime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qQtid != null">
+				Q_QTID = #{qQtid,jdbcType=BIGINT},
+			</if>
+			<if test="qTechtypeid != null">
+				Q_TECHTYPEID = #{qTechtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="qDescribe != null">
+				Q_DESCRIBE = #{qDescribe,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qContent != null">
+				Q_CONTENT = #{qContent,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qAnswer != null">
+				Q_ANSWER = #{qAnswer,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qDetailans != null">
+				Q_DETAILANS = #{qDetailans,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="qRightans != null">
+				Q_RIGHTANS = #{qRightans,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where Q_ID = #{qId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs">
+		update tp_exam_ques
+		set Q_MAXNUM = #{qMaxnum,jdbcType=BIGINT},
+		Q_SCORE = #{qScore,jdbcType=DOUBLE},
+		Q_MAKER = #{qMaker,jdbcType=VARCHAR},
+		Q_INSTIME = #{qInstime,jdbcType=TIMESTAMP},
+		Q_QTID = #{qQtid,jdbcType=BIGINT},
+		Q_TECHTYPEID = #{qTechtypeid,jdbcType=INTEGER},
+		Q_DESCRIBE = #{qDescribe,jdbcType=LONGVARCHAR},
+		Q_CONTENT = #{qContent,jdbcType=LONGVARCHAR},
+		Q_ANSWER = #{qAnswer,jdbcType=LONGVARCHAR},
+		Q_DETAILANS = #{qDetailans,jdbcType=LONGVARCHAR},
+		Q_RIGHTANS = #{qRightans,jdbcType=LONGVARCHAR}
+		where Q_ID = #{qId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.exam.model.ExamQues">
+		update tp_exam_ques
+		set Q_MAXNUM = #{qMaxnum,jdbcType=BIGINT},
+		Q_SCORE = #{qScore,jdbcType=DOUBLE},
+		Q_MAKER = #{qMaker,jdbcType=VARCHAR},
+		Q_INSTIME = #{qInstime,jdbcType=TIMESTAMP},
+		Q_QTID = #{qQtid,jdbcType=BIGINT},
+		Q_TECHTYPEID = #{qTechtypeid,jdbcType=INTEGER}
+		where Q_ID = #{qId,jdbcType=BIGINT}
+	</update>
+
+	<resultMap id="ResultMapWithWithQuesTypeAll" type="com.chinasofti.cetp.exam.model.ExamQuesWithBLOBs" extends="BaseResultMap">
+		<result column="Q_DESCRIBE" property="qDescribe" jdbcType="LONGVARCHAR" />
+		<result column="Q_CONTENT" property="qContent" jdbcType="LONGVARCHAR" />
+		<result column="Q_ANSWER" property="qAnswer" jdbcType="LONGVARCHAR" />
+		<result column="Q_DETAILANS" property="qDetailans" jdbcType="LONGVARCHAR" />
+		<result column="Q_RIGHTANS" property="qRightans" jdbcType="LONGVARCHAR" />
+		<result column="Q_DELFLAG" property="qDelflag" jdbcType="LONGVARCHAR" />
+		<association property="examQuesType" javaType="com.chinasofti.cetp.exam.model.ExamQuesType">
+			<id column="QT_ID" property="qtId" jdbcType="BIGINT" />
+			<result column="QT_NAME" property="qtName" jdbcType="VARCHAR" />
+			<result column="QT_CODE" property="qtCode" jdbcType="VARCHAR" />
+			<result column="QT_OUTTYPE" property="qtOuttype" jdbcType="VARCHAR" />
+			<result column="QT_SUBJECTIVE" property="qtSubjective" jdbcType="BIT" />
+		</association>
+		<association property="techType" javaType="com.chinasofti.cetp.study.model.TechType">
+			<id column="TECH_TYPE_ID" property="techTypeId" jdbcType="INTEGER" />
+			<result column="TECH_TYPE_NAME" property="techTypeName" jdbcType="VARCHAR" />
+			<result column="TECH_TYPE_PARENT" property="techTypeParent" jdbcType="INTEGER" />
+			<result column="TECH_TYPE_LEVEL" property="techTypeLevel" jdbcType="INTEGER" />
+			<result column="TECH_TYPE_SEQ" property="techTypeSeq" jdbcType="INTEGER" />
+			<result column="TECH_TYPE_CODE" property="techTypeCode" jdbcType="VARCHAR" />
+			<result column="TECH_TYPE_REGTIME" property="techTypeRegtime" jdbcType="TIMESTAMP" />
+		</association>
+	</resultMap>
+	<sql id="QuesType_Column_List">
+		QT_ID, QT_NAME, QT_CODE, QT_OUTTYPE, QT_SUBJECTIVE
+	</sql>
+	<sql id="TechType_Column_List">
+		TECH_TYPE_ID, TECH_TYPE_NAME, TECH_TYPE_PARENT, TECH_TYPE_LEVEL,
+		TECH_TYPE_SEQ, TECH_TYPE_CODE,
+		TECH_TYPE_REGTIME
+	</sql>
+
+	<!-- 查询测验试题带有试题类型字段 开始 -->
+	<select id="selectWithQuesTypeAll" resultMap="ResultMapWithWithQuesTypeAll" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="QuesType_Column_List" />
+		,
+		<include refid="TechType_Column_List" />
+		FROM
+		tp_exam_ques t1
+		LEFT JOIN t_exam_ques_type t2 ON t1.Q_QTID = t2.QT_ID
+		LEFT JOIN tp_tech_type t3 ON t1.Q_TECHTYPEID = t3.TECH_TYPE_ID
+		WHERE 1=1
+		<if test="qContent!=null">
+			AND t1.Q_CONTENT like #{qContent,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="qtId!=null">
+			AND t1.Q_QTID = #{qtId,jdbcType=BIGINT}
+		</if>
+		<if test="qMaker!=null">
+			AND t1.Q_MAKER = #{qMaker,jdbcType=VARCHAR}
+		</if>
+		<if test="selectTypeId!=null">
+			AND FIND_IN_SET(Q_TECHTYPEID,getChildTechType(#{selectTypeId,jdbcType=BIGINT}))
+		</if>
+		LIMIT #{offset},#{limit}
+	</select>
+	<!-- DataGird 分页查询-记录条数 -->
+	<select id="selectQuesCount" resultType="java.lang.Integer" parameterType="map">
+		SELECT
+		COUNT(t1.Q_ID)
+		FROM
+		tp_exam_ques t1
+		LEFT JOIN t_exam_ques_type t2 ON t1.Q_QTID = t2.QT_ID
+		LEFT JOIN tp_tech_type t3 ON t1.Q_TECHTYPEID = t3.TECH_TYPE_ID
+		WHERE 1=1
+		<if test="qContent!=null">
+			AND t1.Q_CONTENT like #{qContent,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="qtId!=null">
+			AND t1.Q_QTID = #{qtId,jdbcType=BIGINT}
+		</if>
+		<if test="qMaker!=null">
+			AND t1.Q_MAKER = #{qMaker,jdbcType=VARCHAR}
+		</if>
+		<if test="selectTypeId!=null">
+			AND FIND_IN_SET(Q_TECHTYPEID,getChildTechType(#{selectTypeId,jdbcType=BIGINT}))
+		</if>
+	</select>
+	<!-- 查询测验试题带有试题类型字段 结束 -->
+
+	<!-- 查询各章节测验试题带有试题类型字段 开始 -->
+	<select id="selectWithQuesTypeChapter" resultMap="ResultMapWithWithQuesTypeAll" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="QuesType_Column_List" />
+		, CQ_ID ,
+		<include refid="TechType_Column_List" />
+		FROM
+		tp_exam_ques t1
+		INNER JOIN tp_chapter_ques t2 ON t1.Q_ID = t2.CQ_Q_ID
+		LEFT JOIN t_exam_ques_type t3 ON t1.Q_QTID = t3.QT_ID
+		LEFT JOIN tp_tech_type t4 ON t1.Q_TECHTYPEID = t4.TECH_TYPE_ID
+		WHERE
+		t2.CQ_CHAP_ID = #{chapId,jdbcType=INTEGER} limit #{offset},#{limit}
+	</select>
+	<select id="selectQuesCountChapter" resultType="java.lang.Integer" parameterType="map">
+		SELECT
+		COUNT(t1.Q_ID)
+		FROM
+		tp_exam_ques t1
+		INNER JOIN tp_chapter_ques t2 ON t1.Q_ID = t2.CQ_Q_ID
+		LEFT JOIN t_exam_ques_type t3 ON t1.Q_QTID = t3.QT_ID
+		WHERE
+		t2.CQ_CHAP_ID = #{chapId,jdbcType=INTEGER}
+	</select>
+	<!-- 查询各章节测验试题带有试题类型字段 开始 -->
+	<select id="getQuesAllByChapId" resultMap="ResultMapWithWithQuesTypeAll" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="QuesType_Column_List" />
+		, CQ_ID ,
+		<include refid="TechType_Column_List" />
+		FROM
+		tp_exam_ques t1
+		INNER JOIN tp_chapter_ques t2 ON t1.Q_ID = t2.CQ_Q_ID
+		LEFT JOIN t_exam_ques_type t3 ON t1.Q_QTID = t3.QT_ID
+		LEFT JOIN tp_tech_type t4 ON t1.Q_TECHTYPEID = t4.TECH_TYPE_ID
+		WHERE
+		t2.CQ_CHAP_ID = #{chapId,jdbcType=INTEGER}
+	</select>
+	<select id="selectExamByLiveClassId" resultMap="LiveResultMap" parameterType="java.lang.Integer">
+		SELECT
+		e.LE_LC_ID AS LIVE_COURSE_ID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_exam_ques d JOIN (
+		SELECT
+		c.LE_EQ_ID,c.LE_LC_ID
+		FROM tp_live_exam c
+		WHERE c.LE_LC_ID IN(
+		SELECT
+		b.LIVE_COURSE_ID
+		FROM tp_live_course b
+		WHERE b.LIVE_COURSE_CHAP_ID IN(
+		SELECT
+		a.LIVE_CHAP_ID
+		FROM tp_live_chapter a
+		WHERE a.LIVE_CHAP_CLASS_ID =#{liveClassId}))) e ON d.Q_ID = e.LE_EQ_ID
+	</select>
+	<select id="getQuesAllByLiveCourseId" resultMap="ResultMapWithWithQuesTypeAll" parameterType="map">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="QuesType_Column_List" />
+		,
+		<include refid="TechType_Column_List" />
+		FROM
+		tp_exam_ques t1
+		INNER JOIN tp_live_exam t2 ON t1.Q_ID = t2.LE_EQ_ID
+		LEFT JOIN t_exam_ques_type t3 ON t1.Q_QTID = t3.QT_ID
+		LEFT JOIN tp_tech_type t4 ON t1.Q_TECHTYPEID = t4.TECH_TYPE_ID
+		WHERE
+		t2.LE_LC_ID = #{liveCourseId,jdbcType=INTEGER}
+		<if test="qId != null">AND t1.Q_ID =  #{qId,jdbcType=INTEGER}
+		</if>
+	</select>
+
+</mapper>

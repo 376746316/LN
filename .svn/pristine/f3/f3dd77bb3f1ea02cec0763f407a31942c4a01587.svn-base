@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.admin.dao.CoinRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.admin.model.CoinRecord" >
+    <id column="CREC_ID" property="crecId" jdbcType="BIGINT" />
+    <result column="CREC_COIN" property="crecCoin" jdbcType="INTEGER" />
+    <result column="CREC_STU_NO" property="crecStuNo" jdbcType="INTEGER" />
+    <result column="CREC_USER_NO" property="crecUserNo" jdbcType="INTEGER" />
+    <result column="CREC_REGTIME" property="crecRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.admin.model.CoinRecord" extends="BaseResultMap" >
+    <result column="CREC_REASON" property="crecReason" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CREC_ID, CREC_COIN, CREC_STU_NO, CREC_USER_NO, CREC_REGTIME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CREC_REASON
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.CoinRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_coin_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.admin.model.CoinRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_coin_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tp_coin_record
+    where CREC_ID = #{crecId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tp_coin_record
+    where CREC_ID = #{crecId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.admin.model.CoinRecordExample" >
+    delete from tp_coin_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.admin.model.CoinRecord" >
+    insert into tp_coin_record (CREC_ID, CREC_COIN, CREC_STU_NO, 
+      CREC_USER_NO, CREC_REGTIME, CREC_REASON
+      )
+    values (#{crecId,jdbcType=BIGINT}, #{crecCoin,jdbcType=INTEGER}, #{crecStuNo,jdbcType=INTEGER}, 
+      #{crecUserNo,jdbcType=INTEGER}, #{crecRegtime,jdbcType=TIMESTAMP}, #{crecReason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.admin.model.CoinRecord" >
+    insert into tp_coin_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crecId != null" >
+        CREC_ID,
+      </if>
+      <if test="crecCoin != null" >
+        CREC_COIN,
+      </if>
+      <if test="crecStuNo != null" >
+        CREC_STU_NO,
+      </if>
+      <if test="crecUserNo != null" >
+        CREC_USER_NO,
+      </if>
+      <if test="crecRegtime != null" >
+        CREC_REGTIME,
+      </if>
+      <if test="crecReason != null" >
+        CREC_REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crecId != null" >
+        #{crecId,jdbcType=BIGINT},
+      </if>
+      <if test="crecCoin != null" >
+        #{crecCoin,jdbcType=INTEGER},
+      </if>
+      <if test="crecStuNo != null" >
+        #{crecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="crecUserNo != null" >
+        #{crecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="crecRegtime != null" >
+        #{crecRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crecReason != null" >
+        #{crecReason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.admin.model.CoinRecordExample" resultType="java.lang.Integer" >
+    select count(*) from tp_coin_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_coin_record
+    <set >
+      <if test="record.crecId != null" >
+        CREC_ID = #{record.crecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.crecCoin != null" >
+        CREC_COIN = #{record.crecCoin,jdbcType=INTEGER},
+      </if>
+      <if test="record.crecStuNo != null" >
+        CREC_STU_NO = #{record.crecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.crecUserNo != null" >
+        CREC_USER_NO = #{record.crecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.crecRegtime != null" >
+        CREC_REGTIME = #{record.crecRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.crecReason != null" >
+        CREC_REASON = #{record.crecReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tp_coin_record
+    set CREC_ID = #{record.crecId,jdbcType=BIGINT},
+      CREC_COIN = #{record.crecCoin,jdbcType=INTEGER},
+      CREC_STU_NO = #{record.crecStuNo,jdbcType=INTEGER},
+      CREC_USER_NO = #{record.crecUserNo,jdbcType=INTEGER},
+      CREC_REGTIME = #{record.crecRegtime,jdbcType=TIMESTAMP},
+      CREC_REASON = #{record.crecReason,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_coin_record
+    set CREC_ID = #{record.crecId,jdbcType=BIGINT},
+      CREC_COIN = #{record.crecCoin,jdbcType=INTEGER},
+      CREC_STU_NO = #{record.crecStuNo,jdbcType=INTEGER},
+      CREC_USER_NO = #{record.crecUserNo,jdbcType=INTEGER},
+      CREC_REGTIME = #{record.crecRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.admin.model.CoinRecord" >
+    update tp_coin_record
+    <set >
+      <if test="crecCoin != null" >
+        CREC_COIN = #{crecCoin,jdbcType=INTEGER},
+      </if>
+      <if test="crecStuNo != null" >
+        CREC_STU_NO = #{crecStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="crecUserNo != null" >
+        CREC_USER_NO = #{crecUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="crecRegtime != null" >
+        CREC_REGTIME = #{crecRegtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crecReason != null" >
+        CREC_REASON = #{crecReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CREC_ID = #{crecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.admin.model.CoinRecord" >
+    update tp_coin_record
+    set CREC_COIN = #{crecCoin,jdbcType=INTEGER},
+      CREC_STU_NO = #{crecStuNo,jdbcType=INTEGER},
+      CREC_USER_NO = #{crecUserNo,jdbcType=INTEGER},
+      CREC_REGTIME = #{crecRegtime,jdbcType=TIMESTAMP},
+      CREC_REASON = #{crecReason,jdbcType=LONGVARCHAR}
+    where CREC_ID = #{crecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.admin.model.CoinRecord" >
+    update tp_coin_record
+    set CREC_COIN = #{crecCoin,jdbcType=INTEGER},
+      CREC_STU_NO = #{crecStuNo,jdbcType=INTEGER},
+      CREC_USER_NO = #{crecUserNo,jdbcType=INTEGER},
+      CREC_REGTIME = #{crecRegtime,jdbcType=TIMESTAMP}
+    where CREC_ID = #{crecId,jdbcType=BIGINT}
+  </update>
+</mapper>

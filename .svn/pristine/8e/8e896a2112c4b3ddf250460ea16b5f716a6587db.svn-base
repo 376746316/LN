@@ -1,0 +1,7 @@
+package com.nixiang.test;
+
+public class Customer {
+    public static void main(String[] args) {
+		System.out.println("mybatis项目");
+	}
+}

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.AwardStuMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.AwardStu" >
+    <id column="AWS_ID" property="awsId" jdbcType="INTEGER" />
+    <result column="AWS_AWARD_ID" property="awsAwardId" jdbcType="INTEGER" />
+    <result column="AWS_STU_NO" property="awsStuNo" jdbcType="INTEGER" />
+    <result column="AWS_COUNT" property="awsCount" jdbcType="INTEGER" />
+    <result column="AWS_SEND_TIME" property="awsSendTime" jdbcType="TIMESTAMP" />
+    <result column="AWS_REGTIME" property="awsRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AWS_ID, AWS_AWARD_ID, AWS_STU_NO, AWS_COUNT, AWS_SEND_TIME, AWS_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.AwardStuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tp_award_stu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_award_stu
+    where AWS_ID = #{awsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_award_stu
+    where AWS_ID = #{awsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.live.model.AwardStu" >
+    insert into tp_award_stu (AWS_ID, AWS_AWARD_ID, AWS_STU_NO, 
+      AWS_COUNT, AWS_SEND_TIME, AWS_REGTIME
+      )
+    values (#{awsId,jdbcType=INTEGER}, #{awsAwardId,jdbcType=INTEGER}, #{awsStuNo,jdbcType=INTEGER}, 
+      #{awsCount,jdbcType=INTEGER}, #{awsSendTime,jdbcType=TIMESTAMP}, #{awsRegtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.AwardStu" >
+    insert into tp_award_stu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="awsId != null" >
+        AWS_ID,
+      </if>
+      <if test="awsAwardId != null" >
+        AWS_AWARD_ID,
+      </if>
+      <if test="awsStuNo != null" >
+        AWS_STU_NO,
+      </if>
+      <if test="awsCount != null" >
+        AWS_COUNT,
+      </if>
+      <if test="awsSendTime != null" >
+        AWS_SEND_TIME,
+      </if>
+      <if test="awsRegtime != null" >
+        AWS_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="awsId != null" >
+        #{awsId,jdbcType=INTEGER},
+      </if>
+      <if test="awsAwardId != null" >
+        #{awsAwardId,jdbcType=INTEGER},
+      </if>
+      <if test="awsStuNo != null" >
+        #{awsStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="awsCount != null" >
+        #{awsCount,jdbcType=INTEGER},
+      </if>
+      <if test="awsSendTime != null" >
+        #{awsSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awsRegtime != null" >
+        #{awsRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.live.model.AwardStuExample" resultType="java.lang.Integer" >
+    select count(*) from tp_award_stu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.AwardStu" >
+    update tp_award_stu
+    <set >
+      <if test="awsAwardId != null" >
+        AWS_AWARD_ID = #{awsAwardId,jdbcType=INTEGER},
+      </if>
+      <if test="awsStuNo != null" >
+        AWS_STU_NO = #{awsStuNo,jdbcType=INTEGER},
+      </if>
+      <if test="awsCount != null" >
+        AWS_COUNT = #{awsCount,jdbcType=INTEGER},
+      </if>
+      <if test="awsSendTime != null" >
+        AWS_SEND_TIME = #{awsSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="awsRegtime != null" >
+        AWS_REGTIME = #{awsRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where AWS_ID = #{awsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.AwardStu" >
+    update tp_award_stu
+    set AWS_AWARD_ID = #{awsAwardId,jdbcType=INTEGER},
+      AWS_STU_NO = #{awsStuNo,jdbcType=INTEGER},
+      AWS_COUNT = #{awsCount,jdbcType=INTEGER},
+      AWS_SEND_TIME = #{awsSendTime,jdbcType=TIMESTAMP},
+      AWS_REGTIME = #{awsRegtime,jdbcType=TIMESTAMP}
+    where AWS_ID = #{awsId,jdbcType=INTEGER}
+  </update>
+</mapper>

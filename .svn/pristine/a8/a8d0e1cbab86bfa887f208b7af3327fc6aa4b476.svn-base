@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.attendance.dao.PracCalendarMapper" >
+  <resultMap id="BaseResultMap" type="com.chinasofti.cetp.attendance.model.PracCalendar" >
+    <id column="PAC_ID" property="pacId" jdbcType="INTEGER" />
+    <result column="PAC_PRAC_ID" property="pacPracId" jdbcType="INTEGER" />
+    <result column="PAC_DATE" property="pacDate" jdbcType="DATE" />
+    <result column="PAC_AS_ID" property="pacAsId" jdbcType="INTEGER" />
+    <result column="PAC_USER_NO" property="pacUserNo" jdbcType="INTEGER" />
+    <result column="PAC_REGTIME" property="pacRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PAC_ID, PAC_PRAC_ID, PAC_DATE, PAC_AS_ID, PAC_USER_NO, PAC_REGTIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.attendance.model.PracCalendarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tp_prac_calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tp_prac_calendar
+    where PAC_ID = #{pacId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tp_prac_calendar
+    where PAC_ID = #{pacId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinasofti.cetp.attendance.model.PracCalendarExample" >
+    delete from tp_prac_calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinasofti.cetp.attendance.model.PracCalendar" >
+    insert into tp_prac_calendar (PAC_ID, PAC_PRAC_ID, PAC_DATE, 
+      PAC_AS_ID, PAC_USER_NO, PAC_REGTIME
+      )
+    values (#{pacId,jdbcType=INTEGER}, #{pacPracId,jdbcType=INTEGER}, #{pacDate,jdbcType=DATE}, 
+      #{pacAsId,jdbcType=INTEGER}, #{pacUserNo,jdbcType=INTEGER}, #{pacRegtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinasofti.cetp.attendance.model.PracCalendar" >
+    insert into tp_prac_calendar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pacId != null" >
+        PAC_ID,
+      </if>
+      <if test="pacPracId != null" >
+        PAC_PRAC_ID,
+      </if>
+      <if test="pacDate != null" >
+        PAC_DATE,
+      </if>
+      <if test="pacAsId != null" >
+        PAC_AS_ID,
+      </if>
+      <if test="pacUserNo != null" >
+        PAC_USER_NO,
+      </if>
+      <if test="pacRegtime != null" >
+        PAC_REGTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pacId != null" >
+        #{pacId,jdbcType=INTEGER},
+      </if>
+      <if test="pacPracId != null" >
+        #{pacPracId,jdbcType=INTEGER},
+      </if>
+      <if test="pacDate != null" >
+        #{pacDate,jdbcType=DATE},
+      </if>
+      <if test="pacAsId != null" >
+        #{pacAsId,jdbcType=INTEGER},
+      </if>
+      <if test="pacUserNo != null" >
+        #{pacUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="pacRegtime != null" >
+        #{pacRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinasofti.cetp.attendance.model.PracCalendarExample" resultType="java.lang.Integer" >
+    select count(*) from tp_prac_calendar
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tp_prac_calendar
+    <set >
+      <if test="record.pacId != null" >
+        PAC_ID = #{record.pacId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pacPracId != null" >
+        PAC_PRAC_ID = #{record.pacPracId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pacDate != null" >
+        PAC_DATE = #{record.pacDate,jdbcType=DATE},
+      </if>
+      <if test="record.pacAsId != null" >
+        PAC_AS_ID = #{record.pacAsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pacUserNo != null" >
+        PAC_USER_NO = #{record.pacUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.pacRegtime != null" >
+        PAC_REGTIME = #{record.pacRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tp_prac_calendar
+    set PAC_ID = #{record.pacId,jdbcType=INTEGER},
+      PAC_PRAC_ID = #{record.pacPracId,jdbcType=INTEGER},
+      PAC_DATE = #{record.pacDate,jdbcType=DATE},
+      PAC_AS_ID = #{record.pacAsId,jdbcType=INTEGER},
+      PAC_USER_NO = #{record.pacUserNo,jdbcType=INTEGER},
+      PAC_REGTIME = #{record.pacRegtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.attendance.model.PracCalendar" >
+    update tp_prac_calendar
+    <set >
+      <if test="pacPracId != null" >
+        PAC_PRAC_ID = #{pacPracId,jdbcType=INTEGER},
+      </if>
+      <if test="pacDate != null" >
+        PAC_DATE = #{pacDate,jdbcType=DATE},
+      </if>
+      <if test="pacAsId != null" >
+        PAC_AS_ID = #{pacAsId,jdbcType=INTEGER},
+      </if>
+      <if test="pacUserNo != null" >
+        PAC_USER_NO = #{pacUserNo,jdbcType=INTEGER},
+      </if>
+      <if test="pacRegtime != null" >
+        PAC_REGTIME = #{pacRegtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PAC_ID = #{pacId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.attendance.model.PracCalendar" >
+    update tp_prac_calendar
+    set PAC_PRAC_ID = #{pacPracId,jdbcType=INTEGER},
+      PAC_DATE = #{pacDate,jdbcType=DATE},
+      PAC_AS_ID = #{pacAsId,jdbcType=INTEGER},
+      PAC_USER_NO = #{pacUserNo,jdbcType=INTEGER},
+      PAC_REGTIME = #{pacRegtime,jdbcType=TIMESTAMP}
+    where PAC_ID = #{pacId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- add by yf -->
+  <resultMap type="com.chinasofti.cetp.attendance.model.MorePracCalendar" id="morePracCalendar" extends="BaseResultMap">
+	    <result column="AS_ID" property="asId" jdbcType="INTEGER" />
+	    <result column="AS_NAME" property="asName" jdbcType="VARCHAR" />
+	    <result column="AS_AM_FLAG" property="asAmFlag" jdbcType="CHAR" />
+	    <result column="AS_AM_START" property="asAmStart" jdbcType="TIME" />
+	    <result column="AS_AM_END" property="asAmEnd" jdbcType="TIME" />
+	    <result column="AS_PM_FLAG" property="asPmFlag" jdbcType="CHAR" />
+	    <result column="AS_PM_START" property="asPmStart" jdbcType="TIME" />
+	    <result column="AS_PM_END" property="asPmEnd" jdbcType="TIME" />
+	    <result column="AS_NIGHT_FLAG" property="asNightFlag" jdbcType="CHAR" />
+	    <result column="AS_NIGHT_START" property="asNightStart" jdbcType="TIME" />
+	    <result column="AS_NIGHT_END" property="asNightEnd" jdbcType="TIME" />
+	    <result column="AS_SIGNIN_FLAG" property="asSigninFlag" jdbcType="CHAR" />
+	    <result column="AS_USER_NO" property="asUserNo" jdbcType="INTEGER" />
+	    <result column="AS_REGTIME" property="asRegtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="AS_Column_List" >
+    AS_ID, AS_NAME, AS_AM_FLAG, AS_AM_START, AS_AM_END, AS_PM_FLAG, AS_PM_START, AS_PM_END, 
+    AS_NIGHT_FLAG, AS_NIGHT_START, AS_NIGHT_END, AS_SIGNIN_FLAG, AS_USER_NO, AS_REGTIME
+  </sql>  
+
+  <select id="getPracCalendarList" parameterType="java.lang.Integer" resultMap="morePracCalendar">
+  	SELECT
+  	<include refid="Base_Column_List" />,<include refid="AS_Column_List" />
+	FROM
+	tp_prac_calendar 
+	INNER JOIN
+	tp_attendance_scheme
+	ON
+	PAC_AS_ID = AS_ID
+	WHERE
+	PAC_PRAC_ID = #{pacPracId,jdbcType=INTEGER}
+	ORDER BY PAC_DATE
+  </select>
+  <select id="getPracTimeSlots"  parameterType="java.lang.Integer" resultType="com.chinasofti.cetp.attendance.model.TimeSlot">
+	SELECT
+		start_time,
+		end_time
+	FROM
+		(
+			(
+				SELECT
+					DATE_ADD(
+						PAC_DATE,
+						INTERVAL AS_AM_START HOUR_SECOND
+					) AS start_time,
+					DATE_ADD(
+						PAC_DATE,
+						INTERVAL AS_AM_END HOUR_SECOND
+					) AS end_time
+				FROM
+					tp_prac_calendar
+				INNER JOIN tp_attendance_scheme ON PAC_AS_ID = AS_ID
+				WHERE
+					PAC_PRAC_ID = #{pracId,jdbcType=INTEGER}
+				AND AS_AM_FLAG = '1'
+			)
+			UNION ALL
+				(
+					SELECT
+						DATE_ADD(
+							PAC_DATE,
+							INTERVAL AS_PM_START HOUR_SECOND
+						) AS start_time,
+						DATE_ADD(
+							PAC_DATE,
+							INTERVAL AS_PM_END HOUR_SECOND
+						) AS end_time
+					FROM
+						tp_prac_calendar
+					INNER JOIN tp_attendance_scheme ON PAC_AS_ID = AS_ID
+					WHERE
+						PAC_PRAC_ID = #{pracId,jdbcType=INTEGER}
+					AND AS_PM_FLAG = '1'
+				)
+			UNION ALL
+				(
+					SELECT
+						DATE_ADD(
+							PAC_DATE,
+							INTERVAL AS_NIGHT_START HOUR_SECOND
+						) AS start_time,
+						DATE_ADD(
+							PAC_DATE,
+							INTERVAL AS_NIGHT_END HOUR_SECOND
+						) AS end_time
+					FROM
+						tp_prac_calendar
+					INNER JOIN tp_attendance_scheme ON PAC_AS_ID = AS_ID
+					WHERE
+						PAC_PRAC_ID = #{pracId,jdbcType=INTEGER}
+					AND AS_NIGHT_FLAG = '1'
+				)
+		) a
+	ORDER BY
+		start_time
+  </select>
+</mapper>

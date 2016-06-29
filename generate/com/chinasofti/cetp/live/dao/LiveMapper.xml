@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.live.dao.LiveMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.live.model.Live">
+		<id column="LIVE_ID" property="liveId" jdbcType="INTEGER" />
+		<result column="LIVE_NAME" property="liveName" jdbcType="VARCHAR" />
+		<result column="USER_NICKNAME" property="teacherName" jdbcType="VARCHAR" />
+		<result column="LIVE_TEACHER_NO" property="liveTeacherNo" jdbcType="INTEGER" />
+		<result column="LIVE_FLAG" property="liveFlag" jdbcType="CHAR" />
+		<result column="LIVE_PWD" property="livePwd" jdbcType="CHAR" />
+		<result column="LIVE_COST" property="liveCost" jdbcType="INTEGER" />
+		<result column="LIVE_COUNT" property="liveCount" jdbcType="BIGINT" />
+		<result column="LIVE_STATUS" property="liveStatus" jdbcType="CHAR" />
+		<result column="LIVE_REGTIME" property="liveRegtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.live.model.LiveWithBLOBs" extends="BaseResultMap">
+		<result column="LIVE_INTRO" property="liveIntro" jdbcType="LONGVARCHAR" />
+		<result column="LIVE_THUMB" property="liveThumb" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+			and LIVE_TEACHER_NO = USER_NO
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		LIVE_ID, LIVE_NAME, LIVE_TEACHER_NO, LIVE_FLAG, LIVE_PWD, LIVE_COST, LIVE_COUNT,
+		LIVE_STATUS, LIVE_REGTIME
+	</sql>
+	<sql id="Blob_Column_List">
+		LIVE_INTRO, LIVE_THUMB
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		USER_NICKNAME,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_live,tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="_parameter == null">
+			where LIVE_TEACHER_NO = USER_NO
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.live.model.LiveExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,USER_NICKNAME
+		from tp_live,tp_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="_parameter == null">
+			where LIVE_TEACHER_NO = USER_NO
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,USER_NICKNAME
+		from tp_live,tp_user
+		where LIVE_ID = #{liveId,jdbcType=INTEGER}
+		and user_no = LIVE_TEACHER_NO
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_live
+		where LIVE_ID = #{liveId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.live.model.LiveWithBLOBs" keyProperty="liveId" useGeneratedKeys="true">
+		insert into tp_live (LIVE_ID, LIVE_NAME, LIVE_TEACHER_NO,
+		LIVE_FLAG, LIVE_PWD, LIVE_COST,
+		LIVE_COUNT, LIVE_STATUS, LIVE_REGTIME,
+		LIVE_INTRO, LIVE_THUMB)
+		values (#{liveId,jdbcType=INTEGER}, #{liveName,jdbcType=VARCHAR}, #{liveTeacherNo,jdbcType=INTEGER},
+		#{liveFlag,jdbcType=CHAR}, #{livePwd,jdbcType=CHAR}, #{liveCost,jdbcType=INTEGER},
+		#{liveCount,jdbcType=BIGINT}, #{liveStatus,jdbcType=CHAR}, #{liveRegtime,jdbcType=TIMESTAMP},
+		#{liveIntro,jdbcType=LONGVARCHAR}, #{liveThumb,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.live.model.LiveWithBLOBs" keyProperty="liveId" useGeneratedKeys="true">
+		insert into tp_live
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="liveId != null">
+				LIVE_ID,
+			</if>
+			<if test="liveName != null">
+				LIVE_NAME,
+			</if>
+			<if test="liveTeacherNo != null">
+				LIVE_TEACHER_NO,
+			</if>
+			<if test="liveFlag != null">
+				LIVE_FLAG,
+			</if>
+			<if test="livePwd != null">
+				LIVE_PWD,
+			</if>
+			<if test="liveCost != null">
+				LIVE_COST,
+			</if>
+			<if test="liveCount != null">
+				LIVE_COUNT,
+			</if>
+			<if test="liveStatus != null">
+				LIVE_STATUS,
+			</if>
+			<if test="liveRegtime != null">
+				LIVE_REGTIME,
+			</if>
+			<if test="liveIntro != null">
+				LIVE_INTRO,
+			</if>
+			<if test="liveThumb != null">
+				LIVE_THUMB,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="liveId != null">
+				#{liveId,jdbcType=INTEGER},
+			</if>
+			<if test="liveName != null">
+				#{liveName,jdbcType=VARCHAR},
+			</if>
+			<if test="liveTeacherNo != null">
+				#{liveTeacherNo,jdbcType=INTEGER},
+			</if>
+			<if test="liveFlag != null">
+				#{liveFlag,jdbcType=CHAR},
+			</if>
+			<if test="livePwd != null">
+				#{livePwd,jdbcType=CHAR},
+			</if>
+			<if test="liveCost != null">
+				#{liveCost,jdbcType=INTEGER},
+			</if>
+			<if test="liveCount != null">
+				#{liveCount,jdbcType=BIGINT},
+			</if>
+			<if test="liveStatus != null">
+				#{liveStatus,jdbcType=CHAR},
+			</if>
+			<if test="liveRegtime != null">
+				#{liveRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="liveIntro != null">
+				#{liveIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="liveThumb != null">
+				#{liveThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.live.model.LiveExample" resultType="java.lang.Integer">
+		select count(*) from tp_live
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.live.model.LiveWithBLOBs">
+		update tp_live
+		<set>
+			<if test="liveName != null">
+				LIVE_NAME = #{liveName,jdbcType=VARCHAR},
+			</if>
+			<if test="liveTeacherNo != null">
+				LIVE_TEACHER_NO = #{liveTeacherNo,jdbcType=INTEGER},
+			</if>
+			<if test="liveFlag != null">
+				LIVE_FLAG = #{liveFlag,jdbcType=CHAR},
+			</if>
+			<if test="livePwd != null">
+				LIVE_PWD = #{livePwd,jdbcType=CHAR},
+			</if>
+			<if test="liveCost != null">
+				LIVE_COST = #{liveCost,jdbcType=INTEGER},
+			</if>
+			<if test="liveCount != null">
+				LIVE_COUNT = #{liveCount,jdbcType=BIGINT},
+			</if>
+			<if test="liveStatus != null">
+				LIVE_STATUS = #{liveStatus,jdbcType=CHAR},
+			</if>
+			<if test="liveRegtime != null">
+				LIVE_REGTIME = #{liveRegtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="liveIntro != null">
+				LIVE_INTRO = #{liveIntro,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="liveThumb != null">
+				LIVE_THUMB = #{liveThumb,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where LIVE_ID = #{liveId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.live.model.LiveWithBLOBs">
+		update tp_live
+		set LIVE_NAME = #{liveName,jdbcType=VARCHAR},
+		LIVE_TEACHER_NO = #{liveTeacherNo,jdbcType=INTEGER},
+		LIVE_FLAG = #{liveFlag,jdbcType=CHAR},
+		LIVE_PWD = #{livePwd,jdbcType=CHAR},
+		LIVE_COST = #{liveCost,jdbcType=INTEGER},
+		LIVE_COUNT = #{liveCount,jdbcType=BIGINT},
+		LIVE_STATUS = #{liveStatus,jdbcType=CHAR},
+		LIVE_REGTIME = #{liveRegtime,jdbcType=TIMESTAMP},
+		LIVE_INTRO = #{liveIntro,jdbcType=LONGVARCHAR},
+		LIVE_THUMB = #{liveThumb,jdbcType=LONGVARCHAR}
+		where LIVE_ID = #{liveId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.live.model.Live">
+		update tp_live
+		set LIVE_NAME = #{liveName,jdbcType=VARCHAR},
+		LIVE_TEACHER_NO = #{liveTeacherNo,jdbcType=INTEGER},
+		LIVE_FLAG = #{liveFlag,jdbcType=CHAR},
+		LIVE_PWD = #{livePwd,jdbcType=CHAR},
+		LIVE_COST = #{liveCost,jdbcType=INTEGER},
+		LIVE_COUNT = #{liveCount,jdbcType=BIGINT},
+		LIVE_STATUS = #{liveStatus,jdbcType=CHAR},
+		LIVE_REGTIME = #{liveRegtime,jdbcType=TIMESTAMP}
+		where LIVE_ID = #{liveId,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectByLiveCourseId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tp_live
+		WHERE LIVE_ID = (
+		SELECT
+		c.LIVE_CLASS_LIVEID
+		FROM tp_live_class c
+		WHERE c.LIVE_CLASS_ID =
+		(SELECT
+		b.LIVE_CHAP_CLASS_ID
+		FROM tp_live_chapter b
+		WHERE b.LIVE_CHAP_ID =(
+		SELECT
+		a.LIVE_COURSE_CHAP_ID
+		FROM
+		tp_live_course a
+		WHERE
+		a.LIVE_COURSE_ID = #{liveCourseId})))
+	</select>
+	<select id="selectMyLiveByStuNo" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,USER_NICKNAME
+		FROM
+		tp_live c,tp_user
+		WHERE
+		c.LIVE_ID IN (
+		SELECT
+		b.LIVE_CLASS_LIVEID
+		FROM
+		tp_live_class b
+		WHERE
+		b.LIVE_CLASS_ID IN (
+		SELECT
+		a.LCS_CLASS_ID
+		FROM
+		tp_live_class_stu a
+		WHERE
+		a.LCS_STU_NO = #{stuNo}
+		)
+		GROUP BY
+		b.LIVE_CLASS_LIVEID
+		)
+		and user_no = LIVE_TEACHER_NO
+	</select>
+	<select id="selectPlayBackList" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,USER_NICKNAME
+		FROM
+		tp_live f,
+		tp_user u
+		WHERE
+		f.LIVE_ID IN (
+		SELECT
+		e.LIVE_CLASS_LIVEID
+		FROM
+		tp_live_class e
+		WHERE
+		e.LIVE_CLASS_ID IN (
+		SELECT
+		b.LIVE_CHAP_CLASS_ID
+		FROM
+		tp_live_chapter b
+		WHERE
+		b.LIVE_CHAP_ID IN (
+		SELECT
+		a.LIVE_COURSE_CHAP_ID
+		FROM
+		tp_live_course a
+		WHERE
+		a.LIVE_COURSE_STATUS = "4"
+		)
+		)
+		)
+		AND f.LIVE_TEACHER_NO = u.USER_NO
+	</select>
+</mapper>

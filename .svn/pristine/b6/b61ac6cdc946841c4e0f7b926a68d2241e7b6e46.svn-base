@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinasofti.cetp.question.dao.QuestionMapper">
+	<resultMap id="BaseResultMap" type="com.chinasofti.cetp.question.model.Question">
+		<id column="QUE_ID" property="queId" jdbcType="INTEGER" />
+		<result column="QUE_STU_NO" property="queStuNo" jdbcType="INTEGER" />
+		<result column="QUE_TITLE" property="queTitle" jdbcType="VARCHAR" />
+		<result column="QUE_TIME" property="queTime" jdbcType="TIMESTAMP" />
+		<result column="QUE_STATUS" property="queStatus" jdbcType="CHAR" />
+		<result column="QUE_BEST_ANSWER" property="queBestAnswer" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.chinasofti.cetp.question.model.Question" extends="BaseResultMap">
+		<result column="QUE_CONTENT" property="queContent" jdbcType="LONGVARCHAR" />
+		<result column="QUE_ATTACH" property="queAttach" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<resultMap id="MoreQuestion" type="com.chinasofti.cetp.question.model.MoreQuestion" extends="ResultMapWithBLOBs">
+		<result column="STU_NAME" property="stuName" jdbcType="VARCHAR" />
+		<result column="ANS_COUNT" property="ansCount" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		QUE_ID, QUE_STU_NO, QUE_TITLE, QUE_TIME, QUE_STATUS, QUE_BEST_ANSWER
+	</sql>
+	<sql id="Blob_Column_List">
+		QUE_ATTACH,QUE_CONTENT
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinasofti.cetp.question.model.QuestionExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinasofti.cetp.question.model.QuestionExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from tp_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tp_question
+		where QUE_ID = #{queId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tp_question
+		where QUE_ID = #{queId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.chinasofti.cetp.question.model.QuestionExample">
+		delete from tp_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.chinasofti.cetp.question.model.Question">
+		insert into tp_question (QUE_ID, QUE_STU_NO, QUE_TITLE,
+		QUE_TIME, QUE_STATUS, QUE_BEST_ANSWER,
+		QUE_ATTACH,QUE_CONTENT)
+		values (#{queId,jdbcType=INTEGER}, #{queStuNo,jdbcType=INTEGER}, #{queTitle,jdbcType=VARCHAR},
+		#{queTime,jdbcType=TIMESTAMP}, #{queStatus,jdbcType=CHAR}, #{queBestAnswer,jdbcType=INTEGER},
+		#{queAttach,jdbcType=LONGVARCHAR},#{queContent,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.cetp.question.model.Question" useGeneratedKeys="true" keyProperty="queId">
+		insert into tp_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="queId != null">
+				QUE_ID,
+			</if>
+			<if test="queStuNo != null">
+				QUE_STU_NO,
+			</if>
+			<if test="queTitle != null">
+				QUE_TITLE,
+			</if>
+			<if test="queTime != null">
+				QUE_TIME,
+			</if>
+			<if test="queStatus != null">
+				QUE_STATUS,
+			</if>
+			<if test="queBestAnswer != null">
+				QUE_BEST_ANSWER,
+			</if>
+			<if test="queAttach != null">
+				QUE_ATTACH,
+			</if>
+			<if test="queContent != null">
+				QUE_CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="queId != null">
+				#{queId,jdbcType=INTEGER},
+			</if>
+			<if test="queStuNo != null">
+				#{queStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="queTitle != null">
+				#{queTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="queTime != null">
+				#{queTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="queStatus != null">
+				#{queStatus,jdbcType=CHAR},
+			</if>
+			<if test="queBestAnswer != null">
+				#{queBestAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="queAttach != null">
+				#{queAttach,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="queContent != null">
+				#{queContent,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.chinasofti.cetp.question.model.QuestionExample" resultType="java.lang.Integer">
+		select count(*) from tp_question
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update tp_question
+		<set>
+			<if test="record.queId != null">
+				QUE_ID = #{record.queId,jdbcType=INTEGER},
+			</if>
+			<if test="record.queStuNo != null">
+				QUE_STU_NO = #{record.queStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="record.queTitle != null">
+				QUE_TITLE = #{record.queTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.queTime != null">
+				QUE_TIME = #{record.queTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.queStatus != null">
+				QUE_STATUS = #{record.queStatus,jdbcType=CHAR},
+			</if>
+			<if test="record.queBestAnswer != null">
+				QUE_BEST_ANSWER = #{record.queBestAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="queAttach != null">
+				QUE_ATTACH = #{queAttach,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="record.queContent != null">
+				QUE_CONTENT = #{record.queContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update tp_question
+		set QUE_ID = #{record.queId,jdbcType=INTEGER},
+		QUE_STU_NO = #{record.queStuNo,jdbcType=INTEGER},
+		QUE_TITLE = #{record.queTitle,jdbcType=VARCHAR},
+		QUE_TIME = #{record.queTime,jdbcType=TIMESTAMP},
+		QUE_STATUS = #{record.queStatus,jdbcType=CHAR},
+		QUE_BEST_ANSWER = #{record.queBestAnswer,jdbcType=INTEGER},
+		QUE_CONTENT = #{record.queContent,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update tp_question
+		set QUE_ID = #{record.queId,jdbcType=INTEGER},
+		QUE_STU_NO = #{record.queStuNo,jdbcType=INTEGER},
+		QUE_TITLE = #{record.queTitle,jdbcType=VARCHAR},
+		QUE_TIME = #{record.queTime,jdbcType=TIMESTAMP},
+		QUE_STATUS = #{record.queStatus,jdbcType=CHAR},
+		QUE_BEST_ANSWER = #{record.queBestAnswer,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.chinasofti.cetp.question.model.Question">
+		update tp_question
+		<set>
+			<if test="queStuNo != null">
+				QUE_STU_NO = #{queStuNo,jdbcType=INTEGER},
+			</if>
+			<if test="queTitle != null">
+				QUE_TITLE = #{queTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="queTime != null">
+				QUE_TIME = #{queTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="queStatus != null">
+				QUE_STATUS = #{queStatus,jdbcType=CHAR},
+			</if>
+			<if test="queBestAnswer != null">
+				QUE_BEST_ANSWER = #{queBestAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="queAttach != null">
+				QUE_ATTACH = #{queAttach,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="queContent != null">
+				QUE_CONTENT = #{queContent,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where QUE_ID = #{queId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinasofti.cetp.question.model.Question">
+		update tp_question
+		set QUE_STU_NO = #{queStuNo,jdbcType=INTEGER},
+		QUE_TITLE = #{queTitle,jdbcType=VARCHAR},
+		QUE_TIME = #{queTime,jdbcType=TIMESTAMP},
+		QUE_STATUS = #{queStatus,jdbcType=CHAR},
+		QUE_BEST_ANSWER = #{queBestAnswer,jdbcType=INTEGER},
+		QUE_ATTACH = #{queAttach,jdbcType=LONGVARCHAR},
+		QUE_CONTENT = #{queContent,jdbcType=LONGVARCHAR}
+		where QUE_ID = #{queId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.chinasofti.cetp.question.model.Question">
+		update tp_question
+		set QUE_STU_NO = #{queStuNo,jdbcType=INTEGER},
+		QUE_TITLE = #{queTitle,jdbcType=VARCHAR},
+		QUE_TIME = #{queTime,jdbcType=TIMESTAMP},
+		QUE_STATUS = #{queStatus,jdbcType=CHAR},
+		QUE_BEST_ANSWER = #{queBestAnswer,jdbcType=INTEGER}
+		where QUE_ID = #{queId,jdbcType=INTEGER}
+	</update>
+	<select id="getQue" parameterType="java.lang.Integer" resultMap="MoreQuestion">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,IFNULL(STU_NICKNAME, STU_USERID) AS STU_NAME
+		,count(ans_c.ANS_QUE_ID) AS ANS_COUNT
+		FROM
+		tp_question
+		INNER JOIN tp_student ON QUE_STU_NO = STU_NO
+		LEFT JOIN tp_answer AS ans_c ON ans_c.ANS_QUE_ID = QUE_ID
+		WHERE
+		QUE_ID = #{queId}
+		GROUP BY
+		QUE_ID
+	</select>
+	<select id="getQues" parameterType="map" resultMap="MoreQuestion">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,IFNULL(STU_NICKNAME, STU_USERID) AS STU_NAME
+		,count(ans_c.ANS_QUE_ID) AS ANS_COUNT
+		FROM
+		tp_question
+		INNER JOIN tp_student ON QUE_STU_NO = STU_NO
+		<if test="liveId != null">
+			INNER JOIN tp_que_live ON (
+			QL_QUE_ID = QUE_ID
+			AND QL_LIVE_ID = #{liveId}
+			)
+		</if>
+		<if test="specId != null">
+			INNER JOIN tp_que_spec ON (
+			QS_QUE_ID = QUE_ID
+			AND QS_SPEC_ID = #{specId}
+			)
+		</if>
+		<if test="pracId != null">
+			INNER JOIN tp_que_prac ON (
+			QP_QUE_ID = QUE_ID
+			AND QP_PRAC_ID = #{pracId}
+			)
+		</if>
+		<if test="ansUserNo != null">
+			INNER JOIN tp_answer AS ans_u ON (
+			ans_u.ANS_QUE_ID = QUE_ID
+			AND ans_u.ANS_USER_NO = #{ansUserNo}
+			)
+		</if>
+		<if test="ansStuNo != null">
+			INNER JOIN tp_answer AS ans_s ON (
+			ans_s.ANS_QUE_ID = QUE_ID
+			AND ans_s.ANS_STU_NO = #{ansStuNo}
+			)
+		</if>
+		LEFT JOIN tp_answer AS ans_c ON ans_c.ANS_QUE_ID = QUE_ID
+		<if test="stuNo != null">
+			WHERE
+			STU_NO = #{stuNo}
+		</if>
+		GROUP BY
+		QUE_ID
+		ORDER BY
+		QUE_TIME DESC
+	</select>
+
+	<select id="selectSpecBestQues" parameterType="java.lang.Integer" resultMap="MoreQuestion">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		COUNT(ANS_ID) AS ANS_COUNT
+		FROM
+		tp_question
+		INNER JOIN tp_que_spec ON (
+		QUE_ID = QS_QUE_ID
+		AND QS_SPEC_ID = #{specId}
+		)
+		INNER JOIN tp_answer ON ANS_QUE_ID = QUE_ID
+		WHERE
+		NOT QUE_BEST_ANSWER IS NULL
+		GROUP BY
+		QUE_ID
+	</select>
+
+</mapper>
